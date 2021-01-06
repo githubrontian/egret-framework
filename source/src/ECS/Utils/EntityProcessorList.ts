@@ -1,13 +1,13 @@
 module es {
     export class EntityProcessorList {
-        private _processors: EntitySystem[] = [];
+        protected _processors: EntitySystem[] = [];
 
         public add(processor: EntitySystem) {
             this._processors.push(processor);
         }
 
         public remove(processor: EntitySystem) {
-            this._processors.remove(processor);
+            new linq.List(this._processors).remove(processor);
         }
 
         public onComponentAdded(entity: Entity) {

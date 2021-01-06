@@ -1,18 +1,16 @@
 module es {
     export class CircleCollider extends Collider {
         /**
-         * 创建一个有半径的圆
+         * 创建一个具有半径的CircleCollider。
+         * 请注意，当指定半径时，如果在实体上使用RenderableComponent，您将需要设置原点来对齐CircleCollider。
+         * 例如，如果RenderableComponent有一个0,0的原点，并且创建了一个半径为1.5f * renderable.width的CircleCollider，你可以通过设置originNormalied为中心除以缩放尺寸来偏移原点
          *
          * @param radius
          */
-        constructor(radius?: number) {
+        constructor(radius: number) {
             super();
 
-            if (radius)
-                this._colliderRequiresAutoSizing = true;
-            // 我们在这里插入一个1px的圆圈作为占位符
-            // 直到碰撞器被添加到实体并可以获得更精确的自动调整大小数据的下一帧
-            this.shape = new Circle(radius ? radius : 1);
+            this.shape = new Circle(radius);
         }
 
         public get radius(): number {
@@ -33,12 +31,20 @@ module es {
             if (radius != circle.radius) {
                 circle.radius = radius;
                 circle._originalRadius = radius;
+                this._isPositionDirty = true;
 
-                if (this.entity && this._isParentEntityAddedToScene)
+                if (this.entity != null && this._isParentEntityAddedToScene)
                     Physics.updateCollider(this);
             }
 
             return this;
+        }
+
+        public debugRender(batcher: IBatcher) {
+            batcher.drawHollowRect(this.bounds, Debug.colliderBounds, 1);
+            batcher.drawCircle(this.shape.position, (this.shape as Circle).radius, Debug.colliderEdge, 1);
+            batcher.drawPixel(this.entity.transform.position, Debug.colliderPosition, 4);
+            batcher.drawPixel(this.shape.position, Debug.colliderCenter, 2);
         }
 
         public toString() {

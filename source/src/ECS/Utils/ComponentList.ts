@@ -1,4 +1,4 @@
-///<reference path="../Components/IUpdatableComparer.ts" />
+///<reference path="../Components/IUpdatable.ts" />
 module es {
     export class ComponentList {
         /**
@@ -11,6 +11,10 @@ module es {
          * 添加到实体的组件列表
          */
         public _components: Component[] = [];
+        /**
+         * 所有需要更新的组件列表
+         */
+        public _updatableComponents: IUpdatable[] = [];
         /**
          * 添加到此框架的组件列表。用来对组件进行分组，这样我们就可以同时进行加工
          */
@@ -46,16 +50,18 @@ module es {
         }
 
         public remove(component: Component) {
-            if (this._componentsToRemove.contains(component))
-                console.warn(`You are trying to remove a Component (${component}) that you already removed`);
+            let componentToRemove = new linq.List(this._componentsToRemove);
+            let componentToAdd = new linq.List(this._componentsToAdd);
+            if (componentToRemove.contains(component))
+                console.warn(`您正在尝试删除一个您已经删除的组件(${component})`);
 
             // 这可能不是一个活动的组件，所以我们必须注意它是否还没有被处理，它可能正在同一帧中被删除
-            if (this._componentsToAdd.contains(component)) {
-                this._componentsToAdd.remove(component);
+            if (componentToAdd.contains(component)) {
+                componentToAdd.remove(component);
                 return;
             }
 
-            this._componentsToRemove.push(component);
+            componentToRemove.add(component);
         }
 
         /**
@@ -67,36 +73,36 @@ module es {
             }
 
             this._components.length = 0;
+            this._updatableComponents.length = 0;
             this._componentsToAdd.length = 0;
             this._componentsToRemove.length = 0;
         }
 
         public deregisterAllComponents() {
-            for (let i = 0; i < this._components.length; i++) {
-                let component = this._components[i];
+            for (let component of this._components) {
+                if (!component) continue;
 
-                // 处理渲染层列表
-                if (component instanceof RenderableComponent) {
-                    this._entity.scene.removeChild(component.displayObject);
-                    this._entity.scene.renderableComponents.remove(component);
-                }
+                if (component instanceof RenderableComponent)
+                    new linq.List(this._entity.scene.renderableComponents.buffer).remove(component);
 
+                // 处理IUpdatable
+                if (isIUpdatable(component))
+                    new linq.List(this._updatableComponents).remove(component);
 
-                this._entity.componentBits.set(ComponentTypeManager.getIndexFor(component), false);
+                this._entity.componentBits.set(ComponentTypeManager.getIndexFor(TypeUtils.getType(component)), false);
                 this._entity.scene.entityProcessors.onComponentRemoved(this._entity);
             }
         }
 
         public registerAllComponents() {
-            for (let i = 0; i < this._components.length; i++) {
-                let component = this._components[i];
+            for (let component of this._components) {
+                if (component instanceof RenderableComponent)
+                    this._entity.scene.renderableComponents.buffer.push(component);
 
-                if (component instanceof RenderableComponent) {
-                    this._entity.scene.addChild(component.displayObject);
-                    this._entity.scene.renderableComponents.add(component);
-                }
+                if (isIUpdatable(component))
+                    this._updatableComponents.push(component);
 
-                this._entity.componentBits.set(ComponentTypeManager.getIndexFor(component));
+                this._entity.componentBits.set(ComponentTypeManager.getIndexFor(TypeUtils.getType(component)));
                 this._entity.scene.entityProcessors.onComponentAdded(this._entity);
             }
         }
@@ -108,7 +114,7 @@ module es {
             if (this._componentsToRemove.length > 0) {
                 for (let i = 0; i < this._componentsToRemove.length; i++) {
                     this.handleRemove(this._componentsToRemove[i]);
-                    this._components.remove(this._componentsToRemove[i]);
+                    new linq.List(this._components).remove(this._componentsToRemove[i]);
                 }
 
                 this._componentsToRemove.length = 0;
@@ -117,13 +123,14 @@ module es {
             if (this._componentsToAdd.length > 0) {
                 for (let i = 0, count = this._componentsToAdd.length; i < count; i++) {
                     let component = this._componentsToAdd[i];
-                    if (component instanceof RenderableComponent) {
-                        this._entity.scene.addChild(component.displayObject);
-                        this._entity.scene.renderableComponents.add(component);
-                    }
 
+                    if (component instanceof RenderableComponent)
+                        this._entity.scene.renderableComponents.buffer.push(component);
 
-                    this._entity.componentBits.set(ComponentTypeManager.getIndexFor(component));
+                    if (isIUpdatable(component))
+                        this._updatableComponents.push(component);
+
+                    this._entity.componentBits.set(ComponentTypeManager.getIndexFor(TypeUtils.getType(component)));
                     this._entity.scene.entityProcessors.onComponentAdded(this._entity);
 
                     this._components.push(component);
@@ -149,20 +156,19 @@ module es {
             }
 
             if (this._isComponentListUnsorted) {
-                this._components.sort(ComponentList.compareUpdatableOrder.compare);
+                this._updatableComponents.sort(ComponentList.compareUpdatableOrder.compare);
                 this._isComponentListUnsorted = false;
             }
         }
 
         public handleRemove(component: Component) {
-            // 处理渲染层列表
-            if (component instanceof RenderableComponent) {
-                this._entity.scene.removeChild(component.displayObject);
-                this._entity.scene.renderableComponents.remove(component);
-            }
+            if (component instanceof RenderableComponent)
+                new linq.List(this._entity.scene.renderableComponents.buffer).remove(component);
 
+            if (isIUpdatable(component))
+                new linq.List(this._updatableComponents).remove(component);
 
-            this._entity.componentBits.set(ComponentTypeManager.getIndexFor(component), false);
+            this._entity.componentBits.set(ComponentTypeManager.getIndexFor(TypeUtils.getType(component)), false);
             this._entity.scene.entityProcessors.onComponentRemoved(this._entity);
 
             component.onRemovedFromEntity();
@@ -178,16 +184,14 @@ module es {
          * @param onlyReturnInitializedComponents
          */
         public getComponent<T extends Component>(type, onlyReturnInitializedComponents: boolean): T {
-            for (let i = 0; i < this._components.length; i++) {
-                let component = this._components[i];
+            for (let component of this._components) {
                 if (component instanceof type)
                     return component as T;
             }
 
             // 我们可以选择检查挂起的组件，以防addComponent和getComponent在同一个框架中被调用
             if (!onlyReturnInitializedComponents) {
-                for (let i = 0; i < this._componentsToAdd.length; i++) {
-                    let component = this._componentsToAdd[i];
+                for (let component of this._componentsToAdd) {
                     if (component instanceof type)
                         return component as T;
                 }
@@ -201,33 +205,20 @@ module es {
          * @param typeName
          * @param components
          */
-        public getComponents(typeName: string | any, components?) {
+        public getComponents(typeName: any, components?) {
             if (!components)
                 components = [];
 
-            for (let i = 0; i < this._components.length; i++) {
-                let component = this._components[i];
-                if (typeof (typeName) == "string") {
-                    if (egret.is(component, typeName)) {
-                        components.push(component);
-                    }
-                } else {
-                    if (component instanceof typeName) {
-                        components.push(component);
-                    }
+            for (let component of this._components) {
+                if (component instanceof typeName) {
+                    components.push(component);
                 }
             }
 
-            for (let i = 0; i < this._componentsToAdd.length; i++) {
-                let component = this._componentsToAdd[i];
-                if (typeof (typeName) == "string") {
-                    if (egret.is(component, typeName)) {
-                        components.push(component);
-                    }
-                } else {
-                    if (component instanceof typeName) {
-                        components.push(component);
-                    }
+            // 我们还检查了待处理的组件，以防在同一帧中调用addComponent和getComponent
+            for (let component of this._componentsToAdd) {
+                if (component instanceof typeName) {
+                    components.push(component);
                 }
             }
 
@@ -236,13 +227,9 @@ module es {
 
         public update() {
             this.updateLists();
-            for (let i = 0; i < this._components.length; i++) {
-                let updatableComponent = this._components[i];
-
-                if (updatableComponent.enabled &&
-                    (updatableComponent.updateInterval == 1 ||
-                        Time.frameCount % updatableComponent.updateInterval == 0))
-                    updatableComponent.update();
+            for (let i = 0; i < this._updatableComponents.length; i++) {
+                if (this._updatableComponents[i].enabled)
+                    this._updatableComponents[i].update();
             }
         }
 
@@ -266,6 +253,13 @@ module es {
         public onEntityDisabled() {
             for (let i = 0; i < this._components.length; i++)
                 this._components[i].onDisabled();
+        }
+
+        public debugRender(batcher: IBatcher) {
+            for (let i = 0; i < this._components.length; i++) {
+                if (this._components[i].enabled)
+                    this._components[i].debugRender(batcher);
+            }
         }
     }
 }

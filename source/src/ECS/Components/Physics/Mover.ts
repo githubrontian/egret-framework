@@ -19,7 +19,7 @@ module es {
          * @param collisionResult
          */
         public calculateMovement(motion: Vector2, collisionResult: CollisionResult): boolean {
-            if (!this.entity.getComponent(Collider) || !this._triggerHelper) {
+            if (this.entity.getComponent(Collider) == null || this._triggerHelper == null) {
                 return false;
             }
 
@@ -33,28 +33,28 @@ module es {
                     continue;
 
                 // 获取我们在新位置可能发生碰撞的任何东西
-                let bounds = collider.bounds;
+                let bounds = collider.bounds.clone();
                 bounds.x += motion.x;
                 bounds.y += motion.y;
-                let neighbors = Physics.boxcastBroadphaseExcludingSelf(collider, bounds, collider.collidesWithLayers);
+                let neighbors = Physics.boxcastBroadphaseExcludingSelf(collider, bounds, collider.collidesWithLayers.value);
 
-                for (let j = 0; j < neighbors.length; j++) {
-                    let neighbor = neighbors[j];
+                neighbors.forEach(value => {
+                    let neighbor = value;
                     // 不检测触发器
                     if (neighbor.isTrigger)
-                        continue;
+                        return;
 
                     let _internalcollisionResult: CollisionResult = new CollisionResult();
                     if (collider.collidesWith(neighbor, motion, _internalcollisionResult)) {
                         // 如果碰撞 则退回之前的移动量
-                        motion = motion.subtract(_internalcollisionResult.minimumTranslationVector);
+                        motion.subtract(_internalcollisionResult.minimumTranslationVector);
 
                         // 如果我们碰到多个对象，为了简单起见，只取第一个。
                         if (_internalcollisionResult.collider != null) {
                             collisionResult = _internalcollisionResult;
                         }
                     }
-                }
+                });
             }
 
             ListPool.free(colliders);

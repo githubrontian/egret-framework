@@ -14,6 +14,7 @@ module es {
                 length++;
 
             this._bits = new Array(length);
+            this._bits.fill(0);
         }
 
         public and(bs: BitSet) {
@@ -47,7 +48,7 @@ module es {
 
                 a = ((a >> 1) & 0x5555555555555555) + (a & 0x5555555555555555);
                 a = ((a >> 2) & 0x3333333333333333) + (a & 0x3333333333333333);
-                let b = ((a >> 32) + a);
+                let b = ((a >> 32) + a) >>> 0;
                 b = ((b >> 4) & 0x0f0f0f0f) + (b & 0x0f0f0f0f);
                 b = ((b >> 8) & 0x00ff00ff) + (b & 0x00ff00ff);
                 card += ((b >> 16) & 0x0000ffff) + (b & 0x0000ffff);
@@ -126,9 +127,9 @@ module es {
 
         private ensure(lastElt: number) {
             if (lastElt >= this._bits.length) {
-                let nd = new Number[lastElt + 1];
-                nd = this._bits.copyWithin(0, 0, this._bits.length);
-                this._bits = nd;
+                let startIndex = this._bits.length;
+                this._bits.length = lastElt + 1;
+                this._bits.fill(0, startIndex, lastElt + 1);
             }
         }
     }

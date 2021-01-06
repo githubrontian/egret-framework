@@ -7,7 +7,7 @@ module es {
      *  删除执行顺序
      *      - onRemovedFromEntity
      */
-    export abstract class Component extends egret.HashObject {
+    export abstract class Component {
         /**
          * 此组件附加的实体
          */
@@ -78,10 +78,7 @@ module es {
         public onEntityTransformChanged(comp: transform.Component) {
         }
 
-        /**
-         *
-         */
-        public debugRender() {
+        public debugRender(batcher: IBatcher) {
         }
 
         /**
@@ -94,12 +91,6 @@ module es {
          * 禁用父实体或此组件时调用
          */
         public onDisabled() {
-        }
-
-        /**
-         * 当该组件启用时每帧进行调用
-         */
-        public update() {
         }
 
         public setEnabled(isEnabled: boolean) {
@@ -122,16 +113,6 @@ module es {
             }
 
             return this;
-        }
-
-        /**
-         * 创建此组件的克隆
-         */
-        public clone(): Component {
-            let component = ObjectUtils.clone<Component>(this);
-            component.entity = null;
-
-            return component;
         }
     }
 }

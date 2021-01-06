@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
+    "experimentalDecorators": false,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "pretty": true,
+    "preserveConstEnums": true,
+    "alwaysStrict": true,
     "module": "system",
     "target": "es5",
     "declaration": true,
     "sourceMap": false,
-    "removeComments": true,
+    "removeComments": false,
     "outFile": "./framework.js",
     "lib": [
       "es5",

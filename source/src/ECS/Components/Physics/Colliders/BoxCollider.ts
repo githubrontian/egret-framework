@@ -2,14 +2,17 @@
 module es {
     export class BoxCollider extends Collider {
         /**
-         * 零参数构造函数要求RenderableComponent在实体上，这样碰撞器可以在实体被添加到场景时调整自身的大小。
+         * 创建一个BoxCollider，并使用x/y组件作为局部Offset
+         * @param x 
+         * @param y 
+         * @param width 
+         * @param height 
          */
-        constructor() {
+        constructor(x: number, y: number, width: number, height: number) {
             super();
 
-            // 我们在这里插入一个1x1框作为占位符，直到碰撞器在下一阵被添加到实体并可以获得更精确的自动调整大小数据
-            this.shape = new Box(1, 1);
-            this._colliderRequiresAutoSizing = true;
+            this._localOffset = new Vector2(x + width / 2, y + height / 2);
+            this.shape = new Box(width, height);
         }
 
         public get width() {
@@ -29,20 +32,6 @@ module es {
         }
 
         /**
-         * 创建一个BoxCollider并使用x/y组件作为localOffset
-         * @param x
-         * @param y
-         * @param width
-         * @param height
-         */
-        public createBoxRect(x: number, y: number, width: number, height: number): BoxCollider{
-            this._localOffset = new Vector2(x + width / 2, y + width / 2);
-            this.shape = new Box(width, height);
-            this._colliderRequiresAutoSizing = false;
-            return this;
-        }
-
-        /**
          * 设置BoxCollider的大小
          * @param width
          * @param height
@@ -53,6 +42,7 @@ module es {
             if (width != box.width || height != box.height) {
                 // 更新框，改变边界，如果我们需要更新物理系统中的边界
                 box.updateBox(width, height);
+                this._isPositionDirty = true;
                 if (this.entity && this._isParentEntityAddedToScene)
                     Physics.updateCollider(this);
             }
@@ -70,6 +60,7 @@ module es {
             if (width != box.width) {
                 // 更新框，改变边界，如果我们需要更新物理系统中的边界
                 box.updateBox(width, box.height);
+                this._isPositionDirty = true;
                 if (this.entity && this._isParentEntityAddedToScene)
                     Physics.updateCollider(this);
             }
@@ -87,9 +78,18 @@ module es {
             if (height != box.height) {
                 // 更新框，改变边界，如果我们需要更新物理系统中的边界
                 box.updateBox(box.width, height);
+                this._isPositionDirty = true;
                 if (this.entity && this._isParentEntityAddedToScene)
                     Physics.updateCollider(this);
             }
+        }
+
+        public debugRender(batcher: IBatcher) {
+            let poly = this.shape as Polygon;
+            batcher.drawHollowRect(this.bounds, Debug.colliderBounds, 1);
+            batcher.drawPolygon(this.shape.position, poly.points, Debug.colliderEdge, true, 1);
+            batcher.drawPixel(this.entity.transform.position, Debug.colliderPosition, 4);
+            batcher.drawPixel(Vector2.add(this.entity.transform.position, this.shape.center), Debug.colliderCenter, 2);
         }
 
         public toString() {

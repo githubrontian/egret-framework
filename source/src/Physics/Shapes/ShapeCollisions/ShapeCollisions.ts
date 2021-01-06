@@ -14,8 +14,8 @@ module es {
         public static polygonToPolygon(first: Polygon, second: Polygon, result: CollisionResult): boolean {
             let isIntersecting = true;
 
-            let firstEdges = first.edgeNormals;
-            let secondEdges = second.edgeNormals;
+            let firstEdges = first.edgeNormals.slice();
+            let secondEdges = second.edgeNormals.slice();
             let minIntervalDistance = Number.POSITIVE_INFINITY;
             let translationAxis = new Vector2();
             let polygonOffset = Vector2.subtract(first.position, second.position);
@@ -32,25 +32,21 @@ module es {
                 }
 
                 // 求多边形在当前轴上的投影
-                let minA = 0;
-                let minB = 0;
-                let maxA = 0;
-                let maxB = 0;
+                let minA = new Ref(0);
+                let minB = new Ref(0);
+                let maxA = new Ref(0);
+                let maxB = new Ref(0);
                 let intervalDist = 0;
-                let ta = this.getInterval(axis, first, minA, maxA);
-                minA = ta.min;
-                minB = ta.max;
-                let tb = this.getInterval(axis, second, minB, maxB);
-                minB = tb.min;
-                maxB = tb.max;
+                this.getInterval(axis, first, minA, maxA);
+                this.getInterval(axis, second, minB, maxB);
 
                 // 将区间设为第二个多边形的空间。由轴上投影的位置差偏移。
                 let relativeIntervalOffset = Vector2.dot(polygonOffset, axis);
-                minA += relativeIntervalOffset;
-                maxA += relativeIntervalOffset;
+                minA.value += relativeIntervalOffset;
+                maxA.value += relativeIntervalOffset;
 
                 // 检查多边形投影是否正在相交
-                intervalDist = this.intervalDistance(minA, maxA, minB, maxB);
+                intervalDist = this.intervalDistance(minA.value, maxA.value, minB.value, maxB.value);
                 if (intervalDist > 0)
                     isIntersecting = false;
 
@@ -68,13 +64,13 @@ module es {
                     translationAxis = axis;
 
                     if (Vector2.dot(translationAxis, polygonOffset) < 0)
-                        translationAxis = new Vector2(-translationAxis);
+                        translationAxis = new Vector2(-translationAxis.x, -translationAxis.y);
                 }
             }
 
             // 利用最小平移向量对多边形进行推入。
             result.normal = translationAxis;
-            result.minimumTranslationVector = Vector2.multiply(new Vector2(-translationAxis.x, -translationAxis.y), new Vector2(minIntervalDistance));
+            result.minimumTranslationVector = new Vector2(-translationAxis.x * minIntervalDistance, -translationAxis.y * minIntervalDistance);
 
             return true;
         }
@@ -90,7 +86,7 @@ module es {
             if (minA < minB)
                 return minB - maxA;
 
-            return minA - minB;
+            return minA - maxB;
         }
 
         /**
@@ -100,20 +96,18 @@ module es {
          * @param min
          * @param max
          */
-        public static getInterval(axis: Vector2, polygon: Polygon, min: number, max: number) {
+        public static getInterval(axis: Vector2, polygon: Polygon, min: Ref<number>, max: Ref<number>) {
             let dot = Vector2.dot(polygon.points[0], axis);
-            min = max = dot;
+            min.value = max.value = dot;
 
             for (let i = 1; i < polygon.points.length; i++) {
                 dot = Vector2.dot(polygon.points[i], axis);
-                if (dot < min) {
-                    min = dot;
-                } else if (dot > max) {
-                    max = dot;
+                if (dot  < min.value ) {
+                    min.value  = dot;
+                } else if (dot > max.value) {
+                    max.value  = dot;
                 }
             }
-
-            return {min: min, max: max};
         }
 
         /**
@@ -122,25 +116,33 @@ module es {
          * @param polygon
          * @param result
          */
-        public static circleToPolygon(circle: Circle, polygon: Polygon, result: CollisionResult): boolean {
+        public static circleToPolygon(circle: Circle, polygon: Polygon, result: CollisionResult = new CollisionResult()): boolean {
+            // 圆圈在多边形中的位置坐标
             let poly2Circle = Vector2.subtract(circle.position, polygon.position);
 
-            let distanceSquared = 0;
+            // 首先，我们需要找到从圆到多边形的最近距离
+            let distanceSquared = new Ref(0);
             let closestPoint = Polygon.getClosestPointOnPolygonToPoint(polygon.points, poly2Circle, distanceSquared, result.normal);
 
+            // 确保距离的平方小于半径的平方，否则我们不会相撞。
+            // 请注意，如果圆完全包含在多边形中，距离可能大于半径。
+            // 正因为如此，我们还要确保圆的位置不在多边形内。
             let circleCenterInsidePoly = polygon.containsPoint(circle.position);
-            if (distanceSquared > circle.radius * circle.radius && !circleCenterInsidePoly)
+            if (distanceSquared.value > circle.radius * circle.radius && !circleCenterInsidePoly)
                 return false;
 
+            // 算出MTV。我们要注意处理完全包含在多边形中的圆或包含其中心的圆
             let mtv: Vector2;
             if (circleCenterInsidePoly) {
-                mtv = Vector2.multiply(result.normal, new Vector2(Math.sqrt(distanceSquared) - circle.radius));
+                mtv = Vector2.multiply(result.normal, new Vector2(Math.sqrt(distanceSquared.value) - circle.radius));
             } else {
-                if (distanceSquared == 0) {
-                    mtv = Vector2.multiply(result.normal, new Vector2(circle.radius));
+                // 如果我们没有距离，这意味着圆心在多边形的边缘上。只需根据它的半径移动它
+                if (distanceSquared.value == 0) {
+                    mtv = new Vector2(result.normal.x * circle.radius, result.normal.y * circle.radius);
                 } else {
-                    let distance = Math.sqrt(distanceSquared);
-                    mtv = Vector2.multiply(new Vector2(-Vector2.subtract(poly2Circle, closestPoint)), new Vector2((circle.radius - distanceSquared) / distance));
+                    let distance = Math.sqrt(distanceSquared.value);
+                    mtv = Vector2.subtract(new Vector2(-1), Vector2.subtract(poly2Circle, closestPoint))
+                        .multiply(new Vector2((circle.radius - distance) / distance));
                 }
             }
 
@@ -151,19 +153,19 @@ module es {
         }
 
         /**
-         * 适用于圆心在方框内以及只与方框外圆心重叠的圆。
+         * 适用于中心在框内的圆，也适用于与框外中心重合的圆。
          * @param circle
          * @param box
          * @param result
          */
-        public static circleToBox(circle: Circle, box: Box, result: CollisionResult): boolean {
+        public static circleToBox(circle: Circle, box: Box, result: CollisionResult = new CollisionResult()): boolean {
             let closestPointOnBounds = box.bounds.getClosestPointOnRectangleBorderToPoint(circle.position, result.normal);
 
-            // 处理那些中心在盒子里的圆，因为比较好操作，
+            // 先处理中心在盒子里的圆，如果我们是包含的, 它的成本更低，
             if (box.containsPoint(circle.position)) {
-                result.point = closestPointOnBounds;
+                result.point = closestPointOnBounds.clone();
 
-                // 计算mtv。找到安全的，没有碰撞的位置，然后从那里得到mtv
+                // 计算MTV。找出安全的、非碰撞的位置，并从中得到MTV
                 let safePlace = Vector2.add(closestPointOnBounds, Vector2.multiply(result.normal, new Vector2(circle.radius)));
                 result.minimumTranslationVector = Vector2.subtract(circle.position, safePlace);
 
@@ -171,7 +173,8 @@ module es {
             }
 
             let sqrDistance = Vector2.distanceSquared(closestPointOnBounds, circle.position);
-            // 看盒子上的点与圆的距离是否小于半径
+            
+            // 看框上的点距圆的半径是否小于圆的半径
             if (sqrDistance == 0) {
                 result.minimumTranslationVector = Vector2.multiply(result.normal, new Vector2(circle.radius));
             } else if (sqrDistance <= circle.radius * circle.radius) {
@@ -179,7 +182,7 @@ module es {
                 let depth = result.normal.length() - circle.radius;
 
                 result.point = closestPointOnBounds;
-                result.normal = Vector2Ext.normalize(result.normal);
+                Vector2Ext.normalize(result.normal);
                 result.minimumTranslationVector = Vector2.multiply(new Vector2(depth), result.normal);
 
                 return true;
@@ -234,7 +237,7 @@ module es {
             let t = Vector2.dot(w, v) / Vector2.dot(v, v);
             t = MathHelper.clamp(t, 0, 1);
 
-            return Vector2.add(lineA, Vector2.multiply(v, new Vector2(t, t)));
+            return Vector2.add(lineA, Vector2.multiply(v, new Vector2(t)));
         }
 
         /**
@@ -245,10 +248,10 @@ module es {
          */
         public static pointToPoly(point: Vector2, poly: Polygon, result: CollisionResult): boolean {
             if (poly.containsPoint(point)) {
-                let distanceSquared: number = 0;
+                let distanceSquared = new Ref(0);
                 let closestPoint = Polygon.getClosestPointOnPolygonToPoint(poly.points, Vector2.subtract(point, poly.position), distanceSquared, result.normal);
 
-                result.minimumTranslationVector = Vector2.multiply(result.normal, new Vector2(Math.sqrt(distanceSquared), Math.sqrt(distanceSquared)));
+                result.minimumTranslationVector = new Vector2(result.normal.x * Math.sqrt(distanceSquared.value), result.normal.y * Math.sqrt(distanceSquared.value));
                 result.point = Vector2.add(closestPoint, poly.position);
 
                 return true;
@@ -261,8 +264,9 @@ module es {
          *
          * @param first
          * @param second
+         * @param result
          */
-        public static circleToCircle(first: Circle, second: Circle, result: CollisionResult): boolean {
+        public static circleToCircle(first: Circle, second: Circle, result: CollisionResult = new CollisionResult()): boolean {
             let distanceSquared = Vector2.distanceSquared(first.position, second.position);
             let sumOfRadii = first.radius + second.radius;
             let collided = distanceSquared < sumOfRadii * sumOfRadii;
@@ -271,6 +275,11 @@ module es {
                 let depth = sumOfRadii - Math.sqrt(distanceSquared);
                 result.minimumTranslationVector = Vector2.multiply(new Vector2(-depth), result.normal);
                 result.point = Vector2.add(second.position, Vector2.multiply(result.normal, new Vector2(second.radius)));
+
+                // 这可以得到实际的碰撞点，可能有用也可能没用，所以我们暂时把它留在这里
+                // let collisionPointX = ((first.position.x * second.radius) + (second.position.x * first.radius)) / sumOfRadii;
+                // let collisionPointY = ((first.position.y * second.radius) + (second.position.y * first.radius)) / sumOfRadii;
+                // result.point = new Vector2(collisionPointX, collisionPointY);
 
                 return true;
             }
@@ -294,7 +303,7 @@ module es {
                     return false;
 
                 result.normal = new Vector2(-result.minimumTranslationVector.x, -result.minimumTranslationVector.y);
-                result.normal = result.normal.normalize();
+                result.normal.normalize();
 
                 return true;
             }
@@ -305,14 +314,14 @@ module es {
         private static minkowskiDifference(first: Box, second: Box): Rectangle {
             // 我们需要第一个框的左上角
             // 碰撞器只会修改运动的位置所以我们需要用位置来计算出运动是什么。
-            let positionOffset = Vector2.subtract(first.position, Vector2.add(first.bounds.location, Vector2.divide(first.bounds.size, new Vector2(2))));
+            let positionOffset = Vector2.subtract(first.position, Vector2.add(first.bounds.location, new Vector2(first.bounds.size.x / 2, first.bounds.size.y / 2)));
             let topLeft = Vector2.subtract(Vector2.add(first.bounds.location, positionOffset), second.bounds.max);
             let fullSize = Vector2.add(first.bounds.size, second.bounds.size);
 
             return new Rectangle(topLeft.x, topLeft.y, fullSize.x, fullSize.y)
         }
 
-        public static lineToPoly(start: Vector2, end: Vector2, polygon: Polygon, hit: RaycastHit): boolean {
+        public static lineToPoly(start: Vector2, end: Vector2, polygon: Polygon, hit: RaycastHit = new RaycastHit()): boolean {
             let normal = Vector2.zero;
             let intersectionPoint = Vector2.zero;
             let fraction = Number.MAX_VALUE;
@@ -341,7 +350,7 @@ module es {
             }
 
             if (hasIntersection){
-                normal = normal.normalize();
+                normal.normalize();
                 let distance = Vector2.distance(start, intersectionPoint);
                 hit.setValuesNonCollider(fraction, distance, intersectionPoint, normal);
                 return true;
@@ -368,7 +377,7 @@ module es {
             if (u < 0 || u > 1)
                 return false;
 
-            intersection = intersection.add(a1).add(Vector2.multiply(new Vector2(t), b));
+            intersection = Vector2.add(a1, Vector2.multiply(new Vector2(t), b));
 
             return true;
         }
@@ -422,7 +431,7 @@ module es {
                     return false;
 
                 hit.normal = new Vector2(-mtv.x);
-                hit.normal = hit.normal.normalize();
+                hit.normal.normalize();
                 hit.distance = 0;
                 hit.fraction = 0;
 
@@ -430,13 +439,13 @@ module es {
             }else{
                 // 射线投射移动矢量
                 let ray = new Ray2D(Vector2.zero, new Vector2(-movement.x));
-                let fraction: number = minkowskiDiff.rayIntersects(ray);
-                if (fraction <= 1){
-                    hit.fraction = fraction;
-                    hit.distance = movement.length() * fraction;
-                    hit.normal = new Vector2(-movement.x);
-                    hit.normal = hit.normal.normalize();
-                    hit.centroid = Vector2.add(first.bounds.center, Vector2.multiply(movement, new Vector2(fraction)));
+                let fraction = new Ref(0);
+                if (minkowskiDiff.rayIntersects(ray, fraction) && fraction.value <= 1){
+                    hit.fraction = fraction.value;
+                    hit.distance = movement.length() * fraction.value;
+                    hit.normal = new Vector2(-movement.x, -movement.y);
+                    hit.normal.normalize();
+                    hit.centroid = Vector2.add(first.bounds.center, Vector2.multiply(movement, new Vector2(fraction.value)));
 
                     return true;
                 }

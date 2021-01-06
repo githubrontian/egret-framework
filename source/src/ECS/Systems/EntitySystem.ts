@@ -1,5 +1,8 @@
 module es {
-    export class EntitySystem {
+    /**
+     * 追踪实体的子集，但不实现任何排序或迭代。
+     */
+    export abstract class EntitySystem {
         private _entities: Entity[] = [];
 
         constructor(matcher?: Matcher) {
@@ -28,8 +31,8 @@ module es {
         }
 
         public onChanged(entity: Entity) {
-            let contains = this._entities.contains(entity);
-            let interest = this._matcher.IsIntersted(entity);
+            let contains = new linq.List(this._entities).contains(entity);
+            let interest = this._matcher.isInterestedEntity(entity);
 
             if (interest && !contains)
                 this.add(entity);
@@ -46,7 +49,7 @@ module es {
         }
 
         public remove(entity: Entity) {
-            this._entities.remove(entity);
+            new linq.List(this._entities).remove(entity);
             this.onRemoved(entity);
         }
 

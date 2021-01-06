@@ -51,7 +51,7 @@ module es {
             let messageData = this._messageTable.get(eventType);
             let index = messageData.findIndex(data => data.func == handler);
             if (index != -1)
-                messageData.removeAt(index);
+                new linq.List(messageData).removeAt(index);
         }
 
         /**
@@ -59,11 +59,11 @@ module es {
          * @param eventType 事件类型
          * @param data 事件数据
          */
-        public emit(eventType: T, data?: any) {
+        public emit(eventType: T, ...data: any[]) {
             let list: FuncPack[] = this._messageTable.get(eventType);
             if (list) {
                 for (let i = list.length - 1; i >= 0; i--)
-                    list[i].func.call(list[i].context, data);
+                    list[i].func.call(list[i].context, ...data);
             }
         }
     }

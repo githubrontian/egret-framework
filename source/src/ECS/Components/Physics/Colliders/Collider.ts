@@ -7,16 +7,16 @@ module es {
         /**
          * 如果这个碰撞器是一个触发器，它将不会引起碰撞，但它仍然会触发事件
          */
-        public isTrigger: boolean;
+        public isTrigger: boolean = false;
         /**
          * 在处理冲突时，physicsLayer可以用作过滤器。Flags类有帮助位掩码的方法
          */
-        public physicsLayer = 1 << 0;
+        public physicsLayer = new Ref(1 << 0);
         /**
          * 碰撞器在使用移动器移动时应该碰撞的层
          * 默认为所有层
          */
-        public collidesWithLayers = Physics.allLayers;
+        public collidesWithLayers: Ref<number> = new Ref(Physics.allLayers);
         /**
          * 如果为true，碰撞器将根据附加的变换缩放和旋转
          */
@@ -26,10 +26,12 @@ module es {
          * 存储这个允许我们始终能够安全地从物理系统中移除对撞机，即使它在试图移除它之前已经被移动了。
          */
         public registeredPhysicsBounds: Rectangle = new Rectangle();
+
+        protected _colliderRequiresAutoSizing: boolean;
+
         public _localOffsetLength: number;
         public _isPositionDirty: boolean = true;
         public _isRotationDirty: boolean = true;
-        protected _colliderRequiresAutoSizing;
         /**
          * 标记来跟踪我们的实体是否被添加到场景中
          */
@@ -50,7 +52,7 @@ module es {
          * 封装变换。如果碰撞器没和实体一起旋转 则返回transform.rotation
          */
         public get rotation(): number {
-            if (this.shouldColliderScaleAndRotateWithTransform && this.entity)
+            if (this.shouldColliderScaleAndRotateWithTransform && this.entity != null)
                 return this.entity.transform.rotation;
 
             return 0;
@@ -90,7 +92,7 @@ module es {
          * @param offset
          */
         public setLocalOffset(offset: Vector2): Collider {
-            if (this._localOffset != offset) {
+            if (!this._localOffset.equals(offset)) {
                 this.unregisterColliderWithPhysicsSystem();
                 this._localOffset = offset;
                 this._localOffsetLength = this._localOffset.length();
@@ -113,30 +115,28 @@ module es {
 
         public onAddedToEntity() {
             if (this._colliderRequiresAutoSizing) {
-                if (!(this instanceof BoxCollider || this instanceof CircleCollider)) {
-                    console.error("Only box and circle colliders can be created automatically");
-                    return;
-                }
+                Insist.isTrue(this instanceof BoxCollider || this instanceof CircleCollider, "只有框和圆的碰撞器可以自动创建");
 
                 let renderable = this.entity.getComponent<RenderableComponent>(RenderableComponent);
-                if (renderable) {
-                    let renderableBounds = renderable.bounds;
+                if (renderable == null)
+                    console.warn("Collider没有形状，也没有RenderableComponent。不知道如何确定它的大小。");
+                if (renderable != null) {
+                    let renderableBounds = renderable.bounds.clone();
 
-                    // 这里我们需要大小*反尺度，因为当我们自动调整碰撞器的大小时，它需要没有缩放的渲染
-                    let width = renderableBounds.width / this.entity.scale.x;
-                    let height = renderableBounds.height / this.entity.scale.y;
-                    // 圆碰撞器需要特别注意原点
+                    // 我们在这里需要大小*反比例，因为当我们自动调整Collider的大小时，它需要没有一个缩放的Renderable
+                    let width = renderableBounds.width / this.entity.transform.scale.x;
+                    let height = renderableBounds.height / this.entity.transform.scale.y;
+
                     if (this instanceof CircleCollider) {
                         this.radius = Math.max(width, height) * 0.5;
-                    } else {
+                        // 获取Renderable的中心，将其转移到本地坐标，并将其作为我们碰撞器的localOffset
+                        this.localOffset = Vector2.subtract(renderableBounds.center, this.entity.transform.position);
+                    } else if (this instanceof BoxCollider) {
                         this.width = width;
                         this.height = height;
-                    }
 
-                    // 获取渲染的中心，将其转移到本地坐标，并使用它作为碰撞器的localOffset
-                    this.localOffset = Vector2.subtract(renderableBounds.center, this.entity.transform.position);
-                } else {
-                    console.warn("Collider has no shape and no RenderableComponent. Can't figure out how to size it.");
+                        this.localOffset = Vector2.subtract(renderableBounds.center, this.entity.transform.position);
+                    }
                 }
             }
 
@@ -210,10 +210,10 @@ module es {
          * @param motion
          * @param result
          */
-        public collidesWith(collider: Collider, motion: Vector2, result: CollisionResult): boolean {
+        public collidesWith(collider: Collider, motion: Vector2, result: CollisionResult = new CollisionResult()): boolean {
             // 改变形状的位置，使它在移动后的位置，这样我们可以检查重叠
-            let oldPosition = this.entity.position;
-            this.entity.position = this.entity.position.add(motion);
+            let oldPosition = this.entity.position.clone();
+            this.entity.position = Vector2.add(this.entity.position, motion);
 
             let didCollide = this.shape.collidesWithShape(collider.shape, result);
             if (didCollide)
@@ -225,14 +225,18 @@ module es {
             return didCollide;
         }
 
-        public clone(): Component {
-            let collider = ObjectUtils.clone<Collider>(this);
-            collider.entity = null;
+        /**
+         * 检查这个对撞机是否与对撞机发生碰撞。如果碰撞，则返回true，结果将被填充
+         * @param collider 
+         * @param result 
+         */
+        public collidesWithNonMotion(collider: Collider, result: CollisionResult = new CollisionResult()): boolean {
+            if (this.shape.collidesWithShape(collider.shape, result)) {
+                result.collider = collider;
+                return true;
+            }
 
-            if (this.shape)
-                collider.shape = this.shape.clone();
-
-            return collider;
+            return false;
         }
     }
 }

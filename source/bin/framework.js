@@ -1,3 +1,24 @@
+"use strict";
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -8,1045 +29,240 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Array.prototype.findIndex = function (predicate) {
-    function findIndex(array, predicate) {
-        for (var i = 0, len = array.length; i < len; i++) {
-            if (predicate.call(arguments[2], array[i], i, array)) {
-                return i;
-            }
+var __values = (this && this.__values) || function (o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
         }
-        return -1;
-    }
-    return findIndex(this, predicate);
-};
-Array.prototype.any = function (predicate) {
-    function any(array, predicate) {
-        return array.findIndex(predicate) > -1;
-    }
-    return any(this, predicate);
-};
-Array.prototype.firstOrDefault = function (predicate) {
-    function firstOrDefault(array, predicate) {
-        var index = array.findIndex(predicate);
-        return index == -1 ? null : array[index];
-    }
-    return firstOrDefault(this, predicate);
-};
-Array.prototype.find = function (predicate) {
-    function find(array, predicate) {
-        return array.firstOrDefault(predicate);
-    }
-    return find(this, predicate);
-};
-Array.prototype.where = function (predicate) {
-    function where(array, predicate) {
-        if (typeof (array.reduce) === "function") {
-            return array.reduce(function (ret, element, index) {
-                if (predicate.call(arguments[2], element, index, array)) {
-                    ret.push(element);
-                }
-                return ret;
-            }, []);
-        }
-        else {
-            var ret = [];
-            for (var i = 0, len = array.length; i < len; i++) {
-                var element = array[i];
-                if (predicate.call(arguments[2], element, i, array)) {
-                    ret.push(element);
-                }
-            }
-            return ret;
-        }
-    }
-    return where(this, predicate);
-};
-Array.prototype.count = function (predicate) {
-    function count(array, predicate) {
-        return array.where(predicate).length;
-    }
-    return count(this, predicate);
-};
-Array.prototype.findAll = function (predicate) {
-    function findAll(array, predicate) {
-        return array.where(predicate);
-    }
-    return findAll(this, predicate);
-};
-Array.prototype.contains = function (value) {
-    function contains(array, value) {
-        for (var i = 0, len = array.length; i < len; i++) {
-            if (array[i] instanceof egret.HashObject && value instanceof egret.HashObject) {
-                if (array[i].hashCode == value.hashCode)
-                    return true;
-            }
-            if (array[i] == value) {
-                return true;
-            }
-        }
-        return false;
-    }
-    return contains(this, value);
-};
-Array.prototype.removeAll = function (predicate) {
-    function removeAll(array, predicate) {
-        var index;
-        do {
-            index = array.findIndex(predicate);
-            if (index >= 0) {
-                array.splice(index, 1);
-            }
-        } while (index >= 0);
-    }
-    removeAll(this, predicate);
-};
-Array.prototype.remove = function (element) {
-    function remove(array, element) {
-        var index = array.findIndex(function (x) {
-            return x === element;
-        });
-        if (index >= 0) {
-            array.splice(index, 1);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    return remove(this, element);
-};
-Array.prototype.removeAt = function (index) {
-    function removeAt(array, index) {
-        array.splice(index, 1);
-    }
-    return removeAt(this, index);
-};
-Array.prototype.removeRange = function (index, count) {
-    function removeRange(array, index, count) {
-        array.splice(index, count);
-    }
-    return removeRange(this, index, count);
-};
-Array.prototype.select = function (selector) {
-    function select(array, selector) {
-        if (typeof (array.reduce) === "function") {
-            return array.reduce(function (ret, element, index) {
-                ret.push(selector.call(arguments[2], element, index, array));
-                return ret;
-            }, []);
-        }
-        else {
-            var ret = [];
-            for (var i = 0, len = array.length; i < len; i++) {
-                ret.push(selector.call(arguments[2], array[i], i, array));
-            }
-            return ret;
-        }
-    }
-    return select(this, selector);
-};
-Array.prototype.orderBy = function (keySelector, comparer) {
-    function orderBy(array, keySelector, comparer) {
-        array.sort(function (x, y) {
-            var v1 = keySelector(x);
-            var v2 = keySelector(y);
-            if (comparer) {
-                return comparer(v1, v2);
-            }
-            else {
-                return (v1 > v2) ? 1 : -1;
-            }
-        });
-        return array;
-    }
-    return orderBy(this, keySelector, comparer);
-};
-Array.prototype.orderByDescending = function (keySelector, comparer) {
-    function orderByDescending(array, keySelector, comparer) {
-        array.sort(function (x, y) {
-            var v1 = keySelector(x);
-            var v2 = keySelector(y);
-            if (comparer) {
-                return -comparer(v1, v2);
-            }
-            else {
-                return (v1 < v2) ? 1 : -1;
-            }
-        });
-        return array;
-    }
-    return orderByDescending(this, keySelector, comparer);
-};
-Array.prototype.groupBy = function (keySelector) {
-    function groupBy(array, keySelector) {
-        if (typeof (array.reduce) === "function") {
-            var keys_1 = [];
-            return array.reduce(function (groups, element, index) {
-                var key = JSON.stringify(keySelector.call(arguments[1], element, index, array));
-                var index2 = keys_1.findIndex(function (x) {
-                    return x === key;
-                });
-                if (index2 < 0) {
-                    index2 = keys_1.push(key) - 1;
-                }
-                if (!groups[index2]) {
-                    groups[index2] = [];
-                }
-                groups[index2].push(element);
-                return groups;
-            }, []);
-        }
-        else {
-            var groups = [];
-            var keys = [];
-            var _loop_1 = function (i, len) {
-                var key = JSON.stringify(keySelector.call(arguments_1[1], array[i], i, array));
-                var index = keys.findIndex(function (x) {
-                    return x === key;
-                });
-                if (index < 0) {
-                    index = keys.push(key) - 1;
-                }
-                if (!groups[index]) {
-                    groups[index] = [];
-                }
-                groups[index].push(array[i]);
-            };
-            var arguments_1 = arguments;
-            for (var i = 0, len = array.length; i < len; i++) {
-                _loop_1(i, len);
-            }
-            return groups;
-        }
-    }
-    return groupBy(this, keySelector);
-};
-Array.prototype.sum = function (selector) {
-    function sum(array, selector) {
-        var ret;
-        for (var i = 0, len = array.length; i < len; i++) {
-            if (i == 0) {
-                if (selector) {
-                    ret = selector.call(arguments[2], array[i], i, array);
-                }
-                else {
-                    ret = array[i];
-                }
-            }
-            else {
-                if (selector) {
-                    ret += selector.call(arguments[2], array[i], i, array);
-                }
-                else {
-                    ret += array[i];
-                }
-            }
-        }
-        return ret;
-    }
-    return sum(this, selector);
+    };
 };
 var es;
 (function (es) {
-    var PriorityQueueNode = (function () {
-        function PriorityQueueNode() {
-            this.priority = 0;
-            this.insertionIndex = 0;
-            this.queueIndex = 0;
+    /**
+     * 用于包装事件的一个小类
+     */
+    var FuncPack = /** @class */ (function () {
+        function FuncPack(func, context) {
+            this.func = func;
+            this.context = context;
         }
-        return PriorityQueueNode;
+        return FuncPack;
     }());
-    es.PriorityQueueNode = PriorityQueueNode;
+    es.FuncPack = FuncPack;
+    /**
+     * 用于事件管理
+     */
+    var Emitter = /** @class */ (function () {
+        function Emitter() {
+            this._messageTable = new Map();
+        }
+        /**
+         * 开始监听项
+         * @param eventType 监听类型
+         * @param handler 监听函数
+         * @param context 监听上下文
+         */
+        Emitter.prototype.addObserver = function (eventType, handler, context) {
+            var list = this._messageTable.get(eventType);
+            if (!list) {
+                list = [];
+                this._messageTable.set(eventType, list);
+            }
+            if (list.findIndex(function (funcPack) { return funcPack.func == handler; }) != -1)
+                console.warn("您试图添加相同的观察者两次");
+            list.push(new FuncPack(handler, context));
+        };
+        /**
+         * 移除监听项
+         * @param eventType 事件类型
+         * @param handler 事件函数
+         */
+        Emitter.prototype.removeObserver = function (eventType, handler) {
+            var messageData = this._messageTable.get(eventType);
+            var index = messageData.findIndex(function (data) { return data.func == handler; });
+            if (index != -1)
+                new linq.List(messageData).removeAt(index);
+        };
+        /**
+         * 触发该事件
+         * @param eventType 事件类型
+         * @param data 事件数据
+         */
+        Emitter.prototype.emit = function (eventType) {
+            var data = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                data[_i - 1] = arguments[_i];
+            }
+            var _a;
+            var list = this._messageTable.get(eventType);
+            if (list) {
+                for (var i = list.length - 1; i >= 0; i--)
+                    (_a = list[i].func).call.apply(_a, __spread([list[i].context], data));
+            }
+        };
+        return Emitter;
+    }());
+    es.Emitter = Emitter;
+})(es || (es = {}));
+///<reference path="./Utils/Emitter.ts" />
+var es;
+///<reference path="./Utils/Emitter.ts" />
+(function (es) {
+    /**
+     * 这里作为框架的核心件
+     * 全局函数移动到这
+     */
+    var Framework = /** @class */ (function () {
+        function Framework() {
+        }
+        /**
+         * 核心发射器。只发出核心级别的事件
+         */
+        Framework.emitter = new es.Emitter();
+        return Framework;
+    }());
+    es.Framework = Framework;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var AStarPathfinder = (function () {
-        function AStarPathfinder() {
-        }
-        AStarPathfinder.search = function (graph, start, goal) {
-            var _this = this;
-            var foundPath = false;
-            var cameFrom = new Map();
-            cameFrom.set(start, start);
-            var costSoFar = new Map();
-            var frontier = new es.PriorityQueue(1000);
-            frontier.enqueue(new AStarNode(start), 0);
-            costSoFar.set(start, 0);
-            var _loop_2 = function () {
-                var current = frontier.dequeue();
-                if (JSON.stringify(current.data) == JSON.stringify(goal)) {
-                    foundPath = true;
-                    return "break";
-                }
-                graph.getNeighbors(current.data).forEach(function (next) {
-                    var newCost = costSoFar.get(current.data) + graph.cost(current.data, next);
-                    if (!_this.hasKey(costSoFar, next) || newCost < costSoFar.get(next)) {
-                        costSoFar.set(next, newCost);
-                        var priority = newCost + graph.heuristic(next, goal);
-                        frontier.enqueue(new AStarNode(next), priority);
-                        cameFrom.set(next, current.data);
-                    }
-                });
-            };
-            while (frontier.count > 0) {
-                var state_1 = _loop_2();
-                if (state_1 === "break")
-                    break;
-            }
-            return foundPath ? this.recontructPath(cameFrom, start, goal) : null;
-        };
-        AStarPathfinder.recontructPath = function (cameFrom, start, goal) {
-            var path = [];
-            var current = goal;
-            path.push(goal);
-            while (current != start) {
-                current = this.getKey(cameFrom, current);
-                path.push(current);
-            }
-            path.reverse();
-            return path;
-        };
-        AStarPathfinder.hasKey = function (map, compareKey) {
-            var iterator = map.keys();
-            var r;
-            while (r = iterator.next(), !r.done) {
-                if (JSON.stringify(r.value) == JSON.stringify(compareKey))
-                    return true;
-            }
-            return false;
-        };
-        AStarPathfinder.getKey = function (map, compareKey) {
-            var iterator = map.keys();
-            var valueIterator = map.values();
-            var r;
-            var v;
-            while (r = iterator.next(), v = valueIterator.next(), !r.done) {
-                if (JSON.stringify(r.value) == JSON.stringify(compareKey))
-                    return v.value;
-            }
-            return null;
-        };
-        return AStarPathfinder;
-    }());
-    es.AStarPathfinder = AStarPathfinder;
-    var AStarNode = (function (_super) {
-        __extends(AStarNode, _super);
-        function AStarNode(data) {
-            var _this = _super.call(this) || this;
-            _this.data = data;
-            return _this;
-        }
-        return AStarNode;
-    }(es.PriorityQueueNode));
-    es.AStarNode = AStarNode;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var AstarGridGraph = (function () {
-        function AstarGridGraph(width, height) {
-            this.dirs = [
-                new es.Vector2(1, 0),
-                new es.Vector2(0, -1),
-                new es.Vector2(-1, 0),
-                new es.Vector2(0, 1)
-            ];
-            this.walls = [];
-            this.weightedNodes = [];
-            this.defaultWeight = 1;
-            this.weightedNodeWeight = 5;
-            this._neighbors = new Array(4);
-            this._width = width;
-            this._height = height;
-        }
-        AstarGridGraph.prototype.isNodeInBounds = function (node) {
-            return 0 <= node.x && node.x < this._width && 0 <= node.y && node.y < this._height;
-        };
-        AstarGridGraph.prototype.isNodePassable = function (node) {
-            return !this.walls.firstOrDefault(function (wall) { return JSON.stringify(wall) == JSON.stringify(node); });
-        };
-        AstarGridGraph.prototype.search = function (start, goal) {
-            return es.AStarPathfinder.search(this, start, goal);
-        };
-        AstarGridGraph.prototype.getNeighbors = function (node) {
-            var _this = this;
-            this._neighbors.length = 0;
-            this.dirs.forEach(function (dir) {
-                var next = new es.Vector2(node.x + dir.x, node.y + dir.y);
-                if (_this.isNodeInBounds(next) && _this.isNodePassable(next))
-                    _this._neighbors.push(next);
-            });
-            return this._neighbors;
-        };
-        AstarGridGraph.prototype.cost = function (from, to) {
-            return this.weightedNodes.find(function (p) { return JSON.stringify(p) == JSON.stringify(to); }) ? this.weightedNodeWeight : this.defaultWeight;
-        };
-        AstarGridGraph.prototype.heuristic = function (node, goal) {
-            return Math.abs(node.x - goal.x) + Math.abs(node.y - goal.y);
-        };
-        return AstarGridGraph;
-    }());
-    es.AstarGridGraph = AstarGridGraph;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var PriorityQueue = (function () {
-        function PriorityQueue(maxNodes) {
-            this._numNodes = 0;
-            this._nodes = new Array(maxNodes + 1);
-            this._numNodesEverEnqueued = 0;
-        }
-        Object.defineProperty(PriorityQueue.prototype, "count", {
-            get: function () {
-                return this._numNodes;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(PriorityQueue.prototype, "maxSize", {
-            get: function () {
-                return this._nodes.length - 1;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        PriorityQueue.prototype.clear = function () {
-            this._nodes.splice(1, this._numNodes);
-            this._numNodes = 0;
-        };
-        PriorityQueue.prototype.contains = function (node) {
-            if (!node) {
-                console.error("node cannot be null");
-                return false;
-            }
-            if (node.queueIndex < 0 || node.queueIndex >= this._nodes.length) {
-                console.error("node.QueueIndex has been corrupted. Did you change it manually? Or add this node to another queue?");
-                return false;
-            }
-            return (this._nodes[node.queueIndex] == node);
-        };
-        PriorityQueue.prototype.enqueue = function (node, priority) {
-            node.priority = priority;
-            this._numNodes++;
-            this._nodes[this._numNodes] = node;
-            node.queueIndex = this._numNodes;
-            node.insertionIndex = this._numNodesEverEnqueued++;
-            this.cascadeUp(this._nodes[this._numNodes]);
-        };
-        PriorityQueue.prototype.dequeue = function () {
-            var returnMe = this._nodes[1];
-            this.remove(returnMe);
-            return returnMe;
-        };
-        PriorityQueue.prototype.remove = function (node) {
-            if (node.queueIndex == this._numNodes) {
-                this._nodes[this._numNodes] = null;
-                this._numNodes--;
-                return;
-            }
-            var formerLastNode = this._nodes[this._numNodes];
-            this.swap(node, formerLastNode);
-            delete this._nodes[this._numNodes];
-            this._numNodes--;
-            this.onNodeUpdated(formerLastNode);
-        };
-        PriorityQueue.prototype.isValidQueue = function () {
-            for (var i = 1; i < this._nodes.length; i++) {
-                if (this._nodes[i]) {
-                    var childLeftIndex = 2 * i;
-                    if (childLeftIndex < this._nodes.length && this._nodes[childLeftIndex] &&
-                        this.hasHigherPriority(this._nodes[childLeftIndex], this._nodes[i]))
-                        return false;
-                    var childRightIndex = childLeftIndex + 1;
-                    if (childRightIndex < this._nodes.length && this._nodes[childRightIndex] &&
-                        this.hasHigherPriority(this._nodes[childRightIndex], this._nodes[i]))
-                        return false;
-                }
-            }
-            return true;
-        };
-        PriorityQueue.prototype.onNodeUpdated = function (node) {
-            var parentIndex = Math.floor(node.queueIndex / 2);
-            var parentNode = this._nodes[parentIndex];
-            if (parentIndex > 0 && this.hasHigherPriority(node, parentNode)) {
-                this.cascadeUp(node);
-            }
-            else {
-                this.cascadeDown(node);
-            }
-        };
-        PriorityQueue.prototype.cascadeDown = function (node) {
-            var newParent;
-            var finalQueueIndex = node.queueIndex;
-            while (true) {
-                newParent = node;
-                var childLeftIndex = 2 * finalQueueIndex;
-                if (childLeftIndex > this._numNodes) {
-                    node.queueIndex = finalQueueIndex;
-                    this._nodes[finalQueueIndex] = node;
-                    break;
-                }
-                var childLeft = this._nodes[childLeftIndex];
-                if (this.hasHigherPriority(childLeft, newParent)) {
-                    newParent = childLeft;
-                }
-                var childRightIndex = childLeftIndex + 1;
-                if (childRightIndex <= this._numNodes) {
-                    var childRight = this._nodes[childRightIndex];
-                    if (this.hasHigherPriority(childRight, newParent)) {
-                        newParent = childRight;
-                    }
-                }
-                if (newParent != node) {
-                    this._nodes[finalQueueIndex] = newParent;
-                    var temp = newParent.queueIndex;
-                    newParent.queueIndex = finalQueueIndex;
-                    finalQueueIndex = temp;
-                }
-                else {
-                    node.queueIndex = finalQueueIndex;
-                    this._nodes[finalQueueIndex] = node;
-                    break;
-                }
-            }
-        };
-        PriorityQueue.prototype.cascadeUp = function (node) {
-            var parent = Math.floor(node.queueIndex / 2);
-            while (parent >= 1) {
-                var parentNode = this._nodes[parent];
-                if (this.hasHigherPriority(parentNode, node))
-                    break;
-                this.swap(node, parentNode);
-                parent = Math.floor(node.queueIndex / 2);
-            }
-        };
-        PriorityQueue.prototype.swap = function (node1, node2) {
-            this._nodes[node1.queueIndex] = node2;
-            this._nodes[node2.queueIndex] = node1;
-            var temp = node1.queueIndex;
-            node1.queueIndex = node2.queueIndex;
-            node2.queueIndex = temp;
-        };
-        PriorityQueue.prototype.hasHigherPriority = function (higher, lower) {
-            return (higher.priority < lower.priority ||
-                (higher.priority == lower.priority && higher.insertionIndex < lower.insertionIndex));
-        };
-        return PriorityQueue;
-    }());
-    es.PriorityQueue = PriorityQueue;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var BreadthFirstPathfinder = (function () {
-        function BreadthFirstPathfinder() {
-        }
-        BreadthFirstPathfinder.search = function (graph, start, goal) {
-            var _this = this;
-            var foundPath = false;
-            var frontier = [];
-            frontier.unshift(start);
-            var cameFrom = new Map();
-            cameFrom.set(start, start);
-            var _loop_3 = function () {
-                var current = frontier.shift();
-                if (JSON.stringify(current) == JSON.stringify(goal)) {
-                    foundPath = true;
-                    return "break";
-                }
-                graph.getNeighbors(current).forEach(function (next) {
-                    if (!_this.hasKey(cameFrom, next)) {
-                        frontier.unshift(next);
-                        cameFrom.set(next, current);
-                    }
-                });
-            };
-            while (frontier.length > 0) {
-                var state_2 = _loop_3();
-                if (state_2 === "break")
-                    break;
-            }
-            return foundPath ? es.AStarPathfinder.recontructPath(cameFrom, start, goal) : null;
-        };
-        BreadthFirstPathfinder.hasKey = function (map, compareKey) {
-            var iterator = map.keys();
-            var r;
-            while (r = iterator.next(), !r.done) {
-                if (JSON.stringify(r.value) == JSON.stringify(compareKey))
-                    return true;
-            }
-            return false;
-        };
-        return BreadthFirstPathfinder;
-    }());
-    es.BreadthFirstPathfinder = BreadthFirstPathfinder;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var UnweightedGraph = (function () {
-        function UnweightedGraph() {
-            this.edges = new Map();
-        }
-        UnweightedGraph.prototype.addEdgesForNode = function (node, edges) {
-            this.edges.set(node, edges);
-            return this;
-        };
-        UnweightedGraph.prototype.getNeighbors = function (node) {
-            return this.edges.get(node);
-        };
-        return UnweightedGraph;
-    }());
-    es.UnweightedGraph = UnweightedGraph;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Vector2 = (function () {
-        function Vector2(x, y) {
-            this.x = 0;
-            this.y = 0;
-            this.x = x ? x : 0;
-            this.y = y != undefined ? y : this.x;
-        }
-        Object.defineProperty(Vector2, "zero", {
-            get: function () {
-                return Vector2.zeroVector2;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Vector2, "one", {
-            get: function () {
-                return Vector2.unitVector2;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Vector2, "unitX", {
-            get: function () {
-                return Vector2.unitXVector;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Vector2, "unitY", {
-            get: function () {
-                return Vector2.unitYVector;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Vector2.add = function (value1, value2) {
-            var result = new Vector2(0, 0);
-            result.x = value1.x + value2.x;
-            result.y = value1.y + value2.y;
-            return result;
-        };
-        Vector2.divide = function (value1, value2) {
-            var result = new Vector2(0, 0);
-            result.x = value1.x / value2.x;
-            result.y = value1.y / value2.y;
-            return result;
-        };
-        Vector2.multiply = function (value1, value2) {
-            var result = new Vector2(0, 0);
-            result.x = value1.x * value2.x;
-            result.y = value1.y * value2.y;
-            return result;
-        };
-        Vector2.subtract = function (value1, value2) {
-            var result = new Vector2(0, 0);
-            result.x = value1.x - value2.x;
-            result.y = value1.y - value2.y;
-            return result;
-        };
-        Vector2.normalize = function (value) {
-            var val = 1 / Math.sqrt((value.x * value.x) + (value.y * value.y));
-            value.x *= val;
-            value.y *= val;
-            return value;
-        };
-        Vector2.dot = function (value1, value2) {
-            return (value1.x * value2.x) + (value1.y * value2.y);
-        };
-        Vector2.distanceSquared = function (value1, value2) {
-            var v1 = value1.x - value2.x, v2 = value1.y - value2.y;
-            return (v1 * v1) + (v2 * v2);
-        };
-        Vector2.clamp = function (value1, min, max) {
-            return new Vector2(es.MathHelper.clamp(value1.x, min.x, max.x), es.MathHelper.clamp(value1.y, min.y, max.y));
-        };
-        Vector2.lerp = function (value1, value2, amount) {
-            return new Vector2(es.MathHelper.lerp(value1.x, value2.x, amount), es.MathHelper.lerp(value1.y, value2.y, amount));
-        };
-        Vector2.transform = function (position, matrix) {
-            return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m31, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m32);
-        };
-        Vector2.distance = function (value1, value2) {
-            var v1 = value1.x - value2.x, v2 = value1.y - value2.y;
-            return Math.sqrt((v1 * v1) + (v2 * v2));
-        };
-        Vector2.angle = function (from, to) {
-            from = Vector2.normalize(from);
-            to = Vector2.normalize(to);
-            return Math.acos(es.MathHelper.clamp(Vector2.dot(from, to), -1, 1)) * es.MathHelper.Rad2Deg;
-        };
-        Vector2.negate = function (value) {
-            var result = new Vector2();
-            result.x = -value.x;
-            result.y = -value.y;
-            return result;
-        };
-        Vector2.prototype.add = function (value) {
-            this.x += value.x;
-            this.y += value.y;
-            return this;
-        };
-        Vector2.prototype.divide = function (value) {
-            this.x /= value.x;
-            this.y /= value.y;
-            return this;
-        };
-        Vector2.prototype.multiply = function (value) {
-            this.x *= value.x;
-            this.y *= value.y;
-            return this;
-        };
-        Vector2.prototype.subtract = function (value) {
-            this.x -= value.x;
-            this.y -= value.y;
-            return this;
-        };
-        Vector2.prototype.normalize = function () {
-            var val = 1 / Math.sqrt((this.x * this.x) + (this.y * this.y));
-            this.x *= val;
-            this.y *= val;
-            return this;
-        };
-        Vector2.prototype.length = function () {
-            return Math.sqrt((this.x * this.x) + (this.y * this.y));
-        };
-        Vector2.prototype.lengthSquared = function () {
-            return (this.x * this.x) + (this.y * this.y);
-        };
-        Vector2.prototype.round = function () {
-            return new Vector2(Math.round(this.x), Math.round(this.y));
-        };
-        Vector2.prototype.equals = function (other) {
-            return other.x == this.x && other.y == this.y;
-        };
-        Vector2.unitYVector = new Vector2(0, 1);
-        Vector2.unitXVector = new Vector2(1, 0);
-        Vector2.unitVector2 = new Vector2(1, 1);
-        Vector2.zeroVector2 = new Vector2(0, 0);
-        return Vector2;
-    }());
-    es.Vector2 = Vector2;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var UnweightedGridGraph = (function () {
-        function UnweightedGridGraph(width, height, allowDiagonalSearch) {
-            if (allowDiagonalSearch === void 0) { allowDiagonalSearch = false; }
-            this.walls = [];
-            this._neighbors = new Array(4);
-            this._width = width;
-            this._hegiht = height;
-            this._dirs = allowDiagonalSearch ? UnweightedGridGraph.COMPASS_DIRS : UnweightedGridGraph.CARDINAL_DIRS;
-        }
-        UnweightedGridGraph.prototype.isNodeInBounds = function (node) {
-            return 0 <= node.x && node.x < this._width && 0 <= node.y && node.y < this._hegiht;
-        };
-        UnweightedGridGraph.prototype.isNodePassable = function (node) {
-            return !this.walls.firstOrDefault(function (wall) { return JSON.stringify(wall) == JSON.stringify(node); });
-        };
-        UnweightedGridGraph.prototype.getNeighbors = function (node) {
-            var _this = this;
-            this._neighbors.length = 0;
-            this._dirs.forEach(function (dir) {
-                var next = new es.Vector2(node.x + dir.x, node.y + dir.y);
-                if (_this.isNodeInBounds(next) && _this.isNodePassable(next))
-                    _this._neighbors.push(next);
-            });
-            return this._neighbors;
-        };
-        UnweightedGridGraph.prototype.search = function (start, goal) {
-            return es.BreadthFirstPathfinder.search(this, start, goal);
-        };
-        UnweightedGridGraph.CARDINAL_DIRS = [
-            new es.Vector2(1, 0),
-            new es.Vector2(0, -1),
-            new es.Vector2(-1, 0),
-            new es.Vector2(0, -1)
-        ];
-        UnweightedGridGraph.COMPASS_DIRS = [
-            new es.Vector2(1, 0),
-            new es.Vector2(1, -1),
-            new es.Vector2(0, -1),
-            new es.Vector2(-1, -1),
-            new es.Vector2(-1, 0),
-            new es.Vector2(-1, 1),
-            new es.Vector2(0, 1),
-            new es.Vector2(1, 1),
-        ];
-        return UnweightedGridGraph;
-    }());
-    es.UnweightedGridGraph = UnweightedGridGraph;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var WeightedGridGraph = (function () {
-        function WeightedGridGraph(width, height, allowDiagonalSearch) {
-            if (allowDiagonalSearch === void 0) { allowDiagonalSearch = false; }
-            this.walls = [];
-            this.weightedNodes = [];
-            this.defaultWeight = 1;
-            this.weightedNodeWeight = 5;
-            this._neighbors = new Array(4);
-            this._width = width;
-            this._height = height;
-            this._dirs = allowDiagonalSearch ? WeightedGridGraph.COMPASS_DIRS : WeightedGridGraph.CARDINAL_DIRS;
-        }
-        WeightedGridGraph.prototype.isNodeInBounds = function (node) {
-            return 0 <= node.x && node.x < this._width && 0 <= node.y && node.y < this._height;
-        };
-        WeightedGridGraph.prototype.isNodePassable = function (node) {
-            return !this.walls.firstOrDefault(function (wall) { return JSON.stringify(wall) == JSON.stringify(node); });
-        };
-        WeightedGridGraph.prototype.search = function (start, goal) {
-            return es.WeightedPathfinder.search(this, start, goal);
-        };
-        WeightedGridGraph.prototype.getNeighbors = function (node) {
-            var _this = this;
-            this._neighbors.length = 0;
-            this._dirs.forEach(function (dir) {
-                var next = new es.Vector2(node.x + dir.x, node.y + dir.y);
-                if (_this.isNodeInBounds(next) && _this.isNodePassable(next))
-                    _this._neighbors.push(next);
-            });
-            return this._neighbors;
-        };
-        WeightedGridGraph.prototype.cost = function (from, to) {
-            return this.weightedNodes.find(function (t) { return JSON.stringify(t) == JSON.stringify(to); }) ? this.weightedNodeWeight : this.defaultWeight;
-        };
-        WeightedGridGraph.CARDINAL_DIRS = [
-            new es.Vector2(1, 0),
-            new es.Vector2(0, -1),
-            new es.Vector2(-1, 0),
-            new es.Vector2(0, 1)
-        ];
-        WeightedGridGraph.COMPASS_DIRS = [
-            new es.Vector2(1, 0),
-            new es.Vector2(1, -1),
-            new es.Vector2(0, -1),
-            new es.Vector2(-1, -1),
-            new es.Vector2(-1, 0),
-            new es.Vector2(-1, 1),
-            new es.Vector2(0, 1),
-            new es.Vector2(1, 1),
-        ];
-        return WeightedGridGraph;
-    }());
-    es.WeightedGridGraph = WeightedGridGraph;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var WeightedNode = (function (_super) {
-        __extends(WeightedNode, _super);
-        function WeightedNode(data) {
-            var _this = _super.call(this) || this;
-            _this.data = data;
-            return _this;
-        }
-        return WeightedNode;
-    }(es.PriorityQueueNode));
-    es.WeightedNode = WeightedNode;
-    var WeightedPathfinder = (function () {
-        function WeightedPathfinder() {
-        }
-        WeightedPathfinder.search = function (graph, start, goal) {
-            var _this = this;
-            var foundPath = false;
-            var cameFrom = new Map();
-            cameFrom.set(start, start);
-            var costSoFar = new Map();
-            var frontier = new es.PriorityQueue(1000);
-            frontier.enqueue(new WeightedNode(start), 0);
-            costSoFar.set(start, 0);
-            var _loop_4 = function () {
-                var current = frontier.dequeue();
-                if (JSON.stringify(current.data) == JSON.stringify(goal)) {
-                    foundPath = true;
-                    return "break";
-                }
-                graph.getNeighbors(current.data).forEach(function (next) {
-                    var newCost = costSoFar.get(current.data) + graph.cost(current.data, next);
-                    if (!_this.hasKey(costSoFar, next) || newCost < costSoFar.get(next)) {
-                        costSoFar.set(next, newCost);
-                        var priprity = newCost;
-                        frontier.enqueue(new WeightedNode(next), priprity);
-                        cameFrom.set(next, current.data);
-                    }
-                });
-            };
-            while (frontier.count > 0) {
-                var state_3 = _loop_4();
-                if (state_3 === "break")
-                    break;
-            }
-            return foundPath ? this.recontructPath(cameFrom, start, goal) : null;
-        };
-        WeightedPathfinder.recontructPath = function (cameFrom, start, goal) {
-            var path = [];
-            var current = goal;
-            path.push(goal);
-            while (current != start) {
-                current = this.getKey(cameFrom, current);
-                path.push(current);
-            }
-            path.reverse();
-            return path;
-        };
-        WeightedPathfinder.hasKey = function (map, compareKey) {
-            var iterator = map.keys();
-            var r;
-            while (r = iterator.next(), !r.done) {
-                if (JSON.stringify(r.value) == JSON.stringify(compareKey))
-                    return true;
-            }
-            return false;
-        };
-        WeightedPathfinder.getKey = function (map, compareKey) {
-            var iterator = map.keys();
-            var valueIterator = map.values();
-            var r;
-            var v;
-            while (r = iterator.next(), v = valueIterator.next(), !r.done) {
-                if (JSON.stringify(r.value) == JSON.stringify(compareKey))
-                    return v.value;
-            }
-            return null;
-        };
-        return WeightedPathfinder;
-    }());
-    es.WeightedPathfinder = WeightedPathfinder;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Debug = (function () {
+    /**
+     * 我们在这里存储了各种系统的默认颜色，如对撞机调试渲染、Debug.drawText等。
+     * 命名方式尽可能采用CLASS-THING，以明确它的使用位置
+     */
+    var Debug = /** @class */ (function () {
         function Debug() {
         }
-        Debug.drawHollowRect = function (rectanle, color, duration) {
-            if (duration === void 0) { duration = 0; }
-            this._debugDrawItems.push(new es.DebugDrawItem(rectanle, color, duration));
-        };
-        Debug.render = function () {
-            if (this._debugDrawItems.length > 0) {
-                var debugShape = new egret.Shape();
-                if (es.Core.scene) {
-                    es.Core.scene.addChild(debugShape);
-                }
-                for (var i = this._debugDrawItems.length - 1; i >= 0; i--) {
-                    var item = this._debugDrawItems[i];
-                    if (item.draw(debugShape))
-                        this._debugDrawItems.removeAt(i);
-                }
-            }
-        };
-        Debug._debugDrawItems = [];
+        Debug.debugText = 0xffffff;
+        Debug.colliderBounds = 0xffffff * 0.3;
+        Debug.colliderEdge = 0x8B0000;
+        Debug.colliderPosition = 0xFFFF00;
+        Debug.colliderCenter = 0xFF0000;
+        Debug.renderableBounds = 0xFFFF00;
+        Debug.renderableCenter = 0x9932CC;
+        Debug.verletParticle = 0xDC345E;
+        Debug.verletConstraintEdge = 0x433E36;
         return Debug;
     }());
     es.Debug = Debug;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var DebugDefaults = (function () {
-        function DebugDefaults() {
+    var Insist = /** @class */ (function () {
+        function Insist() {
         }
-        DebugDefaults.verletParticle = 0xDC345E;
-        DebugDefaults.verletConstraintEdge = 0x433E36;
-        return DebugDefaults;
-    }());
-    es.DebugDefaults = DebugDefaults;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var DebugDrawType;
-    (function (DebugDrawType) {
-        DebugDrawType[DebugDrawType["line"] = 0] = "line";
-        DebugDrawType[DebugDrawType["hollowRectangle"] = 1] = "hollowRectangle";
-        DebugDrawType[DebugDrawType["pixel"] = 2] = "pixel";
-        DebugDrawType[DebugDrawType["text"] = 3] = "text";
-    })(DebugDrawType = es.DebugDrawType || (es.DebugDrawType = {}));
-    var DebugDrawItem = (function () {
-        function DebugDrawItem(rectangle, color, duration) {
-            this.rectangle = rectangle;
-            this.color = color;
-            this.duration = duration;
-            this.drawType = DebugDrawType.hollowRectangle;
-        }
-        DebugDrawItem.prototype.draw = function (shape) {
-            switch (this.drawType) {
-                case DebugDrawType.line:
-                    break;
-                case DebugDrawType.hollowRectangle:
-                    break;
-                case DebugDrawType.pixel:
-                    break;
-                case DebugDrawType.text:
-                    break;
+        Insist.fail = function (message) {
+            if (message === void 0) { message = null; }
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
             }
-            this.duration -= es.Time.deltaTime;
-            return this.duration < 0;
+            if (message == null) {
+                console.assert(false);
+            }
+            else {
+                console.assert(false, StringUtils.format(message, args));
+            }
         };
-        return DebugDrawItem;
+        Insist.isTrue = function (condition, message) {
+            if (message === void 0) { message = null; }
+            var args = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args[_i - 2] = arguments[_i];
+            }
+            if (!condition) {
+                if (message == null) {
+                    this.fail();
+                }
+                else {
+                    this.fail(message, args);
+                }
+            }
+        };
+        Insist.isFalse = function (condition, message) {
+            if (message === void 0) { message = null; }
+            var args = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args[_i - 2] = arguments[_i];
+            }
+            if (message == null) {
+                this.isTrue(!condition);
+            }
+            else {
+                this.isTrue(!condition, message, args);
+            }
+        };
+        Insist.isNull = function (obj, message) {
+            if (message === void 0) { message = null; }
+            var args = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args[_i - 2] = arguments[_i];
+            }
+            if (message == null) {
+                this.isTrue(obj == null);
+            }
+            else {
+                this.isTrue(obj == null, message, args);
+            }
+        };
+        Insist.isNotNull = function (obj, message) {
+            if (message === void 0) { message = null; }
+            var args = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args[_i - 2] = arguments[_i];
+            }
+            if (message == null) {
+                this.isTrue(obj != null);
+            }
+            else {
+                this.isTrue(obj != null, message, args);
+            }
+        };
+        Insist.areEqual = function (first, second, message) {
+            var args = [];
+            for (var _i = 3; _i < arguments.length; _i++) {
+                args[_i - 3] = arguments[_i];
+            }
+            if (first != second)
+                this.fail(message, args);
+        };
+        Insist.areNotEqual = function (first, second, message) {
+            var args = [];
+            for (var _i = 3; _i < arguments.length; _i++) {
+                args[_i - 3] = arguments[_i];
+            }
+            if (first == second)
+                this.fail(message, args);
+        };
+        return Insist;
     }());
-    es.DebugDrawItem = DebugDrawItem;
+    es.Insist = Insist;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Component = (function (_super) {
-        __extends(Component, _super);
+    /**
+     * 执行顺序
+     *  - onAddedToEntity
+     *  - OnEnabled
+     *
+     *  删除执行顺序
+     *      - onRemovedFromEntity
+     */
+    var Component = /** @class */ (function () {
         function Component() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.updateInterval = 1;
-            _this._enabled = true;
-            _this._updateOrder = 0;
-            return _this;
+            /**
+             * 更新该组件的时间间隔。这与实体的更新间隔无关。
+             */
+            this.updateInterval = 1;
+            this._enabled = true;
+            this._updateOrder = 0;
         }
         Object.defineProperty(Component.prototype, "transform", {
+            /**
+             * 快速访问 this.entity.transform
+             */
             get: function () {
                 return this.entity.transform;
             },
@@ -1054,9 +270,16 @@ var es;
             configurable: true
         });
         Object.defineProperty(Component.prototype, "enabled", {
+            /**
+             * 如果组件和实体都已启用，则为。当启用该组件时，将调用该组件的生命周期方法。状态的改变会导致调用onEnabled/onDisable。
+             */
             get: function () {
                 return this.entity ? this.entity.enabled && this._enabled : this._enabled;
             },
+            /**
+             * 如果组件和实体都已启用，则为。当启用该组件时，将调用该组件的生命周期方法。状态的改变会导致调用onEnabled/onDisable。
+             * @param value
+             */
             set: function (value) {
                 this.setEnabled(value);
             },
@@ -1064,30 +287,49 @@ var es;
             configurable: true
         });
         Object.defineProperty(Component.prototype, "updateOrder", {
+            /** 更新此实体上组件的顺序 */
             get: function () {
                 return this._updateOrder;
             },
+            /** 更新此实体上组件的顺序 */
             set: function (value) {
                 this.setUpdateOrder(value);
             },
             enumerable: true,
             configurable: true
         });
+        /**
+         * 当此组件已分配其实体，但尚未添加到实体的活动组件列表时调用。有用的东西，如物理组件，需要访问转换来修改碰撞体的属性。
+         */
         Component.prototype.initialize = function () {
         };
+        /**
+         * 在提交所有挂起的组件更改后，将该组件添加到场景时调用。此时，设置了实体字段和实体。场景也设定好了。
+         */
         Component.prototype.onAddedToEntity = function () {
         };
+        /**
+         * 当此组件从其实体中移除时调用。在这里做所有的清理工作。
+         */
         Component.prototype.onRemovedFromEntity = function () {
         };
+        /**
+         * 当实体的位置改变时调用。这允许组件知道它们由于父实体的移动而移动了。
+         * @param comp
+         */
         Component.prototype.onEntityTransformChanged = function (comp) {
         };
-        Component.prototype.debugRender = function () {
+        Component.prototype.debugRender = function (batcher) {
         };
+        /**
+         *当父实体或此组件启用时调用
+         */
         Component.prototype.onEnabled = function () {
         };
+        /**
+         * 禁用父实体或此组件时调用
+         */
         Component.prototype.onDisabled = function () {
-        };
-        Component.prototype.update = function () {
         };
         Component.prototype.setEnabled = function (isEnabled) {
             if (this._enabled != isEnabled) {
@@ -1107,198 +349,60 @@ var es;
             }
             return this;
         };
-        Component.prototype.clone = function () {
-            var component = ObjectUtils.clone(this);
-            component.entity = null;
-            return component;
-        };
         return Component;
-    }(egret.HashObject));
+    }());
     es.Component = Component;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Core = (function (_super) {
-        __extends(Core, _super);
-        function Core() {
-            var _this = _super.call(this) || this;
-            _this._globalManagers = [];
-            Core._instance = _this;
-            Core.emitter = new es.Emitter();
-            Core.content = new es.ContentManager();
-            _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.onAddToStage, _this);
-            return _this;
-        }
-        Object.defineProperty(Core, "Instance", {
-            get: function () {
-                return this._instance;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Core, "scene", {
-            get: function () {
-                if (!this._instance)
-                    return null;
-                return this._instance._scene;
-            },
-            set: function (value) {
-                if (!value) {
-                    console.error("场景不能为空");
-                    return;
-                }
-                if (this._instance._scene == null) {
-                    this._instance._scene = value;
-                    this._instance.addChild(value);
-                    this._instance._scene.begin();
-                    Core.Instance.onSceneChanged();
-                }
-                else {
-                    this._instance._nextScene = value;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Core.startSceneTransition = function (sceneTransition) {
-            if (this._instance._sceneTransition) {
-                console.warn("在前一个场景完成之前，不能开始一个新的场景转换。");
-                return;
-            }
-            this._instance._sceneTransition = sceneTransition;
-            return sceneTransition;
-        };
-        Core.registerGlobalManager = function (manager) {
-            this._instance._globalManagers.push(manager);
-            manager.enabled = true;
-        };
-        Core.unregisterGlobalManager = function (manager) {
-            this._instance._globalManagers.remove(manager);
-            manager.enabled = false;
-        };
-        Core.getGlobalManager = function (type) {
-            for (var i = 0; i < this._instance._globalManagers.length; i++) {
-                if (this._instance._globalManagers[i] instanceof type)
-                    return this._instance._globalManagers[i];
-            }
-            return null;
-        };
-        Core.prototype.onOrientationChanged = function () {
-            Core.emitter.emit(es.CoreEvents.OrientationChanged);
-        };
-        Core.prototype.draw = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (!this._sceneTransition) return [3, 4];
-                            this._sceneTransition.preRender();
-                            if (!(this._scene && !this._sceneTransition.hasPreviousSceneRender)) return [3, 2];
-                            this._scene.render();
-                            this._scene.postRender();
-                            return [4, this._sceneTransition.onBeginTransition()];
-                        case 1:
-                            _a.sent();
-                            return [3, 3];
-                        case 2:
-                            if (this._sceneTransition) {
-                                if (this._scene && this._sceneTransition.isNewSceneLoaded) {
-                                    this._scene.render();
-                                    this._scene.postRender();
-                                }
-                                this._sceneTransition.render();
-                            }
-                            _a.label = 3;
-                        case 3: return [3, 5];
-                        case 4:
-                            if (this._scene) {
-                                this._scene.render();
-                                es.Debug.render();
-                                this._scene.postRender();
-                            }
-                            _a.label = 5;
-                        case 5: return [2];
-                    }
-                });
-            });
-        };
-        Core.prototype.startDebugUpdate = function () {
-            es.TimeRuler.Instance.startFrame();
-            es.TimeRuler.Instance.beginMark("update", 0x00FF00);
-        };
-        Core.prototype.endDebugUpdate = function () {
-            es.TimeRuler.Instance.endMark("update");
-        };
-        Core.prototype.onSceneChanged = function () {
-            Core.emitter.emit(es.CoreEvents.SceneChanged);
-            es.Time.sceneChanged();
-        };
-        Core.prototype.onGraphicsDeviceReset = function () {
-            Core.emitter.emit(es.CoreEvents.GraphicsDeviceReset);
-        };
-        Core.prototype.initialize = function () {
-        };
-        Core.prototype.update = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                var i;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            es.Time.update(egret.getTimer());
-                            if (!this._scene) return [3, 2];
-                            for (i = this._globalManagers.length - 1; i >= 0; i--) {
-                                if (this._globalManagers[i].enabled)
-                                    this._globalManagers[i].update();
-                            }
-                            if (!this._sceneTransition ||
-                                (this._sceneTransition && (!this._sceneTransition.loadsNewScene || this._sceneTransition.isNewSceneLoaded))) {
-                                this._scene.update();
-                            }
-                            if (!this._nextScene) return [3, 2];
-                            this.removeChild(this._scene);
-                            this._scene.end();
-                            this._scene = this._nextScene;
-                            this._nextScene = null;
-                            this.onSceneChanged();
-                            this.addChild(this._scene);
-                            return [4, this._scene.begin()];
-                        case 1:
-                            _a.sent();
-                            _a.label = 2;
-                        case 2: return [4, this.draw()];
-                        case 3:
-                            _a.sent();
-                            return [2];
-                    }
-                });
-            });
-        };
-        Core.prototype.onAddToStage = function () {
-            Core.graphicsDevice = new es.GraphicsDevice();
-            this.addEventListener(egret.Event.RESIZE, this.onGraphicsDeviceReset, this);
-            this.addEventListener(egret.StageOrientationEvent.ORIENTATION_CHANGE, this.onOrientationChanged, this);
-            this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
-            es.Input.initialize();
-            this.initialize();
-        };
-        Core.debugRenderEndabled = false;
-        return Core;
-    }(egret.DisplayObjectContainer));
-    es.Core = Core;
 })(es || (es = {}));
 var es;
 (function (es) {
     var CoreEvents;
     (function (CoreEvents) {
-        CoreEvents[CoreEvents["GraphicsDeviceReset"] = 0] = "GraphicsDeviceReset";
-        CoreEvents[CoreEvents["SceneChanged"] = 1] = "SceneChanged";
-        CoreEvents[CoreEvents["OrientationChanged"] = 2] = "OrientationChanged";
+        /**
+         * 在图形设备重置时触发。当这种情况发生时，任何渲染目标或其他内容的VRAM将被擦除，需要重新生成
+         */
+        CoreEvents[CoreEvents["graphicsDeviceReset"] = 0] = "graphicsDeviceReset";
+        /**
+         * 当场景发生变化时触发
+         */
+        CoreEvents[CoreEvents["sceneChanged"] = 1] = "sceneChanged";
+        /**
+         * 当设备方向改变时触发
+         */
+        CoreEvents[CoreEvents["orientationChanged"] = 2] = "orientationChanged";
+        /**
+         * 当Core.useCustomUpdate为true时则派发该事件
+         */
+        CoreEvents[CoreEvents["sceneUpdated"] = 3] = "sceneUpdated";
+        CoreEvents[CoreEvents["addDefaultRender"] = 4] = "addDefaultRender";
+        CoreEvents[CoreEvents["setRenderTarget"] = 5] = "setRenderTarget";
+        CoreEvents[CoreEvents["clearGraphics"] = 6] = "clearGraphics";
+        CoreEvents[CoreEvents["disposeRenderTarget"] = 7] = "disposeRenderTarget";
+        CoreEvents[CoreEvents["resolutionScale"] = 8] = "resolutionScale";
+        CoreEvents[CoreEvents["resolutionOffset"] = 9] = "resolutionOffset";
+        CoreEvents[CoreEvents["createRenderTarget"] = 10] = "createRenderTarget";
+        CoreEvents[CoreEvents["createCamera"] = 11] = "createCamera";
+        CoreEvents[CoreEvents["rendererSizeChanged"] = 12] = "rendererSizeChanged";
     })(CoreEvents = es.CoreEvents || (es.CoreEvents = {}));
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Entity = (function () {
+    var EntityComparer = /** @class */ (function () {
+        function EntityComparer() {
+        }
+        EntityComparer.prototype.compare = function (self, other) {
+            var compare = self.updateOrder - other.updateOrder;
+            if (compare == 0)
+                compare = self.id - other.id;
+            return compare;
+        };
+        return EntityComparer;
+    }());
+    es.EntityComparer = EntityComparer;
+    var Entity = /** @class */ (function () {
         function Entity(name) {
+            /**
+             * 指定应该调用这个entity update方法的频率。1表示每一帧，2表示每一帧，以此类推
+             */
             this.updateInterval = 1;
             this._tag = 0;
             this._enabled = true;
@@ -1310,6 +414,9 @@ var es;
             this.componentBits = new es.BitSet();
         }
         Object.defineProperty(Entity.prototype, "isDestroyed", {
+            /**
+             * 如果调用了destroy，那么在下一次处理实体之前这将一直为true
+             */
             get: function () {
                 return this._isDestroyed;
             },
@@ -1317,9 +424,16 @@ var es;
             configurable: true
         });
         Object.defineProperty(Entity.prototype, "tag", {
+            /**
+             * 你可以随意使用。稍后可以使用它来查询场景中具有特定标记的所有实体
+             */
             get: function () {
                 return this._tag;
             },
+            /**
+             * 你可以随意使用。稍后可以使用它来查询场景中具有特定标记的所有实体
+             * @param value
+             */
             set: function (value) {
                 this.setTag(value);
             },
@@ -1327,9 +441,16 @@ var es;
             configurable: true
         });
         Object.defineProperty(Entity.prototype, "enabled", {
+            /**
+             * 启用/禁用实体。当禁用碰撞器从物理系统和组件中移除时，方法将不会被调用
+             */
             get: function () {
                 return this._enabled;
             },
+            /**
+             * 启用/禁用实体。当禁用碰撞器从物理系统和组件中移除时，方法将不会被调用
+             * @param value
+             */
             set: function (value) {
                 this.setEnabled(value);
             },
@@ -1337,9 +458,16 @@ var es;
             configurable: true
         });
         Object.defineProperty(Entity.prototype, "updateOrder", {
+            /**
+             * 更新此实体的顺序。updateOrder还用于对scene.entities上的标签列表进行排序
+             */
             get: function () {
                 return this._updateOrder;
             },
+            /**
+             * 更新此实体的顺序。updateOrder还用于对scene.entities上的标签列表进行排序
+             * @param value
+             */
             set: function (value) {
                 this.setUpdateOrder(value);
             },
@@ -1465,10 +593,67 @@ var es;
             configurable: true
         });
         Entity.prototype.onTransformChanged = function (comp) {
+            // 通知我们的子项改变了位置
             this.components.onEntityTransformChanged(comp);
         };
+        Entity.prototype.setParent = function (parent) {
+            if (parent instanceof es.Transform) {
+                this.transform.setParent(parent);
+            }
+            else if (parent instanceof Entity) {
+                this.transform.setParent(parent.transform);
+            }
+            return this;
+        };
+        Entity.prototype.setPosition = function (x, y) {
+            this.transform.setPosition(x, y);
+            return this;
+        };
+        Entity.prototype.setLocalPosition = function (localPosition) {
+            this.transform.setLocalPosition(localPosition);
+            return this;
+        };
+        Entity.prototype.setRotation = function (radians) {
+            this.transform.setRotation(radians);
+            return this;
+        };
+        Entity.prototype.setRotationDegrees = function (degrees) {
+            this.transform.setRotationDegrees(degrees);
+            return this;
+        };
+        Entity.prototype.setLocalRotation = function (radians) {
+            this.transform.setLocalRotation(radians);
+            return this;
+        };
+        Entity.prototype.setLocalRotationDegrees = function (degrees) {
+            this.transform.setLocalRotationDegrees(degrees);
+            return this;
+        };
+        Entity.prototype.setScale = function (scale) {
+            if (scale instanceof es.Vector2) {
+                this.transform.setScale(scale);
+            }
+            else {
+                this.transform.setScale(new es.Vector2(scale));
+            }
+            return this;
+        };
+        Entity.prototype.setLocalScale = function (scale) {
+            if (scale instanceof es.Vector2) {
+                this.transform.setLocalScale(scale);
+            }
+            else {
+                this.transform.setLocalScale(new es.Vector2(scale));
+            }
+            return this;
+        };
+        /**
+         * 设置实体的标记
+         * @param tag
+         */
         Entity.prototype.setTag = function (tag) {
             if (this._tag != tag) {
+                // 我们只有在已经有场景的情况下才会调用entityTagList。如果我们还没有场景，我们会被添加到entityTagList
                 if (this.scene)
                     this.scene.entities.removeFromTagList(this);
                 this._tag = tag;
@@ -1477,6 +662,10 @@ var es;
             }
             return this;
         };
+        /**
+         * 设置实体的启用状态。当禁用碰撞器从物理系统和组件中移除时，方法将不会被调用
+         * @param isEnabled
+         */
         Entity.prototype.setEnabled = function (isEnabled) {
             if (this._enabled != isEnabled) {
                 this._enabled = isEnabled;
@@ -1487,6 +676,10 @@ var es;
             }
             return this;
         };
+        /**
+         * 设置此实体的更新顺序。updateOrder还用于对scene.entities上的标签列表进行排序
+         * @param updateOrder
+         */
         Entity.prototype.setUpdateOrder = function (updateOrder) {
             if (this._updateOrder != updateOrder) {
                 this._updateOrder = updateOrder;
@@ -1497,21 +690,32 @@ var es;
                 return this;
             }
         };
+        /**
+         * 从场景中删除实体并销毁所有子元素
+         */
         Entity.prototype.destroy = function () {
             this._isDestroyed = true;
             this.scene.entities.remove(this);
             this.transform.parent = null;
+            // 销毁所有子项
             for (var i = this.transform.childCount - 1; i >= 0; i--) {
                 var child = this.transform.getChild(i);
                 child.entity.destroy();
             }
         };
+        /**
+         * 将实体从场景中分离。下面的生命周期方法将被调用在组件上:OnRemovedFromEntity
+         */
         Entity.prototype.detachFromScene = function () {
             this.scene.entities.remove(this);
             this.components.deregisterAllComponents();
             for (var i = 0; i < this.transform.childCount; i++)
                 this.transform.getChild(i).entity.detachFromScene();
         };
+        /**
+         * 将一个先前分离的实体附加到一个新的场景
+         * @param newScene
+         */
         Entity.prototype.attachToScene = function (newScene) {
             this.scene = newScene;
             newScene.entities.add(this);
@@ -1520,47 +724,86 @@ var es;
                 this.transform.getChild(i).entity.attachToScene(newScene);
             }
         };
-        Entity.prototype.clone = function (position) {
-            if (position === void 0) { position = new es.Vector2(); }
-            var entity = new Entity(this.name + "(clone)");
-            entity.copyFrom(this);
-            entity.transform.position = position;
-            return entity;
-        };
+        /**
+         * 在提交了所有挂起的实体更改后，将此实体添加到场景时调用
+         */
         Entity.prototype.onAddedToScene = function () {
         };
+        /**
+         * 当此实体从场景中删除时调用
+         */
         Entity.prototype.onRemovedFromScene = function () {
+            // 如果已经被销毁了，移走我们的组件。如果我们只是分离，我们需要保持我们的组件在实体上。
             if (this._isDestroyed)
                 this.components.removeAllComponents();
         };
+        /**
+         * 每帧进行调用进行更新组件
+         */
         Entity.prototype.update = function () {
             this.components.update();
         };
+        /**
+         * 自定义渲染器可以选择是否调用它
+         * @param batcher
+         */
+        Entity.prototype.debugRender = function (batcher) {
+            this.components.debugRender(batcher);
+        };
+        /**
+         * 将组件添加到组件列表中。返回组件。
+         * @param component
+         */
         Entity.prototype.addComponent = function (component) {
             component.entity = this;
             this.components.add(component);
             component.initialize();
             return component;
         };
+        /**
+         * 获取类型T的第一个组件并返回它。如果没有找到组件，则返回null。
+         * @param type
+         */
         Entity.prototype.getComponent = function (type) {
             return this.components.getComponent(type, false);
         };
+        /**
+         * 检查实体是否具有该组件
+         * @param type
+         */
         Entity.prototype.hasComponent = function (type) {
             return this.components.getComponent(type, false) != null;
         };
+        /**
+         * 获取类型T的第一个组件并返回它。如果没有找到组件，将创建组件。
+         * @param type
+         */
         Entity.prototype.getOrCreateComponent = function (type) {
             var comp = this.components.getComponent(type, true);
             if (!comp) {
-                comp = this.addComponent(type);
+                comp = this.addComponent(new type());
             }
             return comp;
         };
+        /**
+         * 获取typeName类型的所有组件，但不使用列表分配
+         * @param typeName
+         * @param componentList
+         */
         Entity.prototype.getComponents = function (typeName, componentList) {
             return this.components.getComponents(typeName, componentList);
         };
+        /**
+         * 从组件列表中删除组件
+         * @param component
+         */
         Entity.prototype.removeComponent = function (component) {
             this.components.remove(component);
         };
+        /**
+         * 从组件列表中删除类型为T的第一个组件
+         * @param type
+         */
         Entity.prototype.removeComponentForType = function (type) {
             var comp = this.getComponent(type);
             if (comp) {
@@ -1569,6 +812,9 @@ var es;
             }
             return false;
         };
+        /**
+         * 从实体中删除所有组件
+         */
         Entity.prototype.removeAllComponents = function () {
             for (var i = 0; i < this.components.count; i++) {
                 this.removeComponent(this.components.buffer[i]);
@@ -1580,160 +826,587 @@ var es;
                 compare = this.id - other.id;
             return compare;
         };
+        Entity.prototype.equals = function (other) {
+            return this.compareTo(other) == 0;
+        };
+        Entity.prototype.getHashCode = function () {
+            return this.id;
+        };
         Entity.prototype.toString = function () {
             return "[Entity: name: " + this.name + ", tag: " + this.tag + ", enabled: " + this.enabled + ", depth: " + this.updateOrder + "]";
         };
-        Entity.prototype.copyFrom = function (entity) {
-            this.tag = entity.tag;
-            this.updateInterval = entity.updateInterval;
-            this.updateOrder = entity.updateOrder;
-            this.enabled = entity.enabled;
-            this.transform.scale = entity.transform.scale;
-            this.transform.rotation = entity.transform.rotation;
-            for (var i = 0; i < entity.components.count; i++)
-                this.addComponent(entity.components.buffer[i].clone());
-            for (var i = 0; i < entity.components._componentsToAdd.length; i++)
-                this.addComponent(entity.components._componentsToAdd[i].clone());
-            for (var i = 0; i < entity.transform.childCount; i++) {
-                var child = entity.transform.getChild(i).entity;
-                var childClone = child.clone();
-                childClone.transform.copyFrom(child.transform);
-                childClone.transform.parent = this.transform;
-            }
-        };
         Entity._idGenerator = 0;
+        Entity.entityComparer = new EntityComparer();
         return Entity;
     }());
     es.Entity = Entity;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Scene = (function (_super) {
-        __extends(Scene, _super);
-        function Scene() {
-            var _this = _super.call(this) || this;
-            _this.enablePostProcessing = true;
-            _this._sceneComponents = [];
-            _this._renderers = [];
-            _this._postProcessors = [];
-            _this.entities = new es.EntityList(_this);
-            _this.renderableComponents = new es.RenderableComponentList();
-            _this.content = new es.ContentManager();
-            _this.entityProcessors = new es.EntityProcessorList();
-            _this.initialize();
-            return _this;
+    /** 2d 向量 */
+    var Vector2 = /** @class */ (function () {
+        /**
+         * 从两个值构造一个带有X和Y的二维向量。
+         * @param x 二维空间中的x坐标
+         * @param y 二维空间的y坐标
+         */
+        function Vector2(x, y) {
+            this.x = 0;
+            this.y = 0;
+            this.x = x ? x : 0;
+            this.y = y != undefined ? y : this.x;
         }
-        Scene.createWithDefaultRenderer = function () {
-            var scene = new Scene();
-            scene.addRenderer(new es.DefaultRenderer());
-            return scene;
+        Object.defineProperty(Vector2, "zero", {
+            get: function () {
+                return new Vector2(0, 0);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Vector2, "one", {
+            get: function () {
+                return new Vector2(1, 1);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Vector2, "unitX", {
+            get: function () {
+                return new Vector2(1, 0);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Vector2, "unitY", {
+            get: function () {
+                return new Vector2(0, 1);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         *
+         * @param value1
+         * @param value2
+         */
+        Vector2.add = function (value1, value2) {
+            var result = Vector2.zero;
+            result.x = value1.x + value2.x;
+            result.y = value1.y + value2.y;
+            return result;
         };
+        /**
+         *
+         * @param value1
+         * @param value2
+         */
+        Vector2.divide = function (value1, value2) {
+            var result = Vector2.zero;
+            result.x = value1.x / value2.x;
+            result.y = value1.y / value2.y;
+            return result;
+        };
+        /**
+         *
+         * @param value1
+         * @param value2
+         */
+        Vector2.multiply = function (value1, value2) {
+            var result = new Vector2(0, 0);
+            result.x = value1.x * value2.x;
+            result.y = value1.y * value2.y;
+            return result;
+        };
+        /**
+         *
+         * @param value1
+         * @param value2
+         */
+        Vector2.subtract = function (value1, value2) {
+            var result = new Vector2(0, 0);
+            result.x = value1.x - value2.x;
+            result.y = value1.y - value2.y;
+            return result;
+        };
+        /**
+         * 创建一个新的Vector2
+         * 它包含来自另一个向量的标准化值。
+         * @param value
+         */
+        Vector2.normalize = function (value) {
+            var nValue = new Vector2(value.x, value.y);
+            var val = 1 / Math.sqrt((nValue.x * nValue.x) + (nValue.y * nValue.y));
+            nValue.x *= val;
+            nValue.y *= val;
+            return nValue;
+        };
+        /**
+         * 返回两个向量的点积
+         * @param value1
+         * @param value2
+         */
+        Vector2.dot = function (value1, value2) {
+            return (value1.x * value2.x) + (value1.y * value2.y);
+        };
+        /**
+         * 返回两个向量之间距离的平方
+         * @param value1
+         * @param value2
+         */
+        Vector2.distanceSquared = function (value1, value2) {
+            var v1 = value1.x - value2.x, v2 = value1.y - value2.y;
+            return (v1 * v1) + (v2 * v2);
+        };
+        /**
+         * 将指定的值限制在一个范围内
+         * @param value1
+         * @param min
+         * @param max
+         */
+        Vector2.clamp = function (value1, min, max) {
+            return new Vector2(es.MathHelper.clamp(value1.x, min.x, max.x), es.MathHelper.clamp(value1.y, min.y, max.y));
+        };
+        /**
+         * 创建一个新的Vector2，其中包含指定向量的线性插值
+         * @param value1 第一个向量
+         * @param value2 第二个向量
+         * @param amount 加权值(0.0-1.0之间)
+         * @returns 指定向量的线性插值结果
+         */
+        Vector2.lerp = function (value1, value2, amount) {
+            return new Vector2(es.MathHelper.lerp(value1.x, value2.x, amount), es.MathHelper.lerp(value1.y, value2.y, amount));
+        };
+        /**
+         * 创建一个新的Vector2，该Vector2包含了通过指定的Matrix进行的二维向量变换。
+         * @param position
+         * @param matrix
+         */
+        Vector2.transform = function (position, matrix) {
+            return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m31, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m32);
+        };
+        /**
+         * 返回两个向量之间的距离
+         * @param value1
+         * @param value2
+         * @returns 两个向量之间的距离
+         */
+        Vector2.distance = function (value1, value2) {
+            var v1 = value1.x - value2.x, v2 = value1.y - value2.y;
+            return Math.sqrt((v1 * v1) + (v2 * v2));
+        };
+        /**
+         * 返回两个向量之间的角度，单位是度数
+         * @param from
+         * @param to
+         */
+        Vector2.angle = function (from, to) {
+            from = Vector2.normalize(from);
+            to = Vector2.normalize(to);
+            return Math.acos(es.MathHelper.clamp(Vector2.dot(from, to), -1, 1)) * es.MathHelper.Rad2Deg;
+        };
+        /**
+         * 创建一个包含指定向量反转的新Vector2
+         * @param value
+         * @returns 矢量反演的结果
+         */
+        Vector2.negate = function (value) {
+            value.x = -value.x;
+            value.y = -value.y;
+            return value;
+        };
+        /**
+         *
+         * @param value
+         */
+        Vector2.prototype.add = function (value) {
+            this.x += value.x;
+            this.y += value.y;
+            return this;
+        };
+        /**
+         *
+         * @param value
+         */
+        Vector2.prototype.divide = function (value) {
+            this.x /= value.x;
+            this.y /= value.y;
+            return this;
+        };
+        /**
+         *
+         * @param value
+         */
+        Vector2.prototype.multiply = function (value) {
+            this.x *= value.x;
+            this.y *= value.y;
+            return this;
+        };
+        /**
+         * 从当前Vector2减去一个Vector2
+         * @param value 要减去的Vector2
+         * @returns 当前Vector2
+         */
+        Vector2.prototype.subtract = function (value) {
+            this.x -= value.x;
+            this.y -= value.y;
+            return this;
+        };
+        /**
+         * 将这个Vector2变成一个方向相同的单位向量
+         */
+        Vector2.prototype.normalize = function () {
+            var val = 1 / Math.sqrt((this.x * this.x) + (this.y * this.y));
+            this.x *= val;
+            this.y *= val;
+        };
+        /** 返回它的长度 */
+        Vector2.prototype.length = function () {
+            return Math.sqrt((this.x * this.x) + (this.y * this.y));
+        };
+        /**
+         * 返回该Vector2的平方长度
+         * @returns 这个Vector2的平方长度
+         */
+        Vector2.prototype.lengthSquared = function () {
+            return (this.x * this.x) + (this.y * this.y);
+        };
+        /**
+         * 四舍五入X和Y值
+         */
+        Vector2.prototype.round = function () {
+            return new Vector2(Math.round(this.x), Math.round(this.y));
+        };
+        /**
+         * 返回以自己为中心点的左右角，单位为度
+         * @param left
+         * @param right
+         */
+        Vector2.prototype.angleBetween = function (left, right) {
+            var one = Vector2.subtract(left, this);
+            var two = Vector2.subtract(right, this);
+            return es.Vector2Ext.angle(one, two);
+        };
+        /**
+         * 比较当前实例是否等于指定的对象
+         * @param other 要比较的对象
+         * @returns 如果实例相同true 否则false
+         */
+        Vector2.prototype.equals = function (other) {
+            if (other instanceof Vector2) {
+                return other.x == this.x && other.y == this.y;
+            }
+            return false;
+        };
+        Vector2.prototype.clone = function () {
+            return new Vector2(this.x, this.y);
+        };
+        return Vector2;
+    }());
+    es.Vector2 = Vector2;
+})(es || (es = {}));
+///<reference path="../Math/Vector2.ts" />
+var es;
+///<reference path="../Math/Vector2.ts" />
+(function (es) {
+    var SceneResolutionPolicy;
+    (function (SceneResolutionPolicy) {
+        /**
+         * 默认情况下，RenderTarget与屏幕大小匹配。RenderTarget与屏幕大小相匹配
+         */
+        SceneResolutionPolicy[SceneResolutionPolicy["none"] = 0] = "none";
+        /**
+         * 该应用程序采用最适合设计分辨率的宽度和高度
+         */
+        SceneResolutionPolicy[SceneResolutionPolicy["bestFit"] = 1] = "bestFit";
+    })(SceneResolutionPolicy = es.SceneResolutionPolicy || (es.SceneResolutionPolicy = {}));
+    /** 场景 */
+    var Scene = /** @class */ (function () {
+        function Scene() {
+            /**
+             * 如果ResolutionPolicy是完美的像素，这将被设置为为它计算的比例
+             */
+            this.pixelPerfectScale = 1;
+            /**
+             * 场景使用的设计分辨率大小
+             */
+            this._designResolutionSize = es.Vector2.zero;
+            this._designBleedSize = es.Vector2.zero;
+            /**
+             * 这将根据分辨率策略进行设置，并用于RenderTarget的最终输出
+             */
+            this._finalRenderDestinationRect = es.Rectangle.empty;
+            this._sceneRenderTarget = new es.Ref(null);
+            this._destinationRenderTarget = new es.Ref(null);
+            this._sceneComponents = [];
+            this._renderers = [];
+            this._afterPostProcessorRenderers = [];
+            this.currentRenderId = new es.Ref(null);
+            this.entities = new es.EntityList(this);
+            this.renderableComponents = new es.RenderableComponentList();
+            this.entityProcessors = new es.EntityProcessorList();
+            es.Framework.emitter.emit(es.CoreEvents.createCamera, this);
+            this._resolutionPolicy = Scene._defaultSceneResolutionPolicy;
+            this._designResolutionSize = Scene._defaultDesignResolutionSize;
+            this._designBleedSize = Scene._defaultDesignBleedSize;
+            this.initialize();
+        }
+        Object.defineProperty(Scene.prototype, "finalRenderDelegate", {
+            get: function () {
+                return this._finalRenderDelegate;
+            },
+            /**
+             * 如果设置了，最终渲染到屏幕上的时间可以推迟到这个委托。
+             * 这实际上只在最终渲染可能需要全屏大小效果的情况下有用，即使使用了一个小的后置缓冲区
+             */
+            set: function (value) {
+                if (this._finalRenderDelegate != null)
+                    this._finalRenderDelegate.unload();
+                this._finalRenderDelegate = value;
+                if (this._finalRenderDelegate != null)
+                    this._finalRenderDelegate.onAddedToScene(this);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * 设置新场景将使用的默认设计尺寸和分辨率策略，水平/垂直Bleed仅与BestFit相关
+         * @param width
+         * @param height
+         * @param sceneResolutionPolicy
+         * @param horizontalBleed
+         * @param vertialcalBleed
+         */
+        Scene.setDefaultDesignResolution = function (width, height, sceneResolutionPolicy, horizontalBleed, vertialcalBleed) {
+            if (horizontalBleed === void 0) { horizontalBleed = 0; }
+            if (vertialcalBleed === void 0) { vertialcalBleed = 0; }
+            this._defaultDesignBleedSize = new es.Vector2(width, height);
+            this._defaultSceneResolutionPolicy = sceneResolutionPolicy;
+            if (this._defaultSceneResolutionPolicy == SceneResolutionPolicy.bestFit)
+                this._defaultDesignBleedSize = new es.Vector2(horizontalBleed, vertialcalBleed);
+        };
+        /**
+         * 在场景子类中重写这个，然后在这里进行加载。
+         * 在场景设置好之后，但在调用begin之前，从contructor中调用这个函数
+         */
         Scene.prototype.initialize = function () {
         };
+        /**
+         * 当Core将这个场景设置为活动场景时，这个将被调用
+         */
         Scene.prototype.onStart = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    return [2];
-                });
-            });
         };
+        /**
+         * 在场景子类中重写这个，并在这里做任何必要的卸载。
+         * 当Core把这个场景从活动槽中移除时，这个被调用。
+         */
         Scene.prototype.unload = function () {
         };
-        Scene.prototype.onActive = function () {
-        };
-        Scene.prototype.onDeactive = function () {
-        };
         Scene.prototype.begin = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (this._renderers.length == 0) {
-                        this.addRenderer(new es.DefaultRenderer());
-                        console.warn("场景开始时没有渲染器 自动添加DefaultRenderer以保证能够正常渲染");
-                    }
-                    this.camera = this.createEntity("camera").getOrCreateComponent(new es.Camera());
-                    es.Physics.reset();
-                    if (this.entityProcessors)
-                        this.entityProcessors.begin();
-                    this.addEventListener(egret.Event.ACTIVATE, this.onActive, this);
-                    this.addEventListener(egret.Event.DEACTIVATE, this.onDeactive, this);
-                    this.camera.onSceneSizeChanged(this.stage.stageWidth, this.stage.stageHeight);
-                    this._didSceneBegin = true;
-                    this.onStart();
-                    return [2];
-                });
-            });
+            if (this._renderers.length == 0) {
+                es.Framework.emitter.emit(es.CoreEvents.addDefaultRender);
+                console.warn("场景开始时没有渲染器");
+            }
+            es.Physics.reset();
+            this.updateResolutionScaler();
+            es.Framework.emitter.emit(es.CoreEvents.setRenderTarget, this._sceneRenderTarget);
+            es.Framework.emitter.addObserver(es.CoreEvents.graphicsDeviceReset, this.updateResolutionScaler, this);
+            es.Framework.emitter.addObserver(es.CoreEvents.orientationChanged, this.updateResolutionScaler, this);
+            if (this.entityProcessors != null)
+                this.entityProcessors.begin();
+            this._didSceneBegin = true;
+            this.onStart();
         };
         Scene.prototype.end = function () {
             this._didSceneBegin = false;
-            this.removeEventListener(egret.Event.DEACTIVATE, this.onDeactive, this);
-            this.removeEventListener(egret.Event.ACTIVATE, this.onActive, this);
-            for (var i = 0; i < this._renderers.length; i++) {
+            for (var i = 0; i < this._renderers.length; i++)
                 this._renderers[i].unload();
-            }
-            for (var i = 0; i < this._postProcessors.length; i++) {
-                this._postProcessors[i].unload();
-            }
+            es.Framework.emitter.removeObserver(es.CoreEvents.graphicsDeviceReset, this.updateResolutionScaler);
             this.entities.removeAllEntities();
-            this.removeChildren();
             for (var i = 0; i < this._sceneComponents.length; i++) {
                 this._sceneComponents[i].onRemovedFromScene();
             }
             this._sceneComponents.length = 0;
             this.camera = null;
-            this.content.dispose();
+            es.Framework.emitter.emit(es.CoreEvents.disposeRenderTarget, this._sceneRenderTarget);
+            es.Framework.emitter.emit(es.CoreEvents.disposeRenderTarget, this._destinationRenderTarget);
+            es.Physics.clear();
             if (this.entityProcessors)
                 this.entityProcessors.end();
-            if (this.parent)
-                this.parent.removeChild(this);
             this.unload();
         };
+        Scene.prototype.updateResolutionScaler = function () {
+            var designSize = this._designResolutionSize;
+            var screenSize = new es.Vector2(es.Screen.width, es.Screen.height);
+            var screenAspectRatio = screenSize.x / screenSize.y;
+            var renderTargetWidth = screenSize.x;
+            var renderTargetHeight = screenSize.y;
+            var resolutionScaleX = screenSize.x / designSize.x;
+            var resolutionScaleY = screenSize.y / designSize.y;
+            var rectCalculated = false;
+            // 计算PixelPerfect变体所使用的比例
+            this.pixelPerfectScale = 1;
+            if (this._resolutionPolicy != SceneResolutionPolicy.none) {
+                if (designSize.x / designSize.y > screenAspectRatio)
+                    this.pixelPerfectScale = screenSize.x / designSize.x;
+                else
+                    this.pixelPerfectScale = screenSize.y / designSize.y;
+                if (this.pixelPerfectScale == 0)
+                    this.pixelPerfectScale = 1;
+            }
+            switch (this._resolutionPolicy) {
+                case SceneResolutionPolicy.none:
+                    this._finalRenderDestinationRect.x = this._finalRenderDestinationRect.y = 0;
+                    this._finalRenderDestinationRect.width = screenSize.x;
+                    this._finalRenderDestinationRect.height = screenSize.y;
+                    rectCalculated = true;
+                    break;
+                case SceneResolutionPolicy.bestFit:
+                    var safeScaleX = screenSize.x / (designSize.x - this._designBleedSize.x);
+                    var safeScaleY = screenSize.y / (designSize.y - this._designBleedSize.y);
+                    var resolutionScale = Math.max(resolutionScaleX, resolutionScaleY);
+                    var safeScale = Math.min(safeScaleX, safeScaleY);
+                    resolutionScaleX = resolutionScaleY = Math.min(resolutionScale, safeScale);
+                    renderTargetWidth = designSize.x;
+                    renderTargetHeight = designSize.y;
+                    break;
+            }
+            // 如果我们还没有计算出一个矩形
+            if (!rectCalculated) {
+                // 计算RenderTarget的显示矩形
+                var renderWidth = designSize.x * resolutionScaleX;
+                var renderHeight = designSize.y * resolutionScaleY;
+                this._finalRenderDestinationRect = new es.Rectangle((screenSize.x - renderWidth) / 2, (screenSize.y - renderHeight) / 2, renderWidth, renderHeight);
+            }
+            // 在Input类中设置一些值，将鼠标位置转换为我们的缩放分辨率
+            var scaleX = renderTargetWidth / this._finalRenderDestinationRect.width;
+            var scaleY = renderTargetHeight / this._finalRenderDestinationRect.height;
+            es.Framework.emitter.emit(es.CoreEvents.resolutionScale, new es.Vector2(scaleX, scaleY));
+            es.Framework.emitter.emit(es.CoreEvents.resolutionOffset, this._finalRenderDestinationRect.location);
+            // 调整我们的RenderTargets大小
+            if (this._sceneRenderTarget != null)
+                es.Framework.emitter.emit(es.CoreEvents.disposeRenderTarget, this._sceneRenderTarget);
+            es.Framework.emitter.emit(es.CoreEvents.createRenderTarget, this._sceneRenderTarget, renderTargetWidth, renderTargetHeight);
+            // 只有在已经存在的情况下才会创建 destinationRenderTarget
+            if (this._destinationRenderTarget != null) {
+                es.Framework.emitter.emit(es.CoreEvents.disposeRenderTarget, this._destinationRenderTarget);
+                es.Framework.emitter.emit(es.CoreEvents.createRenderTarget, this._destinationRenderTarget, renderTargetWidth, renderTargetHeight);
+            }
+            // 通知渲染器、后处理器和FinalRenderDelegate渲染纹理尺寸的变化
+            for (var i = 0; i < this._renderers.length; i++)
+                this._renderers[i].onSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
+            for (var i = 0; i < this._afterPostProcessorRenderers.length; i++)
+                this._afterPostProcessorRenderers[i].onSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
+            if (this._finalRenderDelegate != null)
+                this._finalRenderDelegate.onSceneBackBufferSizeChanged(renderTargetWidth, renderTargetHeight);
+            this.camera.onSceneRenderTargetSizeChanged(renderTargetWidth, renderTargetHeight);
+        };
+        /**
+         * 下一次绘制完成后，这将克隆回缓冲区，并调用回调与clone。
+         * 注意，当使用完Texture后，你必须处理掉它
+         * @param callback
+         */
+        Scene.prototype.requestScreenshot = function (callback) {
+            this._screenshotRequestCallback = callback;
+        };
         Scene.prototype.update = function () {
+            // 我们在这里设置RenderTarget，这样Viewport就会与RenderTarget正确匹配
+            es.Framework.emitter.emit(es.CoreEvents.setRenderTarget, this._sceneRenderTarget);
+            // 更新我们的列表，以防它们有任何变化
             this.entities.updateLists();
             for (var i = this._sceneComponents.length - 1; i >= 0; i--) {
                 if (this._sceneComponents[i].enabled)
                     this._sceneComponents[i].update();
             }
-            if (this.entityProcessors)
+            // 更新我们的实体解析器
+            if (this.entityProcessors != null)
                 this.entityProcessors.update();
+            // 更新我们的实体组
             this.entities.update();
-            if (this.entityProcessors)
-                this.entityProcessors.lateUpdate();
+            // 我们在entity.update之后更新我们的renderables，以防止任何新的Renderables被添加
             this.renderableComponents.updateList();
+            if (this.entityProcessors != null)
+                this.entityProcessors.lateUpdate();
         };
         Scene.prototype.render = function () {
             if (this._renderers.length == 0) {
                 console.error("场景中没有渲染器!");
                 return;
             }
+            // 渲染器应该总是先有那些需要RenderTarget的。
+            // 他们在渲染的时候会自己清空并设置自己为当前的RenderTarget。
+            // 如果第一个Renderer想要sceneRenderTarget，我们现在就设置并清除它
+            if (this._renderers[0].wantsToRenderToSceneRenderTarget) {
+                es.Framework.emitter.emit(es.CoreEvents.setRenderTarget, this._sceneRenderTarget);
+                es.Framework.emitter.emit(es.CoreEvents.clearGraphics);
+            }
+            var lastRendererHadRenderTarget = false;
             for (var i = 0; i < this._renderers.length; i++) {
+                if (lastRendererHadRenderTarget && this._renderers[i].wantsToRenderToSceneRenderTarget) {
+                    es.Framework.emitter.emit(es.CoreEvents.setRenderTarget, this._sceneRenderTarget);
+                    es.Framework.emitter.emit(es.CoreEvents.clearGraphics);
+                    // 强制更新相机矩阵，以考虑到新的视口尺寸
+                    if (this._renderers[i].camera != null)
+                        this._renderers[i].camera.forceMatrixUpdate();
+                    this.camera && this.camera.forceMatrixUpdate();
+                }
                 this._renderers[i].render(this);
+                lastRendererHadRenderTarget = this._renderers[i].renderTexture != null;
             }
         };
-        Scene.prototype.postRender = function () {
-            if (this.enablePostProcessing) {
-                for (var i = 0; i < this._postProcessors.length; i++) {
-                    if (this._postProcessors[i].enabled) {
-                        this._postProcessors[i].process();
-                    }
+        /**
+         * 任何存在的PostProcessors都可以进行处理，然后我们对RenderTarget进行最后的渲染。
+         * 几乎在所有情况下，finalRenderTarget都是空的。
+         * 只有在场景转换的第一帧中，如果转换请求渲染，它才会有一个值。
+         * @param finalRenderTarget
+         */
+        Scene.prototype.postRender = function (finalRenderTarget) {
+            if (finalRenderTarget === void 0) { finalRenderTarget = null; }
+            var enabledCounter = 0;
+            for (var i = 0; i < this._afterPostProcessorRenderers.length; i++) {
+                if (i == 0) {
+                    // 我们需要在这里设置正确的RenderTarget
+                    var currentRenderTarget = es.MathHelper.isEven(enabledCounter) ? this._sceneRenderTarget : this._destinationRenderTarget;
+                    es.Framework.emitter.emit(es.CoreEvents.setRenderTarget, currentRenderTarget);
                 }
+                if (this._afterPostProcessorRenderers[i].camera != null)
+                    this._afterPostProcessorRenderers[i].camera.forceMatrixUpdate();
+                this._afterPostProcessorRenderers[i].render(this);
             }
-            if (this._screenshotRequestCallback) {
-                var tex = new egret.RenderTexture();
-                tex.drawToTexture(this, new es.Rectangle(0, 0, this.stage.stageWidth, this.stage.stageHeight));
-                this._screenshotRequestCallback(tex);
+            // 如果我们有一个截图请求，在最终渲染到回缓冲区之前处理它
+            if (this._screenshotRequestCallback != null) {
+                var currentRenderTarget = es.MathHelper.isEven(enabledCounter) ? this._sceneRenderTarget : this._destinationRenderTarget;
+                this._screenshotRequestCallback(currentRenderTarget.value);
                 this._screenshotRequestCallback = null;
             }
+            // 将我们的最终结果渲染到后置缓冲区，或者让我们的委托来做
+            if (this._finalRenderDelegate != null) {
+                var currentRenderTarget = es.MathHelper.isEven(enabledCounter) ? this._sceneRenderTarget : this._destinationRenderTarget;
+                this._finalRenderDelegate.handleFinalRender(finalRenderTarget, currentRenderTarget, this._finalRenderDestinationRect);
+            }
+            else {
+                var currentRenderTarget = es.MathHelper.isEven(enabledCounter) ? this._sceneRenderTarget : this._destinationRenderTarget;
+                es.Framework.emitter.emit(es.CoreEvents.setRenderTarget, finalRenderTarget);
+                es.Framework.emitter.emit(es.CoreEvents.clearGraphics);
+                es.Framework.batcher.begin(this.currentRenderId, null);
+                es.Framework.batcher.draw(currentRenderTarget.value, new es.Vector2(this._finalRenderDestinationRect.x, this._finalRenderDestinationRect.y), 0xffffff, 0, es.Vector2.zero, new es.Vector2(this._finalRenderDestinationRect.width, this._finalRenderDestinationRect.height));
+                es.Framework.batcher.end();
+            }
         };
-        Scene.prototype.requestScreenshot = function (callback) {
-            this._screenshotRequestCallback = callback;
-        };
+        /**
+         * 向组件列表添加并返回SceneComponent
+         * @param component
+         */
         Scene.prototype.addSceneComponent = function (component) {
             component.scene = this;
             component.onEnabled();
             this._sceneComponents.push(component);
-            this._sceneComponents.sort(component.compareTo);
+            this._sceneComponents.sort(component.compare);
             return component;
         };
+        /**
+         * 获取类型为T的第一个SceneComponent并返回它。如果没有找到组件，则返回null。
+         * @param type
+         */
         Scene.prototype.getSceneComponent = function (type) {
             for (var i = 0; i < this._sceneComponents.length; i++) {
                 var component = this._sceneComponents[i];
@@ -1742,113 +1415,176 @@ var es;
             }
             return null;
         };
+        /**
+         * 获取类型为T的第一个SceneComponent并返回它。如果没有找到SceneComponent，则将创建SceneComponent。
+         * @param type
+         */
         Scene.prototype.getOrCreateSceneComponent = function (type) {
             var comp = this.getSceneComponent(type);
             if (comp == null)
                 comp = this.addSceneComponent(new type());
             return comp;
         };
+        /**
+         * 从SceneComponents列表中删除一个SceneComponent
+         * @param component
+         */
         Scene.prototype.removeSceneComponent = function (component) {
-            if (!this._sceneComponents.contains(component)) {
+            if (!new linq.List(this._sceneComponents).contains(component)) {
                 console.warn("SceneComponent" + component + "\u4E0D\u5728SceneComponents\u5217\u8868\u4E2D!");
                 return;
             }
-            this._sceneComponents.remove(component);
+            new linq.List(this._sceneComponents).remove(component);
             component.onRemovedFromScene();
         };
+        /**
+         * 添加一个渲染器到场景中
+         * @param renderer
+         */
         Scene.prototype.addRenderer = function (renderer) {
-            this._renderers.push(renderer);
-            this._renderers.sort();
+            if (renderer.wantsToRenderAfterPostProcessors) {
+                this._afterPostProcessorRenderers.push(renderer);
+                this._afterPostProcessorRenderers.sort(function (a, b) {
+                    return a.compare(b);
+                });
+            }
+            else {
+                this._renderers.push(renderer);
+                this._renderers.sort(function (a, b) {
+                    return a.compare(b);
+                });
+            }
             renderer.onAddedToScene(this);
+            if (this._didSceneBegin)
+                es.Framework.emitter.emit(es.CoreEvents.rendererSizeChanged, this._sceneRenderTarget.value);
             return renderer;
         };
+        /**
+         * 得到第一个T型的渲染器
+         * @param type
+         */
         Scene.prototype.getRenderer = function (type) {
             for (var i = 0; i < this._renderers.length; i++) {
                 if (this._renderers[i] instanceof type)
                     return this._renderers[i];
             }
+            for (var i = 0; i < this._afterPostProcessorRenderers.length; i++) {
+                if (this._afterPostProcessorRenderers[i] instanceof type)
+                    return this._afterPostProcessorRenderers[i];
+            }
             return null;
         };
+        /**
+         * 从场景中移除渲染器
+         * @param renderer
+         */
         Scene.prototype.removeRenderer = function (renderer) {
-            if (!this._renderers.contains(renderer))
-                return;
-            this._renderers.remove(renderer);
+            var afterProcessLinqList = new linq.List(this._afterPostProcessorRenderers);
+            var rendererLinqList = new linq.List(this._renderers);
+            es.Insist.isTrue(rendererLinqList.contains(renderer) ||
+                afterProcessLinqList.contains(renderer));
+            if (renderer.wantsToRenderAfterPostProcessors)
+                afterProcessLinqList.remove(renderer);
+            else
+                rendererLinqList.remove(renderer);
             renderer.unload();
         };
-        Scene.prototype.addPostProcessor = function (postProcessor) {
-            this._postProcessors.push(postProcessor);
-            this._postProcessors.sort();
-            postProcessor.onAddedToScene(this);
-            if (this._didSceneBegin) {
-                postProcessor.onSceneBackBufferSizeChanged(this.stage.stageWidth, this.stage.stageHeight);
-            }
-            return postProcessor;
-        };
-        Scene.prototype.getPostProcessor = function (type) {
-            for (var i = 0; i < this._postProcessors.length; i++) {
-                if (this._postProcessors[i] instanceof type)
-                    return this._postProcessors[i];
-            }
-            return null;
-        };
-        Scene.prototype.removePostProcessor = function (postProcessor) {
-            if (!this._postProcessors.contains(postProcessor))
-                return;
-            this._postProcessors.remove(postProcessor);
-            postProcessor.unload();
-        };
+        /**
+         * 将实体添加到此场景，并返回它
+         * @param name
+         */
         Scene.prototype.createEntity = function (name) {
             var entity = new es.Entity(name);
             return this.addEntity(entity);
         };
-        Scene.prototype.createEntityAsync = function (name) {
-            var _this = this;
-            return new Promise(function (resolve) {
-                resolve(_this.createEntity(name));
-            });
-        };
+        /**
+         * 在场景的实体列表中添加一个实体
+         * @param entity
+         */
         Scene.prototype.addEntity = function (entity) {
-            if (this.entities.buffer.contains(entity))
-                console.warn("\u60A8\u8BD5\u56FE\u5C06\u540C\u4E00\u5B9E\u4F53\u6DFB\u52A0\u5230\u573A\u666F\u4E24\u6B21: " + entity);
+            es.Insist.isFalse(new linq.List(this.entities.buffer).contains(entity), "\u60A8\u8BD5\u56FE\u5C06\u540C\u4E00\u5B9E\u4F53\u6DFB\u52A0\u5230\u573A\u666F\u4E24\u6B21: " + entity);
             this.entities.add(entity);
             entity.scene = this;
             for (var i = 0; i < entity.transform.childCount; i++)
                 this.addEntity(entity.transform.getChild(i).entity);
             return entity;
         };
+        /**
+         * 从场景中删除所有实体
+         */
         Scene.prototype.destroyAllEntities = function () {
             for (var i = 0; i < this.entities.count; i++) {
                 this.entities.buffer[i].destroy();
             }
         };
+        /**
+         * 搜索并返回第一个具有名称的实体
+         * @param name
+         */
         Scene.prototype.findEntity = function (name) {
             return this.entities.findEntity(name);
         };
+        /**
+         * 返回具有给定标记的所有实体
+         * @param tag
+         */
         Scene.prototype.findEntitiesWithTag = function (tag) {
             return this.entities.entitiesWithTag(tag);
         };
+        /**
+         * 返回类型为T的所有实体
+         * @param type
+         */
         Scene.prototype.entitiesOfType = function (type) {
             return this.entities.entitiesOfType(type);
         };
+        /**
+         * 返回第一个启用加载的类型为T的组件
+         * @param type
+         */
         Scene.prototype.findComponentOfType = function (type) {
             return this.entities.findComponentOfType(type);
         };
+        /**
+         * 返回类型为T的所有已启用已加载组件的列表
+         * @param type
+         */
         Scene.prototype.findComponentsOfType = function (type) {
             return this.entities.findComponentsOfType(type);
         };
+        /**
+         * 在场景中添加一个EntitySystem处理器
+         * @param processor 处理器
+         */
         Scene.prototype.addEntityProcessor = function (processor) {
             processor.scene = this;
             this.entityProcessors.add(processor);
             return processor;
         };
+        /**
+         * 从场景中删除EntitySystem处理器
+         * @param processor
+         */
         Scene.prototype.removeEntityProcessor = function (processor) {
             this.entityProcessors.remove(processor);
         };
+        /**
+         * 获取EntitySystem处理器
+         */
         Scene.prototype.getEntityProcessor = function () {
             return this.entityProcessors.getProcessor();
         };
+        /**
+         * 所有场景的默认分辨率大小
+         */
+        Scene._defaultDesignResolutionSize = es.Vector2.zero;
+        Scene._defaultDesignBleedSize = es.Vector2.zero;
+        /**
+         * 用于所有场景的默认分辨率策略
+         */
+        Scene._defaultSceneResolutionPolicy = SceneResolutionPolicy.none;
         return Scene;
-    }(egret.DisplayObjectContainer));
+    }());
     es.Scene = Scene;
 })(es || (es = {}));
 var transform;
@@ -1862,37 +1598,37 @@ var transform;
 })(transform || (transform = {}));
 var es;
 (function (es) {
-    var HashObject = egret.HashObject;
     var DirtyType;
     (function (DirtyType) {
         DirtyType[DirtyType["clean"] = 0] = "clean";
         DirtyType[DirtyType["positionDirty"] = 1] = "positionDirty";
         DirtyType[DirtyType["scaleDirty"] = 2] = "scaleDirty";
-        DirtyType[DirtyType["rotationDirty"] = 3] = "rotationDirty";
+        DirtyType[DirtyType["rotationDirty"] = 4] = "rotationDirty";
     })(DirtyType = es.DirtyType || (es.DirtyType = {}));
-    var Transform = (function (_super) {
-        __extends(Transform, _super);
+    var Transform = /** @class */ (function () {
         function Transform(entity) {
-            var _this = _super.call(this) || this;
-            _this._localTransform = es.Matrix2D.create();
-            _this._worldTransform = es.Matrix2D.create().identity();
-            _this._rotationMatrix = es.Matrix2D.create();
-            _this._translationMatrix = es.Matrix2D.create();
-            _this._scaleMatrix = es.Matrix2D.create();
-            _this._worldToLocalTransform = es.Matrix2D.create().identity();
-            _this._worldInverseTransform = es.Matrix2D.create().identity();
-            _this._position = es.Vector2.zero;
-            _this._scale = es.Vector2.one;
-            _this._rotation = 0;
-            _this._localPosition = es.Vector2.zero;
-            _this._localScale = es.Vector2.one;
-            _this._localRotation = 0;
-            _this.entity = entity;
-            _this.scale = es.Vector2.one;
-            _this._children = [];
-            return _this;
+            /**
+             * 值将自动从本地和父矩阵重新计算。
+             */
+            this._worldTransform = es.Matrix2D.identity;
+            this._rotationMatrix = es.Matrix2D.identity;
+            this._translationMatrix = es.Matrix2D.identity;
+            this._children = [];
+            this._worldToLocalTransform = es.Matrix2D.identity;
+            this._worldInverseTransform = es.Matrix2D.identity;
+            this._position = es.Vector2.zero;
+            this._scale = es.Vector2.one;
+            this._rotation = 0;
+            this._localPosition = es.Vector2.zero;
+            this._localScale = es.Vector2.one;
+            this._localRotation = 0;
+            this.entity = entity;
+            this.scale = this._localScale = es.Vector2.one;
         }
         Object.defineProperty(Transform.prototype, "childCount", {
+            /**
+             * 这个转换的所有子元素
+             */
             get: function () {
                 return this._children.length;
             },
@@ -1900,9 +1636,16 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "rotationDegrees", {
+            /**
+             * 变换在世界空间的旋转度
+             */
             get: function () {
                 return es.MathHelper.toDegrees(this._rotation);
             },
+            /**
+             * 变换在世界空间的旋转度
+             * @param value
+             */
             set: function (value) {
                 this.setRotation(es.MathHelper.toRadians(value));
             },
@@ -1910,9 +1653,16 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "localRotationDegrees", {
+            /**
+             * 旋转相对于父变换旋转的角度
+             */
             get: function () {
                 return es.MathHelper.toDegrees(this._localRotation);
             },
+            /**
+             * 旋转相对于父变换旋转的角度
+             * @param value
+             */
             set: function (value) {
                 this.localRotation = es.MathHelper.toRadians(value);
             },
@@ -1928,9 +1678,16 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "parent", {
+            /**
+             * 获取此转换的父转换
+             */
             get: function () {
                 return this._parent;
             },
+            /**
+             * 设置此转换的父转换
+             * @param value
+             */
             set: function (value) {
                 this.setParent(value);
             },
@@ -1941,11 +1698,11 @@ var es;
             get: function () {
                 if (this._worldToLocalDirty) {
                     if (!this.parent) {
-                        this._worldToLocalTransform = es.Matrix2D.create().identity();
+                        this._worldToLocalTransform = es.Matrix2D.identity;
                     }
                     else {
                         this.parent.updateTransform();
-                        this._worldToLocalTransform = this.parent._worldTransform.invert();
+                        this._worldToLocalTransform = es.Matrix2D.invert(this.parent._worldTransform);
                     }
                     this._worldToLocalDirty = false;
                 }
@@ -1958,7 +1715,7 @@ var es;
             get: function () {
                 this.updateTransform();
                 if (this._worldInverseDirty) {
-                    this._worldInverseTransform = this._worldTransform.invert();
+                    this._worldInverseTransform = es.Matrix2D.invert(this._worldTransform);
                     this._worldInverseDirty = false;
                 }
                 return this._worldInverseTransform;
@@ -1967,20 +1724,27 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "position", {
+            /**
+             * 变换在世界空间中的位置
+             */
             get: function () {
                 this.updateTransform();
                 if (this._positionDirty) {
-                    if (!this.parent) {
+                    if (this.parent == null) {
                         this._position = this._localPosition;
                     }
                     else {
                         this.parent.updateTransform();
-                        this._position = es.Vector2Ext.transformR(this._localPosition, this.parent._worldTransform);
+                        es.Vector2Ext.transformR(this._localPosition, this.parent._worldTransform, this._position);
                     }
                     this._positionDirty = false;
                 }
                 return this._position;
             },
+            /**
+             * 变换在世界空间中的位置
+             * @param value
+             */
             set: function (value) {
                 this.setPosition(value.x, value.y);
             },
@@ -1988,10 +1752,17 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "scale", {
+            /**
+             * 变换在世界空间的缩放
+             */
             get: function () {
                 this.updateTransform();
                 return this._scale;
             },
+            /**
+             * 变换在世界空间的缩放
+             * @param value
+             */
             set: function (value) {
                 this.setScale(value);
             },
@@ -1999,10 +1770,17 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "rotation", {
+            /**
+             * 在世界空间中以弧度旋转的变换
+             */
             get: function () {
                 this.updateTransform();
                 return this._rotation;
             },
+            /**
+             * 变换在世界空间的旋转度
+             * @param value
+             */
             set: function (value) {
                 this.setRotation(value);
             },
@@ -2010,10 +1788,17 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "localPosition", {
+            /**
+             * 转换相对于父转换的位置。如果转换没有父元素，则与transform.position相同
+             */
             get: function () {
                 this.updateTransform();
                 return this._localPosition;
             },
+            /**
+             * 转换相对于父转换的位置。如果转换没有父元素，则与transform.position相同
+             * @param value
+             */
             set: function (value) {
                 this.setLocalPosition(value);
             },
@@ -2021,10 +1806,17 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "localScale", {
+            /**
+             * 转换相对于父元素的比例。如果转换没有父元素，则与transform.scale相同
+             */
             get: function () {
                 this.updateTransform();
                 return this._localScale;
             },
+            /**
+             * 转换相对于父元素的比例。如果转换没有父元素，则与transform.scale相同
+             * @param value
+             */
             set: function (value) {
                 this.setLocalScale(value);
             },
@@ -2032,37 +1824,58 @@ var es;
             configurable: true
         });
         Object.defineProperty(Transform.prototype, "localRotation", {
+            /**
+             * 相对于父变换的旋转，变换的旋转。如果转换没有父元素，则与transform.rotation相同
+             */
             get: function () {
                 this.updateTransform();
                 return this._localRotation;
             },
+            /**
+             * 相对于父变换的旋转，变换的旋转。如果转换没有父元素，则与transform.rotation相同
+             * @param value
+             */
             set: function (value) {
                 this.setLocalRotation(value);
             },
             enumerable: true,
             configurable: true
         });
+        /**
+         * 返回在索引处的转换子元素
+         * @param index
+         */
         Transform.prototype.getChild = function (index) {
             return this._children[index];
         };
+        /**
+         * 设置此转换的父转换
+         * @param parent
+         */
         Transform.prototype.setParent = function (parent) {
-            if (this._parent.equals(parent))
+            if (this._parent == parent)
                 return this;
             if (!this._parent) {
-                this._parent._children.remove(this);
-                this._parent._children.push(this);
+                var children = new linq.List(this._parent._children);
+                children.remove(this);
+                children.add(this);
             }
             this._parent = parent;
             this.setDirty(DirtyType.positionDirty);
             return this;
         };
+        /**
+         * 设置转换在世界空间中的位置
+         * @param x
+         * @param y
+         */
         Transform.prototype.setPosition = function (x, y) {
             var position = new es.Vector2(x, y);
             if (position.equals(this._position))
                 return this;
             this._position = position;
-            if (this.parent) {
-                this.localPosition = es.Vector2Ext.transformR(this._position, this._worldToLocalTransform);
+            if (this.parent != null) {
+                this.localPosition = es.Vector2.transform(this._position, this._worldToLocalTransform);
             }
             else {
                 this.localPosition = position;
@@ -2070,6 +1883,10 @@ var es;
             this._positionDirty = false;
             return this;
         };
+        /**
+         * 设置转换相对于父转换的位置。如果转换没有父元素，则与transform.position相同
+         * @param localPosition
+         */
         Transform.prototype.setLocalPosition = function (localPosition) {
             if (localPosition.equals(this._localPosition))
                 return this;
@@ -2078,6 +1895,10 @@ var es;
             this.setDirty(DirtyType.positionDirty);
             return this;
         };
+        /**
+         * 设置变换在世界空间的旋转度
+         * @param radians
+         */
         Transform.prototype.setRotation = function (radians) {
             this._rotation = radians;
             if (this.parent) {
@@ -2088,23 +1909,43 @@ var es;
             }
             return this;
         };
+        /**
+         * 设置变换在世界空间的旋转度
+         * @param degrees
+         */
         Transform.prototype.setRotationDegrees = function (degrees) {
             return this.setRotation(es.MathHelper.toRadians(degrees));
         };
+        /**
+         * 旋转精灵的顶部，使其朝向位置
+         * @param pos
+         */
         Transform.prototype.lookAt = function (pos) {
             var sign = this.position.x > pos.x ? -1 : 1;
             var vectorToAlignTo = es.Vector2.normalize(es.Vector2.subtract(this.position, pos));
             this.rotation = sign * Math.acos(es.Vector2.dot(vectorToAlignTo, es.Vector2.unitY));
         };
+        /**
+         * 相对于父变换的旋转设置变换的旋转。如果转换没有父元素，则与transform.rotation相同
+         * @param radians
+         */
         Transform.prototype.setLocalRotation = function (radians) {
             this._localRotation = radians;
             this._localDirty = this._positionDirty = this._localPositionDirty = this._localRotationDirty = this._localScaleDirty = true;
             this.setDirty(DirtyType.rotationDirty);
             return this;
         };
+        /**
+         * 相对于父变换的旋转设置变换的旋转。如果转换没有父元素，则与transform.rotation相同
+         * @param degrees
+         */
         Transform.prototype.setLocalRotationDegrees = function (degrees) {
             return this.setLocalRotation(es.MathHelper.toRadians(degrees));
         };
+        /**
+         * 设置变换在世界空间中的缩放
+         * @param scale
+         */
         Transform.prototype.setScale = function (scale) {
             this._scale = scale;
             if (this.parent) {
@@ -2115,35 +1956,42 @@ var es;
             }
             return this;
         };
+        /**
+         * 设置转换相对于父对象的比例。如果转换没有父元素，则与transform.scale相同
+         * @param scale
+         */
         Transform.prototype.setLocalScale = function (scale) {
             this._localScale = scale;
             this._localDirty = this._positionDirty = this._localScaleDirty = true;
             this.setDirty(DirtyType.scaleDirty);
             return this;
         };
+        /**
+         * 对精灵坐标进行四舍五入
+         */
         Transform.prototype.roundPosition = function () {
-            this.position = this._position.round();
+            this.position = es.Vector2Ext.round(this._position);
         };
         Transform.prototype.updateTransform = function () {
             if (this.hierarchyDirty != DirtyType.clean) {
-                if (this.parent)
+                if (this.parent != null)
                     this.parent.updateTransform();
                 if (this._localDirty) {
                     if (this._localPositionDirty) {
-                        this._translationMatrix = es.Matrix2D.create().translate(this._localPosition.x, this._localPosition.y);
+                        this._translationMatrix = es.Matrix2D.createTranslation(this._localPosition.x, this._localPosition.y);
                         this._localPositionDirty = false;
                     }
                     if (this._localRotationDirty) {
-                        this._rotationMatrix = es.Matrix2D.create().rotate(this._localRotation);
+                        this._rotationMatrix = es.Matrix2D.createRotation(this._localRotation);
                         this._localRotationDirty = false;
                     }
                     if (this._localScaleDirty) {
-                        this._scaleMatrix = es.Matrix2D.create().scale(this._localScale.x, this._localScale.y);
+                        this._scaleMatrix = es.Matrix2D.createScale(this._localScale.x, this._localScale.y);
                         this._localScaleDirty = false;
                     }
                     this._localTransform = this._scaleMatrix.multiply(this._rotationMatrix);
                     this._localTransform = this._localTransform.multiply(this._translationMatrix);
-                    if (!this.parent) {
+                    if (this.parent == null) {
                         this._worldTransform = this._localTransform;
                         this._rotation = this._localRotation;
                         this._scale = this._localScale;
@@ -2151,7 +1999,7 @@ var es;
                     }
                     this._localDirty = false;
                 }
-                if (this.parent) {
+                if (this.parent != null) {
                     this._worldTransform = this._localTransform.multiply(this.parent._worldTransform);
                     this._rotation = this._localRotation + this.parent._rotation;
                     this._scale = es.Vector2.multiply(this.parent._scale, this._localScale);
@@ -2176,12 +2024,15 @@ var es;
                         this.entity.onTransformChanged(transform.Component.scale);
                         break;
                 }
-                if (!this._children)
-                    this._children = [];
+                // 告诉子项发生了变换
                 for (var i = 0; i < this._children.length; i++)
                     this._children[i].setDirty(dirtyFlagType);
             }
         };
+        /**
+         * 从另一个transform属性进行拷贝
+         * @param transform
+         */
         Transform.prototype.copyFrom = function (transform) {
             this._position = transform.position;
             this._localPosition = transform._localPosition;
@@ -2196,400 +2047,13 @@ var es;
         Transform.prototype.toString = function () {
             return "[Transform: parent: " + this.parent + ", position: " + this.position + ", rotation: " + this.rotation + ",\n                scale: " + this.scale + ", localPosition: " + this._localPosition + ", localRotation: " + this._localRotation + ",\n                localScale: " + this._localScale + "]";
         };
-        Transform.prototype.equals = function (other) {
-            return other.hashCode == this.hashCode;
-        };
         return Transform;
-    }(HashObject));
+    }());
     es.Transform = Transform;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var CameraStyle;
-    (function (CameraStyle) {
-        CameraStyle[CameraStyle["lockOn"] = 0] = "lockOn";
-        CameraStyle[CameraStyle["cameraWindow"] = 1] = "cameraWindow";
-    })(CameraStyle = es.CameraStyle || (es.CameraStyle = {}));
-    var CameraInset = (function () {
-        function CameraInset() {
-            this.left = 0;
-            this.right = 0;
-            this.top = 0;
-            this.bottom = 0;
-        }
-        return CameraInset;
-    }());
-    es.CameraInset = CameraInset;
-    var Camera = (function (_super) {
-        __extends(Camera, _super);
-        function Camera(targetEntity, cameraStyle) {
-            if (targetEntity === void 0) { targetEntity = null; }
-            if (cameraStyle === void 0) { cameraStyle = CameraStyle.lockOn; }
-            var _this = _super.call(this) || this;
-            _this._inset = new CameraInset();
-            _this._areMatrixedDirty = true;
-            _this._areBoundsDirty = true;
-            _this._isProjectionMatrixDirty = true;
-            _this.followLerp = 0.1;
-            _this.deadzone = new es.Rectangle();
-            _this.focusOffset = es.Vector2.zero;
-            _this.mapLockEnabled = false;
-            _this.mapSize = new es.Rectangle();
-            _this._desiredPositionDelta = new es.Vector2();
-            _this._worldSpaceDeadZone = new es.Rectangle();
-            _this._minimumZoom = 0.3;
-            _this._maximumZoom = 3;
-            _this._bounds = new es.Rectangle();
-            _this._transformMatrix = new es.Matrix2D().identity();
-            _this._inverseTransformMatrix = new es.Matrix2D().identity();
-            _this._origin = es.Vector2.zero;
-            _this._targetEntity = targetEntity;
-            _this._cameraStyle = cameraStyle;
-            _this.setZoom(0);
-            return _this;
-        }
-        Object.defineProperty(Camera.prototype, "position", {
-            get: function () {
-                return this.entity.transform.position;
-            },
-            set: function (value) {
-                this.entity.transform.position = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "rotation", {
-            get: function () {
-                return this.entity.transform.rotation;
-            },
-            set: function (value) {
-                this.entity.transform.rotation = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "zoom", {
-            get: function () {
-                if (this._zoom == 0)
-                    return 1;
-                if (this._zoom < 1)
-                    return es.MathHelper.map(this._zoom, this._minimumZoom, 1, -1, 0);
-                return es.MathHelper.map(this._zoom, 1, this._maximumZoom, 0, 1);
-            },
-            set: function (value) {
-                this.setZoom(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "minimumZoom", {
-            get: function () {
-                return this._minimumZoom;
-            },
-            set: function (value) {
-                this.setMinimumZoom(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "maximumZoom", {
-            get: function () {
-                return this._maximumZoom;
-            },
-            set: function (value) {
-                this.setMaximumZoom(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "bounds", {
-            get: function () {
-                if (this._areMatrixedDirty)
-                    this.updateMatrixes();
-                if (this._areBoundsDirty) {
-                    var topLeft = this.screenToWorldPoint(new es.Vector2(this._inset.left, this._inset.top));
-                    var bottomRight = this.screenToWorldPoint(new es.Vector2(es.Core.graphicsDevice.viewport.width - this._inset.right, es.Core.graphicsDevice.viewport.height - this._inset.bottom));
-                    if (this.entity.transform.rotation != 0) {
-                        var topRight = this.screenToWorldPoint(new es.Vector2(es.Core.graphicsDevice.viewport.width - this._inset.right, this._inset.top));
-                        var bottomLeft = this.screenToWorldPoint(new es.Vector2(this._inset.left, es.Core.graphicsDevice.viewport.height - this._inset.bottom));
-                        var minX = Math.min(topLeft.x, bottomRight.x, topRight.x, bottomLeft.x);
-                        var maxX = Math.max(topLeft.x, bottomRight.x, topRight.x, bottomLeft.x);
-                        var minY = Math.min(topLeft.y, bottomRight.y, topRight.y, bottomLeft.y);
-                        var maxY = Math.max(topLeft.y, bottomRight.y, topRight.y, bottomLeft.y);
-                        this._bounds.location = new es.Vector2(minX, minY);
-                        this._bounds.width = maxX - minX;
-                        this._bounds.height = maxY - minY;
-                    }
-                    else {
-                        this._bounds.location = topLeft;
-                        this._bounds.width = bottomRight.x - topLeft.x;
-                        this._bounds.height = bottomRight.y - topLeft.y;
-                    }
-                    this._areBoundsDirty = false;
-                }
-                return this._bounds;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "transformMatrix", {
-            get: function () {
-                if (this._areMatrixedDirty)
-                    this.updateMatrixes();
-                return this._transformMatrix;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "inverseTransformMatrix", {
-            get: function () {
-                if (this._areMatrixedDirty)
-                    this.updateMatrixes();
-                return this._inverseTransformMatrix;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Camera.prototype, "origin", {
-            get: function () {
-                return this._origin;
-            },
-            set: function (value) {
-                if (this._origin != value) {
-                    this._origin = value;
-                    this._areMatrixedDirty = true;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Camera.prototype.onSceneSizeChanged = function (newWidth, newHeight) {
-            var oldOrigin = this._origin;
-            this.origin = new es.Vector2(newWidth / 2, newHeight / 2);
-            this.entity.transform.position = es.Vector2.add(this.entity.transform.position, es.Vector2.subtract(this._origin, oldOrigin));
-        };
-        Camera.prototype.setInset = function (left, right, top, bottom) {
-            this._inset = new CameraInset();
-            this._inset.left = left;
-            this._inset.right = right;
-            this._inset.top = top;
-            this._inset.bottom = bottom;
-            this._areBoundsDirty = true;
-            return this;
-        };
-        Camera.prototype.setPosition = function (position) {
-            this.entity.transform.setPosition(position.x, position.y);
-            return this;
-        };
-        Camera.prototype.setRotation = function (rotation) {
-            this.entity.transform.setRotation(rotation);
-            return this;
-        };
-        Camera.prototype.setZoom = function (zoom) {
-            var newZoom = es.MathHelper.clamp(zoom, -1, 1);
-            if (newZoom == 0) {
-                this._zoom = 1;
-            }
-            else if (newZoom < 0) {
-                this._zoom = es.MathHelper.map(newZoom, -1, 0, this._minimumZoom, 1);
-            }
-            else {
-                this._zoom = es.MathHelper.map(newZoom, 0, 1, 1, this._maximumZoom);
-            }
-            this._areMatrixedDirty = true;
-            return this;
-        };
-        Camera.prototype.setMinimumZoom = function (minZoom) {
-            if (minZoom <= 0) {
-                console.error("minimumZoom must be greater than zero");
-                return;
-            }
-            if (this._zoom < minZoom)
-                this._zoom = this.minimumZoom;
-            this._minimumZoom = minZoom;
-            return this;
-        };
-        Camera.prototype.setMaximumZoom = function (maxZoom) {
-            if (maxZoom <= 0) {
-                console.error("maximumZoom must be greater than zero");
-                return;
-            }
-            if (this._zoom > maxZoom)
-                this._zoom = maxZoom;
-            this._maximumZoom = maxZoom;
-            return this;
-        };
-        Camera.prototype.onEntityTransformChanged = function (comp) {
-            this._areMatrixedDirty = true;
-        };
-        Camera.prototype.zoomIn = function (deltaZoom) {
-            this.zoom += deltaZoom;
-        };
-        Camera.prototype.zoomOut = function (deltaZoom) {
-            this.zoom -= deltaZoom;
-        };
-        Camera.prototype.worldToScreenPoint = function (worldPosition) {
-            this.updateMatrixes();
-            worldPosition = es.Vector2.transform(worldPosition, this._transformMatrix);
-            return worldPosition;
-        };
-        Camera.prototype.screenToWorldPoint = function (screenPosition) {
-            this.updateMatrixes();
-            screenPosition = es.Vector2.transform(screenPosition, this._inverseTransformMatrix);
-            return screenPosition;
-        };
-        Camera.prototype.mouseToWorldPoint = function () {
-            return this.screenToWorldPoint(es.Input.touchPosition);
-        };
-        Camera.prototype.onAddedToEntity = function () {
-            this.follow(this._targetEntity, this._cameraStyle);
-        };
-        Camera.prototype.update = function () {
-            var halfScreen = es.Vector2.multiply(new es.Vector2(this.bounds.width, this.bounds.height), new es.Vector2(0.5));
-            this._worldSpaceDeadZone.x = this.position.x - halfScreen.x * es.Core.scene.scaleX + this.deadzone.x + this.focusOffset.x;
-            this._worldSpaceDeadZone.y = this.position.y - halfScreen.y * es.Core.scene.scaleY + this.deadzone.y + this.focusOffset.y;
-            this._worldSpaceDeadZone.width = this.deadzone.width;
-            this._worldSpaceDeadZone.height = this.deadzone.height;
-            if (this._targetEntity)
-                this.updateFollow();
-            this.position = es.Vector2.lerp(this.position, es.Vector2.add(this.position, this._desiredPositionDelta), this.followLerp);
-            this.entity.transform.roundPosition();
-            if (this.mapLockEnabled) {
-                this.position = this.clampToMapSize(this.position);
-                this.entity.transform.roundPosition();
-            }
-        };
-        Camera.prototype.clampToMapSize = function (position) {
-            var halfScreen = es.Vector2.multiply(new es.Vector2(this.bounds.width, this.bounds.height), new es.Vector2(0.5)).add(new es.Vector2(this.mapSize.x, this.mapSize.y));
-            var cameraMax = new es.Vector2(this.mapSize.width - halfScreen.x, this.mapSize.height - halfScreen.y);
-            return es.Vector2.clamp(position, halfScreen, cameraMax);
-        };
-        Camera.prototype.updateFollow = function () {
-            this._desiredPositionDelta.x = this._desiredPositionDelta.y = 0;
-            if (this._cameraStyle == CameraStyle.lockOn) {
-                var targetX = this._targetEntity.transform.position.x;
-                var targetY = this._targetEntity.transform.position.y;
-                if (this._worldSpaceDeadZone.x > targetX)
-                    this._desiredPositionDelta.x = targetX - this._worldSpaceDeadZone.x;
-                else if (this._worldSpaceDeadZone.x < targetX)
-                    this._desiredPositionDelta.x = targetX - this._worldSpaceDeadZone.x;
-                if (this._worldSpaceDeadZone.y < targetY)
-                    this._desiredPositionDelta.y = targetY - this._worldSpaceDeadZone.y;
-                else if (this._worldSpaceDeadZone.y > targetY)
-                    this._desiredPositionDelta.y = targetY - this._worldSpaceDeadZone.y;
-            }
-            else {
-                if (!this._targetCollider) {
-                    this._targetCollider = this._targetEntity.getComponent(es.Collider);
-                    if (!this._targetCollider)
-                        return;
-                }
-                var targetBounds = this._targetEntity.getComponent(es.Collider).bounds;
-                if (!this._worldSpaceDeadZone.containsRect(targetBounds)) {
-                    if (this._worldSpaceDeadZone.left > targetBounds.left)
-                        this._desiredPositionDelta.x = targetBounds.left - this._worldSpaceDeadZone.left;
-                    else if (this._worldSpaceDeadZone.right < targetBounds.right)
-                        this._desiredPositionDelta.x = targetBounds.right - this._worldSpaceDeadZone.right;
-                    if (this._worldSpaceDeadZone.bottom < targetBounds.bottom)
-                        this._desiredPositionDelta.y = targetBounds.bottom - this._worldSpaceDeadZone.bottom;
-                    else if (this._worldSpaceDeadZone.top > targetBounds.top)
-                        this._desiredPositionDelta.y = targetBounds.top - this._worldSpaceDeadZone.top;
-                }
-            }
-        };
-        Camera.prototype.follow = function (targetEntity, cameraStyle) {
-            if (cameraStyle === void 0) { cameraStyle = CameraStyle.cameraWindow; }
-            this._targetEntity = targetEntity;
-            this._cameraStyle = cameraStyle;
-            switch (this._cameraStyle) {
-                case CameraStyle.cameraWindow:
-                    var w = this.bounds.width / 6;
-                    var h = this.bounds.height / 3;
-                    this.deadzone = new es.Rectangle((this.bounds.width - w) / 2, (this.bounds.height - h) / 2, w, h);
-                    break;
-                case CameraStyle.lockOn:
-                    this.deadzone = new es.Rectangle(this.bounds.width / 2, this.bounds.height / 2, 10, 10);
-                    break;
-            }
-        };
-        Camera.prototype.setCenteredDeadzone = function (width, height) {
-            this.deadzone = new es.Rectangle((this.bounds.width - width) / 2, (this.bounds.height - height) / 2, width, height);
-        };
-        Camera.prototype.updateMatrixes = function () {
-            if (!this._areMatrixedDirty)
-                return;
-            var tempMat;
-            this._transformMatrix = es.Matrix2D.create().translate(-this.entity.transform.position.x, -this.entity.transform.position.y);
-            if (this._zoom != 1) {
-                tempMat = es.Matrix2D.create().scale(this._zoom, this._zoom);
-                this._transformMatrix = this._transformMatrix.multiply(tempMat);
-            }
-            if (this.entity.transform.rotation != 0) {
-                tempMat = es.Matrix2D.create().rotate(this.entity.transform.rotation);
-                this._transformMatrix = this._transformMatrix.multiply(tempMat);
-            }
-            tempMat = es.Matrix2D.create().translate(this._origin.x, this._origin.y);
-            this._transformMatrix = this._transformMatrix.multiply(tempMat);
-            this._inverseTransformMatrix = this._transformMatrix.invert();
-            this._areBoundsDirty = true;
-            this._areMatrixedDirty = false;
-        };
-        return Camera;
-    }(es.Component));
-    es.Camera = Camera;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var CameraShake = (function (_super) {
-        __extends(CameraShake, _super);
-        function CameraShake() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this._shakeDirection = es.Vector2.zero;
-            _this._shakeOffset = es.Vector2.zero;
-            _this._shakeIntensity = 0;
-            _this._shakeDegredation = 0.95;
-            return _this;
-        }
-        CameraShake.prototype.shake = function (shakeIntensify, shakeDegredation, shakeDirection) {
-            if (shakeIntensify === void 0) { shakeIntensify = 15; }
-            if (shakeDegredation === void 0) { shakeDegredation = 0.9; }
-            if (shakeDirection === void 0) { shakeDirection = es.Vector2.zero; }
-            this.enabled = true;
-            if (this._shakeIntensity < shakeIntensify) {
-                this._shakeDirection = shakeDirection;
-                this._shakeIntensity = shakeIntensify;
-                if (shakeDegredation < 0 || shakeDegredation >= 1) {
-                    shakeDegredation = 0.95;
-                }
-                this._shakeDegredation = shakeDegredation;
-            }
-        };
-        CameraShake.prototype.update = function () {
-            if (Math.abs(this._shakeIntensity) > 0) {
-                this._shakeOffset = this._shakeDirection;
-                if (this._shakeOffset.x != 0 || this._shakeOffset.y != 0) {
-                    this._shakeOffset.normalize();
-                }
-                else {
-                    this._shakeOffset.x = this._shakeOffset.x + Math.random() - 0.5;
-                    this._shakeOffset.y = this._shakeOffset.y + Math.random() - 0.5;
-                }
-                this._shakeOffset.multiply(new es.Vector2(this._shakeIntensity));
-                this._shakeIntensity *= -this._shakeDegredation;
-                if (Math.abs(this._shakeIntensity) <= 0.01) {
-                    this._shakeIntensity = 0;
-                    this.enabled = false;
-                }
-            }
-            this.entity.scene.camera.position.add(this._shakeOffset);
-        };
-        return CameraShake;
-    }(es.Component));
-    es.CameraShake = CameraShake;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var ComponentPool = (function () {
+    var ComponentPool = /** @class */ (function () {
         function ComponentPool(typeClass) {
             this._type = typeClass;
             this._cache = [];
@@ -2612,7 +2076,10 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var IUpdatableComparer = (function () {
+    /**
+     * 用于比较组件更新排序
+     */
+    var IUpdatableComparer = /** @class */ (function () {
         function IUpdatableComparer() {
         }
         IUpdatableComparer.prototype.compare = function (a, b) {
@@ -2621,10 +2088,12 @@ var es;
         return IUpdatableComparer;
     }());
     es.IUpdatableComparer = IUpdatableComparer;
+    es.isIUpdatable = function (props) { return typeof props['update'] !== 'undefined'; };
 })(es || (es = {}));
 var es;
 (function (es) {
-    var PooledComponent = (function (_super) {
+    /** 回收实例的组件类型。 */
+    var PooledComponent = /** @class */ (function (_super) {
         __extends(PooledComponent, _super);
         function PooledComponent() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -2635,174 +2104,78 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var RenderableComponent = (function (_super) {
-        __extends(RenderableComponent, _super);
-        function RenderableComponent() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.displayObject = new egret.DisplayObject();
-            _this.color = 0x000000;
-            _this._areBoundsDirty = true;
-            _this._localOffset = es.Vector2.zero;
-            _this._renderLayer = 0;
-            _this._bounds = new es.Rectangle();
-            return _this;
-        }
-        Object.defineProperty(RenderableComponent.prototype, "width", {
-            get: function () {
-                return this.bounds.width;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RenderableComponent.prototype, "height", {
-            get: function () {
-                return this.bounds.height;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RenderableComponent.prototype, "localOffset", {
-            get: function () {
-                return this._localOffset;
-            },
-            set: function (value) {
-                this.setLocalOffset(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RenderableComponent.prototype, "renderLayer", {
-            get: function () {
-                return this._renderLayer;
-            },
-            set: function (value) {
-                this.setRenderLayer(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RenderableComponent.prototype, "bounds", {
-            get: function () {
-                if (this._areBoundsDirty) {
-                    this._bounds.calculateBounds(this.entity.transform.position, this._localOffset, es.Vector2.zero, this.entity.transform.scale, this.entity.transform.rotation, this.width, this.height);
-                    this._areBoundsDirty = false;
-                }
-                return this._bounds;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RenderableComponent.prototype, "isVisible", {
-            get: function () {
-                return this._isVisible;
-            },
-            set: function (value) {
-                if (this._isVisible != value) {
-                    this._isVisible = value;
-                    if (this._isVisible)
-                        this.onBecameVisible();
-                    else
-                        this.onBecameInvisible();
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        RenderableComponent.prototype.onEntityTransformChanged = function (comp) {
-            this._areBoundsDirty = true;
-        };
-        RenderableComponent.prototype.isVisibleFromCamera = function (camera) {
-            this.isVisible = camera.bounds.intersects(this.displayObject.getBounds().union(this.bounds));
-            return this.isVisible;
-        };
-        RenderableComponent.prototype.setRenderLayer = function (renderLayer) {
-            if (renderLayer != this._renderLayer) {
-                var oldRenderLayer = this._renderLayer;
-                this._renderLayer = renderLayer;
-                if (this.entity && this.entity.scene)
-                    this.entity.scene.renderableComponents.updateRenderableRenderLayer(this, oldRenderLayer, this._renderLayer);
-            }
-            return this;
-        };
-        RenderableComponent.prototype.setColor = function (color) {
-            this.color = color;
-            return this;
-        };
-        RenderableComponent.prototype.setLocalOffset = function (offset) {
-            if (this._localOffset != offset) {
-                this._localOffset = offset;
-            }
-            return this;
-        };
-        RenderableComponent.prototype.sync = function (camera) {
-            var afterPos = new es.Vector2(this.entity.position.x + this.localOffset.x - camera.position.x + camera.origin.x, this.entity.position.y + this.localOffset.y - camera.position.y + camera.origin.y);
-            if (this.displayObject.x != afterPos.x)
-                this.displayObject.x = afterPos.x;
-            if (this.displayObject.y != afterPos.y)
-                this.displayObject.y = afterPos.y;
-            if (this.displayObject.scaleX != this.entity.scale.x)
-                this.displayObject.scaleX = this.entity.scale.x;
-            if (this.displayObject.scaleY != this.entity.scale.y)
-                this.displayObject.scaleY = this.entity.scale.y;
-            if (this.displayObject.rotation != this.entity.rotation)
-                this.displayObject.rotation = this.entity.rotation;
-        };
-        RenderableComponent.prototype.toString = function () {
-            return "[RenderableComponent] renderLayer: " + this.renderLayer;
-        };
-        RenderableComponent.prototype.onBecameVisible = function () {
-            this.displayObject.visible = this.isVisible;
-        };
-        RenderableComponent.prototype.onBecameInvisible = function () {
-            this.displayObject.visible = this.isVisible;
-        };
-        return RenderableComponent;
-    }(es.Component));
-    es.RenderableComponent = RenderableComponent;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var SceneComponent = (function () {
+    var SceneComponent = /** @class */ (function () {
         function SceneComponent() {
+            /**
+             * 更新此场景中SceneComponents的顺序
+             */
             this.updateOrder = 0;
             this._enabled = true;
         }
         Object.defineProperty(SceneComponent.prototype, "enabled", {
+            /**
+             * 如果启用了SceneComponent，则为true。状态的改变会导致调用onEnabled/onDisable。
+             */
             get: function () {
                 return this._enabled;
             },
+            /**
+             * 如果启用了SceneComponent，则为true。状态的改变会导致调用onEnabled/onDisable。
+             * @param value
+             */
             set: function (value) {
                 this.setEnabled(value);
             },
             enumerable: true,
             configurable: true
         });
+        /**
+         * 在启用此SceneComponent时调用
+         */
         SceneComponent.prototype.onEnabled = function () {
         };
+        /**
+         * 当禁用此SceneComponent时调用
+         */
         SceneComponent.prototype.onDisabled = function () {
         };
+        /**
+         * 当该SceneComponent从场景中移除时调用
+         */
         SceneComponent.prototype.onRemovedFromScene = function () {
         };
+        /**
+         * 在实体更新之前每一帧调用
+         */
         SceneComponent.prototype.update = function () {
         };
+        /**
+         * 启用/禁用这个SceneComponent
+         * @param isEnabled
+         */
         SceneComponent.prototype.setEnabled = function (isEnabled) {
             if (this._enabled != isEnabled) {
                 this._enabled = isEnabled;
                 if (this._enabled) {
+                    this.onEnabled();
                 }
                 else {
+                    this.onDisabled();
                 }
             }
             return this;
         };
+        /**
+         * 设置SceneComponent的updateOrder并触发某种SceneComponent
+         * @param updateOrder
+         */
         SceneComponent.prototype.setUpdateOrder = function (updateOrder) {
             if (this.updateOrder != updateOrder) {
                 this.updateOrder = updateOrder;
-                es.Core.scene._sceneComponents.sort(this.compareTo);
             }
             return this;
         };
-        SceneComponent.prototype.compareTo = function (other) {
+        SceneComponent.prototype.compare = function (other) {
             return this.updateOrder - other.updateOrder;
         };
         return SceneComponent;
@@ -2811,620 +2184,312 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Bitmap = egret.Bitmap;
-    var SpriteRenderer = (function (_super) {
-        __extends(SpriteRenderer, _super);
-        function SpriteRenderer(sprite) {
-            if (sprite === void 0) { sprite = null; }
+    /**
+     * 请注意，这不是一个完整的、多迭代的物理系统！它可以用于简单的、街机风格的物理。
+     * 这可以用于简单的，街机风格的物理学
+     */
+    var ArcadeRigidbody = /** @class */ (function (_super) {
+        __extends(ArcadeRigidbody, _super);
+        function ArcadeRigidbody() {
             var _this = _super.call(this) || this;
-            if (sprite instanceof es.Sprite)
-                _this.setSprite(sprite);
-            else if (sprite instanceof egret.Texture)
-                _this.setSprite(new es.Sprite(sprite));
+            /**
+             *  如果为真，则每一帧都会考虑到Physics.gravity
+             */
+            _this.shouldUseGravity = true;
+            /**
+             * 该刚体的速度
+             */
+            _this.velocity = new es.Vector2();
+            _this._mass = 10;
+            _this._elasticity = 0.5;
+            _this._friction = 0.5;
+            _this._glue = 0.01;
+            _this._inverseMass = 0;
+            _this._inverseMass = 1 / _this._mass;
             return _this;
         }
-        Object.defineProperty(SpriteRenderer.prototype, "bounds", {
+        Object.defineProperty(ArcadeRigidbody.prototype, "mass", {
+            /** 这个刚体的质量。质量为0，则是一个不可移动的物体 */
             get: function () {
-                if (this._areBoundsDirty) {
-                    if (this._sprite) {
-                        this._bounds.calculateBounds(this.entity.transform.position, this._localOffset, this._origin, this.entity.transform.scale, this.entity.transform.rotation, this._sprite.sourceRect.width, this._sprite.sourceRect.height);
-                        this._areBoundsDirty = false;
+                return this._mass;
+            },
+            set: function (value) {
+                this.setMass(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ArcadeRigidbody.prototype, "elasticity", {
+            /**
+             * 0-1范围，其中0为无反弹，1为完全反射。
+             */
+            get: function () {
+                return this._elasticity;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ArcadeRigidbody.prototype, "elasticiy", {
+            set: function (value) {
+                this.setElasticity(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ArcadeRigidbody.prototype, "friction", {
+            /**
+             * 0 - 1范围。0表示没有摩擦力，1表示物体会停止在原地
+             */
+            get: function () {
+                return this._friction;
+            },
+            set: function (value) {
+                this.setFriction(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ArcadeRigidbody.prototype, "glue", {
+            /**
+             * 0-9的范围。当发生碰撞时，沿碰撞面做直线运动时，如果其平方幅度小于glue摩擦力，则将碰撞设置为上限
+             */
+            get: function () {
+                return this._glue;
+            },
+            set: function (value) {
+                this.setGlue(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ArcadeRigidbody.prototype, "isImmovable", {
+            /**
+             * 质量为0的刚体被认为是不可移动的。改变速度和碰撞对它们没有影响
+             */
+            get: function () {
+                return this._mass < 0.0001;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * 这个刚体的质量。质量为0，则是一个不可移动的物体
+         * @param mass
+         */
+        ArcadeRigidbody.prototype.setMass = function (mass) {
+            this._mass = es.MathHelper.clamp(mass, 0, Number.MAX_VALUE);
+            if (this._mass > 0.0001)
+                this._inverseMass = 1 / this._mass;
+            else
+                this._inverseMass = 0;
+            return this;
+        };
+        /**
+         * 0-1范围，其中0为无反弹，1为完全反射。
+         * @param value
+         */
+        ArcadeRigidbody.prototype.setElasticity = function (value) {
+            this._elasticity = es.MathHelper.clamp01(value);
+            return this;
+        };
+        /**
+         * 0 - 1范围。0表示没有摩擦力，1表示物体会停止在原地
+         * @param value
+         */
+        ArcadeRigidbody.prototype.setFriction = function (value) {
+            this._friction = es.MathHelper.clamp01(value);
+            return this;
+        };
+        /**
+         * 0-9的范围。当发生碰撞时，沿碰撞面做直线运动时，如果其平方幅度小于glue摩擦力，则将碰撞设置为上限
+         * @param value
+         */
+        ArcadeRigidbody.prototype.setGlue = function (value) {
+            this._glue = es.MathHelper.clamp(value, 0, 10);
+            return this;
+        };
+        /**
+         * 用刚体的质量给刚体加上一个瞬间的力脉冲。力是一个加速度，单位是每秒像素每秒。将力乘以100000，使数值使用更合理
+         * @param force
+         */
+        ArcadeRigidbody.prototype.addImpulse = function (force) {
+            if (!this.isImmovable) {
+                this.velocity = es.Vector2.add(this.velocity, es.Vector2.multiply(force, new es.Vector2(100000))
+                    .multiply(new es.Vector2(this._inverseMass * es.Time.deltaTime)));
+            }
+        };
+        ArcadeRigidbody.prototype.onAddedToEntity = function () {
+            this._collider = this.entity.getComponent(es.Collider);
+            if (this._collider == null) {
+                console.warn("ArcadeRigidbody 没有 Collider。ArcadeRigidbody需要一个Collider!");
+            }
+        };
+        ArcadeRigidbody.prototype.update = function () {
+            var e_1, _a;
+            if (this.isImmovable || this._collider == null) {
+                this.velocity = es.Vector2.zero;
+                return;
+            }
+            if (this.shouldUseGravity)
+                this.velocity = es.Vector2.add(this.velocity, es.Vector2.multiply(es.Physics.gravity, new es.Vector2(es.Time.deltaTime)));
+            this.entity.transform.position = es.Vector2.add(this.entity.transform.position, es.Vector2.multiply(this.velocity, new es.Vector2(es.Time.deltaTime)));
+            var collisionResult = new es.CollisionResult();
+            // 捞取我们在新的位置上可能会碰撞到的任何东西
+            var neighbors = es.Physics.boxcastBroadphaseExcludingSelfNonRect(this._collider, this._collider.collidesWithLayers.value);
+            try {
+                for (var neighbors_1 = __values(neighbors), neighbors_1_1 = neighbors_1.next(); !neighbors_1_1.done; neighbors_1_1 = neighbors_1.next()) {
+                    var neighbor = neighbors_1_1.value;
+                    // 如果邻近的对撞机是同一个实体，则忽略它
+                    if (neighbor.entity.equals(this.entity)) {
+                        continue;
+                    }
+                    if (this._collider.collidesWithNonMotion(neighbor, collisionResult)) {
+                        // 如果附近有一个ArcadeRigidbody，我们就会处理完整的碰撞响应。如果没有，我们会根据附近是不可移动的来计算事情
+                        var neighborRigidbody = neighbor.entity.getComponent(ArcadeRigidbody);
+                        if (neighborRigidbody != null) {
+                            this.processOverlap(neighborRigidbody, collisionResult.minimumTranslationVector);
+                            this.processCollision(neighborRigidbody, collisionResult.minimumTranslationVector);
+                        }
+                        else {
+                            // 没有ArcadeRigidbody，所以我们假设它是不动的，只移动我们自己的
+                            this.entity.transform.position = es.Vector2.subtract(this.entity.transform.position, collisionResult.minimumTranslationVector);
+                            var relativeVelocity = this.velocity.clone();
+                            this.calculateResponseVelocity(relativeVelocity, collisionResult.minimumTranslationVector, relativeVelocity);
+                            this.velocity = es.Vector2.add(this.velocity, relativeVelocity);
+                        }
                     }
                 }
-                return this._bounds;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(SpriteRenderer.prototype, "originNormalized", {
-            get: function () {
-                return new es.Vector2(this._origin.x / this.width * this.entity.transform.scale.x, this._origin.y / this.height * this.entity.transform.scale.y);
-            },
-            set: function (value) {
-                this.setOrigin(new es.Vector2(value.x * this.width / this.entity.transform.scale.x, value.y * this.height / this.entity.transform.scale.y));
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(SpriteRenderer.prototype, "origin", {
-            get: function () {
-                return this._origin;
-            },
-            set: function (value) {
-                this.setOrigin(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(SpriteRenderer.prototype, "sprite", {
-            get: function () {
-                return this._sprite;
-            },
-            set: function (value) {
-                this.setSprite(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SpriteRenderer.prototype.setSprite = function (sprite) {
-            this._sprite = sprite;
-            if (this._sprite) {
-                this._origin = this._sprite.origin;
-                this.displayObject.anchorOffsetX = this._origin.x;
-                this.displayObject.anchorOffsetY = this._origin.y;
             }
-            this.displayObject = new Bitmap(sprite.texture2D);
-            return this;
-        };
-        SpriteRenderer.prototype.setOrigin = function (origin) {
-            if (this._origin != origin) {
-                this._origin = origin;
-                this.displayObject.anchorOffsetX = this._origin.x;
-                this.displayObject.anchorOffsetY = this._origin.y;
-                this._areBoundsDirty = true;
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (neighbors_1_1 && !neighbors_1_1.done && (_a = neighbors_1.return)) _a.call(neighbors_1);
+                }
+                finally { if (e_1) throw e_1.error; }
             }
-            return this;
         };
-        SpriteRenderer.prototype.setOriginNormalized = function (value) {
-            this.setOrigin(new es.Vector2(value.x * this.width / this.entity.transform.scale.x, value.y * this.height / this.entity.transform.scale.y));
-            return this;
-        };
-        SpriteRenderer.prototype.render = function (camera) {
-            this.sync(camera);
-            var afterPos = new es.Vector2(this.entity.position.x + this.localOffset.x - camera.position.x + camera.origin.x, this.entity.position.y + this.localOffset.y - camera.position.y + camera.origin.y);
-            if (this.displayObject.x != afterPos.x)
-                this.displayObject.x = afterPos.x;
-            if (this.displayObject.y != afterPos.y)
-                this.displayObject.y = afterPos.y;
-        };
-        return SpriteRenderer;
-    }(es.RenderableComponent));
-    es.SpriteRenderer = SpriteRenderer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Bitmap = egret.Bitmap;
-    var RenderTexture = egret.RenderTexture;
-    var TiledSpriteRenderer = (function (_super) {
-        __extends(TiledSpriteRenderer, _super);
-        function TiledSpriteRenderer(sprite) {
-            var _this = _super.call(this, sprite) || this;
-            _this._textureScale = es.Vector2.one;
-            _this._inverseTexScale = es.Vector2.one;
-            _this._gapX = 0;
-            _this._gapY = 0;
-            _this._sourceRect = sprite.sourceRect;
-            var bitmap = _this.displayObject;
-            bitmap.$fillMode = egret.BitmapFillMode.REPEAT;
-            return _this;
-        }
-        Object.defineProperty(TiledSpriteRenderer.prototype, "bounds", {
-            get: function () {
-                if (this._areBoundsDirty) {
-                    if (this._sprite) {
-                        this._bounds.calculateBounds(this.entity.transform.position, this._localOffset, this._origin, this.entity.transform.scale, this.entity.transform.rotation, this.width, this.height);
-                        this._areBoundsDirty = false;
-                    }
-                }
-                return this._bounds;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TiledSpriteRenderer.prototype, "scrollX", {
-            get: function () {
-                return this._sourceRect.x;
-            },
-            set: function (value) {
-                this._sourceRect.x = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TiledSpriteRenderer.prototype, "scrollY", {
-            get: function () {
-                return this._sourceRect.y;
-            },
-            set: function (value) {
-                this._sourceRect.y = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TiledSpriteRenderer.prototype, "textureScale", {
-            get: function () {
-                return this._textureScale;
-            },
-            set: function (value) {
-                this._textureScale = value;
-                this._inverseTexScale = new es.Vector2(1 / this._textureScale.x, 1 / this._textureScale.y);
-                this._sourceRect.width = this._sprite.sourceRect.width * this._inverseTexScale.x;
-                this._sourceRect.height = this._sprite.sourceRect.height * this._inverseTexScale.y;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TiledSpriteRenderer.prototype, "width", {
-            get: function () {
-                return this._sourceRect.width;
-            },
-            set: function (value) {
-                this._areBoundsDirty = true;
-                this._sourceRect.width = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TiledSpriteRenderer.prototype, "height", {
-            get: function () {
-                return this._sourceRect.height;
-            },
-            set: function (value) {
-                this._areBoundsDirty = true;
-                this._sourceRect.height = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TiledSpriteRenderer.prototype, "gapXY", {
-            get: function () {
-                return new es.Vector2(this._gapX, this._gapY);
-            },
-            set: function (value) {
-                this._gapX = value.x;
-                this._gapY = value.y;
-                var renderTexture = new RenderTexture();
-                var newRectangle = this.sprite.sourceRect;
-                newRectangle.x = 0;
-                newRectangle.y = 0;
-                newRectangle.width += this._gapX;
-                newRectangle.height += this._gapY;
-                renderTexture.drawToTexture(this.displayObject, newRectangle);
-                if (!this.displayObject) {
-                    this.displayObject = new Bitmap(renderTexture);
-                }
-                else {
-                    this.displayObject.texture = renderTexture;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TiledSpriteRenderer.prototype.setGapXY = function (value) {
-            this.gapXY = value;
-            return this;
-        };
-        TiledSpriteRenderer.prototype.render = function (camera) {
-            _super.prototype.render.call(this, camera);
-            var bitmap = this.displayObject;
-            bitmap.width = this.width;
-            bitmap.height = this.height;
-            bitmap.scrollRect = this._sourceRect;
-        };
-        return TiledSpriteRenderer;
-    }(es.SpriteRenderer));
-    es.TiledSpriteRenderer = TiledSpriteRenderer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var ScrollingSpriteRenderer = (function (_super) {
-        __extends(ScrollingSpriteRenderer, _super);
-        function ScrollingSpriteRenderer(sprite) {
-            var _this = _super.call(this, sprite) || this;
-            _this.scrollSpeedX = 15;
-            _this.scroolSpeedY = 0;
-            _this._scrollX = 0;
-            _this._scrollY = 0;
-            _this._scrollWidth = 0;
-            _this._scrollHeight = 0;
-            _this._scrollWidth = _this.width;
-            _this._scrollHeight = _this.height;
-            return _this;
-        }
-        Object.defineProperty(ScrollingSpriteRenderer.prototype, "textureScale", {
-            get: function () {
-                return this._textureScale;
-            },
-            set: function (value) {
-                this._textureScale = value;
-                this._inverseTexScale = new es.Vector2(1 / this._textureScale.x, 1 / this._textureScale.y);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ScrollingSpriteRenderer.prototype, "scrollWidth", {
-            get: function () {
-                return this._scrollWidth;
-            },
-            set: function (value) {
-                this._scrollWidth = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ScrollingSpriteRenderer.prototype, "scrollHeight", {
-            get: function () {
-                return this._scrollHeight;
-            },
-            set: function (value) {
-                this._scrollHeight = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ScrollingSpriteRenderer.prototype.update = function () {
-            if (!this.sprite)
-                return;
-            this._scrollX += this.scrollSpeedX * es.Time.deltaTime;
-            this._scrollY += this.scroolSpeedY * es.Time.deltaTime;
-            this._sourceRect.x = this._scrollX;
-            this._sourceRect.y = this._scrollY;
-            this._sourceRect.width = this._scrollWidth + Math.abs(this._scrollX);
-            this._sourceRect.height = this._scrollHeight + Math.abs(this._scrollY);
-        };
-        return ScrollingSpriteRenderer;
-    }(es.TiledSpriteRenderer));
-    es.ScrollingSpriteRenderer = ScrollingSpriteRenderer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Sprite = (function () {
-        function Sprite(texture, sourceRect, origin) {
-            if (sourceRect === void 0) { sourceRect = new es.Rectangle(0, 0, texture.textureWidth, texture.textureHeight); }
-            if (origin === void 0) { origin = sourceRect.getHalfSize(); }
-            this.uvs = new es.Rectangle();
-            this.texture2D = texture;
-            this.sourceRect = sourceRect;
-            this.center = new es.Vector2(sourceRect.width * 0.5, sourceRect.height * 0.5);
-            this.origin = origin;
-            var inverseTexW = 1 / texture.textureWidth;
-            var inverseTexH = 1 / texture.textureHeight;
-            this.uvs.x = sourceRect.x * inverseTexW;
-            this.uvs.y = sourceRect.y * inverseTexH;
-            this.uvs.width = sourceRect.width * inverseTexW;
-            this.uvs.height = sourceRect.height * inverseTexH;
-        }
-        return Sprite;
-    }());
-    es.Sprite = Sprite;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var SpriteAnimation = (function () {
-        function SpriteAnimation(sprites, frameRate) {
-            this.sprites = sprites;
-            this.frameRate = frameRate;
-        }
-        return SpriteAnimation;
-    }());
-    es.SpriteAnimation = SpriteAnimation;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var LoopMode;
-    (function (LoopMode) {
-        LoopMode[LoopMode["loop"] = 0] = "loop";
-        LoopMode[LoopMode["once"] = 1] = "once";
-        LoopMode[LoopMode["clampForever"] = 2] = "clampForever";
-        LoopMode[LoopMode["pingPong"] = 3] = "pingPong";
-        LoopMode[LoopMode["pingPongOnce"] = 4] = "pingPongOnce";
-    })(LoopMode = es.LoopMode || (es.LoopMode = {}));
-    var State;
-    (function (State) {
-        State[State["none"] = 0] = "none";
-        State[State["running"] = 1] = "running";
-        State[State["paused"] = 2] = "paused";
-        State[State["completed"] = 3] = "completed";
-    })(State = es.State || (es.State = {}));
-    var SpriteAnimator = (function (_super) {
-        __extends(SpriteAnimator, _super);
-        function SpriteAnimator(sprite) {
-            var _this = _super.call(this, sprite) || this;
-            _this.speed = 1;
-            _this.animationState = State.none;
-            _this._elapsedTime = 0;
-            _this._animations = new Map();
-            return _this;
-        }
-        Object.defineProperty(SpriteAnimator.prototype, "isRunning", {
-            get: function () {
-                return this.animationState == State.running;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(SpriteAnimator.prototype, "animations", {
-            get: function () {
-                return this._animations;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SpriteAnimator.prototype.update = function () {
-            if (this.animationState != State.running || !this.currentAnimation)
-                return;
-            var animation = this.currentAnimation;
-            var secondsPerFrame = 1 / (animation.frameRate * this.speed);
-            var iterationDuration = secondsPerFrame * animation.sprites.length;
-            this._elapsedTime += es.Time.deltaTime;
-            var time = Math.abs(this._elapsedTime);
-            if (this._loopMode == LoopMode.once && time > iterationDuration ||
-                this._loopMode == LoopMode.pingPongOnce && time > iterationDuration * 2) {
-                this.animationState = State.completed;
-                this._elapsedTime = 0;
-                this.currentFrame = 0;
-                this.sprite = animation.sprites[this.currentFrame];
-                return;
+        /**
+         * 将两个重叠的刚体分开。也处理其中一个不可移动的情况
+         * @param other
+         * @param minimumTranslationVector
+         */
+        ArcadeRigidbody.prototype.processOverlap = function (other, minimumTranslationVector) {
+            if (this.isImmovable) {
+                other.entity.transform.position = es.Vector2.add(other.entity.transform.position, minimumTranslationVector);
             }
-            var i = Math.floor(time / secondsPerFrame);
-            var n = animation.sprites.length;
-            if (n > 2 && (this._loopMode == LoopMode.pingPong || this._loopMode == LoopMode.pingPongOnce)) {
-                var maxIndex = n - 1;
-                this.currentFrame = maxIndex - Math.abs(maxIndex - i % (maxIndex * 2));
+            else if (other.isImmovable) {
+                this.entity.transform.position = es.Vector2.subtract(this.entity.transform.position, minimumTranslationVector);
             }
             else {
-                this.currentFrame = i % n;
-            }
-            this.sprite = animation.sprites[this.currentFrame];
-        };
-        SpriteAnimator.prototype.addAnimation = function (name, animation) {
-            if (!this.sprite && animation.sprites.length > 0)
-                this.setSprite(animation.sprites[0]);
-            this._animations[name] = animation;
-            return this;
-        };
-        SpriteAnimator.prototype.play = function (name, loopMode) {
-            if (loopMode === void 0) { loopMode = null; }
-            this.currentAnimation = this._animations[name];
-            this.currentAnimationName = name;
-            this.currentFrame = 0;
-            this.animationState = State.running;
-            this.sprite = this.currentAnimation.sprites[0];
-            this._elapsedTime = 0;
-            this._loopMode = loopMode ? loopMode : LoopMode.loop;
-        };
-        SpriteAnimator.prototype.isAnimationActive = function (name) {
-            return this.currentAnimation && this.currentAnimationName == name;
-        };
-        SpriteAnimator.prototype.pause = function () {
-            this.animationState = State.paused;
-        };
-        SpriteAnimator.prototype.unPause = function () {
-            this.animationState = State.running;
-        };
-        SpriteAnimator.prototype.stop = function () {
-            this.currentAnimation = null;
-            this.currentAnimationName = null;
-            this.currentFrame = 0;
-            this.animationState = State.none;
-        };
-        return SpriteAnimator;
-    }(es.SpriteRenderer));
-    es.SpriteAnimator = SpriteAnimator;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var CollisionState = (function () {
-        function CollisionState() {
-        }
-        Object.defineProperty(CollisionState.prototype, "hasCollision", {
-            get: function () {
-                return this.below || this.right || this.left || this.above;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        CollisionState.prototype.reset = function () {
-            this.becameGroundedThisFrame = this.isGroundedOnOnewayPlatform = this.right = this.left = this.above = this.below = false;
-            this.slopAngle = 0;
-        };
-        CollisionState.prototype.toString = function () {
-            return "[CollisionState] r: " + this.right + ", l: " + this.left + ", a: " + this.above + ", b: " + this.below + ", angle: " + this.slopAngle + ", wasGroundedLastFrame: " + this.wasGroundedLastFrame + ", becameGroundedThisFrame: " + this.becameGroundedThisFrame;
-        };
-        return CollisionState;
-    }());
-    es.CollisionState = CollisionState;
-    var TiledMapMover = (function (_super) {
-        __extends(TiledMapMover, _super);
-        function TiledMapMover() {
-            var _this = _super.call(this) || this;
-            _this.colliderHorizontalInset = 2;
-            _this.colliderVerticalInset = 6;
-            return _this;
-        }
-        TiledMapMover.prototype.testCollisions = function (motion, boxColliderBounds, collisionState) {
-            this._boxColliderBounds = boxColliderBounds;
-            collisionState.wasGroundedLastFrame = collisionState.below;
-            collisionState.reset();
-            var motionX = motion.x;
-            var motionY = motion.y;
-            if (motionX != 0) {
-                var direction = motionX > 0 ? es.Edge.right : es.Edge.left;
-                var sweptBounds = this.collisionRectForSide(direction, motionX);
-                var collisionResponse = 0;
-                if (this.testMapCollision(sweptBounds, direction, collisionState, collisionResponse)) {
-                    motion.x = collisionResponse - es.RectangleExt.getSide(boxColliderBounds, direction);
-                    collisionState.left = direction == es.Edge.left;
-                    collisionState.right = direction == es.Edge.right;
-                    collisionState._movementRemainderX.reset();
-                }
-                else {
-                    collisionState.left = false;
-                    collisionState.right = false;
-                }
+                this.entity.transform.position = es.Vector2.subtract(this.entity.transform.position, es.Vector2.multiply(minimumTranslationVector, es.Vector2Ext.halfVector()));
+                other.entity.transform.position = es.Vector2.add(other.entity.transform.position, es.Vector2.multiply(minimumTranslationVector, es.Vector2Ext.halfVector()));
             }
         };
-        TiledMapMover.prototype.testMapCollision = function (collisionRect, direction, collisionState, collisionResponse) {
-            var side = es.EdgeExt.oppositeEdge(direction);
-            var perpindicularPosition = es.EdgeExt.isVertical(side) ? collisionRect.center.x : collisionRect.center.y;
-            var leadingPosition = es.RectangleExt.getSide(collisionRect, direction);
-            var shouldTestSlopes = es.EdgeExt.isVertical(side);
+        /**
+         * 处理两个非重叠的刚体的碰撞。新的速度将根据情况分配给每个刚体
+         * @param other
+         * @param minimumTranslationVector
+         */
+        ArcadeRigidbody.prototype.processCollision = function (other, minimumTranslationVector) {
+            // 我们计算两个相撞物体的响应。
+            // 计算的基础是沿碰撞表面法线反射的物体的相对速度。
+            // 然后，响应的一部分会根据质量加到每个物体上
+            var relativeVelocity = es.Vector2.subtract(this.velocity, other.velocity);
+            this.calculateResponseVelocity(relativeVelocity, minimumTranslationVector, relativeVelocity);
+            // 现在，我们使用质量来线性缩放两个刚体上的响应
+            var totalinverseMass = this._inverseMass + other._inverseMass;
+            var ourResponseFraction = this._inverseMass / totalinverseMass;
+            var otherResponseFraction = other._inverseMass / totalinverseMass;
+            this.velocity = es.Vector2.add(this.velocity, new es.Vector2(relativeVelocity.x * ourResponseFraction, relativeVelocity.y * ourResponseFraction));
+            other.velocity = es.Vector2.subtract(other.velocity, new es.Vector2(relativeVelocity.x * otherResponseFraction, relativeVelocity.y * otherResponseFraction));
         };
-        TiledMapMover.prototype.collisionRectForSide = function (side, motion) {
-            var bounds;
-            if (es.EdgeExt.isHorizontal(side)) {
-                bounds = es.RectangleExt.getRectEdgePortion(this._boxColliderBounds, side);
-            }
-            else {
-                bounds = es.RectangleExt.getHalfRect(this._boxColliderBounds, side);
-            }
-            if (es.EdgeExt.isVertical(side)) {
-                es.RectangleExt.contract(bounds, this.colliderHorizontalInset, 0);
-            }
-            else {
-                es.RectangleExt.contract(bounds, 0, this.colliderVerticalInset);
-            }
-            es.RectangleExt.expandSide(bounds, side, motion);
-            return bounds;
+        /**
+         *  给定两个物体和MTV之间的相对速度，本方法修改相对速度，使其成为碰撞响应
+         * @param relativeVelocity
+         * @param minimumTranslationVector
+         * @param responseVelocity
+         */
+        ArcadeRigidbody.prototype.calculateResponseVelocity = function (relativeVelocity, minimumTranslationVector, responseVelocity) {
+            if (responseVelocity === void 0) { responseVelocity = new es.Vector2(); }
+            // 首先，我们得到反方向的归一化MTV：表面法线
+            var inverseMTV = es.Vector2.multiply(minimumTranslationVector, new es.Vector2(-1));
+            var normal = es.Vector2.normalize(inverseMTV);
+            // 速度是沿碰撞法线和碰撞平面分解的。
+            // 弹性将影响沿法线的响应（法线速度分量），摩擦力将影响速度的切向分量（切向速度分量）
+            var n = es.Vector2.dot(relativeVelocity, normal);
+            var normalVelocityComponent = new es.Vector2(normal.x * n, normal.y * n);
+            var tangentialVelocityComponent = es.Vector2.subtract(relativeVelocity, normalVelocityComponent);
+            if (n > 0)
+                normalVelocityComponent = es.Vector2.zero;
+            // 如果切向分量的平方幅度小于glue，那么我们就把摩擦力提升到最大
+            var coefficientOfFriction = this._friction;
+            if (tangentialVelocityComponent.lengthSquared() < this._glue)
+                coefficientOfFriction = 1.01;
+            // 弹性影响速度的法向分量，摩擦力影响速度的切向分量
+            var t = es.Vector2.multiply(new es.Vector2((1 + this._elasticity)), normalVelocityComponent)
+                .multiply(new es.Vector2(-1))
+                .subtract(es.Vector2.multiply(new es.Vector2(coefficientOfFriction), tangentialVelocityComponent));
+            responseVelocity.x = t.x;
+            relativeVelocity.y = t.y;
         };
-        return TiledMapMover;
+        return ArcadeRigidbody;
     }(es.Component));
-    es.TiledMapMover = TiledMapMover;
+    es.ArcadeRigidbody = ArcadeRigidbody;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var TiledMapRenderer = (function (_super) {
-        __extends(TiledMapRenderer, _super);
-        function TiledMapRenderer(tiledMap, collisionLayerName, shouldCreateColliders) {
-            if (collisionLayerName === void 0) { collisionLayerName = null; }
-            if (shouldCreateColliders === void 0) { shouldCreateColliders = true; }
-            var _this = _super.call(this) || this;
-            _this.physicsLayer = 1 << 0;
-            _this.toContainer = false;
-            _this.tiledMap = tiledMap;
-            _this._shouldCreateColliders = shouldCreateColliders;
-            _this.displayObject = new egret.DisplayObjectContainer();
-            if (collisionLayerName) {
-                _this.collisionLayer = tiledMap.tileLayers[collisionLayerName];
-            }
-            return _this;
+    var TriggerListenerHelper = /** @class */ (function () {
+        function TriggerListenerHelper() {
         }
-        Object.defineProperty(TiledMapRenderer.prototype, "width", {
-            get: function () {
-                return this.tiledMap.width * this.tiledMap.tileWidth;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TiledMapRenderer.prototype, "height", {
-            get: function () {
-                return this.tiledMap.height * this.tiledMap.tileHeight;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TiledMapRenderer.prototype.setLayerToRender = function (layerName) {
-            this.layerIndicesToRender = [];
-            this.layerIndicesToRender[0] = this.getLayerIndex(layerName);
-        };
-        TiledMapRenderer.prototype.setLayersToRender = function () {
-            var layerNames = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                layerNames[_i] = arguments[_i];
-            }
-            this.layerIndicesToRender = [];
-            for (var i = 0; i < layerNames.length; i++)
-                this.layerIndicesToRender[i] = this.getLayerIndex(layerNames[i]);
-        };
-        TiledMapRenderer.prototype.getLayerIndex = function (layerName) {
-            var index = 0;
-            var layerType = this.tiledMap.getLayer(layerName);
-            for (var layer in this.tiledMap.layers) {
-                if (this.tiledMap.layers.hasOwnProperty(layer) &&
-                    this.tiledMap.layers[layer] == layerType) {
-                    return index;
+        TriggerListenerHelper.getITriggerListener = function (entity, components) {
+            var e_2, _a, e_3, _b;
+            try {
+                for (var _c = __values(entity.components._components), _d = _c.next(); !_d.done; _d = _c.next()) {
+                    var component = _d.value;
+                    if (es.isITriggerListener(component)) {
+                        components.push(component);
+                    }
                 }
             }
-            return -1;
-        };
-        TiledMapRenderer.prototype.getRowAtWorldPosition = function (yPos) {
-            yPos -= this.entity.transform.position.y + this._localOffset.y;
-            return this.tiledMap.worldToTilePositionY(yPos);
-        };
-        TiledMapRenderer.prototype.getColumnAtWorldPosition = function (xPos) {
-            xPos -= this.entity.transform.position.x + this._localOffset.x;
-            return this.tiledMap.worldToTilePositionX(xPos);
-        };
-        TiledMapRenderer.prototype.onEntityTransformChanged = function (comp) {
-            if (this._shouldCreateColliders && comp == transform.Component.position) {
-                this.removeColliders();
-                this.addColliders();
+            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+            finally {
+                try {
+                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+                }
+                finally { if (e_2) throw e_2.error; }
             }
-        };
-        TiledMapRenderer.prototype.onAddedToEntity = function () {
-            this.addColliders();
-        };
-        TiledMapRenderer.prototype.onRemovedFromEntity = function () {
-            this.removeColliders();
-        };
-        TiledMapRenderer.prototype.update = function () {
-            this.tiledMap.update();
-        };
-        TiledMapRenderer.prototype.render = function (camera) {
-            this.sync(camera);
-            if (!this.layerIndicesToRender) {
-                es.TiledRendering.renderMap(this.tiledMap, !this.toContainer ? this.displayObject : null, es.Vector2.add(this.entity.transform.position, this._localOffset), this.transform.scale, this.renderLayer);
-            }
-            else {
-                for (var i = 0; i < this.tiledMap.layers.length; i++) {
-                    if (this.tiledMap.layers[i].visible && this.layerIndicesToRender.contains(i))
-                        es.TiledRendering.renderLayerRenderCamera(this.tiledMap.layers[i], !this.toContainer ? this.displayObject : null, es.Vector2.add(this.entity.transform.position, this._localOffset), this.transform.scale, this.renderLayer, camera.bounds);
+            try {
+                for (var _e = __values(entity.components._componentsToAdd), _f = _e.next(); !_f.done; _f = _e.next()) {
+                    var component = _f.value;
+                    if (es.isITriggerListener(component)) {
+                        components.push(component);
+                    }
                 }
             }
-            if (!this.toContainer) {
-                this.displayObject.cacheAsBitmap = true;
-                this.toContainer = true;
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+            finally {
+                try {
+                    if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
+                }
+                finally { if (e_3) throw e_3.error; }
             }
+            return components;
         };
-        TiledMapRenderer.prototype.addColliders = function () {
-            if (!this.collisionLayer || !this._shouldCreateColliders)
-                return;
-            var collisionRects = this.collisionLayer.getCollisionRectangles();
-            this._colliders = [];
-            for (var i = 0; i < collisionRects.length; i++) {
-                var collider = new es.BoxCollider().createBoxRect(collisionRects[i].x + this._localOffset.x, collisionRects[i].y + this._localOffset.y, collisionRects[i].width, collisionRects[i].height);
-                collider.physicsLayer = this.physicsLayer;
-                collider.entity = this.entity;
-                this._colliders[i] = collider;
-                es.Physics.addCollider(collider);
-            }
-        };
-        TiledMapRenderer.prototype.removeColliders = function () {
-            if (this._colliders == null)
-                return;
-            for (var _i = 0, _a = this._colliders; _i < _a.length; _i++) {
-                var collider = _a[_i];
-                es.Physics.removeCollider(collider);
-            }
-            this._colliders = null;
-        };
-        return TiledMapRenderer;
-    }(es.RenderableComponent));
-    es.TiledMapRenderer = TiledMapRenderer;
+        return TriggerListenerHelper;
+    }());
+    es.TriggerListenerHelper = TriggerListenerHelper;
+    es.isITriggerListener = function (props) { return typeof props['onTriggerEnter'] !== 'undefined'; };
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Mover = (function (_super) {
+    /**
+     * 辅助类说明了一种处理移动的方法，它考虑了包括触发器在内的所有冲突。
+     * ITriggerListener接口用于管理对移动过程中违反的任何触发器的回调。
+     * 一个物体只能通过移动器移动。要正确报告触发器的move方法。
+     *
+     * 请注意，多个移动者相互交互将多次调用ITriggerListener。
+     */
+    var Mover = /** @class */ (function (_super) {
         __extends(Mover, _super);
         function Mover() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -3432,40 +2497,65 @@ var es;
         Mover.prototype.onAddedToEntity = function () {
             this._triggerHelper = new es.ColliderTriggerHelper(this.entity);
         };
+        /**
+         * 计算修改运动矢量的运动，以考虑移动时可能发生的碰撞
+         * @param motion
+         * @param collisionResult
+         */
         Mover.prototype.calculateMovement = function (motion, collisionResult) {
-            if (!this.entity.getComponent(es.Collider) || !this._triggerHelper) {
+            if (this.entity.getComponent(es.Collider) == null || this._triggerHelper == null) {
                 return false;
             }
+            // 移动所有的非触发碰撞器并获得最近的碰撞
             var colliders = this.entity.getComponents(es.Collider);
-            for (var i = 0; i < colliders.length; i++) {
+            var _loop_1 = function (i) {
                 var collider = colliders[i];
+                // 不检测触发器 在我们移动后会重新访问它
                 if (collider.isTrigger)
-                    continue;
-                var bounds = collider.bounds;
+                    return "continue";
+                // 获取我们在新位置可能发生碰撞的任何东西
+                var bounds = collider.bounds.clone();
                 bounds.x += motion.x;
                 bounds.y += motion.y;
-                var neighbors = es.Physics.boxcastBroadphaseExcludingSelf(collider, bounds, collider.collidesWithLayers);
-                for (var j = 0; j < neighbors.length; j++) {
-                    var neighbor = neighbors[j];
+                var neighbors = es.Physics.boxcastBroadphaseExcludingSelf(collider, bounds, collider.collidesWithLayers.value);
+                neighbors.forEach(function (value) {
+                    var neighbor = value;
+                    // 不检测触发器
                     if (neighbor.isTrigger)
-                        continue;
+                        return;
                     var _internalcollisionResult = new es.CollisionResult();
                     if (collider.collidesWith(neighbor, motion, _internalcollisionResult)) {
-                        motion = motion.subtract(_internalcollisionResult.minimumTranslationVector);
+                        // 如果碰撞 则退回之前的移动量
+                        motion.subtract(_internalcollisionResult.minimumTranslationVector);
+                        // 如果我们碰到多个对象，为了简单起见，只取第一个。
                         if (_internalcollisionResult.collider != null) {
                             collisionResult = _internalcollisionResult;
                         }
                     }
-                }
+                });
+            };
+            for (var i = 0; i < colliders.length; i++) {
+                _loop_1(i);
             }
             es.ListPool.free(colliders);
             return collisionResult.collider != null;
         };
+        /**
+         *  将calculatemomovement应用到实体并更新triggerHelper
+         * @param motion
+         */
         Mover.prototype.applyMovement = function (motion) {
+            // 移动实体到它的新位置，如果我们有一个碰撞，否则移动全部数量。当碰撞发生时，运动被更新
             this.entity.position = es.Vector2.add(this.entity.position, motion);
+            // 对所有是触发器的碰撞器与所有宽相位碰撞器进行重叠检查。任何重叠都会导致触发事件。
             if (this._triggerHelper)
                 this._triggerHelper.update();
         };
+        /**
+         * 通过调用calculateMovement和applyMovement来移动考虑碰撞的实体;
+         * @param motion
+         * @param collisionResult
+         */
         Mover.prototype.move = function (motion, collisionResult) {
             this.calculateMovement(motion, collisionResult);
             this.applyMovement(motion);
@@ -3477,7 +2567,11 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var ProjectileMover = (function (_super) {
+    /**
+     * 移动时考虑到碰撞，只用于向任何ITriggerListeners报告。
+     * 物体总是会全量移动，所以如果需要的话，由调用者在撞击时销毁它。
+     */
+    var ProjectileMover = /** @class */ (function (_super) {
         __extends(ProjectileMover, _super);
         function ProjectileMover() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -3487,30 +2581,48 @@ var es;
         ProjectileMover.prototype.onAddedToEntity = function () {
             this._collider = this.entity.getComponent(es.Collider);
             if (!this._collider)
-                console.warn("ProjectileMover has no Collider. ProjectilMover requires a Collider!");
+                console.warn("ProjectileMover没有Collider。ProjectilMover需要一个Collider!");
         };
+        /**
+         * 在考虑到碰撞的情况下移动实体
+         * @param motion
+         */
         ProjectileMover.prototype.move = function (motion) {
-            if (!this._collider)
+            var e_4, _a;
+            if (this._collider == null)
                 return false;
             var didCollide = false;
+            // 获取我们在新的位置上可能会碰撞到的任何东西
             this.entity.position = es.Vector2.add(this.entity.position, motion);
-            var neighbors = es.Physics.boxcastBroadphase(this._collider.bounds, this._collider.collidesWithLayers);
-            for (var i = 0; i < neighbors.length; i++) {
-                var neighbor = neighbors[i];
-                if (this._collider.overlaps(neighbor) && neighbor.enabled) {
-                    didCollide = true;
-                    this.notifyTriggerListeners(this._collider, neighbor);
+            // 获取任何可能在新位置发生碰撞的东西
+            var neighbors = es.Physics.boxcastBroadphase(this._collider.bounds, this._collider.collidesWithLayers.value);
+            try {
+                for (var neighbors_2 = __values(neighbors), neighbors_2_1 = neighbors_2.next(); !neighbors_2_1.done; neighbors_2_1 = neighbors_2.next()) {
+                    var neighbor = neighbors_2_1.value;
+                    if (this._collider.overlaps(neighbor) && neighbor.enabled) {
+                        didCollide = true;
+                        this.notifyTriggerListeners(this._collider, neighbor);
+                    }
                 }
+            }
+            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+            finally {
+                try {
+                    if (neighbors_2_1 && !neighbors_2_1.done && (_a = neighbors_2.return)) _a.call(neighbors_2);
+                }
+                finally { if (e_4) throw e_4.error; }
             }
             return didCollide;
         };
         ProjectileMover.prototype.notifyTriggerListeners = function (self, other) {
-            other.entity.getComponents("ITriggerListener", this._tempTriggerList);
+            // 通知我们重叠的碰撞器实体上的任何侦听器
+            es.TriggerListenerHelper.getITriggerListener(other.entity, this._tempTriggerList);
             for (var i = 0; i < this._tempTriggerList.length; i++) {
                 this._tempTriggerList[i].onTriggerEnter(self, other);
             }
             this._tempTriggerList.length = 0;
-            this.entity.getComponents("ITriggerListener", this._tempTriggerList);
+            // 通知此实体上的任何侦听器
+            es.TriggerListenerHelper.getITriggerListener(this.entity, this._tempTriggerList);
             for (var i = 0; i < this._tempTriggerList.length; i++) {
                 this._tempTriggerList[i].onTriggerEnter(other, self);
             }
@@ -3522,13 +2634,31 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Collider = (function (_super) {
+    var Collider = /** @class */ (function (_super) {
         __extends(Collider, _super);
         function Collider() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.physicsLayer = 1 << 0;
-            _this.collidesWithLayers = es.Physics.allLayers;
+            /**
+             * 如果这个碰撞器是一个触发器，它将不会引起碰撞，但它仍然会触发事件
+             */
+            _this.isTrigger = false;
+            /**
+             * 在处理冲突时，physicsLayer可以用作过滤器。Flags类有帮助位掩码的方法
+             */
+            _this.physicsLayer = new es.Ref(1 << 0);
+            /**
+             * 碰撞器在使用移动器移动时应该碰撞的层
+             * 默认为所有层
+             */
+            _this.collidesWithLayers = new es.Ref(es.Physics.allLayers);
+            /**
+             * 如果为true，碰撞器将根据附加的变换缩放和旋转
+             */
             _this.shouldColliderScaleAndRotateWithTransform = true;
+            /**
+             * 这个对撞机在物理系统注册时的边界。
+             * 存储这个允许我们始终能够安全地从物理系统中移除对撞机，即使它在试图移除它之前已经被移动了。
+             */
             _this.registeredPhysicsBounds = new es.Rectangle();
             _this._isPositionDirty = true;
             _this._isRotationDirty = true;
@@ -3536,6 +2666,9 @@ var es;
             return _this;
         }
         Object.defineProperty(Collider.prototype, "absolutePosition", {
+            /**
+             * 镖师碰撞器的绝对位置
+             */
             get: function () {
                 return es.Vector2.add(this.entity.transform.position, this._localOffset);
             },
@@ -3543,8 +2676,11 @@ var es;
             configurable: true
         });
         Object.defineProperty(Collider.prototype, "rotation", {
+            /**
+             * 封装变换。如果碰撞器没和实体一起旋转 则返回transform.rotation
+             */
             get: function () {
-                if (this.shouldColliderScaleAndRotateWithTransform && this.entity)
+                if (this.shouldColliderScaleAndRotateWithTransform && this.entity != null)
                     return this.entity.transform.rotation;
                 return 0;
             },
@@ -3563,17 +2699,31 @@ var es;
             configurable: true
         });
         Object.defineProperty(Collider.prototype, "localOffset", {
+            /**
+             * 将localOffset添加到实体。获取碰撞器几何图形的最终位置。
+             * 允许向一个实体添加多个碰撞器并分别定位，还允许你设置缩放/旋转
+             */
             get: function () {
                 return this._localOffset;
             },
+            /**
+             * 将localOffset添加到实体。获取碰撞器几何图形的最终位置。
+             * 允许向一个实体添加多个碰撞器并分别定位，还允许你设置缩放/旋转
+             * @param value
+             */
             set: function (value) {
                 this.setLocalOffset(value);
             },
             enumerable: true,
             configurable: true
         });
+        /**
+         * 将localOffset添加到实体。获取碰撞器的最终位置。
+         * 这允许您向一个实体添加多个碰撞器并分别定位它们。
+         * @param offset
+         */
         Collider.prototype.setLocalOffset = function (offset) {
-            if (this._localOffset != offset) {
+            if (!this._localOffset.equals(offset)) {
                 this.unregisterColliderWithPhysicsSystem();
                 this._localOffset = offset;
                 this._localOffsetLength = this._localOffset.length();
@@ -3582,6 +2732,10 @@ var es;
             }
             return this;
         };
+        /**
+         * 如果为true，碰撞器将根据附加的变换缩放和旋转
+         * @param shouldColliderScaleAndRotationWithTransform
+         */
         Collider.prototype.setShouldColliderScaleAndRotateWithTransform = function (shouldColliderScaleAndRotationWithTransform) {
             this.shouldColliderScaleAndRotateWithTransform = shouldColliderScaleAndRotationWithTransform;
             this._isPositionDirty = this._isRotationDirty = true;
@@ -3589,26 +2743,25 @@ var es;
         };
         Collider.prototype.onAddedToEntity = function () {
             if (this._colliderRequiresAutoSizing) {
-                if (!(this instanceof es.BoxCollider || this instanceof es.CircleCollider)) {
-                    console.error("Only box and circle colliders can be created automatically");
-                    return;
-                }
+                es.Insist.isTrue(this instanceof es.BoxCollider || this instanceof es.CircleCollider, "只有框和圆的碰撞器可以自动创建");
                 var renderable = this.entity.getComponent(es.RenderableComponent);
-                if (renderable) {
-                    var renderableBounds = renderable.bounds;
-                    var width = renderableBounds.width / this.entity.scale.x;
-                    var height = renderableBounds.height / this.entity.scale.y;
+                if (renderable == null)
+                    console.warn("Collider没有形状，也没有RenderableComponent。不知道如何确定它的大小。");
+                if (renderable != null) {
+                    var renderableBounds = renderable.bounds.clone();
+                    // 我们在这里需要大小*反比例，因为当我们自动调整Collider的大小时，它需要没有一个缩放的Renderable
+                    var width = renderableBounds.width / this.entity.transform.scale.x;
+                    var height = renderableBounds.height / this.entity.transform.scale.y;
                     if (this instanceof es.CircleCollider) {
                         this.radius = Math.max(width, height) * 0.5;
+                        // 获取Renderable的中心，将其转移到本地坐标，并将其作为我们碰撞器的localOffset
+                        this.localOffset = es.Vector2.subtract(renderableBounds.center, this.entity.transform.position);
                     }
-                    else {
+                    else if (this instanceof es.BoxCollider) {
                         this.width = width;
                         this.height = height;
+                        this.localOffset = es.Vector2.subtract(renderableBounds.center, this.entity.transform.position);
                     }
-                    this.localOffset = es.Vector2.subtract(renderableBounds.center, this.entity.transform.position);
-                }
-                else {
-                    console.warn("Collider has no shape and no RenderableComponent. Can't figure out how to size it.");
                 }
             }
             this._isParentEntityAddedToScene = true;
@@ -3640,49 +2793,84 @@ var es;
         Collider.prototype.onDisabled = function () {
             this.unregisterColliderWithPhysicsSystem();
         };
+        /**
+         * 父实体会在不同的时间调用它(当添加到场景，启用，等等)
+         */
         Collider.prototype.registerColliderWithPhysicsSystem = function () {
+            // 如果在将我们添加到实体之前更改了origin等属性，则实体可以为null
             if (this._isParentEntityAddedToScene && !this._isColliderRegistered) {
                 es.Physics.addCollider(this);
                 this._isColliderRegistered = true;
             }
         };
+        /**
+         * 父实体会在不同的时候调用它(从场景中移除，禁用，等等)
+         */
         Collider.prototype.unregisterColliderWithPhysicsSystem = function () {
             if (this._isParentEntityAddedToScene && this._isColliderRegistered) {
                 es.Physics.removeCollider(this);
             }
             this._isColliderRegistered = false;
         };
+        /**
+         * 检查这个形状是否与物理系统中的其他对撞机重叠
+         * @param other
+         */
         Collider.prototype.overlaps = function (other) {
             return this.shape.overlaps(other.shape);
         };
+        /**
+         * 检查这个与运动应用的碰撞器(移动向量)是否与碰撞器碰撞。如果是这样，将返回true，并且结果将填充碰撞数据。
+         * @param collider
+         * @param motion
+         * @param result
+         */
         Collider.prototype.collidesWith = function (collider, motion, result) {
-            var oldPosition = this.entity.position;
-            this.entity.position = this.entity.position.add(motion);
+            if (result === void 0) { result = new es.CollisionResult(); }
+            // 改变形状的位置，使它在移动后的位置，这样我们可以检查重叠
+            var oldPosition = this.entity.position.clone();
+            this.entity.position = es.Vector2.add(this.entity.position, motion);
             var didCollide = this.shape.collidesWithShape(collider.shape, result);
             if (didCollide)
                 result.collider = collider;
+            // 将图形位置返回到检查前的位置
             this.entity.position = oldPosition;
             return didCollide;
         };
-        Collider.prototype.clone = function () {
-            var collider = ObjectUtils.clone(this);
-            collider.entity = null;
-            if (this.shape)
-                collider.shape = this.shape.clone();
-            return collider;
+        /**
+         * 检查这个对撞机是否与对撞机发生碰撞。如果碰撞，则返回true，结果将被填充
+         * @param collider
+         * @param result
+         */
+        Collider.prototype.collidesWithNonMotion = function (collider, result) {
+            if (result === void 0) { result = new es.CollisionResult(); }
+            if (this.shape.collidesWithShape(collider.shape, result)) {
+                result.collider = collider;
+                return true;
+            }
+            return false;
         };
         return Collider;
     }(es.Component));
     es.Collider = Collider;
 })(es || (es = {}));
+///<reference path="./Collider.ts" />
 var es;
+///<reference path="./Collider.ts" />
 (function (es) {
-    var BoxCollider = (function (_super) {
+    var BoxCollider = /** @class */ (function (_super) {
         __extends(BoxCollider, _super);
-        function BoxCollider() {
+        /**
+         * 创建一个BoxCollider，并使用x/y组件作为局部Offset
+         * @param x
+         * @param y
+         * @param width
+         * @param height
+         */
+        function BoxCollider(x, y, width, height) {
             var _this = _super.call(this) || this;
-            _this.shape = new es.Box(1, 1);
-            _this._colliderRequiresAutoSizing = true;
+            _this._localOffset = new es.Vector2(x + width / 2, y + height / 2);
+            _this.shape = new es.Box(width, height);
             return _this;
         }
         Object.defineProperty(BoxCollider.prototype, "width", {
@@ -3705,40 +2893,60 @@ var es;
             enumerable: true,
             configurable: true
         });
-        BoxCollider.prototype.createBoxRect = function (x, y, width, height) {
-            this._localOffset = new es.Vector2(x + width / 2, y + width / 2);
-            this.shape = new es.Box(width, height);
-            this._colliderRequiresAutoSizing = false;
-            return this;
-        };
+        /**
+         * 设置BoxCollider的大小
+         * @param width
+         * @param height
+         */
         BoxCollider.prototype.setSize = function (width, height) {
             this._colliderRequiresAutoSizing = false;
             var box = this.shape;
             if (width != box.width || height != box.height) {
+                // 更新框，改变边界，如果我们需要更新物理系统中的边界
                 box.updateBox(width, height);
+                this._isPositionDirty = true;
                 if (this.entity && this._isParentEntityAddedToScene)
                     es.Physics.updateCollider(this);
             }
             return this;
         };
+        /**
+         * 设置BoxCollider的宽度
+         * @param width
+         */
         BoxCollider.prototype.setWidth = function (width) {
             this._colliderRequiresAutoSizing = false;
             var box = this.shape;
             if (width != box.width) {
+                // 更新框，改变边界，如果我们需要更新物理系统中的边界
                 box.updateBox(width, box.height);
+                this._isPositionDirty = true;
                 if (this.entity && this._isParentEntityAddedToScene)
                     es.Physics.updateCollider(this);
             }
             return this;
         };
+        /**
+         * 设置BoxCollider的高度
+         * @param height
+         */
         BoxCollider.prototype.setHeight = function (height) {
             this._colliderRequiresAutoSizing = false;
             var box = this.shape;
             if (height != box.height) {
+                // 更新框，改变边界，如果我们需要更新物理系统中的边界
                 box.updateBox(box.width, height);
+                this._isPositionDirty = true;
                 if (this.entity && this._isParentEntityAddedToScene)
                     es.Physics.updateCollider(this);
             }
+        };
+        BoxCollider.prototype.debugRender = function (batcher) {
+            var poly = this.shape;
+            batcher.drawHollowRect(this.bounds, es.Debug.colliderBounds, 1);
+            batcher.drawPolygon(this.shape.position, poly.points, es.Debug.colliderEdge, true, 1);
+            batcher.drawPixel(this.entity.transform.position, es.Debug.colliderPosition, 4);
+            batcher.drawPixel(es.Vector2.add(this.entity.transform.position, this.shape.center), es.Debug.colliderCenter, 2);
         };
         BoxCollider.prototype.toString = function () {
             return "[BoxCollider: bounds: " + this.bounds + "]";
@@ -3749,13 +2957,18 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var CircleCollider = (function (_super) {
+    var CircleCollider = /** @class */ (function (_super) {
         __extends(CircleCollider, _super);
+        /**
+         * 创建一个具有半径的CircleCollider。
+         * 请注意，当指定半径时，如果在实体上使用RenderableComponent，您将需要设置原点来对齐CircleCollider。
+         * 例如，如果RenderableComponent有一个0,0的原点，并且创建了一个半径为1.5f * renderable.width的CircleCollider，你可以通过设置originNormalied为中心除以缩放尺寸来偏移原点
+         *
+         * @param radius
+         */
         function CircleCollider(radius) {
             var _this = _super.call(this) || this;
-            if (radius)
-                _this._colliderRequiresAutoSizing = true;
-            _this.shape = new es.Circle(radius ? radius : 1);
+            _this.shape = new es.Circle(radius);
             return _this;
         }
         Object.defineProperty(CircleCollider.prototype, "radius", {
@@ -3768,16 +2981,27 @@ var es;
             enumerable: true,
             configurable: true
         });
+        /**
+         * 设置圆的半径
+         * @param radius
+         */
         CircleCollider.prototype.setRadius = function (radius) {
             this._colliderRequiresAutoSizing = false;
             var circle = this.shape;
             if (radius != circle.radius) {
                 circle.radius = radius;
                 circle._originalRadius = radius;
-                if (this.entity && this._isParentEntityAddedToScene)
+                this._isPositionDirty = true;
+                if (this.entity != null && this._isParentEntityAddedToScene)
                     es.Physics.updateCollider(this);
             }
             return this;
+        };
+        CircleCollider.prototype.debugRender = function (batcher) {
+            batcher.drawHollowRect(this.bounds, es.Debug.colliderBounds, 1);
+            batcher.drawCircle(this.shape.position, this.shape.radius, es.Debug.colliderEdge, 1);
+            batcher.drawPixel(this.entity.transform.position, es.Debug.colliderPosition, 4);
+            batcher.drawPixel(this.shape.position, es.Debug.colliderCenter, 2);
         };
         CircleCollider.prototype.toString = function () {
             return "[CircleCollider: bounds: " + this.bounds + ", radius: " + this.shape.radius + "]";
@@ -3788,26 +3012,265 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var PolygonCollider = (function (_super) {
+    /**
+     * 多边形应该以顺时针方式定义
+     */
+    var PolygonCollider = /** @class */ (function (_super) {
         __extends(PolygonCollider, _super);
+        /**
+         * 如果这些点没有居中，它们将以localOffset的差异为居中。
+         * @param points
+         */
         function PolygonCollider(points) {
             var _this = _super.call(this) || this;
+            // 第一点和最后一点决不能相同。我们想要一个开放的多边形
             var isPolygonClosed = points[0] == points[points.length - 1];
+            var linqPoints = new linq.List(points);
+            // 最后一个移除
             if (isPolygonClosed)
-                points.splice(points.length - 1, 1);
+                linqPoints.remove(linqPoints.last());
             var center = es.Polygon.findPolygonCenter(points);
             _this.setLocalOffset(center);
             es.Polygon.recenterPolygonVerts(points);
             _this.shape = new es.Polygon(points);
             return _this;
         }
+        PolygonCollider.prototype.debugRender = function (batcher) {
+            var poly = this.shape;
+            batcher.drawHollowRect(this.bounds, es.Debug.colliderBounds, 1);
+            batcher.drawPolygon(this.shape.position, poly.points, es.Debug.colliderEdge, true, 1);
+            batcher.drawPixel(this.entity.transform.position, es.Debug.colliderPosition, 4);
+            batcher.drawPixel(this.shape.position, es.Debug.colliderCenter, 2);
+        };
         return PolygonCollider;
     }(es.Collider));
     es.PolygonCollider = PolygonCollider;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var EntitySystem = (function () {
+    /**
+     * 对IRenderables进行排序的比较器。
+     * 首先按 RenderLayer 排序，然后按 LayerDepth 排序。
+     * 如果出现平局，则使用材料作为平局的断定器，以避免渲染状态的改变
+     */
+    var RenderableComparer = /** @class */ (function () {
+        function RenderableComparer() {
+        }
+        RenderableComparer.prototype.compare = function (self, other) {
+            var res = other.renderLayer - self.renderLayer;
+            if (res == 0) {
+                res = other.layerDepth - self.layerDepth;
+                if (res == 0) {
+                    if (self.material == other.material)
+                        return 0;
+                    if (other.material == null)
+                        return -1;
+                    return 1;
+                }
+            }
+            return res;
+        };
+        return RenderableComparer;
+    }());
+    es.RenderableComparer = RenderableComparer;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * IRenderable的具体实现。包含方便的方法。
+     * 非常重要！子类必须覆盖width/height或bounds! 子类必须覆盖width/height或bounds!
+     */
+    var RenderableComponent = /** @class */ (function (_super) {
+        __extends(RenderableComponent, _super);
+        function RenderableComponent() {
+            var _this = _super.call(this) || this;
+            /**
+             * 渲染时传递给批处理程序的颜色
+             */
+            _this.color = 0xffffff;
+            _this.debugRenderEnabled = true;
+            _this._localOffset = es.Vector2.zero;
+            _this._bounds = es.Rectangle.empty;
+            _this._areBoundsDirty = true;
+            return _this;
+        }
+        Object.defineProperty(RenderableComponent.prototype, "layerDepth", {
+            /**
+             * 标准的Batcher图层深度，0为前面，1为后面。
+             * 改变这个值会触发场景中可渲染组件列表的排序。
+             */
+            get: function () {
+                return this._layerDepth;
+            },
+            set: function (value) {
+                this.setLayerDepth(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(RenderableComponent.prototype, "renderLayer", {
+            /**
+             * 较低的renderLayers在前面，较高的在后面，就像layerDepth一樣，但不是限制在0-1。
+             * 请注意，这意味着更高的renderLayers首先被发送到Batcher。
+             */
+            get: function () {
+                return this._renderLayer;
+            },
+            set: function (value) {
+                this.setRenderLayer(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(RenderableComponent.prototype, "localOffset", {
+            /**
+             * 偏移。用于将多个Renderables添加到需要特定定位的实体
+             */
+            get: function () {
+                return this._localOffset;
+            },
+            set: function (value) {
+                this.setLocalOffset(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(RenderableComponent.prototype, "isVisible", {
+            /**
+             * 这个Renderable的可见性。
+             * 状态的改变最终会调用onBecameVisible/onBecameInvisible方法
+             */
+            get: function () {
+                return this._isVisble;
+            },
+            set: function (value) {
+                if (this._isVisble != value) {
+                    this._isVisble = value;
+                    if (this._isVisble)
+                        this.onBecameVisible();
+                    else
+                        this.onBecameInvisible();
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        RenderableComponent.prototype.onEntityTransformChanged = function (comp) {
+            this._areBoundsDirty = true;
+        };
+        /**
+         * 只有在没有对撞机的情况下才会渲染边界。始终在原点上渲染一个正方形
+         * @param batcher
+         */
+        RenderableComponent.prototype.debugRender = function (batcher) {
+            if (!this.debugRenderEnabled)
+                return;
+            // 如果我们没有对撞机，我们就画出我们的范围
+            if (this.entity.getComponent(es.Collider) == null)
+                batcher.drawHollowRect(this.bounds, 0xFFFF00);
+            batcher.drawPixel(this.entity.transform.position.add(this._localOffset), 0xcc3299, 4);
+        };
+        /**
+         * 当Renderable进入相机帧时被调用。
+         * 请注意，如果您的Renderer没有使用isVisibleFromCamera来进行裁剪检查，这些方法将不会被调用。
+         * 所有默认的Renderer都会这样做
+         */
+        RenderableComponent.prototype.onBecameVisible = function () {
+        };
+        /**
+         * 当渲染器退出相机帧时，将调用这些方法。
+         * 请注意，如果你的Renderer没有使用isVisibleFromCamera来进行Culling检查，这些方法将不会被调用。
+         * 所有默认的Renderer都会这样做
+         */
+        RenderableComponent.prototype.onBecameInvisible = function () {
+        };
+        RenderableComponent.prototype.onRemovedFromEntity = function () {
+        };
+        /**
+         * 如果Renderables的边界与Camera.bounds相交，则返回true。
+         * 处理isVisible标志的状态切换。在你的渲染方法中使用这个方法来决定你是否应该渲染
+         * @param camera
+         */
+        RenderableComponent.prototype.isVisibleFromCamera = function (camera) {
+            this.isVisible = camera.bounds.intersects(this.bounds);
+            return this.isVisible;
+        };
+        RenderableComponent.prototype.setMaterial = function (material) {
+            this.material = material;
+            if (this.entity != null && this.entity.scene != null)
+                this.entity.scene.renderableComponents.setRenderLayerNeedsComponentSort(this.renderLayer);
+            return this;
+        };
+        /**
+         * 标准的Batcher图层深度，0为前面，1为后面。
+         * 改变这个值会触发一种类似于renderableComponents的方法
+         * @param layerDepth
+         */
+        RenderableComponent.prototype.setLayerDepth = function (layerDepth) {
+            this._layerDepth = es.MathHelper.clamp01(layerDepth);
+            if (this.entity != null && this.entity.scene != null)
+                this.entity.scene.renderableComponents.setRenderLayerNeedsComponentSort(this.renderLayer);
+            return this;
+        };
+        /**
+        * 较低的渲染层在前面，较高的在后面
+        * @param renderLayer
+        */
+        RenderableComponent.prototype.setRenderLayer = function (renderLayer) {
+            if (renderLayer != this._renderLayer) {
+                var oldRenderLayer = this._renderLayer;
+                this._renderLayer = renderLayer;
+                // 如果该组件拥有一个实体，那么是由ComponentList管理，需要通知它改变了渲染层
+                if (this.entity && this.entity.scene)
+                    this.entity.scene.renderableComponents.updateRenderableRenderLayer(this, oldRenderLayer, this._renderLayer);
+            }
+            return this;
+        };
+        /**
+         * 偏移。用于将多个Renderables添加到需要特定定位的实体
+         * @param offset
+         */
+        RenderableComponent.prototype.setLocalOffset = function (offset) {
+            if (!this._localOffset.equals(offset)) {
+                this._localOffset = offset;
+                this._areBoundsDirty = true;
+            }
+            return this;
+        };
+        /**
+         * 用于检索一个已经铸造的Material子类的帮助程序
+         */
+        RenderableComponent.prototype.getMaterial = function () {
+            return this.material;
+        };
+        /**
+         * 先按renderLayer排序，再按layerDepth排序，最后按材质排序
+         * @param other
+         */
+        RenderableComponent.prototype.compare = function (other) {
+            var res = other.renderLayer - this.renderLayer;
+            if (res == 0) {
+                res = other.layerDepth - this.layerDepth;
+                if (res == 0) {
+                    if (this.material == other.material)
+                        return 0;
+                    if (other.material == null)
+                        return -1;
+                    return 1;
+                }
+            }
+        };
+        RenderableComponent.renderIdGenerator = 0;
+        return RenderableComponent;
+    }(es.Component));
+    es.RenderableComponent = RenderableComponent;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 追踪实体的子集，但不实现任何排序或迭代。
+     */
+    var EntitySystem = /** @class */ (function () {
         function EntitySystem(matcher) {
             this._entities = [];
             this._matcher = matcher ? matcher : es.Matcher.empty();
@@ -3833,8 +3296,8 @@ var es;
         EntitySystem.prototype.initialize = function () {
         };
         EntitySystem.prototype.onChanged = function (entity) {
-            var contains = this._entities.contains(entity);
-            var interest = this._matcher.IsIntersted(entity);
+            var contains = new linq.List(this._entities).contains(entity);
+            var interest = this._matcher.isInterestedEntity(entity);
             if (interest && !contains)
                 this.add(entity);
             else if (!interest && contains)
@@ -3847,7 +3310,7 @@ var es;
         EntitySystem.prototype.onAdded = function (entity) {
         };
         EntitySystem.prototype.remove = function (entity) {
-            this._entities.remove(entity);
+            new linq.List(this._entities).remove(entity);
             this.onRemoved(entity);
         };
         EntitySystem.prototype.onRemoved = function (entity) {
@@ -3872,15 +3335,27 @@ var es;
     }());
     es.EntitySystem = EntitySystem;
 })(es || (es = {}));
+///<reference path="./EntitySystem.ts" />
 var es;
+///<reference path="./EntitySystem.ts" />
 (function (es) {
-    var EntityProcessingSystem = (function (_super) {
+    /**
+     * 基本实体处理系统。将其用作处理具有特定组件的许多实体的基础
+     *
+     * 按实体引用遍历实体订阅成员实体的系统
+     * 当你需要处理与Matcher相匹配的实体，并且你更喜欢使用Entity的时候，可以使用这个功能。
+     */
+    var EntityProcessingSystem = /** @class */ (function (_super) {
         __extends(EntityProcessingSystem, _super);
         function EntityProcessingSystem(matcher) {
             return _super.call(this, matcher) || this;
         }
         EntityProcessingSystem.prototype.lateProcessEntity = function (entity) {
         };
+        /**
+         * 遍历这个系统的所有实体并逐个处理它们
+         * @param entities
+         */
         EntityProcessingSystem.prototype.process = function (entities) {
             var _this = this;
             entities.forEach(function (entity) { return _this.processEntity(entity); });
@@ -3895,7 +3370,7 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var PassiveSystem = (function (_super) {
+    var PassiveSystem = /** @class */ (function (_super) {
         __extends(PassiveSystem, _super);
         function PassiveSystem() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -3903,6 +3378,7 @@ var es;
         PassiveSystem.prototype.onChanged = function (entity) {
         };
         PassiveSystem.prototype.process = function (entities) {
+            // 我们用我们自己的不考虑实体的基本实体系统来代替
             this.begin();
             this.end();
         };
@@ -3910,9 +3386,11 @@ var es;
     }(es.EntitySystem));
     es.PassiveSystem = PassiveSystem;
 })(es || (es = {}));
+/** 用于协调其他系统的通用系统基类 */
 var es;
+/** 用于协调其他系统的通用系统基类 */
 (function (es) {
-    var ProcessingSystem = (function (_super) {
+    var ProcessingSystem = /** @class */ (function (_super) {
         __extends(ProcessingSystem, _super);
         function ProcessingSystem() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -3930,13 +3408,19 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var BitSet = (function () {
+    /**
+     * 这个类可以从两方面来考虑。你可以把它看成一个位向量或者一组非负整数。这个名字有点误导人。
+     *
+     * 它是由一个位向量实现的，但同样可以把它看成是一个非负整数的集合;集合中的每个整数由对应索引处的集合位表示。该结构的大小由集合中的最大整数决定。
+     */
+    var BitSet = /** @class */ (function () {
         function BitSet(nbits) {
             if (nbits === void 0) { nbits = 64; }
             var length = nbits >> 6;
             if ((nbits & BitSet.LONG_MASK) != 0)
                 length++;
             this._bits = new Array(length);
+            this._bits.fill(0);
         }
         BitSet.prototype.and = function (bs) {
             var max = Math.min(this._bits.length, bs._bits.length);
@@ -3963,7 +3447,7 @@ var es;
                 }
                 a = ((a >> 1) & 0x5555555555555555) + (a & 0x5555555555555555);
                 a = ((a >> 2) & 0x3333333333333333) + (a & 0x3333333333333333);
-                var b = ((a >> 32) + a);
+                var b = ((a >> 32) + a) >>> 0;
                 b = ((b >> 4) & 0x0f0f0f0f) + (b & 0x0f0f0f0f);
                 b = ((b >> 8) & 0x00ff00ff) + (b & 0x00ff00ff);
                 card += ((b >> 16) & 0x0000ffff) + (b & 0x0000ffff);
@@ -4031,9 +3515,9 @@ var es;
         };
         BitSet.prototype.ensure = function (lastElt) {
             if (lastElt >= this._bits.length) {
-                var nd = new Number[lastElt + 1];
-                nd = this._bits.copyWithin(0, 0, this._bits.length);
-                this._bits = nd;
+                var startIndex = this._bits.length;
+                this._bits.length = lastElt + 1;
+                this._bits.fill(0, startIndex, lastElt + 1);
             }
         };
         BitSet.LONG_MASK = 0x3f;
@@ -4041,12 +3525,27 @@ var es;
     }());
     es.BitSet = BitSet;
 })(es || (es = {}));
+///<reference path="../Components/IUpdatable.ts" />
 var es;
+///<reference path="../Components/IUpdatable.ts" />
 (function (es) {
-    var ComponentList = (function () {
+    var ComponentList = /** @class */ (function () {
         function ComponentList(entity) {
+            /**
+             * 添加到实体的组件列表
+             */
             this._components = [];
+            /**
+             * 所有需要更新的组件列表
+             */
+            this._updatableComponents = [];
+            /**
+             * 添加到此框架的组件列表。用来对组件进行分组，这样我们就可以同时进行加工
+             */
             this._componentsToAdd = [];
+            /**
+             * 标记要删除此框架的组件列表。用来对组件进行分组，这样我们就可以同时进行加工
+             */
             this._componentsToRemove = [];
             this._tempBufferList = [];
             this._entity = entity;
@@ -4072,69 +3571,105 @@ var es;
             this._componentsToAdd.push(component);
         };
         ComponentList.prototype.remove = function (component) {
-            if (this._componentsToRemove.contains(component))
-                console.warn("You are trying to remove a Component (" + component + ") that you already removed");
-            if (this._componentsToAdd.contains(component)) {
-                this._componentsToAdd.remove(component);
+            var componentToRemove = new linq.List(this._componentsToRemove);
+            var componentToAdd = new linq.List(this._componentsToAdd);
+            if (componentToRemove.contains(component))
+                console.warn("\u60A8\u6B63\u5728\u5C1D\u8BD5\u5220\u9664\u4E00\u4E2A\u60A8\u5DF2\u7ECF\u5220\u9664\u7684\u7EC4\u4EF6(" + component + ")");
+            // 这可能不是一个活动的组件，所以我们必须注意它是否还没有被处理，它可能正在同一帧中被删除
+            if (componentToAdd.contains(component)) {
+                componentToAdd.remove(component);
                 return;
             }
-            this._componentsToRemove.push(component);
+            componentToRemove.add(component);
         };
+        /**
+         * 立即从组件列表中删除所有组件
+         */
         ComponentList.prototype.removeAllComponents = function () {
             for (var i = 0; i < this._components.length; i++) {
                 this.handleRemove(this._components[i]);
             }
             this._components.length = 0;
+            this._updatableComponents.length = 0;
             this._componentsToAdd.length = 0;
             this._componentsToRemove.length = 0;
         };
         ComponentList.prototype.deregisterAllComponents = function () {
-            for (var i = 0; i < this._components.length; i++) {
-                var component = this._components[i];
-                if (component instanceof es.RenderableComponent) {
-                    this._entity.scene.removeChild(component.displayObject);
-                    this._entity.scene.renderableComponents.remove(component);
+            var e_5, _a;
+            try {
+                for (var _b = __values(this._components), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var component = _c.value;
+                    if (!component)
+                        continue;
+                    if (component instanceof es.RenderableComponent)
+                        new linq.List(this._entity.scene.renderableComponents.buffer).remove(component);
+                    // 处理IUpdatable
+                    if (es.isIUpdatable(component))
+                        new linq.List(this._updatableComponents).remove(component);
+                    this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(es.TypeUtils.getType(component)), false);
+                    this._entity.scene.entityProcessors.onComponentRemoved(this._entity);
                 }
-                this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(component), false);
-                this._entity.scene.entityProcessors.onComponentRemoved(this._entity);
+            }
+            catch (e_5_1) { e_5 = { error: e_5_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_5) throw e_5.error; }
             }
         };
         ComponentList.prototype.registerAllComponents = function () {
-            for (var i = 0; i < this._components.length; i++) {
-                var component = this._components[i];
-                if (component instanceof es.RenderableComponent) {
-                    this._entity.scene.addChild(component.displayObject);
-                    this._entity.scene.renderableComponents.add(component);
+            var e_6, _a;
+            try {
+                for (var _b = __values(this._components), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var component = _c.value;
+                    if (component instanceof es.RenderableComponent)
+                        this._entity.scene.renderableComponents.buffer.push(component);
+                    if (es.isIUpdatable(component))
+                        this._updatableComponents.push(component);
+                    this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(es.TypeUtils.getType(component)));
+                    this._entity.scene.entityProcessors.onComponentAdded(this._entity);
                 }
-                this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(component));
-                this._entity.scene.entityProcessors.onComponentAdded(this._entity);
+            }
+            catch (e_6_1) { e_6 = { error: e_6_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_6) throw e_6.error; }
             }
         };
+        /**
+         * 处理任何需要删除或添加的组件
+         */
         ComponentList.prototype.updateLists = function () {
             if (this._componentsToRemove.length > 0) {
                 for (var i = 0; i < this._componentsToRemove.length; i++) {
                     this.handleRemove(this._componentsToRemove[i]);
-                    this._components.remove(this._componentsToRemove[i]);
+                    new linq.List(this._components).remove(this._componentsToRemove[i]);
                 }
                 this._componentsToRemove.length = 0;
             }
             if (this._componentsToAdd.length > 0) {
                 for (var i = 0, count = this._componentsToAdd.length; i < count; i++) {
                     var component = this._componentsToAdd[i];
-                    if (component instanceof es.RenderableComponent) {
-                        this._entity.scene.addChild(component.displayObject);
-                        this._entity.scene.renderableComponents.add(component);
-                    }
-                    this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(component));
+                    if (component instanceof es.RenderableComponent)
+                        this._entity.scene.renderableComponents.buffer.push(component);
+                    if (es.isIUpdatable(component))
+                        this._updatableComponents.push(component);
+                    this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(es.TypeUtils.getType(component)));
                     this._entity.scene.entityProcessors.onComponentAdded(this._entity);
                     this._components.push(component);
                     this._tempBufferList.push(component);
                 }
+                // 在调用onAddedToEntity之前清除，以防添加更多组件
                 this._componentsToAdd.length = 0;
                 this._isComponentListUnsorted = true;
+                // 现在所有的组件都添加到了场景中，我们再次循环并调用onAddedToEntity/onEnabled
                 for (var i = 0; i < this._tempBufferList.length; i++) {
                     var component = this._tempBufferList[i];
                     component.onAddedToEntity();
+                    // enabled检查实体和组件
                     if (component.enabled) {
                         component.onEnabled();
                     }
@@ -4142,74 +3677,109 @@ var es;
                 this._tempBufferList.length = 0;
             }
             if (this._isComponentListUnsorted) {
-                this._components.sort(ComponentList.compareUpdatableOrder.compare);
+                this._updatableComponents.sort(ComponentList.compareUpdatableOrder.compare);
                 this._isComponentListUnsorted = false;
             }
         };
         ComponentList.prototype.handleRemove = function (component) {
-            if (component instanceof es.RenderableComponent) {
-                this._entity.scene.removeChild(component.displayObject);
-                this._entity.scene.renderableComponents.remove(component);
-            }
-            this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(component), false);
+            if (component instanceof es.RenderableComponent)
+                new linq.List(this._entity.scene.renderableComponents.buffer).remove(component);
+            if (es.isIUpdatable(component))
+                new linq.List(this._updatableComponents).remove(component);
+            this._entity.componentBits.set(es.ComponentTypeManager.getIndexFor(es.TypeUtils.getType(component)), false);
             this._entity.scene.entityProcessors.onComponentRemoved(this._entity);
             component.onRemovedFromEntity();
             component.entity = null;
         };
+        /**
+         * 获取类型T的第一个组件并返回它
+         * 可以选择跳过检查未初始化的组件(尚未调用onAddedToEntity方法的组件)
+         * 如果没有找到组件，则返回null。
+         * @param type
+         * @param onlyReturnInitializedComponents
+         */
         ComponentList.prototype.getComponent = function (type, onlyReturnInitializedComponents) {
-            for (var i = 0; i < this._components.length; i++) {
-                var component = this._components[i];
-                if (component instanceof type)
-                    return component;
-            }
-            if (!onlyReturnInitializedComponents) {
-                for (var i = 0; i < this._componentsToAdd.length; i++) {
-                    var component = this._componentsToAdd[i];
+            var e_7, _a, e_8, _b;
+            try {
+                for (var _c = __values(this._components), _d = _c.next(); !_d.done; _d = _c.next()) {
+                    var component = _d.value;
                     if (component instanceof type)
                         return component;
                 }
             }
-            return null;
-        };
-        ComponentList.prototype.getComponents = function (typeName, components) {
-            if (!components)
-                components = [];
-            for (var i = 0; i < this._components.length; i++) {
-                var component = this._components[i];
-                if (typeof (typeName) == "string") {
-                    if (egret.is(component, typeName)) {
-                        components.push(component);
+            catch (e_7_1) { e_7 = { error: e_7_1 }; }
+            finally {
+                try {
+                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+                }
+                finally { if (e_7) throw e_7.error; }
+            }
+            // 我们可以选择检查挂起的组件，以防addComponent和getComponent在同一个框架中被调用
+            if (!onlyReturnInitializedComponents) {
+                try {
+                    for (var _e = __values(this._componentsToAdd), _f = _e.next(); !_f.done; _f = _e.next()) {
+                        var component = _f.value;
+                        if (component instanceof type)
+                            return component;
                     }
                 }
-                else {
+                catch (e_8_1) { e_8 = { error: e_8_1 }; }
+                finally {
+                    try {
+                        if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
+                    }
+                    finally { if (e_8) throw e_8.error; }
+                }
+            }
+            return null;
+        };
+        /**
+         * 获取T类型的所有组件，但不使用列表分配
+         * @param typeName
+         * @param components
+         */
+        ComponentList.prototype.getComponents = function (typeName, components) {
+            var e_9, _a, e_10, _b;
+            if (!components)
+                components = [];
+            try {
+                for (var _c = __values(this._components), _d = _c.next(); !_d.done; _d = _c.next()) {
+                    var component = _d.value;
                     if (component instanceof typeName) {
                         components.push(component);
                     }
                 }
             }
-            for (var i = 0; i < this._componentsToAdd.length; i++) {
-                var component = this._componentsToAdd[i];
-                if (typeof (typeName) == "string") {
-                    if (egret.is(component, typeName)) {
-                        components.push(component);
-                    }
+            catch (e_9_1) { e_9 = { error: e_9_1 }; }
+            finally {
+                try {
+                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
                 }
-                else {
+                finally { if (e_9) throw e_9.error; }
+            }
+            try {
+                // 我们还检查了待处理的组件，以防在同一帧中调用addComponent和getComponent
+                for (var _e = __values(this._componentsToAdd), _f = _e.next(); !_f.done; _f = _e.next()) {
+                    var component = _f.value;
                     if (component instanceof typeName) {
                         components.push(component);
                     }
                 }
+            }
+            catch (e_10_1) { e_10 = { error: e_10_1 }; }
+            finally {
+                try {
+                    if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
+                }
+                finally { if (e_10) throw e_10.error; }
             }
             return components;
         };
         ComponentList.prototype.update = function () {
             this.updateLists();
-            for (var i = 0; i < this._components.length; i++) {
-                var updatableComponent = this._components[i];
-                if (updatableComponent.enabled &&
-                    (updatableComponent.updateInterval == 1 ||
-                        es.Time.frameCount % updatableComponent.updateInterval == 0))
-                    updatableComponent.update();
+            for (var i = 0; i < this._updatableComponents.length; i++) {
+                if (this._updatableComponents[i].enabled)
+                    this._updatableComponents[i].update();
             }
         };
         ComponentList.prototype.onEntityTransformChanged = function (comp) {
@@ -4230,6 +3800,15 @@ var es;
             for (var i = 0; i < this._components.length; i++)
                 this._components[i].onDisabled();
         };
+        ComponentList.prototype.debugRender = function (batcher) {
+            for (var i = 0; i < this._components.length; i++) {
+                if (this._components[i].enabled)
+                    this._components[i].debugRender(batcher);
+            }
+        };
+        /**
+         * 组件列表的全局updateOrder排序
+         */
         ComponentList.compareUpdatableOrder = new es.IUpdatableComparer();
         return ComponentList;
     }());
@@ -4237,17 +3816,20 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var ComponentTypeManager = (function () {
+    var ComponentTypeManager = /** @class */ (function () {
         function ComponentTypeManager() {
         }
         ComponentTypeManager.add = function (type) {
             if (!this._componentTypesMask.has(type))
-                this._componentTypesMask[type] = this._componentTypesMask.size;
+                this._componentTypesMask.set(type, this._componentTypesMask.size);
         };
         ComponentTypeManager.getIndexFor = function (type) {
             var v = -1;
             if (!this._componentTypesMask.has(type)) {
                 this.add(type);
+                v = this._componentTypesMask.get(type);
+            }
+            else {
                 v = this._componentTypesMask.get(type);
             }
             return v;
@@ -4259,14 +3841,25 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var EntityList = (function () {
+    var EntityList = /** @class */ (function () {
         function EntityList(scene) {
+            /**
+             * 场景中添加的实体列表
+             */
             this._entities = [];
-            this._entitiesToAdded = [];
-            this._entitiesToRemove = [];
+            /**
+             * 本帧添加的实体列表。用于对实体进行分组，以便我们可以同时处理它们
+             */
+            this._entitiesToAdded = new es.HashSet();
+            /**
+             * 本帧被标记为删除的实体列表。用于对实体进行分组，以便我们可以同时处理它们
+             */
+            this._entitiesToRemove = new es.HashSet();
+            /**
+             * 通过标签跟踪实体，便于检索
+             */
             this._entityDict = new Map();
-            this._unsortedTags = [];
-            this._tempEntityList = [];
+            this._unsortedTags = new Set();
             this.scene = scene;
         }
         Object.defineProperty(EntityList.prototype, "count", {
@@ -4287,28 +3880,41 @@ var es;
             this._isEntityListUnsorted = true;
         };
         EntityList.prototype.markTagUnsorted = function (tag) {
-            this._unsortedTags.push(tag);
+            this._unsortedTags.add(tag);
         };
+        /**
+         * 将一个实体添加到列表中。所有的生命周期方法将在下一帧中被调用
+         * @param entity
+         */
         EntityList.prototype.add = function (entity) {
-            if (this._entitiesToAdded.indexOf(entity) == -1)
-                this._entitiesToAdded.push(entity);
+            this._entitiesToAdded.add(entity);
         };
+        /**
+         * 从列表中删除一个实体。所有的生命周期方法将在下一帧中被调用
+         * @param entity
+         */
         EntityList.prototype.remove = function (entity) {
             if (!this._entitiesToRemove.contains(entity)) {
-                console.warn("You are trying to remove an entity (" + entity.name + ") that you already removed");
+                console.warn("\u60A8\u6B63\u5728\u5C1D\u8BD5\u5220\u9664\u5DF2\u7ECF\u5220\u9664\u7684\u5B9E\u4F53(" + entity.name + ")");
                 return;
             }
+            // 防止在同一帧中添加或删除实体
             if (this._entitiesToAdded.contains(entity)) {
                 this._entitiesToAdded.remove(entity);
                 return;
             }
             if (!this._entitiesToRemove.contains(entity))
-                this._entitiesToRemove.push(entity);
+                this._entitiesToRemove.add(entity);
         };
+        /**
+         * 从实体列表中删除所有实体
+         */
         EntityList.prototype.removeAllEntities = function () {
-            this._unsortedTags.length = 0;
-            this._entitiesToAdded.length = 0;
+            this._unsortedTags.clear();
+            this._entitiesToAdded.clear();
             this._isEntityListUnsorted = false;
+            // 为什么我们要在这里更新列表？主要是为了处理在场景切换前被分离的实体。
+            // 它们仍然会在_entitiesToRemove列表中，这将由updateLists处理。
             this.updateLists();
             for (var i = 0; i < this._entities.length; i++) {
                 this._entities[i]._isDestroyed = true;
@@ -4318,8 +3924,12 @@ var es;
             this._entities.length = 0;
             this._entityDict.clear();
         };
+        /**
+         * 检查实体目前是否由这个EntityList管理
+         * @param entity
+         */
         EntityList.prototype.contains = function (entity) {
-            return this._entities.contains(entity) || this._entitiesToAdded.contains(entity);
+            return new linq.List(this._entities).contains(entity) || this._entitiesToAdded.contains(entity);
         };
         EntityList.prototype.getTagList = function (tag) {
             var list = this._entityDict.get(tag);
@@ -4327,96 +3937,127 @@ var es;
                 list = [];
                 this._entityDict.set(tag, list);
             }
-            return this._entityDict.get(tag);
+            return list;
         };
         EntityList.prototype.addToTagList = function (entity) {
             var list = this.getTagList(entity.tag);
-            if (!list.contains(entity)) {
+            if (list.findIndex(function (e) { return e.id == entity.id; }) == -1) {
                 list.push(entity);
-                this._unsortedTags.push(entity.tag);
+                this._unsortedTags.add(entity.tag);
             }
         };
         EntityList.prototype.removeFromTagList = function (entity) {
             var list = this._entityDict.get(entity.tag);
             if (list) {
-                list.remove(entity);
+                new linq.List(list).remove(entity);
             }
         };
         EntityList.prototype.update = function () {
-            for (var i = 0; i < this._entities.length; i++) {
-                var entity = this._entities[i];
-                if (entity.enabled && (entity.updateInterval == 1 || es.Time.frameCount % entity.updateInterval == 0))
-                    entity.update();
+            var e_11, _a;
+            try {
+                for (var _b = __values(this._entities), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var entity = _c.value;
+                    if (entity.enabled && (entity.updateInterval == 1 || es.Time.frameCount % entity.updateInterval == 0))
+                        entity.update();
+                }
+            }
+            catch (e_11_1) { e_11 = { error: e_11_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_11) throw e_11.error; }
             }
         };
         EntityList.prototype.updateLists = function () {
             var _this = this;
-            if (this._entitiesToRemove.length > 0) {
-                var temp = this._entitiesToRemove;
-                this._entitiesToRemove = this._tempEntityList;
-                this._tempEntityList = temp;
-                this._tempEntityList.forEach(function (entity) {
+            if (this._entitiesToRemove.getCount() > 0) {
+                this._entitiesToRemove.toArray().forEach(function (entity) {
+                    // 处理标签列表
                     _this.removeFromTagList(entity);
-                    _this._entities.remove(entity);
+                    // 处理常规实体列表
+                    new linq.List(_this._entities).remove(entity);
                     entity.onRemovedFromScene();
                     entity.scene = null;
                     _this.scene.entityProcessors.onEntityRemoved(entity);
                 });
-                this._tempEntityList.length = 0;
+                this._entitiesToRemove.clear();
             }
-            if (this._entitiesToAdded.length > 0) {
-                var temp = this._entitiesToAdded;
-                this._entitiesToAdded = this._tempEntityList;
-                this._tempEntityList = temp;
-                this._tempEntityList.forEach(function (entity) {
-                    if (!_this._entities.contains(entity)) {
-                        _this._entities.push(entity);
-                        entity.scene = _this.scene;
-                        _this.addToTagList(entity);
-                        _this.scene.entityProcessors.onEntityAdded(entity);
-                    }
+            if (this._entitiesToAdded.getCount() > 0) {
+                this._entitiesToAdded.toArray().forEach(function (entity) {
+                    _this._entities.push(entity);
+                    entity.scene = _this.scene;
+                    _this.addToTagList(entity);
+                    _this.scene.entityProcessors.onEntityAdded(entity);
                 });
-                this._tempEntityList.forEach(function (entity) { return entity.onAddedToScene(); });
-                this._tempEntityList.length = 0;
+                this._entitiesToAdded.toArray().forEach(function (entity) {
+                    entity.onAddedToScene();
+                });
+                this._entitiesToAdded.clear();
                 this._isEntityListUnsorted = true;
             }
             if (this._isEntityListUnsorted) {
-                this._entities.sort();
+                this._entities.sort(es.Entity.entityComparer.compare);
                 this._isEntityListUnsorted = false;
             }
-            if (this._unsortedTags.length > 0) {
-                this._unsortedTags.forEach(function (tag) {
-                    _this._entityDict.get(tag).sort();
-                });
-                this._unsortedTags.length = 0;
+            // 根据需要对标签列表进行排序
+            if (this._unsortedTags.size > 0) {
+                this._unsortedTags.forEach(function (value) { return _this._entityDict.get(value).sort(function (a, b) { return a.compareTo(b); }); });
+                this._unsortedTags.clear();
             }
         };
+        /**
+         * 返回第一个找到的名字为name的实体。如果没有找到则返回null
+         * @param name
+         */
         EntityList.prototype.findEntity = function (name) {
             for (var i = 0; i < this._entities.length; i++) {
                 if (this._entities[i].name == name)
                     return this._entities[i];
             }
-            return this._entitiesToAdded.firstOrDefault(function (entity) { return entity.name == name; });
+            for (var i = 0; i < this._entitiesToAdded.getCount(); i++) {
+                var entity = this._entitiesToAdded.toArray()[i];
+                if (entity.name == name)
+                    return entity;
+            }
+            return null;
         };
+        /**
+         * 返回带有标签的所有实体的列表。如果没有实体有标签，则返回一个空列表。
+         * 返回的List可以通过ListPool.free放回池中
+         * @param tag
+         */
         EntityList.prototype.entitiesWithTag = function (tag) {
             var list = this.getTagList(tag);
             var returnList = es.ListPool.obtain();
+            returnList.length = this._entities.length;
             for (var i = 0; i < list.length; i++)
                 returnList.push(list[i]);
             return returnList;
         };
+        /**
+         * 返回一个T类型的所有实体的列表。
+         * 返回的List可以通过ListPool.free放回池中。
+         * @param type
+         */
         EntityList.prototype.entitiesOfType = function (type) {
             var list = es.ListPool.obtain();
             for (var i = 0; i < this._entities.length; i++) {
                 if (this._entities[i] instanceof type)
                     list.push(this._entities[i]);
             }
-            this._entitiesToAdded.forEach(function (entity) {
-                if (entity instanceof type)
+            for (var i = 0; i < this._entitiesToAdded.getCount(); i++) {
+                var entity = this._entitiesToAdded.toArray()[i];
+                if (es.TypeUtils.getType(entity) instanceof type) {
                     list.push(entity);
-            });
+                }
+            }
             return list;
         };
+        /**
+         * 返回在场景中找到的第一个T类型的组件。
+         * @param type
+         */
         EntityList.prototype.findComponentOfType = function (type) {
             for (var i = 0; i < this._entities.length; i++) {
                 if (this._entities[i].enabled) {
@@ -4425,8 +4066,8 @@ var es;
                         return comp;
                 }
             }
-            for (var i = 0; i < this._entitiesToAdded.length; i++) {
-                var entity = this._entitiesToAdded[i];
+            for (var i = 0; i < this._entitiesToAdded.getCount(); i++) {
+                var entity = this._entitiesToAdded.toArray()[i];
                 if (entity.enabled) {
                     var comp = entity.getComponent(type);
                     if (comp)
@@ -4435,14 +4076,19 @@ var es;
             }
             return null;
         };
+        /**
+         * 返回在场景中找到的所有T类型的组件。
+         * 返回的List可以通过ListPool.free放回池中。
+         * @param type
+         */
         EntityList.prototype.findComponentsOfType = function (type) {
             var comps = es.ListPool.obtain();
             for (var i = 0; i < this._entities.length; i++) {
                 if (this._entities[i].enabled)
                     this._entities[i].getComponents(type, comps);
             }
-            for (var i = 0; i < this._entitiesToAdded.length; i++) {
-                var entity = this._entitiesToAdded[i];
+            for (var i = 0; i < this._entitiesToAdded.getCount(); i++) {
+                var entity = this._entitiesToAdded.toArray()[i];
                 if (entity.enabled)
                     entity.getComponents(type, comps);
             }
@@ -4454,7 +4100,7 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var EntityProcessorList = (function () {
+    var EntityProcessorList = /** @class */ (function () {
         function EntityProcessorList() {
             this._processors = [];
         }
@@ -4462,7 +4108,7 @@ var es;
             this._processors.push(processor);
         };
         EntityProcessorList.prototype.remove = function (processor) {
-            this._processors.remove(processor);
+            new linq.List(this._processors).remove(processor);
         };
         EntityProcessorList.prototype.onComponentAdded = function (entity) {
             this.notifyEntityChanged(entity);
@@ -4514,7 +4160,93 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Matcher = (function () {
+    var HashHelpers = /** @class */ (function () {
+        function HashHelpers() {
+        }
+        HashHelpers.isPrime = function (candidate) {
+            if ((candidate & 1) != 0) {
+                var limit = Math.sqrt(candidate);
+                for (var divisor = 3; divisor <= limit; divisor += 2) {
+                    if ((candidate & divisor) == 0)
+                        return false;
+                }
+                return true;
+            }
+            return (candidate == 2);
+        };
+        HashHelpers.getPrime = function (min) {
+            if (min < 0)
+                throw new Error("参数错误 min不能小于0");
+            for (var i = 0; i < this.primes.length; i++) {
+                var prime = this.primes[i];
+                if (prime >= min)
+                    return prime;
+            }
+            // 在我们预定义的表之外，计算的方式稍复杂。
+            for (var i = (min | 1); i < Number.MAX_VALUE; i += 2) {
+                if (this.isPrime(i) && ((i - 1) % this.hashPrime != 0))
+                    return i;
+            }
+            return min;
+        };
+        /**
+         *
+         * @param oldSize
+         * @returns 返回要增长的哈希特表的大小
+         */
+        HashHelpers.expandPrime = function (oldSize) {
+            var newSize = 2 * oldSize;
+            // 在遇到容量溢出之前，允许哈希特表增长到最大可能的大小
+            // 请注意，即使当_items.Length溢出时，这项检查也会起作用
+            if (newSize > this.maxPrimeArrayLength && this.maxPrimeArrayLength > oldSize) {
+                return this.maxPrimeArrayLength;
+            }
+            return this.getPrime(newSize);
+        };
+        HashHelpers.getHashCode = function (str) {
+            var s;
+            if (typeof str == 'object') {
+                s = JSON.stringify(str);
+            }
+            else {
+                s = str.toString();
+            }
+            var hash = 0;
+            if (s.length == 0)
+                return hash;
+            for (var i = 0; i < s.length; i++) {
+                var char = s.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return hash;
+        };
+        HashHelpers.hashCollisionThreshold = 100;
+        HashHelpers.hashPrime = 101;
+        /**
+         * 用来作为哈希表大小的质数表。
+         * 一个典型的调整大小的算法会在这个数组中选取比之前容量大两倍的最小质数。
+         * 假设我们的Hashtable当前的容量为x，并且添加了足够多的元素，因此需要进行大小调整。
+         * 调整大小首先计算2x，然后在表中找到第一个大于2x的质数，即如果质数的顺序是p_1，p_2，...，p_i，...，则找到p_n，使p_n-1 < 2x < p_n。
+         * 双倍对于保持哈希特操作的渐近复杂度是很重要的，比如添加。
+         * 拥有一个质数可以保证双倍哈希不会导致无限循环。 IE，你的哈希函数将是h1(key)+i*h2(key)，0 <= i < size.h2和size必须是相对质数。
+         */
+        HashHelpers.primes = [3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
+            1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
+            17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,
+            187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263,
+            1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559, 5999471, 7199369];
+        /**
+         * 这是比Array.MaxArrayLength小的最大质数
+         */
+        HashHelpers.maxPrimeArrayLength = 0x7FEFFFFD;
+        return HashHelpers;
+    }());
+    es.HashHelpers = HashHelpers;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Matcher = /** @class */ (function () {
         function Matcher() {
             this.allSet = new es.BitSet();
             this.exclusionSet = new es.BitSet();
@@ -4532,16 +4264,22 @@ var es;
         Matcher.prototype.getOneSet = function () {
             return this.oneSet;
         };
-        Matcher.prototype.IsIntersted = function (e) {
+        Matcher.prototype.isInterestedEntity = function (e) {
+            return this.isInterested(e.componentBits);
+        };
+        Matcher.prototype.isInterested = function (componentBits) {
+            // 检查实体是否拥有该方面中定义的所有组件
             if (!this.allSet.isEmpty()) {
                 for (var i = this.allSet.nextSetBit(0); i >= 0; i = this.allSet.nextSetBit(i + 1)) {
-                    if (!e.componentBits.get(i))
+                    if (!componentBits.get(i))
                         return false;
                 }
             }
-            if (!this.exclusionSet.isEmpty() && this.exclusionSet.intersects(e.componentBits))
+            // 如果我们仍然感兴趣，检查该实体是否拥有任何一个排除组件，如果有，那么系统就不感兴趣
+            if (!this.exclusionSet.isEmpty() && this.exclusionSet.intersects(componentBits))
                 return false;
-            if (!this.oneSet.isEmpty() && !this.oneSet.intersects(e.componentBits))
+            // 如果我们仍然感兴趣，检查该实体是否拥有oneSet中的任何一个组件。如果是，系统就会感兴趣
+            if (!this.oneSet.isEmpty() && !this.oneSet.intersects(componentBits))
                 return false;
             return true;
         };
@@ -4582,57 +4320,17 @@ var es;
     }());
     es.Matcher = Matcher;
 })(es || (es = {}));
-var ObjectUtils = (function () {
-    function ObjectUtils() {
-    }
-    ObjectUtils.clone = function (p, c) {
-        if (c === void 0) { c = null; }
-        var c = c || {};
-        for (var i in p) {
-            if (typeof p[i] === 'object') {
-                c[i] = p[i] instanceof Array ? [] : {};
-                this.clone(p[i], c[i]);
-            }
-            else {
-                c[i] = p[i];
-            }
-        }
-        return c;
-    };
-    ObjectUtils.elements = function (p) {
-        var c = [];
-        for (var i in p) {
-            if (Array.isArray(p[i])) {
-                for (var _i = 0, _a = p[i]; _i < _a.length; _i++) {
-                    var v = _a[_i];
-                    c.push(v);
-                }
-            }
-            else {
-                c.push(p[i]);
-            }
-        }
-        return c;
-    };
-    return ObjectUtils;
-}());
 var es;
 (function (es) {
-    var RenderableComparer = (function () {
-        function RenderableComparer() {
-        }
-        RenderableComparer.prototype.compare = function (self, other) {
-            return other.renderLayer - self.renderLayer;
-        };
-        return RenderableComparer;
-    }());
-    es.RenderableComparer = RenderableComparer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var RenderableComponentList = (function () {
+    var RenderableComponentList = /** @class */ (function () {
         function RenderableComponentList() {
+            /**
+             * 添加到实体的组件列表
+             */
             this._components = [];
+            /**
+             * 通过renderLayer跟踪组件，便于检索
+             */
             this._componentsByRenderLayer = new Map();
             this._unsortedRenderLayers = [];
             this._componentsNeedSort = true;
@@ -4651,41 +4349,44 @@ var es;
             enumerable: true,
             configurable: true
         });
+        RenderableComponentList.prototype.get = function (index) {
+            return this._components[index];
+        };
         RenderableComponentList.prototype.add = function (component) {
             this._components.push(component);
             this.addToRenderLayerList(component, component.renderLayer);
         };
         RenderableComponentList.prototype.remove = function (component) {
-            this._components.remove(component);
-            this._componentsByRenderLayer.get(component.renderLayer).remove(component);
+            new linq.List(this._components).remove(component);
+            new linq.List(this._componentsByRenderLayer.get(component.renderLayer)).remove(component);
         };
         RenderableComponentList.prototype.updateRenderableRenderLayer = function (component, oldRenderLayer, newRenderLayer) {
-            if (this._componentsByRenderLayer.has(oldRenderLayer) && this._componentsByRenderLayer.get(oldRenderLayer).contains(component)) {
-                this._componentsByRenderLayer.get(oldRenderLayer).remove(component);
+            // 需要注意的是，在组件 "上线 "之前，renderLayer可能会发生变化
+            if (this._componentsByRenderLayer.has(oldRenderLayer) &&
+                new linq.List(this._componentsByRenderLayer.get(oldRenderLayer)).contains(component)) {
+                new linq.List(this._componentsByRenderLayer.get(oldRenderLayer)).remove(component);
                 this.addToRenderLayerList(component, newRenderLayer);
             }
         };
+        /**
+         * 弄脏RenderLayers排序标志，导致所有组件的重新排序
+         * @param renderLayer
+         */
         RenderableComponentList.prototype.setRenderLayerNeedsComponentSort = function (renderLayer) {
-            if (!this._unsortedRenderLayers.contains(renderLayer))
+            if (!new linq.List(this._unsortedRenderLayers).contains(renderLayer))
                 this._unsortedRenderLayers.push(renderLayer);
-            this._componentsNeedSort = true;
-        };
-        RenderableComponentList.prototype.setNeedsComponentSort = function () {
             this._componentsNeedSort = true;
         };
         RenderableComponentList.prototype.addToRenderLayerList = function (component, renderLayer) {
             var list = this.componentsWithRenderLayer(renderLayer);
-            if (list.contains(component)) {
-                console.warn("组件呈现层列表已经包含此组件");
-                return;
-            }
-            list.push(component);
-            if (!this._unsortedRenderLayers.contains(renderLayer))
-                this._unsortedRenderLayers.push(renderLayer);
-            this._componentsNeedSort = true;
+            es.Insist.isFalse(new linq.List(list).contains(component), "组件renderLayer列表已经包含这个组件");
         };
+        /**
+         * 获取所有给定renderLayer的组件。组件列表是预先排序的。
+         * @param renderLayer
+         */
         RenderableComponentList.prototype.componentsWithRenderLayer = function (renderLayer) {
-            if (!this._componentsByRenderLayer.get(renderLayer)) {
+            if (!this._componentsByRenderLayer.has(renderLayer)) {
                 this._componentsByRenderLayer.set(renderLayer, []);
             }
             return this._componentsByRenderLayer.get(renderLayer);
@@ -4694,7 +4395,6 @@ var es;
             if (this._componentsNeedSort) {
                 this._components.sort(RenderableComponentList.compareUpdatableOrder.compare);
                 this._componentsNeedSort = false;
-                this.updateEgretList();
             }
             if (this._unsortedRenderLayers.length > 0) {
                 for (var i = 0, count = this._unsortedRenderLayers.length; i < count; i++) {
@@ -4704,37 +4404,32 @@ var es;
                     }
                 }
                 this._unsortedRenderLayers.length = 0;
-                this.updateEgretList();
             }
         };
-        RenderableComponentList.prototype.updateEgretList = function () {
-            var scene = es.Core._instance._scene;
-            if (!scene)
-                return;
-            var _loop_5 = function (i) {
-                var component = this_1._components[i];
-                var egretDisplayObject = scene.$children.find(function (a) { return a.hashCode == component.displayObject.hashCode; });
-                var displayIndex = scene.getChildIndex(egretDisplayObject);
-                if (displayIndex != i)
-                    scene.swapChildrenAt(displayIndex, i);
-            };
-            var this_1 = this;
-            for (var i = 0; i < this._components.length; i++) {
-                _loop_5(i);
-            }
-        };
+        // IRenderable列表的全局updateOrder排序
         RenderableComponentList.compareUpdatableOrder = new es.RenderableComparer();
         return RenderableComponentList;
     }());
     es.RenderableComponentList = RenderableComponentList;
 })(es || (es = {}));
-var StringUtils = (function () {
+var StringUtils = /** @class */ (function () {
     function StringUtils() {
     }
+    /**
+     * 匹配中文字符
+     * @param str 需要匹配的字符串
+     * @return
+     */
     StringUtils.matchChineseWord = function (str) {
+        //中文字符的unicode值[\u4E00-\u9FA5]
         var patternA = /[\u4E00-\u9FA5]+/gim;
         return str.match(patternA);
     };
+    /**
+     * 去除字符串左端的空白字符
+     * @param target 目标字符串
+     * @return
+     */
     StringUtils.lTrim = function (target) {
         var startIndex = 0;
         while (this.isWhiteSpace(target.charAt(startIndex))) {
@@ -4742,6 +4437,11 @@ var StringUtils = (function () {
         }
         return target.slice(startIndex, target.length);
     };
+    /**
+     * 去除字符串右端的空白字符
+     * @param target 目标字符串
+     * @return
+     */
     StringUtils.rTrim = function (target) {
         var endIndex = target.length - 1;
         while (this.isWhiteSpace(target.charAt(endIndex))) {
@@ -4749,17 +4449,35 @@ var StringUtils = (function () {
         }
         return target.slice(0, endIndex + 1);
     };
+    /**
+     * 返回一个去除2段空白字符的字符串
+     * @param target
+     * @return 返回一个去除2段空白字符的字符串
+     */
     StringUtils.trim = function (target) {
         if (target == null) {
             return null;
         }
         return this.rTrim(this.lTrim(target));
     };
+    /**
+     * 返回该字符是否为空白字符
+     * @param    str
+     * @return  返回该字符是否为空白字符
+     */
     StringUtils.isWhiteSpace = function (str) {
         if (str == " " || str == "\t" || str == "\r" || str == "\n")
             return true;
         return false;
     };
+    /**
+     * 返回执行替换后的字符串
+     * @param mainStr 待查找字符串
+     * @param targetStr 目标字符串
+     * @param replaceStr 替换字符串
+     * @param caseMark 是否忽略大小写
+     * @return 返回执行替换后的字符串
+     */
     StringUtils.replaceMatch = function (mainStr, targetStr, replaceStr, caseMark) {
         if (caseMark === void 0) { caseMark = false; }
         var len = mainStr.length;
@@ -4783,6 +4501,12 @@ var StringUtils = (function () {
         }
         return tempStr;
     };
+    /**
+     * 用html实体换掉字符窜中的特殊字符
+     * @param str 需要替换的字符串
+     * @param reversion 是否翻转替换：将转义符号替换为正常的符号
+     * @return 换掉特殊字符后的字符串
+     */
     StringUtils.htmlSpecialChars = function (str, reversion) {
         if (reversion === void 0) { reversion = false; }
         var len = this.specialSigns.length;
@@ -4800,6 +4524,15 @@ var StringUtils = (function () {
         }
         return str;
     };
+    /**
+     * 给数字字符前面添 "0"
+     *
+     * @param str 要进行处理的字符串
+     * @param width 处理后字符串的长度，
+     *              如果str.length >= width，将不做任何处理直接返回原始的str。
+     * @return
+     *
+     */
     StringUtils.zfill = function (str, width) {
         if (width === void 0) { width = 2; }
         if (!str) {
@@ -4824,12 +4557,25 @@ var StringUtils = (function () {
         }
         return str;
     };
+    /**
+     * 翻转字符串
+     * @param str 字符串
+     * @return 翻转后的字符串
+     */
     StringUtils.reverse = function (str) {
         if (str.length > 1)
             return this.reverse(str.substring(1)) + str.substring(0, 1);
         else
             return str;
     };
+    /**
+     * 截断某段字符串
+     * @param str 目标字符串
+     * @param start 需要截断的起始索引
+     * @param en 截断长度
+     * @param order 顺序，true从字符串头部开始计算，false从字符串尾巴开始结算。
+     * @return 截断后的字符串
+     */
     StringUtils.cutOff = function (str, start, len, order) {
         if (order === void 0) { order = true; }
         start = Math.floor(start);
@@ -4850,6 +4596,9 @@ var StringUtils = (function () {
         }
         return newStr;
     };
+    /**
+     * {0} 字符替换
+     */
     StringUtils.strReplace = function (str, rStr) {
         var i = 0, len = rStr.length;
         for (; i < len; i++) {
@@ -4860,6 +4609,20 @@ var StringUtils = (function () {
         }
         return str;
     };
+    StringUtils.format = function (str) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        for (var i = 0; i < args.length - 1; i++) {
+            var reg = new RegExp("\\{" + i + "\\}", "gm");
+            str = str.replace(reg, args[i + 1]);
+        }
+        return str;
+    };
+    /**
+     * 特殊符号字符串
+     */
     StringUtils.specialSigns = [
         '&', '&amp;',
         '<', '&lt;',
@@ -4874,164 +4637,55 @@ var StringUtils = (function () {
 }());
 var es;
 (function (es) {
-    var TextureUtils = (function () {
-        function TextureUtils() {
-        }
-        TextureUtils.convertImageToCanvas = function (texture, rect) {
-            if (!this.sharedCanvas) {
-                this.sharedCanvas = egret.sys.createCanvas();
-                this.sharedContext = this.sharedCanvas.getContext("2d");
-            }
-            var w = texture.$getTextureWidth();
-            var h = texture.$getTextureHeight();
-            if (!rect) {
-                rect = egret.$TempRectangle;
-                rect.x = 0;
-                rect.y = 0;
-                rect.width = w;
-                rect.height = h;
-            }
-            rect.x = Math.min(rect.x, w - 1);
-            rect.y = Math.min(rect.y, h - 1);
-            rect.width = Math.min(rect.width, w - rect.x);
-            rect.height = Math.min(rect.height, h - rect.y);
-            var iWidth = Math.floor(rect.width);
-            var iHeight = Math.floor(rect.height);
-            var surface = this.sharedCanvas;
-            surface["style"]["width"] = iWidth + "px";
-            surface["style"]["height"] = iHeight + "px";
-            this.sharedCanvas.width = iWidth;
-            this.sharedCanvas.height = iHeight;
-            if (egret.Capabilities.renderMode == "webgl") {
-                var renderTexture = void 0;
-                if (!texture.$renderBuffer) {
-                    if (egret.sys.systemRenderer["renderClear"]) {
-                        egret.sys.systemRenderer["renderClear"]();
-                    }
-                    renderTexture = new egret.RenderTexture();
-                    renderTexture.drawToTexture(new egret.Bitmap(texture));
-                }
-                else {
-                    renderTexture = texture;
-                }
-                var pixels = renderTexture.$renderBuffer.getPixels(rect.x, rect.y, iWidth, iHeight);
-                var x = 0;
-                var y = 0;
-                for (var i = 0; i < pixels.length; i += 4) {
-                    this.sharedContext.fillStyle =
-                        'rgba(' + pixels[i]
-                            + ',' + pixels[i + 1]
-                            + ',' + pixels[i + 2]
-                            + ',' + (pixels[i + 3] / 255) + ')';
-                    this.sharedContext.fillRect(x, y, 1, 1);
-                    x++;
-                    if (x == iWidth) {
-                        x = 0;
-                        y++;
-                    }
-                }
-                if (!texture.$renderBuffer) {
-                    renderTexture.dispose();
-                }
-                return surface;
-            }
-            else {
-                var bitmapData = texture;
-                var offsetX = Math.round(bitmapData.$offsetX);
-                var offsetY = Math.round(bitmapData.$offsetY);
-                var bitmapWidth = bitmapData.$bitmapWidth;
-                var bitmapHeight = bitmapData.$bitmapHeight;
-                var $TextureScaleFactor = es.Core._instance.stage.textureScaleFactor;
-                this.sharedContext.drawImage(bitmapData.$bitmapData.source, bitmapData.$bitmapX + rect.x / $TextureScaleFactor, bitmapData.$bitmapY + rect.y / $TextureScaleFactor, bitmapWidth * rect.width / w, bitmapHeight * rect.height / h, offsetX, offsetY, rect.width, rect.height);
-                return surface;
-            }
-        };
-        TextureUtils.toDataURL = function (type, texture, rect, encoderOptions) {
-            try {
-                var surface = this.convertImageToCanvas(texture, rect);
-                var result = surface.toDataURL(type, encoderOptions);
-                return result;
-            }
-            catch (e) {
-                egret.$error(1033);
-            }
-            return null;
-        };
-        TextureUtils.eliFoTevas = function (type, texture, filePath, rect, encoderOptions) {
-            var surface = this.convertImageToCanvas(texture, rect);
-            var result = surface.toTempFilePathSync({
-                fileType: type.indexOf("png") >= 0 ? "png" : "jpg"
-            });
-            wx.getFileSystemManager().saveFile({
-                tempFilePath: result,
-                filePath: wx.env.USER_DATA_PATH + "/" + filePath,
-                success: function (res) {
-                }
-            });
-            return result;
-        };
-        TextureUtils.getPixel32 = function (texture, x, y) {
-            egret.$warn(1041, "getPixel32", "getPixels");
-            return texture.getPixels(x, y);
-        };
-        TextureUtils.getPixels = function (texture, x, y, width, height) {
-            if (width === void 0) { width = 1; }
-            if (height === void 0) { height = 1; }
-            if (egret.Capabilities.renderMode == "webgl") {
-                var renderTexture = void 0;
-                if (!texture.$renderBuffer) {
-                    renderTexture = new egret.RenderTexture();
-                    renderTexture.drawToTexture(new egret.Bitmap(texture));
-                }
-                else {
-                    renderTexture = texture;
-                }
-                var pixels = renderTexture.$renderBuffer.getPixels(x, y, width, height);
-                return pixels;
-            }
-            try {
-                var surface = this.convertImageToCanvas(texture);
-                var result = this.sharedContext.getImageData(x, y, width, height).data;
-                return result;
-            }
-            catch (e) {
-                egret.$error(1039);
-            }
-        };
-        return TextureUtils;
-    }());
-    es.TextureUtils = TextureUtils;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Time = (function () {
+    /** 提供帧定时信息 */
+    var Time = /** @class */ (function () {
         function Time() {
         }
         Time.update = function (currentTime) {
             var dt = (currentTime - this._lastTime) / 1000;
+            this.totalTime += dt;
             this.deltaTime = dt * this.timeScale;
             this.unscaledDeltaTime = dt;
-            this._timeSinceSceneLoad += dt;
+            this.timeSinceSceneLoad += dt;
             this.frameCount++;
             this._lastTime = currentTime;
         };
         Time.sceneChanged = function () {
-            this._timeSinceSceneLoad = 0;
+            this.timeSinceSceneLoad = 0;
         };
+        /**
+         * 允许在间隔检查。只应该使用高于delta的间隔值，否则它将始终返回true。
+         * @param interval
+         */
         Time.checkEvery = function (interval) {
-            return (this._timeSinceSceneLoad / interval) > ((this._timeSinceSceneLoad - this.deltaTime) / interval);
+            // 我们减去了delta，因为timeSinceSceneLoad已经包含了这个update ticks delta
+            return this.timeSinceSceneLoad / interval > (this.timeSinceSceneLoad - this.deltaTime) / interval;
         };
+        /** 游戏运行的总时间 */
+        Time.totalTime = 0;
+        /** deltaTime的未缩放版本。不受时间尺度的影响 */
+        Time.unscaledDeltaTime = 0;
+        /** 前一帧到当前帧的时间增量，按时间刻度进行缩放 */
         Time.deltaTime = 0;
+        /** 时间刻度缩放 */
         Time.timeScale = 1;
+        /** 已传递的帧总数 */
         Time.frameCount = 0;
+        /** 自场景加载以来的总时间 */
+        Time.timeSinceSceneLoad = 0;
         Time._lastTime = 0;
         return Time;
     }());
     es.Time = Time;
 })(es || (es = {}));
-var TimeUtils = (function () {
+var TimeUtils = /** @class */ (function () {
     function TimeUtils() {
     }
+    /**
+     * 计算月份ID
+     * @param d 指定计算日期
+     * @returns 月ID
+     */
     TimeUtils.monthId = function (d) {
         if (d === void 0) { d = null; }
         d = d ? d : new Date();
@@ -5040,6 +4694,11 @@ var TimeUtils = (function () {
         var g = m < 10 ? "0" : "";
         return parseInt(y + g + m);
     };
+    /**
+     * 计算日期ID
+     * @param d 指定计算日期
+     * @returns 日期ID
+     */
     TimeUtils.dateId = function (t) {
         if (t === void 0) { t = null; }
         t = t ? t : new Date();
@@ -5049,6 +4708,11 @@ var TimeUtils = (function () {
         var b = d < 10 ? "0" : "";
         return parseInt(t.getFullYear() + a + m + b + d);
     };
+    /**
+     * 计算周ID
+     * @param d 指定计算日期
+     * @returns 周ID
+     */
     TimeUtils.weekId = function (d, first) {
         if (d === void 0) { d = null; }
         if (first === void 0) { first = true; }
@@ -5056,7 +4720,7 @@ var TimeUtils = (function () {
         var c = new Date();
         c.setTime(d.getTime());
         c.setDate(1);
-        c.setMonth(0);
+        c.setMonth(0); //当年第一天
         var year = c.getFullYear();
         var firstDay = c.getDay();
         if (firstDay == 0) {
@@ -5073,7 +4737,7 @@ var TimeUtils = (function () {
         var num = this.diffDay(d, c, false);
         if (num < 0) {
             c.setDate(1);
-            c.setMonth(0);
+            c.setMonth(0); //当年第一天
             c.setDate(c.getDate() - 1);
             return this.weekId(c, false);
         }
@@ -5089,32 +4753,47 @@ var TimeUtils = (function () {
             if (first && (!max || endDay < 4)) {
                 c.setFullYear(c.getFullYear() + 1);
                 c.setDate(1);
-                c.setMonth(0);
+                c.setMonth(0); //当年第一天
                 return this.weekId(c, false);
             }
         }
         var g = weekIdx > 9 ? "" : "0";
-        var s = year + "00" + g + weekIdx;
+        var s = year + "00" + g + weekIdx; //加上00防止和月份ID冲突
         return parseInt(s);
     };
+    /**
+     * 计算俩日期时间差，如果a比b小，返回负数
+     */
     TimeUtils.diffDay = function (a, b, fixOne) {
         if (fixOne === void 0) { fixOne = false; }
         var x = (a.getTime() - b.getTime()) / 86400000;
         return fixOne ? Math.ceil(x) : Math.floor(x);
     };
+    /**
+     * 获取本周一 凌晨时间
+     */
     TimeUtils.getFirstDayOfWeek = function (d) {
         d = d ? d : new Date();
         var day = d.getDay() || 7;
         return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1 - day, 0, 0, 0, 0);
     };
+    /**
+     * 获取当日凌晨时间
+     */
     TimeUtils.getFirstOfDay = function (d) {
         d = d ? d : new Date();
         d.setHours(0, 0, 0, 0);
         return d;
     };
+    /**
+     * 获取次日凌晨时间
+     */
     TimeUtils.getNextFirstOfDay = function (d) {
         return new Date(this.getFirstOfDay(d).getTime() + 86400000);
     };
+    /**
+     * @returns 2018-12-12
+     */
     TimeUtils.formatDate = function (date) {
         var y = date.getFullYear();
         var m = date.getMonth() + 1;
@@ -5123,6 +4802,9 @@ var TimeUtils = (function () {
         d = d < 10 ? ('0' + d) : d;
         return y + '-' + m + '-' + d;
     };
+    /**
+     * @returns 2018-12-12 12:12:12
+     */
     TimeUtils.formatDateTime = function (date) {
         var y = date.getFullYear();
         var m = date.getMonth() + 1;
@@ -5136,6 +4818,9 @@ var TimeUtils = (function () {
         s = s < 10 ? ('0' + s) : s;
         return y + '-' + m + '-' + d + ' ' + h + ':' + i + ":" + s;
     };
+    /**
+     * @returns s 2018-12-12 或者 2018-12-12 12:12:12
+     */
     TimeUtils.parseDate = function (s) {
         var t = Date.parse(s);
         if (!isNaN(t)) {
@@ -5145,6 +4830,15 @@ var TimeUtils = (function () {
             return new Date();
         }
     };
+    /**
+     * 秒数转换为时间形式。
+     * @param    time 秒数
+     * @param    partition 分隔符
+     * @param    showHour  是否显示小时
+     * @return  返回一个以分隔符分割的时, 分, 秒
+     *
+     * 比如: time = 4351; secondToTime(time)返回字符串01:12:31;
+     */
     TimeUtils.secondToTime = function (time, partition, showHour) {
         if (time === void 0) { time = 0; }
         if (partition === void 0) { partition = ":"; }
@@ -5168,6 +4862,20 @@ var TimeUtils = (function () {
             timeStr = m + partition + s;
         return timeStr;
     };
+    /**
+     * 时间形式转换为毫秒数。
+     * @param   time  以指定分隔符分割的时间字符串
+     * @param   partition  分隔符
+     * @return  毫秒数显示的字符串
+     * @throws  Error Exception
+     *
+     * 用法1 trace(MillisecondTransform.timeToMillisecond("00:60:00"))
+     * 输出   3600000
+     *
+     *
+     * 用法2 trace(MillisecondTransform.timeToMillisecond("00.60.00","."))
+     * 输出   3600000
+     */
     TimeUtils.timeToMillisecond = function (time, partition) {
         if (partition === void 0) { partition = ":"; }
         var _ary = time.split(partition);
@@ -5184,591 +4892,77 @@ var TimeUtils = (function () {
 }());
 var es;
 (function (es) {
-    var GraphicsCapabilities = (function (_super) {
-        __extends(GraphicsCapabilities, _super);
-        function GraphicsCapabilities() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        GraphicsCapabilities.prototype.initialize = function (device) {
-            this.platformInitialize(device);
-        };
-        GraphicsCapabilities.prototype.platformInitialize = function (device) {
-            if (GraphicsCapabilities.runtimeType != egret.RuntimeType.WXGAME)
-                return;
-            var capabilities = this;
-            capabilities["isMobile"] = true;
-            var systemInfo = wx.getSystemInfoSync();
-            var systemStr = systemInfo.system.toLowerCase();
-            if (systemStr.indexOf("ios") > -1) {
-                capabilities["os"] = "iOS";
-            }
-            else if (systemStr.indexOf("android") > -1) {
-                capabilities["os"] = "Android";
-            }
-            var language = systemInfo.language;
-            if (language.indexOf('zh') > -1) {
-                language = "zh-CN";
-            }
-            else {
-                language = "en-US";
-            }
-            capabilities["language"] = language;
-        };
-        return GraphicsCapabilities;
-    }(egret.Capabilities));
-    es.GraphicsCapabilities = GraphicsCapabilities;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var GraphicsDevice = (function () {
-        function GraphicsDevice() {
-            this.setup();
-            this.graphicsCapabilities = new es.GraphicsCapabilities();
-            this.graphicsCapabilities.initialize(this);
-        }
-        Object.defineProperty(GraphicsDevice.prototype, "viewport", {
-            get: function () {
-                return this._viewport;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        GraphicsDevice.prototype.setup = function () {
-            this._viewport = new es.Viewport(0, 0, es.Core._instance.stage.stageWidth, es.Core._instance.stage.stageHeight);
-        };
-        return GraphicsDevice;
-    }());
-    es.GraphicsDevice = GraphicsDevice;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Viewport = (function () {
-        function Viewport(x, y, width, height) {
-            this._x = x;
-            this._y = y;
-            this._width = width;
-            this._height = height;
-            this._minDepth = 0;
-            this._maxDepth = 1;
-        }
-        Object.defineProperty(Viewport.prototype, "width", {
-            get: function () {
-                return this._width;
-            },
-            set: function (value) {
-                this._width = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Viewport.prototype, "height", {
-            get: function () {
-                return this._height;
-            },
-            set: function (value) {
-                this._height = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Viewport.prototype, "aspectRatio", {
-            get: function () {
-                if ((this._height != 0) && (this._width != 0))
-                    return (this._width / this._height);
-                return 0;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Viewport.prototype, "bounds", {
-            get: function () {
-                return new es.Rectangle(this._x, this._y, this._width, this._height);
-            },
-            set: function (value) {
-                this._x = value.x;
-                this._y = value.y;
-                this._width = value.width;
-                this._height = value.height;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return Viewport;
-    }());
-    es.Viewport = Viewport;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var GaussianBlurEffect = (function (_super) {
-        __extends(GaussianBlurEffect, _super);
-        function GaussianBlurEffect() {
-            return _super.call(this, es.PostProcessor.default_vert, GaussianBlurEffect.blur_frag, {
-                screenWidth: es.Core.graphicsDevice.viewport.width,
-                screenHeight: es.Core.graphicsDevice.viewport.height
-            }) || this;
-        }
-        GaussianBlurEffect.blur_frag = "precision mediump float;\n" +
-            "uniform sampler2D uSampler;\n" +
-            "uniform float screenWidth;\n" +
-            "uniform float screenHeight;\n" +
-            "float normpdf(in float x, in float sigma)\n" +
-            "{\n" +
-            "return 0.39894*exp(-0.5*x*x/(sigma*sigma))/sigma;\n" +
-            "}\n" +
-            "void main()\n" +
-            "{\n" +
-            "vec3 c = texture2D(uSampler, gl_FragCoord.xy / vec2(screenWidth, screenHeight).xy).rgb;\n" +
-            "const int mSize = 11;\n" +
-            "const int kSize = (mSize - 1)/2;\n" +
-            "float kernel[mSize];\n" +
-            "vec3 final_colour = vec3(0.0);\n" +
-            "float sigma = 7.0;\n" +
-            "float z = 0.0;\n" +
-            "for (int j = 0; j <= kSize; ++j)\n" +
-            "{\n" +
-            "kernel[kSize+j] = kernel[kSize-j] = normpdf(float(j),sigma);\n" +
-            "}\n" +
-            "for (int j = 0; j < mSize; ++j)\n" +
-            "{\n" +
-            "z += kernel[j];\n" +
-            "}\n" +
-            "for (int i = -kSize; i <= kSize; ++i)\n" +
-            "{\n" +
-            "for (int j = -kSize; j <= kSize; ++j)\n" +
-            "{\n" +
-            "final_colour += kernel[kSize+j]*kernel[kSize+i]*texture2D(uSampler, (gl_FragCoord.xy+vec2(float(i),float(j))) / vec2(screenWidth, screenHeight).xy).rgb;\n" +
-            "}\n}\n" +
-            "gl_FragColor = vec4(final_colour/(z*z), 1.0);\n" +
-            "}";
-        return GaussianBlurEffect;
-    }(egret.CustomFilter));
-    es.GaussianBlurEffect = GaussianBlurEffect;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var PolygonLightEffect = (function (_super) {
-        __extends(PolygonLightEffect, _super);
-        function PolygonLightEffect() {
-            return _super.call(this, PolygonLightEffect.vertSrc, PolygonLightEffect.fragmentSrc) || this;
-        }
-        PolygonLightEffect.vertSrc = "attribute vec2 aVertexPosition;\n" +
-            "attribute vec2 aTextureCoord;\n" +
-            "uniform vec2 projectionVector;\n" +
-            "varying vec2 vTextureCoord;\n" +
-            "const vec2 center = vec2(-1.0, 1.0);\n" +
-            "void main(void) {\n" +
-            "   gl_Position = vec4( (aVertexPosition / projectionVector) + center , 0.0, 1.0);\n" +
-            "   vTextureCoord = aTextureCoord;\n" +
-            "}";
-        PolygonLightEffect.fragmentSrc = "precision lowp float;\n" +
-            "varying vec2 vTextureCoord;\n" +
-            "uniform sampler2D uSampler;\n" +
-            "#define SAMPLE_COUNT 15\n" +
-            "uniform vec2 _sampleOffsets[SAMPLE_COUNT];\n" +
-            "uniform float _sampleWeights[SAMPLE_COUNT];\n" +
-            "void main(void) {\n" +
-            "vec4 c = vec4(0, 0, 0, 0);\n" +
-            "for( int i = 0; i < SAMPLE_COUNT; i++ )\n" +
-            "   c += texture2D( uSampler, vTextureCoord + _sampleOffsets[i] ) * _sampleWeights[i];\n" +
-            "gl_FragColor = c;\n" +
-            "}";
-        return PolygonLightEffect;
-    }(egret.CustomFilter));
-    es.PolygonLightEffect = PolygonLightEffect;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var PostProcessor = (function () {
-        function PostProcessor(effect) {
-            if (effect === void 0) { effect = null; }
-            this.enabled = true;
-            this.effect = effect;
-        }
-        PostProcessor.prototype.onAddedToScene = function (scene) {
-            this.scene = scene;
-            this.shape = new egret.Shape();
-            this.shape.graphics.beginFill(0xFFFFFF, 1);
-            this.shape.graphics.drawRect(0, 0, es.Core.graphicsDevice.viewport.width, es.Core.graphicsDevice.viewport.height);
-            this.shape.graphics.endFill();
-            scene.addChild(this.shape);
-        };
-        PostProcessor.prototype.process = function () {
-            this.drawFullscreenQuad();
-        };
-        PostProcessor.prototype.onSceneBackBufferSizeChanged = function (newWidth, newHeight) {
-        };
-        PostProcessor.prototype.unload = function () {
-            if (this.effect) {
-                this.effect = null;
-            }
-            this.scene.removeChild(this.shape);
-            this.scene = null;
-        };
-        PostProcessor.prototype.drawFullscreenQuad = function () {
-            this.scene.filters = [this.effect];
-        };
-        PostProcessor.default_vert = "attribute vec2 aVertexPosition;\n" +
-            "attribute vec2 aTextureCoord;\n" +
-            "attribute vec2 aColor;\n" +
-            "uniform vec2 projectionVector;\n" +
-            "varying vec2 vTextureCoord;\n" +
-            "varying vec4 vColor;\n" +
-            "const vec2 center = vec2(-1.0, 1.0);\n" +
-            "void main(void) {\n" +
-            "gl_Position = vec4( (aVertexPosition / projectionVector) + center , 0.0, 1.0);\n" +
-            "vTextureCoord = aTextureCoord;\n" +
-            "vColor = vec4(aColor.x, aColor.x, aColor.x, aColor.x);\n" +
-            "}";
-        return PostProcessor;
-    }());
-    es.PostProcessor = PostProcessor;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var GaussianBlurPostProcessor = (function (_super) {
-        __extends(GaussianBlurPostProcessor, _super);
-        function GaussianBlurPostProcessor() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        GaussianBlurPostProcessor.prototype.onAddedToScene = function (scene) {
-            _super.prototype.onAddedToScene.call(this, scene);
-            this.effect = new es.GaussianBlurEffect();
-        };
-        return GaussianBlurPostProcessor;
-    }(es.PostProcessor));
-    es.GaussianBlurPostProcessor = GaussianBlurPostProcessor;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Renderer = (function () {
-        function Renderer(renderOrder, camera) {
-            if (camera === void 0) { camera = null; }
-            this.renderOrder = 0;
-            this.camera = camera;
-            this.renderOrder = renderOrder;
-        }
-        Renderer.prototype.onAddedToScene = function (scene) {
-        };
-        Renderer.prototype.unload = function () {
-        };
-        Renderer.prototype.onSceneBackBufferSizeChanged = function (newWidth, newHeight) {
-        };
-        Renderer.prototype.compareTo = function (other) {
-            return this.renderOrder - other.renderOrder;
-        };
-        Renderer.prototype.beginRender = function (cam) {
-        };
-        Renderer.prototype.renderAfterStateCheck = function (renderable, cam) {
-            renderable.render(cam);
-        };
-        return Renderer;
-    }());
-    es.Renderer = Renderer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var DefaultRenderer = (function (_super) {
-        __extends(DefaultRenderer, _super);
-        function DefaultRenderer() {
-            return _super.call(this, 0, null) || this;
-        }
-        DefaultRenderer.prototype.render = function (scene) {
-            var cam = this.camera ? this.camera : scene.camera;
-            this.beginRender(cam);
-            for (var i = 0; i < scene.renderableComponents.count; i++) {
-                var renderable = scene.renderableComponents.buffer[i];
-                if (renderable.enabled && renderable.isVisibleFromCamera(cam))
-                    this.renderAfterStateCheck(renderable, cam);
-            }
-        };
-        return DefaultRenderer;
-    }(es.Renderer));
-    es.DefaultRenderer = DefaultRenderer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var ScreenSpaceRenderer = (function (_super) {
-        __extends(ScreenSpaceRenderer, _super);
-        function ScreenSpaceRenderer() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        ScreenSpaceRenderer.prototype.render = function (scene) {
-        };
-        return ScreenSpaceRenderer;
-    }(es.Renderer));
-    es.ScreenSpaceRenderer = ScreenSpaceRenderer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var PolyLight = (function (_super) {
-        __extends(PolyLight, _super);
-        function PolyLight(radius, color, power) {
-            var _this = _super.call(this) || this;
-            _this._indices = [];
-            _this.radius = radius;
-            _this.power = power;
-            _this.color = color;
-            _this.computeTriangleIndices();
-            return _this;
-        }
-        Object.defineProperty(PolyLight.prototype, "radius", {
-            get: function () {
-                return this._radius;
-            },
-            set: function (value) {
-                this.setRadius(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        PolyLight.prototype.setRadius = function (radius) {
-            if (radius != this._radius) {
-                this._radius = radius;
-                this._areBoundsDirty = true;
-            }
-        };
-        PolyLight.prototype.render = function (camera) {
-        };
-        PolyLight.prototype.reset = function () {
-        };
-        PolyLight.prototype.computeTriangleIndices = function (totalTris) {
-            if (totalTris === void 0) { totalTris = 20; }
-            this._indices.length = 0;
-            for (var i = 0; i < totalTris; i += 2) {
-                this._indices.push(0);
-                this._indices.push(i + 2);
-                this._indices.push(i + 1);
-            }
-        };
-        return PolyLight;
-    }(es.RenderableComponent));
-    es.PolyLight = PolyLight;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var SceneTransition = (function () {
-        function SceneTransition(sceneLoadAction) {
-            this.sceneLoadAction = sceneLoadAction;
-            this.loadsNewScene = sceneLoadAction != null;
-        }
-        Object.defineProperty(SceneTransition.prototype, "hasPreviousSceneRender", {
-            get: function () {
-                if (!this._hasPreviousSceneRender) {
-                    this._hasPreviousSceneRender = true;
-                    return false;
-                }
-                return true;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        SceneTransition.prototype.preRender = function () {
-        };
-        SceneTransition.prototype.render = function () {
-        };
-        SceneTransition.prototype.onBeginTransition = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4, this.loadNextScene()];
-                        case 1:
-                            _a.sent();
-                            this.transitionComplete();
-                            return [2];
-                    }
-                });
-            });
-        };
-        SceneTransition.prototype.tickEffectProgressProperty = function (filter, duration, easeType, reverseDirection) {
-            if (reverseDirection === void 0) { reverseDirection = false; }
-            return new Promise(function (resolve) {
-                var start = reverseDirection ? 1 : 0;
-                var end = reverseDirection ? 0 : 1;
-                egret.Tween.get(filter.uniforms).set({ _progress: start }).to({ _progress: end }, duration * 1000, easeType).call(function () {
-                    resolve();
-                });
-            });
-        };
-        SceneTransition.prototype.transitionComplete = function () {
-            es.Core._instance._sceneTransition = null;
-            if (this.onTransitionCompleted) {
-                this.onTransitionCompleted();
-            }
-        };
-        SceneTransition.prototype.loadNextScene = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                var _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            if (this.onScreenObscured)
-                                this.onScreenObscured();
-                            if (!this.loadsNewScene) {
-                                this.isNewSceneLoaded = true;
-                            }
-                            _a = es.Core;
-                            return [4, this.sceneLoadAction()];
-                        case 1:
-                            _a.scene = _b.sent();
-                            this.isNewSceneLoaded = true;
-                            return [2];
-                    }
-                });
-            });
-        };
-        return SceneTransition;
-    }());
-    es.SceneTransition = SceneTransition;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var FadeTransition = (function (_super) {
-        __extends(FadeTransition, _super);
-        function FadeTransition(sceneLoadAction) {
-            var _this = _super.call(this, sceneLoadAction) || this;
-            _this.fadeToColor = 0x000000;
-            _this.fadeOutDuration = 0.4;
-            _this.fadeEaseType = egret.Ease.quadInOut;
-            _this.delayBeforeFadeInDuration = 0.1;
-            _this._alpha = 0;
-            _this._mask = new egret.Shape();
-            return _this;
-        }
-        FadeTransition.prototype.onBeginTransition = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                var _this = this;
-                return __generator(this, function (_a) {
-                    this._mask.graphics.beginFill(this.fadeToColor, 1);
-                    this._mask.graphics.drawRect(0, 0, es.Core.graphicsDevice.viewport.width, es.Core.graphicsDevice.viewport.height);
-                    this._mask.graphics.endFill();
-                    egret.Tween.get(this).to({ _alpha: 1 }, this.fadeOutDuration * 1000, this.fadeEaseType)
-                        .call(function () { return __awaiter(_this, void 0, void 0, function () {
-                        return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0: return [4, this.loadNextScene()];
-                                case 1:
-                                    _a.sent();
-                                    return [2];
-                            }
-                        });
-                    }); }).wait(this.delayBeforeFadeInDuration).call(function () {
-                        egret.Tween.get(_this).to({ _alpha: 0 }, _this.fadeOutDuration * 1000, _this.fadeEaseType).call(function () {
-                            _this.transitionComplete();
-                        });
-                    });
-                    return [2];
-                });
-            });
-        };
-        FadeTransition.prototype.render = function () {
-            this._mask.graphics.clear();
-            this._mask.graphics.beginFill(this.fadeToColor, this._alpha);
-            this._mask.graphics.drawRect(0, 0, es.Core.graphicsDevice.viewport.width, es.Core.graphicsDevice.viewport.height);
-            this._mask.graphics.endFill();
-        };
-        return FadeTransition;
-    }(es.SceneTransition));
-    es.FadeTransition = FadeTransition;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var WindTransition = (function (_super) {
-        __extends(WindTransition, _super);
-        function WindTransition(sceneLoadAction) {
-            var _this = _super.call(this, sceneLoadAction) || this;
-            _this.duration = 1;
-            _this.easeType = egret.Ease.quadOut;
-            var vertexSrc = "attribute vec2 aVertexPosition;\n" +
-                "attribute vec2 aTextureCoord;\n" +
-                "uniform vec2 projectionVector;\n" +
-                "varying vec2 vTextureCoord;\n" +
-                "const vec2 center = vec2(-1.0, 1.0);\n" +
-                "void main(void) {\n" +
-                "   gl_Position = vec4( (aVertexPosition / projectionVector) + center , 0.0, 1.0);\n" +
-                "   vTextureCoord = aTextureCoord;\n" +
-                "}";
-            var fragmentSrc = "precision lowp float;\n" +
-                "varying vec2 vTextureCoord;\n" +
-                "uniform sampler2D uSampler;\n" +
-                "uniform float _progress;\n" +
-                "uniform float _size;\n" +
-                "uniform float _windSegments;\n" +
-                "void main(void) {\n" +
-                "vec2 co = floor(vec2(0.0, vTextureCoord.y * _windSegments));\n" +
-                "float x = sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453;\n" +
-                "float r = x - floor(x);\n" +
-                "float m = smoothstep(0.0, -_size, vTextureCoord.x * (1.0 - _size) + _size * r - (_progress * (1.0 + _size)));\n" +
-                "vec4 fg = texture2D(uSampler, vTextureCoord);\n" +
-                "gl_FragColor = mix(fg, vec4(0, 0, 0, 0), m);\n" +
-                "}";
-            _this._windEffect = new egret.CustomFilter(vertexSrc, fragmentSrc, {
-                _progress: 0,
-                _size: 0.3,
-                _windSegments: 100
-            });
-            _this._mask = new egret.Shape();
-            _this._mask.graphics.beginFill(0xFFFFFF, 1);
-            _this._mask.graphics.drawRect(0, 0, es.Core.graphicsDevice.viewport.width, es.Core.graphicsDevice.viewport.height);
-            _this._mask.graphics.endFill();
-            _this._mask.filters = [_this._windEffect];
-            return _this;
-        }
-        Object.defineProperty(WindTransition.prototype, "windSegments", {
-            set: function (value) {
-                this._windEffect.uniforms._windSegments = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(WindTransition.prototype, "size", {
-            set: function (value) {
-                this._windEffect.uniforms._size = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        WindTransition.prototype.onBeginTransition = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            this.loadNextScene();
-                            return [4, this.tickEffectProgressProperty(this._windEffect, this.duration, this.easeType)];
-                        case 1:
-                            _a.sent();
-                            this.transitionComplete();
-                            return [2];
-                    }
-                });
-            });
-        };
-        return WindTransition;
-    }(es.SceneTransition));
-    es.WindTransition = WindTransition;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Bezier = (function () {
+    /**
+     * 三次方和二次方贝塞尔帮助器(cubic and quadratic bezier helper)
+     */
+    var Bezier = /** @class */ (function () {
         function Bezier() {
         }
+        /**
+         * 求解二次曲折线
+         * @param p0
+         * @param p1
+         * @param p2
+         * @param t
+         */
         Bezier.getPoint = function (p0, p1, p2, t) {
             t = es.MathHelper.clamp01(t);
             var oneMinusT = 1 - t;
-            return es.Vector2.add(es.Vector2.add(es.Vector2.multiply(new es.Vector2(oneMinusT * oneMinusT), p0), es.Vector2.multiply(new es.Vector2(2 * oneMinusT * t), p1)), es.Vector2.multiply(new es.Vector2(t * t), p2));
+            return new es.Vector2(oneMinusT * oneMinusT).multiply(p0)
+                .add(new es.Vector2(2 * oneMinusT * t).multiply(p1))
+                .add(new es.Vector2(t * t).multiply(p2));
         };
+        /**
+         * 求解一个立方体曲率
+         * @param start
+         * @param firstControlPoint
+         * @param secondControlPoint
+         * @param end
+         * @param t
+         */
+        Bezier.getPointThree = function (start, firstControlPoint, secondControlPoint, end, t) {
+            t = es.MathHelper.clamp01(t);
+            var oneMinusT = 1 - t;
+            return new es.Vector2(oneMinusT * oneMinusT * oneMinusT).multiply(start)
+                .add(new es.Vector2(3 * oneMinusT * oneMinusT * t).multiply(firstControlPoint))
+                .add(new es.Vector2(3 * oneMinusT * t * t).multiply(secondControlPoint))
+                .add(new es.Vector2(t * t * t).multiply(end));
+        };
+        /**
+         * 得到二次贝塞尔函数的一阶导数
+         * @param p0
+         * @param p1
+         * @param p2
+         * @param t
+         */
         Bezier.getFirstDerivative = function (p0, p1, p2, t) {
-            return es.Vector2.add(es.Vector2.multiply(new es.Vector2(2 * (1 - t)), es.Vector2.subtract(p1, p0)), es.Vector2.multiply(new es.Vector2(2 * t), es.Vector2.subtract(p2, p1)));
+            return new es.Vector2(2 * (1 - t)).multiply(es.Vector2.subtract(p1, p0))
+                .add(new es.Vector2(2 * t).multiply(es.Vector2.subtract(p2, p1)));
         };
+        /**
+         * 得到一个三次贝塞尔函数的一阶导数
+         * @param start
+         * @param firstControlPoint
+         * @param secondControlPoint
+         * @param end
+         * @param t
+         */
         Bezier.getFirstDerivativeThree = function (start, firstControlPoint, secondControlPoint, end, t) {
             t = es.MathHelper.clamp01(t);
             var oneMunusT = 1 - t;
-            return es.Vector2.add(es.Vector2.add(es.Vector2.multiply(new es.Vector2(3 * oneMunusT * oneMunusT), es.Vector2.subtract(firstControlPoint, start)), es.Vector2.multiply(new es.Vector2(6 * oneMunusT * t), es.Vector2.subtract(secondControlPoint, firstControlPoint))), es.Vector2.multiply(new es.Vector2(3 * t * t), es.Vector2.subtract(end, secondControlPoint)));
+            return new es.Vector2(3 * oneMunusT * oneMunusT).multiply(es.Vector2.subtract(firstControlPoint, start))
+                .add(new es.Vector2(6 * oneMunusT * t).multiply(es.Vector2.subtract(secondControlPoint, firstControlPoint)))
+                .add(new es.Vector2(3 * t * t).multiply(es.Vector2.subtract(end, secondControlPoint)));
         };
-        Bezier.getPointThree = function (start, firstControlPoint, secondControlPoint, end, t) {
-            t = es.MathHelper.clamp01(t);
-            var oneMunusT = 1 - t;
-            return es.Vector2.add(es.Vector2.add(es.Vector2.add(es.Vector2.multiply(new es.Vector2(oneMunusT * oneMunusT * oneMunusT), start), es.Vector2.multiply(new es.Vector2(3 * oneMunusT * oneMunusT * t), firstControlPoint)), es.Vector2.multiply(new es.Vector2(3 * oneMunusT * t * t), secondControlPoint)), es.Vector2.multiply(new es.Vector2(t * t * t), end));
-        };
+        /**
+         * 递归地细分bezier曲线，直到满足距离校正
+         * 在这种算法中，平面切片的点要比曲面切片少。返回完成后应返回到ListPool的合并列表。
+         * @param start
+         * @param firstCtrlPoint
+         * @param secondCtrlPoint
+         * @param end
+         * @param distanceTolerance
+         */
         Bezier.getOptimizedDrawingPoints = function (start, firstCtrlPoint, secondCtrlPoint, end, distanceTolerance) {
             if (distanceTolerance === void 0) { distanceTolerance = 1; }
             var points = es.ListPool.obtain();
@@ -5777,13 +4971,26 @@ var es;
             points.push(end);
             return points;
         };
+        /**
+         * 递归地细分bezier曲线，直到满足距离校正。在这种算法中，平面切片的点要比曲面切片少。
+         * @param start
+         * @param firstCtrlPoint
+         * @param secondCtrlPoint
+         * @param end
+         * @param points
+         * @param distanceTolerance
+         */
         Bezier.recursiveGetOptimizedDrawingPoints = function (start, firstCtrlPoint, secondCtrlPoint, end, points, distanceTolerance) {
+            // 计算线段的所有中点
             var pt12 = es.Vector2.divide(es.Vector2.add(start, firstCtrlPoint), new es.Vector2(2));
             var pt23 = es.Vector2.divide(es.Vector2.add(firstCtrlPoint, secondCtrlPoint), new es.Vector2(2));
             var pt34 = es.Vector2.divide(es.Vector2.add(secondCtrlPoint, end), new es.Vector2(2));
+            // 计算新半直线的中点
             var pt123 = es.Vector2.divide(es.Vector2.add(pt12, pt23), new es.Vector2(2));
             var pt234 = es.Vector2.divide(es.Vector2.add(pt23, pt34), new es.Vector2(2));
+            // 最后再细分最后两个中点。如果我们满足我们的距离公差，这将是我们使用的最后一点。
             var pt1234 = es.Vector2.divide(es.Vector2.add(pt123, pt234), new es.Vector2(2));
+            // 试着用一条直线来近似整个三次曲线
             var deltaLine = es.Vector2.subtract(end, start);
             var d2 = Math.abs(((firstCtrlPoint.x, end.x) * deltaLine.y - (firstCtrlPoint.y - end.y) * deltaLine.x));
             var d3 = Math.abs(((secondCtrlPoint.x - end.x) * deltaLine.y - (secondCtrlPoint.y - end.y) * deltaLine.x));
@@ -5791,6 +4998,7 @@ var es;
                 points.push(pt1234);
                 return;
             }
+            // 继续细分
             this.recursiveGetOptimizedDrawingPoints(start, pt12, pt123, pt1234, points, distanceTolerance);
             this.recursiveGetOptimizedDrawingPoints(pt1234, pt234, pt34, end, points, distanceTolerance);
         };
@@ -5800,28 +5008,167 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Flags = (function () {
+    /**
+     * 提供了一系列立方贝塞尔点，并提供了帮助方法来访问贝塞尔
+     */
+    var BezierSpline = /** @class */ (function () {
+        function BezierSpline() {
+            this._points = [];
+            this._curveCount = 0;
+        }
+        /**
+         * 在这个过程中，t被修改为在曲线段的范围内。
+         * @param t
+         */
+        BezierSpline.prototype.pointIndexAtTime = function (t) {
+            var i = 0;
+            if (t.value >= 1) {
+                t.value = 1;
+                i = this._points.length - 4;
+            }
+            else {
+                t.value = es.MathHelper.clamp01(t.value) * this._curveCount;
+                i = ~~t;
+                t.value -= i;
+                i *= 3;
+            }
+            return i;
+        };
+        /**
+         * 设置一个控制点，考虑到这是否是一个共享点，如果是，则适当调整
+         * @param index
+         * @param point
+         */
+        BezierSpline.prototype.setControlPoint = function (index, point) {
+            if (index % 3 == 0) {
+                var delta = es.Vector2.subtract(point, this._points[index]);
+                if (index > 0)
+                    this._points[index - 1].add(delta);
+                if (index + 1 < this._points.length)
+                    this._points[index + 1].add(delta);
+            }
+            this._points[index] = point;
+        };
+        /**
+         * 得到时间t的贝塞尔曲线上的点
+         * @param t
+         */
+        BezierSpline.prototype.getPointAtTime = function (t) {
+            var i = this.pointIndexAtTime(new es.Ref(t));
+            return es.Bezier.getPointThree(this._points[i], this._points[i + 1], this._points[i + 2], this._points[i + 3], t);
+        };
+        /**
+         * 得到贝塞尔在时间t的速度（第一导数）
+         * @param t
+         */
+        BezierSpline.prototype.getVelocityAtTime = function (t) {
+            var i = this.pointIndexAtTime(new es.Ref(t));
+            return es.Bezier.getFirstDerivativeThree(this._points[i], this._points[i + 1], this._points[i + 2], this._points[i + 3], t);
+        };
+        /**
+         * 得到时间t时贝塞尔的方向（归一化第一导数）
+         * @param t
+         */
+        BezierSpline.prototype.getDirectionAtTime = function (t) {
+            return es.Vector2.normalize(this.getVelocityAtTime(t));
+        };
+        /**
+         * 在贝塞尔曲线上添加一条曲线
+         * @param start
+         * @param firstControlPoint
+         * @param secondControlPoint
+         * @param end
+         */
+        BezierSpline.prototype.addCurve = function (start, firstControlPoint, secondControlPoint, end) {
+            // 只有当这是第一条曲线时，我们才会添加起始点。对于其他所有的曲线，前一个曲线的终点应该等于新曲线的起点。
+            if (this._points.length == 0)
+                this._points.push(start);
+            this._points.push(firstControlPoint);
+            this._points.push(secondControlPoint);
+            this._points.push(end);
+            this._curveCount = (this._points.length - 1) / 3;
+        };
+        /**
+         * 重置bezier，移除所有点
+         */
+        BezierSpline.prototype.reset = function () {
+            this._points.length = 0;
+        };
+        /**
+         * 将splitine分解成totalSegments部分，并返回使用线条绘制所需的所有点
+         * @param totalSegments
+         */
+        BezierSpline.prototype.getDrawingPoints = function (totalSegments) {
+            var points = [];
+            for (var i = 0; i < totalSegments; i++) {
+                var t = i / totalSegments;
+                points[i] = this.getPointAtTime(t);
+            }
+            return points;
+        };
+        return BezierSpline;
+    }());
+    es.BezierSpline = BezierSpline;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 帮助处理位掩码的实用程序类
+     * 除了isFlagSet之外，所有方法都期望flag参数是一个非移位的标志
+     * 允许您使用普通的(0、1、2、3等)来设置/取消您的标记
+     */
+    var Flags = /** @class */ (function () {
         function Flags() {
         }
+        /**
+         * 检查位标志是否已在数值中设置
+         * 检查期望标志是否已经移位
+         * @param self
+         * @param flag
+         */
         Flags.isFlagSet = function (self, flag) {
             return (self & flag) != 0;
         };
+        /**
+         * 检查位标志是否在数值中设置
+         * @param self
+         * @param flag
+         */
         Flags.isUnshiftedFlagSet = function (self, flag) {
             flag = 1 << flag;
             return (self & flag) != 0;
         };
+        /**
+         *  设置数值标志位，移除所有已经设置的标志
+         * @param self
+         * @param flag
+         */
         Flags.setFlagExclusive = function (self, flag) {
-            return 1 << flag;
+            self.value = 1 << flag;
         };
+        /**
+         * 设置标志位
+         * @param self
+         * @param flag
+         */
         Flags.setFlag = function (self, flag) {
-            return (self | 1 << flag);
+            self.value = (self.value | 1 << flag);
         };
+        /**
+         * 取消标志位
+         * @param self
+         * @param flag
+         */
         Flags.unsetFlag = function (self, flag) {
             flag = 1 << flag;
-            return (self & (~flag));
+            self.value = (self.value & (~flag));
         };
+        /**
+         * 反转数值集合位
+         * @param self
+         */
         Flags.invertFlags = function (self) {
-            return ~self;
+            self.value = ~self.value;
         };
         return Flags;
     }());
@@ -5829,15 +5176,31 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var MathHelper = (function () {
+    var MathHelper = /** @class */ (function () {
         function MathHelper() {
         }
+        /**
+         * 将弧度转换成角度。
+         * @param radians 用弧度表示的角
+         */
         MathHelper.toDegrees = function (radians) {
             return radians * 57.295779513082320876798154814105;
         };
+        /**
+         * 将角度转换为弧度
+         * @param degrees
+         */
         MathHelper.toRadians = function (degrees) {
             return degrees * 0.017453292519943295769236907684886;
         };
+        /**
+         * mapps值(在leftMin - leftMax范围内)到rightMin - rightMax范围内的值
+         * @param value
+         * @param leftMin
+         * @param leftMax
+         * @param rightMin
+         * @param rightMax
+         */
         MathHelper.map = function (value, leftMin, leftMax, rightMin, rightMax) {
             return rightMin + (value - leftMin) * (rightMax - rightMin) / (leftMax - leftMin);
         };
@@ -5851,13 +5214,27 @@ var es;
                 return max;
             return value;
         };
+        /**
+         * 给定圆心、半径和角度，得到圆周上的一个点。0度是3点钟。
+         * @param circleCenter
+         * @param radius
+         * @param angleInDegrees
+         */
         MathHelper.pointOnCirlce = function (circleCenter, radius, angleInDegrees) {
             var radians = MathHelper.toRadians(angleInDegrees);
             return new es.Vector2(Math.cos(radians) * radians + circleCenter.x, Math.sin(radians) * radians + circleCenter.y);
         };
+        /**
+         * 如果值为偶数，返回true
+         * @param value
+         */
         MathHelper.isEven = function (value) {
             return value % 2 == 0;
         };
+        /**
+         * 数值限定在0-1之间
+         * @param value
+         */
         MathHelper.clamp01 = function (value) {
             if (value < 0)
                 return 0;
@@ -5868,15 +5245,73 @@ var es;
         MathHelper.angleBetweenVectors = function (from, to) {
             return Math.atan2(to.y - from.y, to.x - from.x);
         };
+        MathHelper.angleToVector = function (angleRadians, length) {
+            return new es.Vector2(Math.cos(angleRadians) * length, Math.sin(angleRadians) * length);
+        };
+        /**
+         * 增加t并确保它总是大于或等于0并且小于长度
+         * @param t
+         * @param length
+         */
         MathHelper.incrementWithWrap = function (t, length) {
             t++;
             if (t == length)
                 return 0;
             return t;
         };
+        /**
+         * 以roundToNearest为步长，将值舍入到最接近的数字。例如：在125中找到127到最近的5个结果
+         * @param value
+         * @param roundToNearest
+         */
+        MathHelper.roundToNearest = function (value, roundToNearest) {
+            return Math.round(value / roundToNearest) * roundToNearest;
+        };
+        /**
+         * 检查传递的值是否在某个阈值之下。对于小规模、精确的比较很有用
+         * @param value
+         * @param ep
+         */
+        MathHelper.withinEpsilon = function (value, ep) {
+            if (ep === void 0) { ep = this.Epsilon; }
+            return Math.abs(value) < ep;
+        };
+        /**
+         * 由上移量向上移。start可以小于或大于end。例如:开始是2，结束是10，移位是4，结果是6
+         * @param start
+         * @param end
+         * @param shift
+         */
+        MathHelper.approach = function (start, end, shift) {
+            if (start < end)
+                return Math.min(start + shift, end);
+            return Math.max(start - shift, end);
+        };
+        /**
+         * 计算两个给定角之间的最短差值（度数）
+         * @param current
+         * @param target
+         */
+        MathHelper.deltaAngle = function (current, target) {
+            var num = this.repeat(target - current, 360);
+            if (num > 180)
+                num -= 360;
+            return num;
+        };
+        /**
+         * 循环t，使其永远不大于长度，永远不小于0
+         * @param t
+         * @param length
+         */
+        MathHelper.repeat = function (t, length) {
+            return t - Math.floor(t / length) * length;
+        };
         MathHelper.Epsilon = 0.00001;
         MathHelper.Rad2Deg = 57.29578;
         MathHelper.Deg2Rad = 0.0174532924;
+        /**
+         * 表示pi除以2的值(1.57079637)
+         */
         MathHelper.PiOver2 = Math.PI / 2;
         return MathHelper;
     }());
@@ -5884,126 +5319,241 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    es.matrixPool = [];
-    var Matrix2D = (function (_super) {
-        __extends(Matrix2D, _super);
-        function Matrix2D() {
-            return _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * 代表右手4x4浮点矩阵，可以存储平移、比例和旋转信息
+     */
+    var Matrix = /** @class */ (function () {
+        function Matrix() {
         }
-        Object.defineProperty(Matrix2D.prototype, "m11", {
+        /**
+         * 为自定义的正交视图创建一个新的投影矩阵
+         * @param left
+         * @param right
+         * @param top
+         * @param zFarPlane
+         * @param result
+         */
+        Matrix.createOrthographicOffCenter = function (left, right, bottom, top, zNearPlane, zFarPlane, result) {
+            if (result === void 0) { result = new Matrix(); }
+            result.m11 = 2 / (right - left);
+            result.m12 = 0;
+            result.m13 = 0;
+            result.m14 = 0;
+            result.m21 = 0;
+            result.m22 = 2 / (top - bottom);
+            result.m23 = 0;
+            result.m24 = 0;
+            result.m31 = 0;
+            result.m32 = 0;
+            result.m33 = 1 / (zNearPlane - zFarPlane);
+            result.m34 = 0;
+            result.m41 = (left + right) / (left - right);
+            result.m42 = (top + bottom) / (bottom - top);
+            result.m43 = zNearPlane / (zNearPlane - zFarPlane);
+            result.m44 = 1;
+        };
+        /**
+         * 创建一个新的矩阵，其中包含两个矩阵的乘法。
+         * @param matrix1
+         * @param matrix2
+         * @param result
+         */
+        Matrix.multiply = function (matrix1, matrix2, result) {
+            if (result === void 0) { result = new Matrix(); }
+            var m11 = (((matrix1.m11 * matrix2.m11) + (matrix1.m12 * matrix2.m21)) + (matrix1.m13 * matrix2.m31)) + (matrix1.m14 * matrix2.m41);
+            var m12 = (((matrix1.m11 * matrix2.m12) + (matrix1.m12 * matrix2.m22)) + (matrix1.m13 * matrix2.m32)) + (matrix1.m14 * matrix2.m42);
+            var m13 = (((matrix1.m11 * matrix2.m13) + (matrix1.m12 * matrix2.m23)) + (matrix1.m13 * matrix2.m33)) + (matrix1.m14 * matrix2.m43);
+            var m14 = (((matrix1.m11 * matrix2.m14) + (matrix1.m12 * matrix2.m24)) + (matrix1.m13 * matrix2.m34)) + (matrix1.m14 * matrix2.m44);
+            var m21 = (((matrix1.m21 * matrix2.m11) + (matrix1.m22 * matrix2.m21)) + (matrix1.m23 * matrix2.m31)) + (matrix1.m24 * matrix2.m41);
+            var m22 = (((matrix1.m21 * matrix2.m12) + (matrix1.m22 * matrix2.m22)) + (matrix1.m23 * matrix2.m32)) + (matrix1.m24 * matrix2.m42);
+            var m23 = (((matrix1.m21 * matrix2.m13) + (matrix1.m22 * matrix2.m23)) + (matrix1.m23 * matrix2.m33)) + (matrix1.m24 * matrix2.m43);
+            var m24 = (((matrix1.m21 * matrix2.m14) + (matrix1.m22 * matrix2.m24)) + (matrix1.m23 * matrix2.m34)) + (matrix1.m24 * matrix2.m44);
+            var m31 = (((matrix1.m31 * matrix2.m11) + (matrix1.m32 * matrix2.m21)) + (matrix1.m33 * matrix2.m31)) + (matrix1.m34 * matrix2.m41);
+            var m32 = (((matrix1.m31 * matrix2.m12) + (matrix1.m32 * matrix2.m22)) + (matrix1.m33 * matrix2.m32)) + (matrix1.m34 * matrix2.m42);
+            var m33 = (((matrix1.m31 * matrix2.m13) + (matrix1.m32 * matrix2.m23)) + (matrix1.m33 * matrix2.m33)) + (matrix1.m34 * matrix2.m43);
+            var m34 = (((matrix1.m31 * matrix2.m14) + (matrix1.m32 * matrix2.m24)) + (matrix1.m33 * matrix2.m34)) + (matrix1.m34 * matrix2.m44);
+            var m41 = (((matrix1.m41 * matrix2.m11) + (matrix1.m42 * matrix2.m21)) + (matrix1.m43 * matrix2.m31)) + (matrix1.m44 * matrix2.m41);
+            var m42 = (((matrix1.m41 * matrix2.m12) + (matrix1.m42 * matrix2.m22)) + (matrix1.m43 * matrix2.m32)) + (matrix1.m44 * matrix2.m42);
+            var m43 = (((matrix1.m41 * matrix2.m13) + (matrix1.m42 * matrix2.m23)) + (matrix1.m43 * matrix2.m33)) + (matrix1.m44 * matrix2.m43);
+            var m44 = (((matrix1.m41 * matrix2.m14) + (matrix1.m42 * matrix2.m24)) + (matrix1.m43 * matrix2.m34)) + (matrix1.m44 * matrix2.m44);
+            result.m11 = m11;
+            result.m12 = m12;
+            result.m13 = m13;
+            result.m14 = m14;
+            result.m21 = m21;
+            result.m22 = m22;
+            result.m23 = m23;
+            result.m24 = m24;
+            result.m31 = m31;
+            result.m32 = m32;
+            result.m33 = m33;
+            result.m34 = m34;
+            result.m41 = m41;
+            result.m42 = m42;
+            result.m43 = m43;
+            result.m44 = m44;
+        };
+        return Matrix;
+    }());
+    es.Matrix = Matrix;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 表示右手3 * 3的浮点矩阵，可以存储平移、缩放和旋转信息。
+     */
+    var Matrix2D = /** @class */ (function () {
+        /**
+         * 构建一个矩阵
+         * @param m11
+         * @param m12
+         * @param m21
+         * @param m22
+         * @param m31
+         * @param m32
+         */
+        function Matrix2D(m11, m12, m21, m22, m31, m32) {
+            this.m11 = 0; // x 缩放
+            this.m12 = 0;
+            this.m21 = 0;
+            this.m22 = 0;
+            this.m31 = 0;
+            this.m32 = 0;
+            this.m11 = m11;
+            this.m12 = m12;
+            this.m21 = m21;
+            this.m22 = m22;
+            this.m31 = m31;
+            this.m32 = m32;
+        }
+        Object.defineProperty(Matrix2D, "identity", {
+            /**
+             * 返回标识矩阵
+             */
             get: function () {
-                return this.a;
-            },
-            set: function (value) {
-                this.a = value;
+                return new Matrix2D(1, 0, 0, 1, 0, 0);
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Matrix2D.prototype, "m12", {
+        Object.defineProperty(Matrix2D.prototype, "translation", {
+            /**
+             * 储存在该矩阵中的位置
+             */
             get: function () {
-                return this.b;
+                return new es.Vector2(this.m31, this.m32);
             },
             set: function (value) {
-                this.b = value;
+                this.m31 = value.x;
+                this.m32 = value.y;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Matrix2D.prototype, "m21", {
+        Object.defineProperty(Matrix2D.prototype, "rotation", {
+            /**
+             * 以弧度为单位的旋转，存储在这个矩阵中
+             */
             get: function () {
-                return this.c;
+                return Math.atan2(this.m21, this.m11);
             },
             set: function (value) {
-                this.c = value;
+                var val1 = Math.cos(value);
+                var val2 = Math.sin(value);
+                this.m11 = val1;
+                this.m12 = val2;
+                this.m21 = -val2;
+                this.m22 = val1;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Matrix2D.prototype, "m22", {
+        Object.defineProperty(Matrix2D.prototype, "rotationDegrees", {
+            /**
+             * 矩阵中存储的旋转度数
+             */
             get: function () {
-                return this.d;
+                return es.MathHelper.toDegrees(this.rotation);
             },
             set: function (value) {
-                this.d = value;
+                this.rotation = es.MathHelper.toRadians(value);
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Matrix2D.prototype, "m31", {
+        Object.defineProperty(Matrix2D.prototype, "scale", {
+            /**
+             * 储存在这个矩阵中的缩放
+             */
             get: function () {
-                return this.tx;
+                return new es.Vector2(this.m11, this.m22);
             },
             set: function (value) {
-                this.tx = value;
+                this.m11 = value.x;
+                this.m22 = value.y;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Matrix2D.prototype, "m32", {
-            get: function () {
-                return this.ty;
-            },
-            set: function (value) {
-                this.ty = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Matrix2D.create = function () {
-            var matrix = es.matrixPool.pop();
-            if (!matrix)
-                matrix = new Matrix2D();
-            return matrix;
+        /**
+         * 创建一个新的围绕Z轴的旋转矩阵2D
+         * @param radians
+         */
+        Matrix2D.createRotation = function (radians) {
+            var result = this.identity;
+            var val1 = Math.cos(radians);
+            var val2 = Math.sin(radians);
+            result.m11 = val1;
+            result.m12 = val2;
+            result.m21 = -val2;
+            result.m22 = val1;
+            return result;
         };
-        Matrix2D.prototype.identity = function () {
-            this.a = this.d = 1;
-            this.b = this.c = this.tx = this.ty = 0;
-            return this;
+        /**
+         * 创建一个新的缩放矩阵2D
+         * @param xScale
+         * @param yScale
+         */
+        Matrix2D.createScale = function (xScale, yScale) {
+            var result = this.identity;
+            result.m11 = xScale;
+            result.m12 = 0;
+            result.m21 = 0;
+            result.m22 = yScale;
+            result.m31 = 0;
+            result.m32 = 0;
+            return result;
         };
-        Matrix2D.prototype.translate = function (dx, dy) {
-            this.tx += dx;
-            this.ty += dy;
-            return this;
+        /**
+         * 创建一个新的平移矩阵2D
+         * @param xPosition
+         * @param yPosition
+         */
+        Matrix2D.createTranslation = function (xPosition, yPosition) {
+            var result = this.identity;
+            result.m11 = 1;
+            result.m12 = 0;
+            result.m21 = 0;
+            result.m22 = 1;
+            result.m31 = xPosition;
+            result.m32 = yPosition;
+            return result;
         };
-        Matrix2D.prototype.scale = function (sx, sy) {
-            if (sx !== 1) {
-                this.a *= sx;
-                this.c *= sx;
-                this.tx *= sx;
-            }
-            if (sy !== 1) {
-                this.b *= sy;
-                this.d *= sy;
-                this.ty *= sy;
-            }
-            return this;
+        Matrix2D.invert = function (matrix) {
+            var det = 1 / matrix.determinant();
+            var result = this.identity;
+            result.m11 = matrix.m22 * det;
+            result.m12 = -matrix.m12 * det;
+            result.m21 = -matrix.m21 * det;
+            result.m22 = matrix.m11 * det;
+            result.m31 = (matrix.m32 * matrix.m21 - matrix.m31 * matrix.m22) * det;
+            result.m32 = -(matrix.m32 * matrix.m11 - matrix.m31 * matrix.m12) * det;
+            return result;
         };
-        Matrix2D.prototype.rotate = function (angle) {
-            angle = +angle;
-            if (angle !== 0) {
-                angle = angle / DEG_TO_RAD;
-                var u = Math.cos(angle);
-                var v = Math.sin(angle);
-                var ta = this.a;
-                var tb = this.b;
-                var tc = this.c;
-                var td = this.d;
-                var ttx = this.tx;
-                var tty = this.ty;
-                this.a = ta * u - tb * v;
-                this.b = ta * v + tb * u;
-                this.c = tc * u - td * v;
-                this.d = tc * v + td * u;
-                this.tx = ttx * u - tty * v;
-                this.ty = ttx * v + tty * u;
-            }
-            return this;
-        };
-        Matrix2D.prototype.invert = function () {
-            this.$invertInto(this);
-            return this;
-        };
+        /**
+         * 创建一个新的matrix, 它包含两个矩阵的和。
+         * @param matrix
+         */
         Matrix2D.prototype.add = function (matrix) {
             this.m11 += matrix.m11;
             this.m12 += matrix.m12;
@@ -6049,37 +5599,272 @@ var es;
         Matrix2D.prototype.determinant = function () {
             return this.m11 * this.m22 - this.m12 * this.m21;
         };
-        Matrix2D.prototype.release = function (matrix) {
-            if (!matrix)
-                return;
-            es.matrixPool.push(matrix);
+        /**
+         * 创建一个新的Matrix2D，包含指定矩阵中的线性插值。
+         * @param matrix1
+         * @param matrix2
+         * @param amount
+         */
+        Matrix2D.lerp = function (matrix1, matrix2, amount) {
+            matrix1.m11 = matrix1.m11 + ((matrix2.m11 - matrix1.m11) * amount);
+            matrix1.m12 = matrix1.m12 + ((matrix2.m12 - matrix1.m12) * amount);
+            matrix1.m21 = matrix1.m21 + ((matrix2.m21 - matrix1.m21) * amount);
+            matrix1.m22 = matrix1.m22 + ((matrix2.m22 - matrix1.m22) * amount);
+            matrix1.m31 = matrix1.m31 + ((matrix2.m31 - matrix1.m31) * amount);
+            matrix1.m32 = matrix1.m32 + ((matrix2.m32 - matrix1.m32) * amount);
+            return matrix1;
+        };
+        /**
+         * 交换矩阵的行和列
+         * @param matrix
+         */
+        Matrix2D.transpose = function (matrix) {
+            var ret = this.identity;
+            ret.m11 = matrix.m11;
+            ret.m12 = matrix.m21;
+            ret.m21 = matrix.m12;
+            ret.m22 = matrix.m22;
+            ret.m31 = 0;
+            ret.m32 = 0;
+            return ret;
+        };
+        Matrix2D.prototype.mutiplyTranslation = function (x, y) {
+            var trans = Matrix2D.createTranslation(x, y);
+            return es.MatrixHelper.mutiply(this, trans);
+        };
+        /**
+         * 比较当前实例是否等于指定的Matrix2D
+         * @param other
+         */
+        Matrix2D.prototype.equals = function (other) {
+            return this == other;
+        };
+        Matrix2D.toMatrix = function (mat) {
+            var matrix = new es.Matrix();
+            matrix.m11 = mat.m11;
+            matrix.m12 = mat.m12;
+            matrix.m13 = 0;
+            matrix.m14 = 0;
+            matrix.m21 = mat.m21;
+            matrix.m22 = mat.m22;
+            matrix.m23 = 0;
+            matrix.m24 = 0;
+            matrix.m31 = 0;
+            matrix.m32 = 0;
+            matrix.m33 = 1;
+            matrix.m34 = 0;
+            matrix.m41 = mat.m31;
+            matrix.m42 = mat.m32;
+            matrix.m43 = 0;
+            matrix.m44 = 1;
+            return matrix;
+        };
+        Matrix2D.prototype.toString = function () {
+            return "{m11:" + this.m11 + " m12:" + this.m12 + " m21:" + this.m21 + " m22:" + this.m22 + " m31:" + this.m31 + " m32:" + this.m32 + "}";
         };
         return Matrix2D;
-    }(egret.Matrix));
+    }());
     es.Matrix2D = Matrix2D;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Rectangle = (function (_super) {
-        __extends(Rectangle, _super);
-        function Rectangle() {
-            return _super !== null && _super.apply(this, arguments) || this;
+    var MatrixHelper = /** @class */ (function () {
+        function MatrixHelper() {
         }
+        /**
+         * 创建一个新的Matrix2D，其中包含两个矩阵的和
+         * @param matrix1
+         * @param matrix2
+         */
+        MatrixHelper.add = function (matrix1, matrix2) {
+            var result = es.Matrix2D.identity;
+            result.m11 = matrix1.m11 + matrix2.m11;
+            result.m12 = matrix1.m12 + matrix2.m12;
+            result.m21 = matrix1.m21 + matrix2.m21;
+            result.m22 = matrix1.m22 + matrix2.m22;
+            result.m31 = matrix1.m31 + matrix2.m31;
+            result.m32 = matrix1.m32 + matrix2.m32;
+            return result;
+        };
+        /**
+         * 将一个Matrix2D的元素除以另一个矩阵的元素
+         * @param matrix1
+         * @param matrix2
+         */
+        MatrixHelper.divide = function (matrix1, matrix2) {
+            var result = es.Matrix2D.identity;
+            result.m11 = matrix1.m11 / matrix2.m11;
+            result.m12 = matrix1.m12 / matrix2.m12;
+            result.m21 = matrix1.m21 / matrix2.m21;
+            result.m22 = matrix1.m22 / matrix2.m22;
+            result.m31 = matrix1.m31 / matrix2.m31;
+            result.m32 = matrix1.m32 / matrix2.m32;
+            return result;
+        };
+        /**
+         * 创建一个新的Matrix2D，包含两个矩阵的乘法
+         * @param matrix1
+         * @param matrix2
+         */
+        MatrixHelper.mutiply = function (matrix1, matrix2) {
+            var result = es.Matrix2D.identity;
+            if (matrix2 instanceof es.Matrix2D) {
+                var m11 = (matrix1.m11 * matrix2.m11) + (matrix1.m12 * matrix2.m21);
+                var m12 = (matrix2.m11 * matrix2.m12) + (matrix1.m12 * matrix2.m22);
+                var m21 = (matrix1.m21 * matrix2.m11) + (matrix1.m22 * matrix2.m21);
+                var m22 = (matrix1.m21 * matrix2.m12) + (matrix1.m22 * matrix2.m22);
+                var m31 = (matrix1.m31 * matrix2.m11) + (matrix1.m32 * matrix2.m21) + matrix2.m31;
+                var m32 = (matrix1.m31 * matrix2.m12) + (matrix1.m32 * matrix2.m22) + matrix2.m32;
+                result.m11 = m11;
+                result.m12 = m12;
+                result.m21 = m21;
+                result.m22 = m22;
+                result.m31 = m31;
+                result.m32 = m32;
+            }
+            else if (typeof matrix2 == "number") {
+                result.m11 = matrix1.m11 * matrix2;
+                result.m12 = matrix1.m12 * matrix2;
+                result.m21 = matrix1.m21 * matrix2;
+                result.m22 = matrix1.m22 * matrix2;
+                result.m31 = matrix1.m31 * matrix2;
+                result.m32 = matrix1.m32 * matrix2;
+            }
+            return result;
+        };
+        /**
+         * 创建一个新的Matrix2D，包含一个矩阵与另一个矩阵的减法。
+         * @param matrix1
+         * @param matrix2
+         */
+        MatrixHelper.subtract = function (matrix1, matrix2) {
+            var result = es.Matrix2D.identity;
+            result.m11 = matrix1.m11 - matrix2.m11;
+            result.m12 = matrix1.m12 - matrix2.m12;
+            result.m21 = matrix1.m21 - matrix2.m21;
+            result.m22 = matrix1.m22 - matrix2.m22;
+            result.m31 = matrix1.m31 - matrix2.m31;
+            result.m32 = matrix1.m32 - matrix2.m32;
+            return result;
+        };
+        return MatrixHelper;
+    }());
+    es.MatrixHelper = MatrixHelper;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Rectangle = /** @class */ (function () {
+        /**
+         * 创建一个新的Rectanglestruct实例，指定位置、宽度和高度。
+         * @param x 创建的矩形的左上角的X坐标
+         * @param y 创建的矩形的左上角的y坐标
+         * @param width 创建的矩形的宽度
+         * @param height 创建的矩形的高度
+         */
+        function Rectangle(x, y, width, height) {
+            if (x === void 0) { x = 0; }
+            if (y === void 0) { y = 0; }
+            if (width === void 0) { width = 0; }
+            if (height === void 0) { height = 0; }
+            /**
+             * 该矩形的左上角的x坐标
+             */
+            this.x = 0;
+            /**
+             * 该矩形的左上角的y坐标
+             */
+            this.y = 0;
+            /**
+             * 该矩形的宽度
+             */
+            this.width = 0;
+            /**
+             * 该矩形的高度
+             */
+            this.height = 0;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+        Object.defineProperty(Rectangle, "empty", {
+            /**
+             * 返回X=0, Y=0, Width=0, Height=0的矩形
+             */
+            get: function () {
+                return new Rectangle();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Rectangle, "maxRect", {
+            /**
+             * 返回一个Number.Min/Max值的矩形
+             */
+            get: function () {
+                return new Rectangle(Number.MIN_VALUE / 2, Number.MIN_VALUE / 2, Number.MAX_VALUE, Number.MAX_VALUE);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Rectangle.prototype, "left", {
+            /**
+             * 返回此矩形左边缘的X坐标
+             */
+            get: function () {
+                return this.x;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Rectangle.prototype, "right", {
+            /**
+             * 返回此矩形右边缘的X坐标
+             */
+            get: function () {
+                return this.x + this.width;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Rectangle.prototype, "top", {
+            /**
+             * 返回此矩形顶边的y坐标
+             */
+            get: function () {
+                return this.y;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Rectangle.prototype, "bottom", {
+            /**
+             * 返回此矩形底边的y坐标
+             */
+            get: function () {
+                return this.y + this.height;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(Rectangle.prototype, "max", {
+            /**
+             * 获取矩形的最大点，即右下角
+             */
             get: function () {
                 return new es.Vector2(this.right, this.bottom);
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Rectangle.prototype, "center", {
-            get: function () {
-                return new es.Vector2(this.x + (this.width / 2), this.y + (this.height / 2));
-            },
-            enumerable: true,
-            configurable: true
-        });
+        /**
+         * 这个矩形的宽和高是否为0，位置是否为（0，0）
+         */
+        Rectangle.prototype.isEmpty = function () {
+            return ((((this.width == 0) && (this.height == 0)) && (this.x == 0)) && (this.y == 0));
+        };
         Object.defineProperty(Rectangle.prototype, "location", {
+            /** 这个矩形的左上角坐标 */
             get: function () {
                 return new es.Vector2(this.x, this.y);
             },
@@ -6091,6 +5876,9 @@ var es;
             configurable: true
         });
         Object.defineProperty(Rectangle.prototype, "size", {
+            /**
+             * 这个矩形的宽-高坐标
+             */
             get: function () {
                 return new es.Vector2(this.width, this.height);
             },
@@ -6101,10 +5889,34 @@ var es;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(Rectangle.prototype, "center", {
+            /**
+             * 位于这个矩形中心的一个点
+             * 如果 "宽度 "或 "高度 "是奇数，则中心点将向下舍入
+             */
+            get: function () {
+                return new es.Vector2(this.x + (this.width / 2), this.y + (this.height / 2));
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * 创建一个给定最小/最大点（左上角，右下角）的矩形
+         * @param minX
+         * @param minY
+         * @param maxX
+         * @param maxY
+         */
         Rectangle.fromMinMax = function (minX, minY, maxX, maxY) {
             return new Rectangle(minX, minY, maxX - minX, maxY - minY);
         };
+        /**
+         * 给定多边形的点，计算边界
+         * @param points
+         * @returns 来自多边形的点
+         */
         Rectangle.rectEncompassingPoints = function (points) {
+            // 我们需要求出x/y的最小值/最大值
             var minX = Number.POSITIVE_INFINITY;
             var minY = Number.POSITIVE_INFINITY;
             var maxX = Number.NEGATIVE_INFINITY;
@@ -6122,18 +5934,60 @@ var es;
             }
             return this.fromMinMax(minX, minY, maxX, maxY);
         };
+        /**
+         * 获取指定边缘的位置
+         * @param edge
+         */
+        Rectangle.prototype.getSide = function (edge) {
+            switch (edge) {
+                case es.Edge.top:
+                    return this.top;
+                case es.Edge.bottom:
+                    return this.bottom;
+                case es.Edge.left:
+                    return this.left;
+                case es.Edge.right:
+                    return this.right;
+                default:
+                    throw new Error("Argument Out Of Range");
+            }
+        };
+        /**
+         * 获取所提供的坐标是否在这个矩形的范围内
+         * @param x 检查封堵点的X坐标
+         * @param y 检查封堵点的Y坐标
+         */
+        Rectangle.prototype.contains = function (x, y) {
+            return ((((this.x <= x) && (x < (this.x + this.width))) &&
+                (this.y <= y)) && (y < (this.y + this.height)));
+        };
+        /**
+         * 按指定的水平和垂直方向调整此矩形的边缘
+         * @param horizontalAmount 调整左、右边缘的值
+         * @param verticalAmount 调整上、下边缘的值
+         */
+        Rectangle.prototype.inflate = function (horizontalAmount, verticalAmount) {
+            this.x -= horizontalAmount;
+            this.y -= verticalAmount;
+            this.width += horizontalAmount * 2;
+            this.height += verticalAmount * 2;
+        };
+        /**
+         * 获取其他矩形是否与这个矩形相交
+         * @param value 另一个用于测试的矩形
+         */
         Rectangle.prototype.intersects = function (value) {
             return value.left < this.right &&
                 this.left < value.right &&
                 value.top < this.bottom &&
                 this.top < value.bottom;
         };
-        Rectangle.prototype.rayIntersects = function (ray) {
-            var distance = 0;
+        Rectangle.prototype.rayIntersects = function (ray, distance) {
+            distance.value = 0;
             var maxValue = Number.MAX_VALUE;
             if (Math.abs(ray.direction.x) < 1E-06) {
                 if ((ray.start.x < this.x) || (ray.start.x > this.x + this.width))
-                    return distance;
+                    return false;
             }
             else {
                 var num11 = 1 / ray.direction.x;
@@ -6144,14 +5998,14 @@ var es;
                     num8 = num7;
                     num7 = num14;
                 }
-                distance = Math.max(num8, distance);
+                distance.value = Math.max(num8, distance.value);
                 maxValue = Math.min(num7, maxValue);
-                if (distance > maxValue)
-                    return distance;
+                if (distance.value > maxValue)
+                    return false;
             }
             if (Math.abs(ray.direction.y) < 1E-06) {
                 if ((ray.start.y < this.y) || (ray.start.y > this.y + this.height))
-                    return distance;
+                    return false;
             }
             else {
                 var num10 = 1 / ray.direction.y;
@@ -6162,29 +6016,69 @@ var es;
                     num6 = num5;
                     num5 = num13;
                 }
-                distance = Math.max(num6, distance);
+                distance.value = Math.max(num6, distance.value);
                 maxValue = Math.max(num5, maxValue);
-                if (distance > maxValue)
-                    return distance;
+                if (distance.value > maxValue)
+                    return false;
             }
-            return distance;
+            return true;
         };
+        /**
+         * 获取所提供的矩形是否在此矩形的边界内
+         * @param value
+         */
         Rectangle.prototype.containsRect = function (value) {
             return ((((this.x <= value.x) && (value.x < (this.x + this.width))) &&
                 (this.y <= value.y)) &&
                 (value.y < (this.y + this.height)));
         };
-        Rectangle.prototype.contains = function (x, y) {
-            return ((((this.x <= x) && (x < (this.x + this.width))) && (this.y <= y)) && (y < (this.y + this.height)));
-        };
         Rectangle.prototype.getHalfSize = function () {
             return new es.Vector2(this.width * 0.5, this.height * 0.5);
         };
-        Rectangle.prototype.getClosestPointOnRectangleBorderToPoint = function (point, edgeNormal) {
-            edgeNormal = es.Vector2.zero;
+        Rectangle.prototype.getClosestPointOnBoundsToOrigin = function () {
+            var max = this.max;
+            var minDist = Math.abs(this.location.x);
+            var boundsPoint = new es.Vector2(this.location.x, 0);
+            if (Math.abs(max.x) < minDist) {
+                minDist = Math.abs(max.x);
+                boundsPoint.x = max.x;
+                boundsPoint.y = 0;
+            }
+            if (Math.abs(max.y) < minDist) {
+                minDist = Math.abs(max.y);
+                boundsPoint.x = 0;
+                boundsPoint.y = max.y;
+            }
+            if (Math.abs(this.location.y) < minDist) {
+                minDist = Math.abs(this.location.y);
+                boundsPoint.x = 0;
+                boundsPoint.y = this.location.y;
+            }
+            return boundsPoint;
+        };
+        /**
+         * 返回离给定点最近的点
+         * @param point 矩形上离点最近的点
+         */
+        Rectangle.prototype.getClosestPointOnRectangleToPoint = function (point) {
+            // 对于每条轴，如果点在框外，就把它限制在框内，否则就不要管它
             var res = new es.Vector2();
             res.x = es.MathHelper.clamp(point.x, this.left, this.right);
             res.y = es.MathHelper.clamp(point.y, this.top, this.bottom);
+            return res;
+        };
+        /**
+         * 获取矩形边界上与给定点最近的点
+         * @param point
+         * @param edgeNormal
+         * @returns 矩形边框上离点最近的点
+         */
+        Rectangle.prototype.getClosestPointOnRectangleBorderToPoint = function (point, edgeNormal) {
+            // 对于每条轴，如果点在框外，就把它限制在框内，否则就不要管它
+            var res = new es.Vector2();
+            res.x = es.MathHelper.clamp(point.x, this.left, this.right);
+            res.y = es.MathHelper.clamp(point.y, this.top, this.bottom);
+            // 如果点在矩形内，我们需要将res推到边界上，因为它将在矩形内
             if (this.contains(res.x, res.y)) {
                 var dl = res.x - this.left;
                 var dr = this.right - res.x;
@@ -6220,26 +6114,52 @@ var es;
             }
             return res;
         };
-        Rectangle.prototype.getClosestPointOnBoundsToOrigin = function () {
-            var max = this.max;
-            var minDist = Math.abs(this.location.x);
-            var boundsPoint = new es.Vector2(this.location.x, 0);
-            if (Math.abs(max.x) < minDist) {
-                minDist = Math.abs(max.x);
-                boundsPoint.x = max.x;
-                boundsPoint.y = 0;
+        /**
+         * 创建一个新的RectangleF，该RectangleF包含两个其他矩形的重叠区域
+         * @param value1
+         * @param value2
+         * @returns 将两个矩形的重叠区域作为输出参数
+         */
+        Rectangle.intersect = function (value1, value2) {
+            if (value1.intersects(value2)) {
+                var right_side = Math.min(value1.x + value1.width, value2.x + value2.width);
+                var left_side = Math.max(value1.x, value2.x);
+                var top_side = Math.max(value1.y, value2.y);
+                var bottom_side = Math.min(value1.y + value1.height, value2.y + value2.height);
+                return new Rectangle(left_side, top_side, right_side - left_side, bottom_side - top_side);
             }
-            if (Math.abs(max.y) < minDist) {
-                minDist = Math.abs(max.y);
-                boundsPoint.x = 0;
-                boundsPoint.y = max.y;
+            else {
+                return new Rectangle(0, 0, 0, 0);
             }
-            if (Math.abs(this.location.y) < minDist) {
-                minDist = Math.abs(this.location.y);
-                boundsPoint.x = 0;
-                boundsPoint.y = this.location.y;
-            }
-            return boundsPoint;
+        };
+        /**
+         * 改变这个矩形的位置
+         * @param offsetX 要添加到这个矩形的X坐标
+         * @param offsetY 要添加到这个矩形的y坐标
+         */
+        Rectangle.prototype.offset = function (offsetX, offsetY) {
+            this.x += offsetX;
+            this.y += offsetY;
+        };
+        /**
+         * 创建一个完全包含两个其他矩形的新矩形
+         * @param value1
+         * @param value2
+         */
+        Rectangle.union = function (value1, value2) {
+            var x = Math.min(value1.x, value2.x);
+            var y = Math.min(value1.y, value2.y);
+            return new Rectangle(x, y, Math.max(value1.right, value2.right) - x, Math.max(value1.bottom, value2.bottom) - y);
+        };
+        /**
+         * 在矩形重叠的地方创建一个新的矩形
+         * @param value1
+         * @param value2
+         */
+        Rectangle.overlap = function (value1, value2) {
+            var x = Math.max(value1.x, value2.x, 0);
+            var y = Math.max(value1.y, value2.y, 0);
+            return new Rectangle(x, y, Math.max(Math.min(value1.right, value2.right) - x, 0), Math.max(Math.min(value1.bottom, value2.bottom) - y, 0));
         };
         Rectangle.prototype.calculateBounds = function (parentPosition, position, origin, scale, rotation, width, height) {
             if (rotation == 0) {
@@ -6249,23 +6169,27 @@ var es;
                 this.height = height * scale.y;
             }
             else {
+                // 我们需要找到我们的绝对最小/最大值，并据此创建边界
                 var worldPosX = parentPosition.x + position.x;
                 var worldPosY = parentPosition.y + position.y;
-                this._transformMat = es.Matrix2D.create().translate(-worldPosX - origin.x, -worldPosY - origin.y);
-                this._tempMat = es.Matrix2D.create().scale(scale.x, scale.y);
+                // 考虑到原点，将参考点设置为世界参考
+                this._transformMat = es.Matrix2D.createTranslation(-worldPosX - origin.x, -worldPosY - origin.y);
+                this._tempMat = es.Matrix2D.createScale(scale.x, scale.y);
                 this._transformMat = this._transformMat.multiply(this._tempMat);
-                this._tempMat = es.Matrix2D.create().rotate(rotation);
+                this._tempMat = es.Matrix2D.createRotation(rotation);
                 this._transformMat = this._transformMat.multiply(this._tempMat);
-                this._tempMat = es.Matrix2D.create().translate(worldPosX, worldPosY);
+                this._tempMat = es.Matrix2D.createTranslation(worldPosX, worldPosY);
                 this._transformMat = this._transformMat.multiply(this._tempMat);
+                // TODO: 我们可以把世界变换留在矩阵中，避免在世界空间中得到所有的四个角
                 var topLeft = new es.Vector2(worldPosX, worldPosY);
                 var topRight = new es.Vector2(worldPosX + width, worldPosY);
                 var bottomLeft = new es.Vector2(worldPosX, worldPosY + height);
                 var bottomRight = new es.Vector2(worldPosX + width, worldPosY + height);
-                topLeft = es.Vector2Ext.transformR(topLeft, this._transformMat);
-                topRight = es.Vector2Ext.transformR(topRight, this._transformMat);
-                bottomLeft = es.Vector2Ext.transformR(bottomLeft, this._transformMat);
-                bottomRight = es.Vector2Ext.transformR(bottomRight, this._transformMat);
+                es.Vector2Ext.transformR(topLeft, this._transformMat, topLeft);
+                es.Vector2Ext.transformR(topRight, this._transformMat, topRight);
+                es.Vector2Ext.transformR(bottomLeft, this._transformMat, bottomLeft);
+                es.Vector2Ext.transformR(bottomRight, this._transformMat, bottomRight);
+                // 找出最小值和最大值，这样我们就可以计算出我们的边界框。
                 var minX = Math.min(topLeft.x, bottomRight.x, topRight.x, bottomLeft.x);
                 var maxX = Math.max(topLeft.x, bottomRight.x, topRight.x, bottomLeft.x);
                 var minY = Math.min(topLeft.y, bottomRight.y, topRight.y, bottomLeft.y);
@@ -6275,89 +6199,215 @@ var es;
                 this.height = maxY - minY;
             }
         };
+        /**
+         * 返回一个横跨当前矩形和提供的三角形位置的矩形
+         * @param deltaX
+         * @param deltaY
+         */
+        Rectangle.prototype.getSweptBroadphaseBounds = function (deltaX, deltaY) {
+            var broadphasebox = Rectangle.empty;
+            broadphasebox.x = deltaX > 0 ? this.x : this.x + deltaX;
+            broadphasebox.y = deltaY > 0 ? this.y : this.y + deltaY;
+            broadphasebox.width = deltaX > 0 ? deltaX + this.width : this.width - deltaX;
+            broadphasebox.height = deltaY > 0 ? deltaY + this.height : this.height - deltaY;
+            return broadphasebox;
+        };
+        /**
+         * 如果发生碰撞，返回true
+         * moveX和moveY将返回b1为避免碰撞而必须移动的移动量
+         * @param other
+         * @param moveX
+         * @param moveY
+         */
+        Rectangle.prototype.collisionCheck = function (other, moveX, moveY) {
+            moveX.value = moveY.value = 0;
+            var l = other.x - (this.x + this.width);
+            var r = (other.x + other.width) - this.x;
+            var t = (other.y - (this.y + this.height));
+            var b = (other.y + other.height) - this.y;
+            // 检验是否有碰撞
+            if (l > 0 || r < 0 || t > 0 || b < 0)
+                return false;
+            // 求两边的偏移量
+            moveX.value = Math.abs(l) < r ? l : r;
+            moveY.value = Math.abs(t) < b ? t : b;
+            // 只使用最小的偏移量
+            if (Math.abs(moveX.value) < Math.abs(moveY.value))
+                moveY.value = 0;
+            else
+                moveX.value = 0;
+            return true;
+        };
+        /**
+         * 计算两个矩形之间有符号的交点深度
+         * @param rectA
+         * @param rectB
+         * @returns 两个相交的矩形之间的重叠量。
+         * 这些深度值可以是负值，取决于矩形/相交的哪些边。
+         * 这允许调用者确定正确的推送对象的方向，以解决碰撞问题。
+         * 如果矩形不相交，则返回Vector2.Zero
+         */
+        Rectangle.getIntersectionDepth = function (rectA, rectB) {
+            // 计算半尺寸
+            var halfWidthA = rectA.width / 2;
+            var halfHeightA = rectA.height / 2;
+            var halfWidthB = rectB.width / 2;
+            var halfHeightB = rectB.height / 2;
+            // 计算中心
+            var centerA = new es.Vector2(rectA.left + halfWidthA, rectA.top + halfHeightA);
+            var centerB = new es.Vector2(rectB.left + halfWidthB, rectB.top + halfHeightB);
+            // 计算当前中心间的距离和最小非相交距离
+            var distanceX = centerA.x - centerB.x;
+            var distanceY = centerA.y - centerB.y;
+            var minDistanceX = halfWidthA + halfWidthB;
+            var minDistanceY = halfHeightA + halfHeightB;
+            // 如果我们根本不相交，则返回(0，0)
+            if (Math.abs(distanceX) >= minDistanceX || Math.abs(distanceY) >= minDistanceY)
+                return es.Vector2.zero;
+            // 计算并返回交叉点深度
+            var depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
+            var depthY = distanceY > 0 ? minDistanceY - distanceY : -minDistanceY - distanceY;
+            return new es.Vector2(depthX, depthY);
+        };
+        /**
+         * 比较当前实例是否等于指定的矩形
+         * @param other
+         */
+        Rectangle.prototype.equals = function (other) {
+            return this === other;
+        };
+        /**
+         * 获取这个矩形的哈希码
+         */
+        Rectangle.prototype.getHashCode = function () {
+            return (this.x ^ this.y ^ this.width ^ this.height);
+        };
+        Rectangle.prototype.clone = function () {
+            return new Rectangle(this.x, this.y, this.width, this.height);
+        };
         return Rectangle;
-    }(egret.Rectangle));
+    }());
     es.Rectangle = Rectangle;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Vector3 = (function () {
-        function Vector3(x, y, z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+    /**
+     * 它存储值，直到累计的总数大于1。一旦超过1，该值将在调用update时添加到amount中
+     * 一般用法如下:
+     *
+     *  let deltaMove = this.velocity * es.Time.deltaTime;
+     *  deltaMove.x = this._x.update(deltaMove.x);
+     *  deltaMove.y = this._y.update(deltaMove.y);
+     */
+    var SubpixelFloat = /** @class */ (function () {
+        function SubpixelFloat() {
+            this.remainder = 0;
         }
-        return Vector3;
+        /**
+         * 以amount递增余数，将值截断，存储新的余数并将amount设置为当前值
+         * @param amount
+         */
+        SubpixelFloat.prototype.update = function (amount) {
+            this.remainder += amount;
+            var motion = Math.floor(Math.trunc(this.remainder));
+            this.remainder -= motion;
+            amount = motion;
+            return amount;
+        };
+        /**
+         * 将余数重置为0
+         */
+        SubpixelFloat.prototype.reset = function () {
+            this.remainder = 0;
+        };
+        return SubpixelFloat;
     }());
-    es.Vector3 = Vector3;
+    es.SubpixelFloat = SubpixelFloat;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var ColliderTriggerHelper = (function () {
+    var SubpixelVector2 = /** @class */ (function () {
+        function SubpixelVector2() {
+            this._x = new es.SubpixelFloat();
+            this._y = new es.SubpixelFloat();
+        }
+        /**
+         * 以数量递增s/y余数，将值截断为整数，存储新的余数并将amount设置为当前值
+         * @param amount
+         */
+        SubpixelVector2.prototype.update = function (amount) {
+            amount.x = this._x.update(amount.x);
+            amount.y = this._y.update(amount.y);
+        };
+        /**
+         * 将余数重置为0
+         */
+        SubpixelVector2.prototype.reset = function () {
+            this._x.reset();
+            this._y.reset();
+        };
+        return SubpixelVector2;
+    }());
+    es.SubpixelVector2 = SubpixelVector2;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 移动器使用的帮助器类，用于管理触发器碰撞器交互并调用itriggerlistener
+     */
+    var ColliderTriggerHelper = /** @class */ (function () {
         function ColliderTriggerHelper(entity) {
-            this._activeTriggerIntersections = [];
-            this._previousTriggerIntersections = [];
+            /** 存储当前帧中发生的所有活动交点对 */
+            this._activeTriggerIntersections = new es.HashSet();
+            /** 存储前一帧的交点对，这样我们就可以在移动这一帧后检测到退出 */
+            this._previousTriggerIntersections = new es.HashSet();
             this._tempTriggerList = [];
             this._entity = entity;
         }
+        /**
+         * update应该在实体被移动后被调用，它将处理任何与Colllider重叠的ITriggerListeners。
+         * 它将处理任何与Collider重叠的ITriggerListeners。
+         */
         ColliderTriggerHelper.prototype.update = function () {
+            // 对所有实体.colliders进行重叠检查，这些实体.colliders是触发器，与所有宽相碰撞器，无论是否触发器。   
+            // 任何重叠都会导致触发事件
             var colliders = this._entity.getComponents(es.Collider);
             for (var i = 0; i < colliders.length; i++) {
                 var collider = colliders[i];
                 var neighbors = es.Physics.boxcastBroadphase(collider.bounds, collider.collidesWithLayers);
-                var _loop_6 = function (j) {
+                for (var j = 0; j < neighbors.size; j++) {
                     var neighbor = neighbors[j];
+                    // 我们至少需要一个碰撞器作为触发器
                     if (!collider.isTrigger && !neighbor.isTrigger)
-                        return "continue";
+                        continue;
                     if (collider.overlaps(neighbor)) {
-                        var pair_1 = new es.Pair(collider, neighbor);
-                        var shouldReportTriggerEvent = this_2._activeTriggerIntersections.findIndex(function (value) {
-                            return value.first == pair_1.first && value.second == pair_1.second;
-                        }) == -1 && this_2._previousTriggerIntersections.findIndex(function (value) {
-                            return value.first == pair_1.first && value.second == pair_1.second;
-                        }) == -1;
+                        var pair = new es.Pair(collider, neighbor);
+                        // 如果我们的某一个集合中已经有了这个对子（前一个或当前的触发交叉点），就不要调用输入事件了
+                        var shouldReportTriggerEvent = !this._activeTriggerIntersections.contains(pair) &&
+                            !this._previousTriggerIntersections.contains(pair);
                         if (shouldReportTriggerEvent)
-                            this_2.notifyTriggerListeners(pair_1, true);
-                        if (!this_2._activeTriggerIntersections.contains(pair_1))
-                            this_2._activeTriggerIntersections.push(pair_1);
+                            this.notifyTriggerListeners(pair, true);
+                        this._activeTriggerIntersections.add(pair);
                     }
-                };
-                var this_2 = this;
-                for (var j = 0; j < neighbors.length; j++) {
-                    _loop_6(j);
                 }
             }
             es.ListPool.free(colliders);
             this.checkForExitedColliders();
         };
         ColliderTriggerHelper.prototype.checkForExitedColliders = function () {
-            var _this = this;
-            var _loop_7 = function (i) {
-                var index = this_3._previousTriggerIntersections.findIndex(function (value) {
-                    if (value.first == _this._activeTriggerIntersections[i].first && value.second == _this._activeTriggerIntersections[i].second)
-                        return true;
-                    return false;
-                });
-                if (index != -1)
-                    this_3._previousTriggerIntersections.removeAt(index);
-            };
-            var this_3 = this;
-            for (var i = 0; i < this._activeTriggerIntersections.length; i++) {
-                _loop_7(i);
-            }
-            for (var i = 0; i < this._previousTriggerIntersections.length; i++) {
+            // 删除所有与此帧交互的触发器，留下我们退出的触发器
+            this._previousTriggerIntersections.exceptWith(this._activeTriggerIntersections.toArray());
+            for (var i = 0; i < this._previousTriggerIntersections.getCount(); i++) {
                 this.notifyTriggerListeners(this._previousTriggerIntersections[i], false);
             }
-            this._previousTriggerIntersections.length = 0;
-            for (var i = 0; i < this._activeTriggerIntersections.length; i++) {
-                if (!this._previousTriggerIntersections.contains(this._activeTriggerIntersections[i])) {
-                    this._previousTriggerIntersections.push(this._activeTriggerIntersections[i]);
-                }
-            }
-            this._activeTriggerIntersections.length = 0;
+            this._previousTriggerIntersections.clear();
+            // 添加所有当前激活的触发器
+            this._previousTriggerIntersections.unionWith(this._activeTriggerIntersections.toArray());
+            // 清空活动集，为下一帧做准备
+            this._activeTriggerIntersections.clear();
         };
         ColliderTriggerHelper.prototype.notifyTriggerListeners = function (collisionPair, isEntering) {
-            collisionPair.first.entity.getComponents("ITriggerListener", this._tempTriggerList);
+            es.TriggerListenerHelper.getITriggerListener(collisionPair.first.entity, this._tempTriggerList);
             for (var i = 0; i < this._tempTriggerList.length; i++) {
                 if (isEntering) {
                     this._tempTriggerList[i].onTriggerEnter(collisionPair.second, collisionPair.first);
@@ -6367,7 +6417,7 @@ var es;
                 }
                 this._tempTriggerList.length = 0;
                 if (collisionPair.second.entity) {
-                    collisionPair.second.entity.getComponents("ITriggerListener", this._tempTriggerList);
+                    es.TriggerListenerHelper.getITriggerListener(collisionPair.second.entity, this._tempTriggerList);
                     for (var i_2 = 0; i_2 < this._tempTriggerList.length; i_2++) {
                         if (isEntering) {
                             this._tempTriggerList[i_2].onTriggerEnter(collisionPair.first, collisionPair.second);
@@ -6398,13 +6448,14 @@ var es;
         PointSectors[PointSectors["bottomLeft"] = 10] = "bottomLeft";
         PointSectors[PointSectors["bottomRight"] = 6] = "bottomRight";
     })(PointSectors = es.PointSectors || (es.PointSectors = {}));
-    var Collisions = (function () {
+    var Collisions = /** @class */ (function () {
         function Collisions() {
         }
-        Collisions.isLineToLine = function (a1, a2, b1, b2) {
+        Collisions.lineToLine = function (a1, a2, b1, b2) {
             var b = es.Vector2.subtract(a2, a1);
             var d = es.Vector2.subtract(b2, b1);
             var bDotDPerp = b.x * d.y - b.y * d.x;
+            // 如果b*d = 0，表示这两条直线平行，因此有无穷个交点
             if (bDotDPerp == 0)
                 return false;
             var c = es.Vector2.subtract(b1, a1);
@@ -6416,22 +6467,27 @@ var es;
                 return false;
             return true;
         };
-        Collisions.lineToLineIntersection = function (a1, a2, b1, b2) {
-            var intersection = new es.Vector2(0, 0);
+        Collisions.lineToLineIntersection = function (a1, a2, b1, b2, intersection) {
+            if (intersection === void 0) { intersection = new es.Vector2(); }
+            intersection.x = 0;
+            intersection.y = 0;
             var b = es.Vector2.subtract(a2, a1);
             var d = es.Vector2.subtract(b2, b1);
             var bDotDPerp = b.x * d.y - b.y * d.x;
+            // 如果b*d = 0，表示这两条直线平行，因此有无穷个交点
             if (bDotDPerp == 0)
-                return intersection;
+                return false;
             var c = es.Vector2.subtract(b1, a1);
             var t = (c.x * d.y - c.y * d.x) / bDotDPerp;
             if (t < 0 || t > 1)
-                return intersection;
+                return false;
             var u = (c.x * b.y - c.y * b.x) / bDotDPerp;
             if (u < 0 || u > 1)
-                return intersection;
-            intersection = es.Vector2.add(a1, new es.Vector2(t * b.x, t * b.y));
-            return intersection;
+                return false;
+            var temp = es.Vector2.add(a1, new es.Vector2(t * b.x, t * b.y));
+            intersection.x = temp.x;
+            intersection.y = temp.y;
+            return true;
         };
         Collisions.closestPointOnLine = function (lineA, lineB, closestTo) {
             var v = es.Vector2.subtract(lineB, lineA);
@@ -6440,23 +6496,50 @@ var es;
             t = es.MathHelper.clamp(t, 0, 1);
             return es.Vector2.add(lineA, new es.Vector2(v.x * t, v.y * t));
         };
-        Collisions.isCircleToCircle = function (circleCenter1, circleRadius1, circleCenter2, circleRadius2) {
+        Collisions.circleToCircle = function (circleCenter1, circleRadius1, circleCenter2, circleRadius2) {
             return es.Vector2.distanceSquared(circleCenter1, circleCenter2) < (circleRadius1 + circleRadius2) * (circleRadius1 + circleRadius2);
         };
-        Collisions.isCircleToLine = function (circleCenter, radius, lineFrom, lineTo) {
+        Collisions.circleToLine = function (circleCenter, radius, lineFrom, lineTo) {
             return es.Vector2.distanceSquared(circleCenter, this.closestPointOnLine(lineFrom, lineTo, circleCenter)) < radius * radius;
         };
-        Collisions.isCircleToPoint = function (circleCenter, radius, point) {
+        Collisions.circleToPoint = function (circleCenter, radius, point) {
             return es.Vector2.distanceSquared(circleCenter, point) < radius * radius;
         };
-        Collisions.isRectToCircle = function (rect, cPosition, cRadius) {
-            var ew = rect.width * 0.5;
-            var eh = rect.height * 0.5;
-            var vx = Math.max(0, Math.max(cPosition.x - rect.x) - ew);
-            var vy = Math.max(0, Math.max(cPosition.y - rect.y) - eh);
-            return vx * vx + vy * vy < cRadius * cRadius;
+        Collisions.rectToCircle = function (rect, cPosition, cRadius) {
+            // 检查矩形是否包含圆的中心点
+            if (this.rectToPoint(rect.x, rect.y, rect.width, rect.height, cPosition))
+                return true;
+            // 对照相关边缘检查圆圈
+            var edgeFrom;
+            var edgeTo;
+            var sector = this.getSector(rect.x, rect.y, rect.width, rect.height, cPosition);
+            if ((sector & PointSectors.top) != 0) {
+                edgeFrom = new es.Vector2(rect.x, rect.y);
+                edgeTo = new es.Vector2(rect.x + rect.width, rect.y);
+                if (this.circleToLine(cPosition, cRadius, edgeFrom, edgeTo))
+                    return true;
+            }
+            if ((sector & PointSectors.bottom) != 0) {
+                edgeFrom = new es.Vector2(rect.x, rect.y + rect.width);
+                edgeTo = new es.Vector2(rect.x + rect.width, rect.y + rect.height);
+                if (this.circleToLine(cPosition, cRadius, edgeFrom, edgeTo))
+                    return true;
+            }
+            if ((sector & PointSectors.left) != 0) {
+                edgeFrom = new es.Vector2(rect.x, rect.y);
+                edgeTo = new es.Vector2(rect.x, rect.y + rect.height);
+                if (this.circleToLine(cPosition, cRadius, edgeFrom, edgeTo))
+                    return true;
+            }
+            if ((sector & PointSectors.right) != 0) {
+                edgeFrom = new es.Vector2(rect.x + rect.width, rect.y);
+                edgeTo = new es.Vector2(rect.x + rect.width, rect.y + rect.height);
+                if (this.circleToLine(cPosition, cRadius, edgeFrom, edgeTo))
+                    return true;
+            }
+            return false;
         };
-        Collisions.isRectToLine = function (rect, lineFrom, lineTo) {
+        Collisions.rectToLine = function (rect, lineFrom, lineTo) {
             var fromSector = this.getSector(rect.x, rect.y, rect.width, rect.height, lineFrom);
             var toSector = this.getSector(rect.x, rect.y, rect.width, rect.height, lineTo);
             if (fromSector == PointSectors.center || toSector == PointSectors.center) {
@@ -6467,38 +6550,52 @@ var es;
             }
             else {
                 var both = fromSector | toSector;
+                // 线对边进行检查
                 var edgeFrom = void 0;
                 var edgeTo = void 0;
                 if ((both & PointSectors.top) != 0) {
                     edgeFrom = new es.Vector2(rect.x, rect.y);
                     edgeTo = new es.Vector2(rect.x + rect.width, rect.y);
-                    if (this.isLineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
+                    if (this.lineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
                         return true;
                 }
                 if ((both & PointSectors.bottom) != 0) {
                     edgeFrom = new es.Vector2(rect.x, rect.y + rect.height);
                     edgeTo = new es.Vector2(rect.x + rect.width, rect.y + rect.height);
-                    if (this.isLineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
+                    if (this.lineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
                         return true;
                 }
                 if ((both & PointSectors.left) != 0) {
                     edgeFrom = new es.Vector2(rect.x, rect.y);
                     edgeTo = new es.Vector2(rect.x, rect.y + rect.height);
-                    if (this.isLineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
+                    if (this.lineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
                         return true;
                 }
                 if ((both & PointSectors.right) != 0) {
                     edgeFrom = new es.Vector2(rect.x + rect.width, rect.y);
                     edgeTo = new es.Vector2(rect.x + rect.width, rect.y + rect.height);
-                    if (this.isLineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
+                    if (this.lineToLine(edgeFrom, edgeTo, lineFrom, lineTo))
                         return true;
                 }
             }
             return false;
         };
-        Collisions.isRectToPoint = function (rX, rY, rW, rH, point) {
+        Collisions.rectToPoint = function (rX, rY, rW, rH, point) {
             return point.x >= rX && point.y >= rY && point.x < rX + rW && point.y < rY + rH;
         };
+        /**
+         * 位标志和帮助使用Cohen–Sutherland算法
+         *
+         * 位标志:
+         * 1001 1000 1010
+         * 0001 0000 0010
+         * 0101 0100 0110
+         * @param rX
+         * @param rY
+         * @param rW
+         * @param rH
+         * @param point
+         */
         Collisions.getSector = function (rX, rY, rW, rH, point) {
             var sector = PointSectors.center;
             if (point.x < rX)
@@ -6517,71 +6614,23 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Physics = (function () {
-        function Physics() {
-        }
-        Physics.reset = function () {
-            this._spatialHash = new es.SpatialHash(this.spatialHashCellSize);
-        };
-        Physics.clear = function () {
-            this._spatialHash.clear();
-        };
-        Physics.overlapCircleAll = function (center, randius, results, layerMask) {
-            if (layerMask === void 0) { layerMask = -1; }
-            if (results.length == 0) {
-                console.error("An empty results array was passed in. No results will ever be returned.");
-                return;
-            }
-            return this._spatialHash.overlapCircle(center, randius, results, layerMask);
-        };
-        Physics.boxcastBroadphase = function (rect, layerMask) {
-            if (layerMask === void 0) { layerMask = this.allLayers; }
-            return this._spatialHash.aabbBroadphase(rect, null, layerMask);
-        };
-        Physics.boxcastBroadphaseExcludingSelf = function (collider, rect, layerMask) {
-            if (layerMask === void 0) { layerMask = this.allLayers; }
-            return this._spatialHash.aabbBroadphase(rect, collider, layerMask);
-        };
-        Physics.addCollider = function (collider) {
-            Physics._spatialHash.register(collider);
-        };
-        Physics.removeCollider = function (collider) {
-            Physics._spatialHash.remove(collider);
-        };
-        Physics.updateCollider = function (collider) {
-            this._spatialHash.remove(collider);
-            this._spatialHash.register(collider);
-        };
-        Physics.debugDraw = function (secondsToDisplay) {
-            this._spatialHash.debugDraw(secondsToDisplay, 2);
-        };
-        Physics.spatialHashCellSize = 100;
-        Physics.allLayers = -1;
-        Physics.raycastsHitTriggers = false;
-        Physics.raycastsStartInColliders = false;
-        return Physics;
-    }());
-    es.Physics = Physics;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Ray2D = (function () {
-        function Ray2D(position, end) {
-            this.start = position;
-            this.end = end;
-            this.direction = es.Vector2.subtract(this.end, this.start);
-        }
-        return Ray2D;
-    }());
-    es.Ray2D = Ray2D;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var RaycastHit = (function () {
+    var RaycastHit = /** @class */ (function () {
         function RaycastHit(collider, fraction, distance, point, normal) {
+            /**
+             * 撞击发生时沿射线的距离。
+             */
             this.fraction = 0;
+            /**
+             * 从射线原点到碰撞点的距离
+             */
             this.distance = 0;
+            /**
+             * 世界空间中光线击中对撞机表面的点
+             */
             this.point = es.Vector2.zero;
+            /**
+             * 被射线击中的表面的法向量
+             */
             this.normal = es.Vector2.zero;
             this.collider = collider;
             this.fraction = fraction;
@@ -6612,22 +6661,641 @@ var es;
     }());
     es.RaycastHit = RaycastHit;
 })(es || (es = {}));
+///<reference path="./RaycastHit.ts" />
+var es;
+///<reference path="./RaycastHit.ts" />
+(function (es) {
+    var Physics = /** @class */ (function () {
+        function Physics() {
+        }
+        Physics.reset = function () {
+            this._spatialHash = new es.SpatialHash(this.spatialHashCellSize);
+            this._hitArray[0].reset();
+            this._colliderArray[0] = null;
+        };
+        /**
+         * 从SpatialHash中移除所有碰撞器
+         */
+        Physics.clear = function () {
+            this._spatialHash.clear();
+        };
+        /**
+         * 检查是否有对撞机落在一个圆形区域内。返回遇到的第一个对撞机
+         * @param center
+         * @param radius
+         * @param layerMask
+         */
+        Physics.overlapCircle = function (center, radius, layerMask) {
+            if (layerMask === void 0) { layerMask = Physics.allLayers; }
+            this._colliderArray[0] = null;
+            this._spatialHash.overlapCircle(center, radius, this._colliderArray, layerMask);
+            return this._colliderArray[0];
+        };
+        /**
+         * 获取所有落在指定圆圈内的碰撞器
+         * @param center
+         * @param randius
+         * @param results
+         * @param layerMask
+         */
+        Physics.overlapCircleAll = function (center, randius, results, layerMask) {
+            if (layerMask === void 0) { layerMask = -1; }
+            if (results.length == 0) {
+                console.warn("传入了一个空的结果数组。不会返回任何结果");
+                return;
+            }
+            return this._spatialHash.overlapCircle(center, randius, results, layerMask);
+        };
+        /**
+         * 返回所有碰撞器与边界相交的碰撞器。bounds。请注意，这是一个broadphase检查，所以它只检查边界，不做单个碰撞到碰撞器的检查!
+         * @param rect
+         * @param layerMask
+         */
+        Physics.boxcastBroadphase = function (rect, layerMask) {
+            if (layerMask === void 0) { layerMask = this.allLayers; }
+            return this._spatialHash.aabbBroadphase(rect, null, layerMask);
+        };
+        /**
+         * 返回所有被边界交错的碰撞器，但不包括传入的碰撞器（self）。
+         * 如果你想为其他查询自己创建扫描边界，这个方法很有用
+         * @param collider
+         * @param rect
+         * @param layerMask
+         */
+        Physics.boxcastBroadphaseExcludingSelf = function (collider, rect, layerMask) {
+            if (layerMask === void 0) { layerMask = this.allLayers; }
+            return this._spatialHash.aabbBroadphase(rect, collider, layerMask);
+        };
+        /**
+         * 返回所有边界与 collider.bounds 相交的碰撞器，但不包括传入的碰撞器(self)
+         * @param collider
+         * @param layerMask
+         */
+        Physics.boxcastBroadphaseExcludingSelfNonRect = function (collider, layerMask) {
+            if (layerMask === void 0) { layerMask = this.allLayers; }
+            var bounds = collider.bounds.clone();
+            return this._spatialHash.aabbBroadphase(bounds, collider, layerMask);
+        };
+        /**
+         * 返回所有被 collider.bounds 扩展为包含 deltaX/deltaY 的碰撞器，但不包括传入的碰撞器（self）
+         * @param collider
+         * @param deltaX
+         * @param deltaY
+         * @param layerMask
+         */
+        Physics.boxcastBroadphaseExcludingSelfDelta = function (collider, deltaX, deltaY, layerMask) {
+            if (layerMask === void 0) { layerMask = Physics.allLayers; }
+            var colliderBounds = collider.bounds.clone();
+            var sweptBounds = colliderBounds.getSweptBroadphaseBounds(deltaX, deltaY);
+            return this._spatialHash.aabbBroadphase(sweptBounds, collider, layerMask);
+        };
+        /**
+         * 将对撞机添加到物理系统中
+         * @param collider
+         */
+        Physics.addCollider = function (collider) {
+            Physics._spatialHash.register(collider);
+        };
+        /**
+         * 从物理系统中移除对撞机
+         * @param collider
+         */
+        Physics.removeCollider = function (collider) {
+            Physics._spatialHash.remove(collider);
+        };
+        /**
+         * 更新物理系统中对撞机的位置。这实际上只是移除然后重新添加带有新边界的碰撞器
+         * @param collider
+         */
+        Physics.updateCollider = function (collider) {
+            this._spatialHash.remove(collider);
+            this._spatialHash.register(collider);
+        };
+        /**
+         * 返回与layerMask匹配的碰撞器的第一次命中
+         * @param start
+         * @param end
+         * @param layerMask
+         */
+        Physics.linecast = function (start, end, layerMask) {
+            if (layerMask === void 0) { layerMask = Physics.allLayers; }
+            this._hitArray[0].reset();
+            this.linecastAll(start, end, this._hitArray, layerMask);
+            return this._hitArray[0];
+        };
+        /**
+         * 通过空间散列强制执行一行，并用该行命中的任何碰撞器填充hits数组
+         * @param start
+         * @param end
+         * @param hits
+         * @param layerMask
+         */
+        Physics.linecastAll = function (start, end, hits, layerMask) {
+            if (layerMask === void 0) { layerMask = Physics.allLayers; }
+            if (hits.length == 0) {
+                console.warn("传入了一个空的hits数组。没有点击会被返回");
+                return 0;
+            }
+            return this._spatialHash.linecast(start, end, hits, layerMask);
+        };
+        /**
+         * 检查是否有对撞机落在一个矩形区域中
+         * @param rect
+         * @param layerMask
+         */
+        Physics.overlapRectangle = function (rect, layerMask) {
+            if (layerMask === void 0) { layerMask = Physics.allLayers; }
+            this._colliderArray[0] = null;
+            this._spatialHash.overlapRectangle(rect, this._colliderArray, layerMask);
+            return this._colliderArray[0];
+        };
+        /**
+         * 获取所有在指定矩形范围内的碰撞器
+         * @param rect
+         * @param results
+         * @param layerMask
+         */
+        Physics.overlapRectangleAll = function (rect, results, layerMask) {
+            if (layerMask === void 0) { layerMask = Physics.allLayers; }
+            if (results.length == 0) {
+                console.warn("传入了一个空的结果数组。不会返回任何结果");
+                return 0;
+            }
+            return this._spatialHash.overlapRectangle(rect, results, layerMask);
+        };
+        /** 用于在全局范围内存储重力值的方便字段 */
+        Physics.gravity = new es.Vector2(0, 300);
+        /** 调用reset并创建一个新的SpatialHash时使用的单元格大小 */
+        Physics.spatialHashCellSize = 100;
+        /** 接受layerMask的所有方法的默认值 */
+        Physics.allLayers = -1;
+        /**
+         * raycast是否检测配置为触发器的碰撞器
+         */
+        Physics.raycastsHitTriggers = false;
+        /**
+         * 在碰撞器中开始的射线/直线是否强制转换检测到那些碰撞器
+         */
+        Physics.raycastsStartInColliders = false;
+        /**
+         * 我们保留它以避免在每次raycast发生时分配它
+         */
+        Physics._hitArray = [
+            new es.RaycastHit()
+        ];
+        /**
+         * 避免重叠检查和形状投射的分配
+         */
+        Physics._colliderArray = [
+            null
+        ];
+        return Physics;
+    }());
+    es.Physics = Physics;
+})(es || (es = {}));
 var es;
 (function (es) {
-    var Shape = (function () {
+    /**
+     * 不是真正的射线(射线只有开始和方向)，作为一条线和射线。
+     */
+    var Ray2D = /** @class */ (function () {
+        function Ray2D(position, end) {
+            this.start = position;
+            this.end = end;
+            this.direction = es.Vector2.subtract(this.end, this.start);
+        }
+        return Ray2D;
+    }());
+    es.Ray2D = Ray2D;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var SpatialHash = /** @class */ (function () {
+        function SpatialHash(cellSize) {
+            if (cellSize === void 0) { cellSize = 100; }
+            this.gridBounds = new es.Rectangle();
+            /**
+             * 重叠检查缓存框
+             */
+            this._overlapTestBox = new es.Box(0, 0);
+            /**
+             * 重叠检查缓存圈
+             */
+            this._overlapTestCircle = new es.Circle(0);
+            /**
+             * 保存所有数据的字典
+             */
+            this._cellDict = new NumberDictionary();
+            /**
+             * 用于返回冲突信息的共享HashSet
+             */
+            this._tempHashSet = new Set();
+            this._cellSize = cellSize;
+            this._inverseCellSize = 1 / this._cellSize;
+            this._raycastParser = new RaycastResultParser();
+        }
+        /**
+         * 将对象添加到SpatialHash
+         * @param collider
+         */
+        SpatialHash.prototype.register = function (collider) {
+            var bounds = collider.bounds.clone();
+            collider.registeredPhysicsBounds = bounds;
+            var p1 = this.cellCoords(bounds.x, bounds.y);
+            var p2 = this.cellCoords(bounds.right, bounds.bottom);
+            // 更新边界以跟踪网格大小
+            if (!this.gridBounds.contains(p1.x, p1.y)) {
+                this.gridBounds = es.RectangleExt.union(this.gridBounds, p1);
+            }
+            if (!this.gridBounds.contains(p2.x, p2.y)) {
+                this.gridBounds = es.RectangleExt.union(this.gridBounds, p2);
+            }
+            for (var x = p1.x; x <= p2.x; x++) {
+                for (var y = p1.y; y <= p2.y; y++) {
+                    // 如果没有单元格，我们需要创建它
+                    var c = this.cellAtPosition(x, y, true);
+                    c.push(collider);
+                }
+            }
+        };
+        /**
+         * 从SpatialHash中删除对象
+         * @param collider
+         */
+        SpatialHash.prototype.remove = function (collider) {
+            var bounds = collider.registeredPhysicsBounds.clone();
+            var p1 = this.cellCoords(bounds.x, bounds.y);
+            var p2 = this.cellCoords(bounds.right, bounds.bottom);
+            for (var x = p1.x; x <= p2.x; x++) {
+                for (var y = p1.y; y <= p2.y; y++) {
+                    // 单元格应该始终存在，因为这个碰撞器应该在所有查询的单元格中
+                    var cell = this.cellAtPosition(x, y);
+                    if (!cell)
+                        console.log("\u4ECE\u4E0D\u5B58\u5728\u78B0\u649E\u5668\u7684\u5355\u5143\u683C\u4E2D\u79FB\u9664\u78B0\u649E\u5668: [" + collider + "]");
+                    else
+                        new linq.List(cell).remove(collider);
+                }
+            }
+        };
+        /**
+         * 使用蛮力方法从SpatialHash中删除对象
+         * @param obj
+         */
+        SpatialHash.prototype.removeWithBruteForce = function (obj) {
+            this._cellDict.remove(obj);
+        };
+        SpatialHash.prototype.clear = function () {
+            this._cellDict.clear();
+        };
+        /**
+         * 返回边框与单元格相交的所有对象
+         * @param bounds
+         * @param excludeCollider
+         * @param layerMask
+         */
+        SpatialHash.prototype.aabbBroadphase = function (bounds, excludeCollider, layerMask) {
+            this._tempHashSet.clear();
+            var p1 = this.cellCoords(bounds.x, bounds.y);
+            var p2 = this.cellCoords(bounds.right, bounds.bottom);
+            for (var x = p1.x; x <= p2.x; x++) {
+                for (var y = p1.y; y <= p2.y; y++) {
+                    var cell = this.cellAtPosition(x, y);
+                    if (cell == null)
+                        continue;
+                    // 当cell不为空。循环并取回所有碰撞器
+                    for (var i = 0; i < cell.length; i++) {
+                        var collider = cell[i];
+                        // 如果它是自身或者如果它不匹配我们的层掩码 跳过这个碰撞器
+                        if (collider == excludeCollider || !es.Flags.isFlagSet(layerMask, collider.physicsLayer.value))
+                            continue;
+                        if (bounds.intersects(collider.bounds)) {
+                            this._tempHashSet.add(collider);
+                        }
+                    }
+                }
+            }
+            return this._tempHashSet;
+        };
+        /**
+         * 通过空间散列投掷一条线，并将该线碰到的任何碰撞器填入碰撞数组
+         * https://github.com/francisengelmann/fast_voxel_traversal/blob/master/main.cpp
+         * http://www.cse.yorku.ca/~amana/research/grid.pdf
+         * @param start
+         * @param end
+         * @param hits
+         * @param layerMask
+         */
+        SpatialHash.prototype.linecast = function (start, end, hits, layerMask) {
+            var ray = new es.Ray2D(start, end);
+            this._raycastParser.start(ray, hits, layerMask);
+            // 获取我们的起始/结束位置，与我们的网格在同一空间内
+            var currentCell = this.cellCoords(start.x, start.y);
+            var lastCell = this.cellCoords(end.x, end.y);
+            // 我们向什么方向递增单元格检查？
+            var stepX = Math.sign(ray.direction.x);
+            var stepY = Math.sign(ray.direction.y);
+            // 我们要确保，如果我们在同一条线上或同一排上，就不会踩到不必要的方向上
+            if (currentCell.x == lastCell.x)
+                stepX = 0;
+            if (currentCell.y == lastCell.y)
+                stepY = 0;
+            // 计算单元格的边界。
+            // 当步长为正数时，下一个单元格在这个单元格之后，意味着我们要加1。
+            var xStep = stepX < 0 ? 0 : stepX;
+            var yStep = stepY < 0 ? 0 : stepY;
+            var nextBoundaryX = (currentCell.x + xStep) * this._cellSize;
+            var nextBoundaryY = (currentCell.y + yStep) * this._cellSize;
+            // 确定射线穿过第一个垂直体素边界时的t值，y/水平也是如此。
+            // 这两个值的最小值将表明我们可以沿着射线移动多少，并且仍然保持在当前的体素中，对于接近垂直/水平的射线可能是无限的。
+            var tMaxX = ray.direction.x != 0 ? (nextBoundaryX - ray.start.x) / ray.direction.x : Number.MAX_VALUE;
+            var tMaxY = ray.direction.y != 0 ? (nextBoundaryY - ray.start.y) / ray.direction.y : Number.MAX_VALUE;
+            // 我们要走多远才能从一个单元格的边界穿过一个单元格
+            var tDeltaX = ray.direction.x != 0 ? this._cellSize / (ray.direction.x * stepX) : Number.MAX_VALUE;
+            var tDeltaY = ray.direction.y != 0 ? this._cellSize / (ray.direction.y * stepY) : Number.MAX_VALUE;
+            // 开始遍历并返回交叉单元格。
+            var cell = this.cellAtPosition(currentCell.x, currentCell.y);
+            if (cell && this._raycastParser.checkRayIntersection(currentCell.x, currentCell.y, cell)) {
+                this._raycastParser.reset();
+                return this._raycastParser.hitCounter;
+            }
+            while (currentCell.x != lastCell.x || currentCell.y != lastCell.y) {
+                if (tMaxX < tMaxY) {
+                    currentCell.x = Math.floor(es.MathHelper.approach(currentCell.x, lastCell.x, Math.abs(stepX)));
+                    tMaxX += tDeltaX;
+                }
+                else {
+                    currentCell.y = Math.floor(es.MathHelper.approach(currentCell.y, lastCell.y, Math.abs(stepY)));
+                    tMaxY += tDeltaY;
+                }
+                cell = this.cellAtPosition(currentCell.x, currentCell.y);
+                if (cell && this._raycastParser.checkRayIntersection(currentCell.x, currentCell.y, cell)) {
+                    this._raycastParser.reset();
+                    return this._raycastParser.hitCounter;
+                }
+            }
+            // 复位
+            this._raycastParser.reset();
+            return this._raycastParser.hitCounter;
+        };
+        /**
+         * 获取所有在指定矩形范围内的碰撞器
+         * @param rect
+         * @param results
+         * @param layerMask
+         */
+        SpatialHash.prototype.overlapRectangle = function (rect, results, layerMask) {
+            var e_12, _a;
+            this._overlapTestBox.updateBox(rect.width, rect.height);
+            this._overlapTestBox.position = rect.location;
+            var resultCounter = 0;
+            var potentials = this.aabbBroadphase(rect, null, layerMask);
+            try {
+                for (var potentials_1 = __values(potentials), potentials_1_1 = potentials_1.next(); !potentials_1_1.done; potentials_1_1 = potentials_1.next()) {
+                    var collider = potentials_1_1.value;
+                    if (collider instanceof es.BoxCollider) {
+                        results[resultCounter] = collider;
+                        resultCounter++;
+                    }
+                    else if (collider instanceof es.CircleCollider) {
+                        if (es.Collisions.rectToCircle(rect, collider.bounds.center, collider.bounds.width * 0.5)) {
+                            results[resultCounter] = collider;
+                            resultCounter++;
+                        }
+                    }
+                    else if (collider instanceof es.PolygonCollider) {
+                        if (collider.shape.overlaps(this._overlapTestBox)) {
+                            results[resultCounter] = collider;
+                            resultCounter++;
+                        }
+                    }
+                    else {
+                        throw new Error("overlapRectangle对这个类型没有实现!");
+                    }
+                    if (resultCounter == results.length)
+                        return resultCounter;
+                }
+            }
+            catch (e_12_1) { e_12 = { error: e_12_1 }; }
+            finally {
+                try {
+                    if (potentials_1_1 && !potentials_1_1.done && (_a = potentials_1.return)) _a.call(potentials_1);
+                }
+                finally { if (e_12) throw e_12.error; }
+            }
+            return resultCounter;
+        };
+        /**
+         * 获取所有落在指定圆圈内的碰撞器
+         * @param circleCenter
+         * @param radius
+         * @param results
+         * @param layerMask
+         */
+        SpatialHash.prototype.overlapCircle = function (circleCenter, radius, results, layerMask) {
+            var e_13, _a;
+            var bounds = new es.Rectangle(circleCenter.x - radius, circleCenter.y - radius, radius * 2, radius * 2);
+            this._overlapTestCircle.radius = radius;
+            this._overlapTestCircle.position = circleCenter;
+            var resultCounter = 0;
+            var potentials = this.aabbBroadphase(bounds, null, layerMask);
+            try {
+                for (var potentials_2 = __values(potentials), potentials_2_1 = potentials_2.next(); !potentials_2_1.done; potentials_2_1 = potentials_2.next()) {
+                    var collider = potentials_2_1.value;
+                    if (collider instanceof es.BoxCollider) {
+                        results[resultCounter] = collider;
+                        resultCounter++;
+                    }
+                    else if (collider instanceof es.CircleCollider) {
+                        if (collider.shape.overlaps(this._overlapTestCircle)) {
+                            results[resultCounter] = collider;
+                            resultCounter++;
+                        }
+                    }
+                    else if (collider instanceof es.PolygonCollider) {
+                        if (collider.shape.overlaps(this._overlapTestCircle)) {
+                            results[resultCounter] = collider;
+                            resultCounter++;
+                        }
+                    }
+                    else {
+                        throw new Error("对这个对撞机类型的overlapCircle没有实现!");
+                    }
+                    // 如果我们所有的结果数据有了则返回
+                    if (resultCounter == results.length)
+                        return resultCounter;
+                }
+            }
+            catch (e_13_1) { e_13 = { error: e_13_1 }; }
+            finally {
+                try {
+                    if (potentials_2_1 && !potentials_2_1.done && (_a = potentials_2.return)) _a.call(potentials_2);
+                }
+                finally { if (e_13) throw e_13.error; }
+            }
+            return resultCounter;
+        };
+        /**
+         * 获取单元格的x,y值作为世界空间的x,y值
+         * @param x
+         * @param y
+         */
+        SpatialHash.prototype.cellCoords = function (x, y) {
+            return new es.Vector2(Math.floor(x * this._inverseCellSize), Math.floor(y * this._inverseCellSize));
+        };
+        /**
+         * 获取世界空间x,y值的单元格。
+         * 如果单元格为空且createCellIfEmpty为true，则会创建一个新的单元格
+         * @param x
+         * @param y
+         * @param createCellIfEmpty
+         */
+        SpatialHash.prototype.cellAtPosition = function (x, y, createCellIfEmpty) {
+            if (createCellIfEmpty === void 0) { createCellIfEmpty = false; }
+            var cell = this._cellDict.tryGetValue(x, y);
+            if (!cell) {
+                if (createCellIfEmpty) {
+                    cell = [];
+                    this._cellDict.add(x, y, cell);
+                }
+            }
+            return cell;
+        };
+        return SpatialHash;
+    }());
+    es.SpatialHash = SpatialHash;
+    /**
+     * 包装一个Unit32，列表碰撞器字典
+     * 它的主要目的是将int、int x、y坐标散列到单个Uint32键中，使用O(1)查找。
+     */
+    var NumberDictionary = /** @class */ (function () {
+        function NumberDictionary() {
+            this._store = new Map();
+        }
+        NumberDictionary.prototype.add = function (x, y, list) {
+            this._store.set(this.getKey(x, y), list);
+        };
+        /**
+         * 使用蛮力方法从字典存储列表中移除碰撞器
+         * @param obj
+         */
+        NumberDictionary.prototype.remove = function (obj) {
+            this._store.forEach(function (list) {
+                var linqList = new linq.List(list);
+                if (linqList.contains(obj))
+                    linqList.remove(obj);
+            });
+        };
+        NumberDictionary.prototype.tryGetValue = function (x, y) {
+            return this._store.get(this.getKey(x, y));
+        };
+        NumberDictionary.prototype.getKey = function (x, y) {
+            return x << 16 | (y >>> 0);
+        };
+        /**
+         * 清除字典数据
+         */
+        NumberDictionary.prototype.clear = function () {
+            this._store.clear();
+        };
+        return NumberDictionary;
+    }());
+    es.NumberDictionary = NumberDictionary;
+    var RaycastResultParser = /** @class */ (function () {
+        function RaycastResultParser() {
+            this._tempHit = new es.RaycastHit();
+            this._checkedColliders = [];
+            this._cellHits = [];
+        }
+        RaycastResultParser.prototype.start = function (ray, hits, layerMask) {
+            this._ray = ray;
+            this._hits = hits;
+            this._layerMask = layerMask;
+            this.hitCounter = 0;
+        };
+        /**
+         * 如果hits数组被填充，返回true。单元格不能为空!
+         * @param cellX
+         * @param cellY
+         * @param cell
+         */
+        RaycastResultParser.prototype.checkRayIntersection = function (cellX, cellY, cell) {
+            var fraction = new es.Ref(0);
+            for (var i = 0; i < cell.length; i++) {
+                var potential = cell[i];
+                // 管理我们已经处理过的碰撞器
+                if (new linq.List(this._checkedColliders).contains(potential))
+                    continue;
+                this._checkedColliders.push(potential);
+                // 只有当我们被设置为这样做时才会点击触发器
+                if (potential.isTrigger && !es.Physics.raycastsHitTriggers)
+                    continue;
+                // 确保碰撞器在图层蒙版上
+                if (!es.Flags.isFlagSet(this._layerMask, potential.physicsLayer.value))
+                    continue;
+                // TODO: rayIntersects的性能够吗?需要测试它。Collisions.rectToLine可能更快
+                // TODO: 如果边界检查返回更多数据，我们就不需要为BoxCollider检查做任何事情
+                // 在做形状测试之前先做一个边界检查
+                var colliderBounds = potential.bounds.clone();
+                if (colliderBounds.rayIntersects(this._ray, fraction) && fraction.value <= 1) {
+                    if (potential.shape.collidesWithLine(this._ray.start, this._ray.end, this._tempHit)) {
+                        // 检查一下，我们应该排除这些射线，射线cast是否在碰撞器中开始
+                        if (!es.Physics.raycastsStartInColliders && potential.shape.containsPoint(this._ray.start))
+                            continue;
+                        // TODO: 确保碰撞点在当前单元格中，如果它没有保存它以供以后计算
+                        this._tempHit.collider = potential;
+                        this._cellHits.push(this._tempHit);
+                    }
+                }
+            }
+            if (this._cellHits.length == 0)
+                return false;
+            // 所有处理单元完成。对结果进行排序并将命中结果打包到结果数组中
+            this._cellHits.sort(RaycastResultParser.compareRaycastHits);
+            for (var i = 0; i < this._cellHits.length; i++) {
+                this._hits[this.hitCounter] = this._cellHits[i];
+                // 增加命中计数器，如果它已经达到数组大小的限制，我们就完成了
+                this.hitCounter++;
+                if (this.hitCounter == this._hits.length)
+                    return true;
+            }
+            return false;
+        };
+        RaycastResultParser.prototype.reset = function () {
+            this._hits = null;
+            this._checkedColliders.length = 0;
+            this._cellHits.length = 0;
+        };
+        RaycastResultParser.compareRaycastHits = function (a, b) {
+            return a.distance - b.distance;
+        };
+        return RaycastResultParser;
+    }());
+    es.RaycastResultParser = RaycastResultParser;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Shape = /** @class */ (function () {
         function Shape() {
         }
-        Shape.prototype.clone = function () {
-            return ObjectUtils.clone(this);
-        };
         return Shape;
     }());
     es.Shape = Shape;
 })(es || (es = {}));
+///<reference path="./Shape.ts" />
 var es;
+///<reference path="./Shape.ts" />
 (function (es) {
-    var Polygon = (function (_super) {
+    /**
+     * 多边形
+     */
+    var Polygon = /** @class */ (function (_super) {
         __extends(Polygon, _super);
+        /**
+         * 从点构造一个多边形
+         * 多边形应该以顺时针方式指定 不能重复第一个/最后一个点，它们以0 0为中心
+         * @param points
+         * @param isBox
+         */
         function Polygon(points, isBox) {
             var _this = _super.call(this) || this;
             _this._areEdgeNormalsDirty = true;
@@ -6637,6 +7305,10 @@ var es;
             return _this;
         }
         Object.defineProperty(Polygon.prototype, "edgeNormals", {
+            /**
+             * 边缘法线用于SAT碰撞检测。缓存它们用于避免squareRoots
+             * box只有两个边缘 因为其他两边是平行的
+             */
             get: function () {
                 if (this._areEdgeNormalsDirty)
                     this.buildEdgeNormals();
@@ -6645,21 +7317,31 @@ var es;
             enumerable: true,
             configurable: true
         });
+        /**
+         * 重置点并重新计算中心和边缘法线
+         * @param points
+         */
         Polygon.prototype.setPoints = function (points) {
             this.points = points;
             this.recalculateCenterAndEdgeNormals();
-            this._originalPoints = [];
-            for (var i = 0; i < this.points.length; i++) {
-                this._originalPoints.push(this.points[i]);
-            }
+            this._originalPoints = this.points.slice();
         };
+        /**
+         * 重新计算多边形中心
+         * 如果点数改变必须调用该方法
+         */
         Polygon.prototype.recalculateCenterAndEdgeNormals = function () {
             this._polygonCenter = Polygon.findPolygonCenter(this.points);
             this._areEdgeNormalsDirty = true;
         };
+        /**
+         * 建立多边形边缘法线
+         * 它们仅由edgeNormals getter惰性创建和更新
+         */
         Polygon.prototype.buildEdgeNormals = function () {
+            // 对于box 我们只需要两条边，因为另外两条边是平行的
             var totalEdges = this.isBox ? 2 : this.points.length;
-            if (this._edgeNormals == null || this._edgeNormals.length != totalEdges)
+            if (this._edgeNormals == undefined || this._edgeNormals.length != totalEdges)
                 this._edgeNormals = new Array(totalEdges);
             var p2;
             for (var i = 0; i < totalEdges; i++) {
@@ -6669,23 +7351,36 @@ var es;
                 else
                     p2 = this.points[i + 1];
                 var perp = es.Vector2Ext.perpendicular(p1, p2);
-                perp = es.Vector2.normalize(perp);
+                es.Vector2Ext.normalize(perp);
                 this._edgeNormals[i] = perp;
             }
         };
+        /**
+         * 建立一个对称的多边形(六边形，八角形，n角形)并返回点
+         * @param vertCount
+         * @param radius
+         */
         Polygon.buildSymmetricalPolygon = function (vertCount, radius) {
             var verts = new Array(vertCount);
             for (var i = 0; i < vertCount; i++) {
                 var a = 2 * Math.PI * (i / vertCount);
-                verts[i] = es.Vector2.multiply(new es.Vector2(Math.cos(a), Math.sin(a)), new es.Vector2(radius));
+                verts[i] = new es.Vector2(Math.cos(a) * radius, Math.sin(a) * radius);
             }
             return verts;
         };
+        /**
+         * 重定位多边形的点
+         * @param points
+         */
         Polygon.recenterPolygonVerts = function (points) {
             var center = this.findPolygonCenter(points);
             for (var i = 0; i < points.length; i++)
                 points[i] = es.Vector2.subtract(points[i], center);
         };
+        /**
+         * 找到多边形的中心。注意，这对于正则多边形是准确的。不规则多边形没有中心。
+         * @param points
+         */
         Polygon.findPolygonCenter = function (points) {
             var x = 0, y = 0;
             for (var i = 0; i < points.length; i++) {
@@ -6694,6 +7389,11 @@ var es;
             }
             return new es.Vector2(x / points.length, y / points.length);
         };
+        /**
+         * 不知道辅助顶点，所以取每个顶点，如果你知道辅助顶点，执行climbing算法
+         * @param points
+         * @param direction
+         */
         Polygon.getFarthestPointInDirection = function (points, direction) {
             var index = 0;
             var maxDot = es.Vector2.dot(points[index], direction);
@@ -6706,65 +7406,89 @@ var es;
             }
             return points[index];
         };
+        /**
+         * 迭代多边形的所有边，并得到任意边上离点最近的点。
+         * 通过最近点的平方距离和它所在的边的法线返回。
+         * 点应该在多边形的空间中(点-多边形.位置)
+         * @param points
+         * @param point
+         * @param distanceSquared
+         * @param edgeNormal
+         */
         Polygon.getClosestPointOnPolygonToPoint = function (points, point, distanceSquared, edgeNormal) {
-            distanceSquared = Number.MAX_VALUE;
-            edgeNormal = new es.Vector2(0, 0);
-            var closestPoint = new es.Vector2(0, 0);
-            var tempDistanceSquared;
+            distanceSquared.value = Number.MAX_VALUE;
+            edgeNormal.x = 0;
+            edgeNormal.y = 0;
+            var closestPoint = es.Vector2.zero;
+            var tempDistanceSquared = 0;
             for (var i = 0; i < points.length; i++) {
                 var j = i + 1;
                 if (j == points.length)
                     j = 0;
                 var closest = es.ShapeCollisions.closestPointOnLine(points[i], points[j], point);
                 tempDistanceSquared = es.Vector2.distanceSquared(point, closest);
-                if (tempDistanceSquared < distanceSquared) {
-                    distanceSquared = tempDistanceSquared;
+                if (tempDistanceSquared < distanceSquared.value) {
+                    distanceSquared.value = tempDistanceSquared;
                     closestPoint = closest;
+                    // 求直线的法线
                     var line = es.Vector2.subtract(points[j], points[i]);
-                    edgeNormal = new es.Vector2(-line.y, line.x);
+                    edgeNormal.x = -line.y;
+                    edgeNormal.y = line.x;
                 }
             }
             es.Vector2Ext.normalize(edgeNormal);
             return closestPoint;
         };
+        /**
+         * 旋转原始点并复制旋转的值到旋转的点
+         * @param radians
+         * @param originalPoints
+         * @param rotatedPoints
+         */
         Polygon.rotatePolygonVerts = function (radians, originalPoints, rotatedPoints) {
             var cos = Math.cos(radians);
-            var sin = Math.sign(radians);
+            var sin = Math.sin(radians);
             for (var i = 0; i < originalPoints.length; i++) {
                 var position = originalPoints[i];
                 rotatedPoints[i] = new es.Vector2(position.x * cos + position.y * -sin, position.x * sin + position.y * cos);
             }
         };
         Polygon.prototype.recalculateBounds = function (collider) {
-            this.center = collider.localOffset;
+            // 如果我们没有旋转或不关心TRS我们使用localOffset作为中心，我们会从那开始
+            this.center = collider.localOffset.clone();
             if (collider.shouldColliderScaleAndRotateWithTransform) {
                 var hasUnitScale = true;
                 var tempMat = void 0;
-                var combinedMatrix = es.Matrix2D.create().translate(-this._polygonCenter.x, -this._polygonCenter.y);
-                if (collider.entity.transform.scale != es.Vector2.zero) {
-                    tempMat = es.Matrix2D.create().scale(collider.entity.transform.scale.x, collider.entity.transform.scale.y);
+                var combinedMatrix = es.Matrix2D.createTranslation(-this._polygonCenter.x, -this._polygonCenter.y);
+                if (!collider.entity.transform.scale.equals(es.Vector2.one)) {
+                    tempMat = es.Matrix2D.createScale(collider.entity.transform.scale.x, collider.entity.transform.scale.y);
                     combinedMatrix = combinedMatrix.multiply(tempMat);
                     hasUnitScale = false;
+                    // 缩放偏移量并将其设置为中心。如果我们有旋转，它会在下面重置
                     this.center = es.Vector2.multiply(collider.localOffset, collider.entity.transform.scale);
                 }
                 if (collider.entity.transform.rotation != 0) {
-                    tempMat = es.Matrix2D.create().rotate(collider.entity.transform.rotation);
+                    tempMat = es.Matrix2D.createRotation(collider.entity.transform.rotation);
                     combinedMatrix = combinedMatrix.multiply(tempMat);
-                    var offsetAngle = Math.atan2(collider.localOffset.y, collider.localOffset.x) * es.MathHelper.Rad2Deg;
+                    // 为了处理偏移原点的旋转我们只需要将圆心在(0,0)附近移动
+                    // 我们的偏移使角度为0我们还需要处理这里的比例所以我们先对偏移进行缩放以得到合适的长度。
+                    var offsetAngle = Math.atan2(collider.localOffset.y * collider.entity.transform.scale.y, collider.localOffset.x * collider.entity.transform.scale.x) * es.MathHelper.Rad2Deg;
                     var offsetLength = hasUnitScale ? collider._localOffsetLength :
                         es.Vector2.multiply(collider.localOffset, collider.entity.transform.scale).length();
-                    this.center = es.MathHelper.pointOnCirlce(es.Vector2.zero, offsetLength, collider.entity.transform.rotation + offsetAngle);
+                    this.center = es.MathHelper.pointOnCirlce(es.Vector2.zero, offsetLength, collider.entity.transform.rotationDegrees + offsetAngle);
                 }
-                tempMat = es.Matrix2D.create().translate(this._polygonCenter.x, this._polygonCenter.y);
+                tempMat = es.Matrix2D.createTranslation(this._polygonCenter.x, this._polygonCenter.y);
                 combinedMatrix = combinedMatrix.multiply(tempMat);
+                // 最后变换原始点
                 es.Vector2Ext.transform(this._originalPoints, combinedMatrix, this.points);
                 this.isUnrotated = collider.entity.transform.rotation == 0;
+                // 如果旋转的话，我们只需要重建边的法线
                 if (collider._isRotationDirty)
                     this._areEdgeNormalsDirty = true;
             }
             this.position = es.Vector2.add(collider.entity.transform.position, this.center);
             this.bounds = es.Rectangle.rectEncompassingPoints(this.points);
-            this.bounds.location = this.bounds.location.add(this.position);
+            this.bounds.location = es.Vector2.add(this.bounds.location, this.position);
         };
         Polygon.prototype.overlaps = function (other) {
             var result = new es.CollisionResult();
@@ -6795,8 +7519,14 @@ var es;
         Polygon.prototype.collidesWithLine = function (start, end, hit) {
             return es.ShapeCollisions.lineToPoly(start, end, this, hit);
         };
+        /**
+         * 本质上，这个算法所做的就是从一个点发射一条射线。
+         * 如果它与奇数条多边形边相交，我们就知道它在多边形内部。
+         * @param point
+         */
         Polygon.prototype.containsPoint = function (point) {
-            point = es.Vector2.subtract(point, this.position);
+            // 将点归一化到多边形坐标空间中
+            point.subtract(this.position);
             var isInside = false;
             for (var i = 0, j = this.points.length - 1; i < this.points.length; j = i++) {
                 if (((this.points[i].y > point.y) != (this.points[j].y > point.y)) &&
@@ -6814,9 +7544,14 @@ var es;
     }(es.Shape));
     es.Polygon = Polygon;
 })(es || (es = {}));
+///<reference path="./Polygon.ts" />
 var es;
+///<reference path="./Polygon.ts" />
 (function (es) {
-    var Box = (function (_super) {
+    /**
+     * 多边形的特殊情况。在进行SAT碰撞检查时，我们只需要检查2个轴而不是8个轴
+     */
+    var Box = /** @class */ (function (_super) {
         __extends(Box, _super);
         function Box(width, height) {
             var _this = _super.call(this, Box.buildBox(width, height), true) || this;
@@ -6824,7 +7559,13 @@ var es;
             _this.height = height;
             return _this;
         }
+        /**
+         * 在一个盒子的形状中建立多边形需要的点的帮助方法
+         * @param width
+         * @param height
+         */
         Box.buildBox = function (width, height) {
+            // 我们在(0,0)的中心周围创建点
             var halfWidth = width / 2;
             var halfHeight = height / 2;
             var verts = new Array(4);
@@ -6834,9 +7575,15 @@ var es;
             verts[3] = new es.Vector2(-halfWidth, halfHeight);
             return verts;
         };
+        /**
+         * 更新框点，重新计算中心，设置宽度/高度
+         * @param width
+         * @param height
+         */
         Box.prototype.updateBox = function (width, height) {
             this.width = width;
             this.height = height;
+            // 我们在(0,0)的中心周围创建点
             var halfWidth = width / 2;
             var halfHeight = height / 2;
             this.points[0] = new es.Vector2(-halfWidth, -halfHeight);
@@ -6847,18 +7594,21 @@ var es;
                 this._originalPoints[i] = this.points[i];
         };
         Box.prototype.overlaps = function (other) {
+            // 特殊情况，这一个高性能方式实现，其他情况则使用polygon方法检测
             if (this.isUnrotated) {
                 if (other instanceof Box && other.isUnrotated)
                     return this.bounds.intersects(other.bounds);
                 if (other instanceof es.Circle)
-                    return es.Collisions.isRectToCircle(this.bounds, other.position, other.radius);
+                    return es.Collisions.rectToCircle(this.bounds, other.position, other.radius);
             }
             return _super.prototype.overlaps.call(this, other);
         };
         Box.prototype.collidesWithShape = function (other, result) {
+            // 特殊情况，这一个高性能方式实现，其他情况则使用polygon方法检测
             if (other instanceof Box && other.isUnrotated) {
                 return es.ShapeCollisions.boxToBox(this, other, result);
             }
+            // TODO: 让 minkowski 运行于 cricleToBox
             return _super.prototype.collidesWithShape.call(this, other, result);
         };
         Box.prototype.containsPoint = function (point) {
@@ -6875,9 +7625,11 @@ var es;
     }(es.Polygon));
     es.Box = Box;
 })(es || (es = {}));
+///<reference path="./Shape.ts" />
 var es;
+///<reference path="./Shape.ts" />
 (function (es) {
-    var Circle = (function (_super) {
+    var Circle = /** @class */ (function (_super) {
         __extends(Circle, _super);
         function Circle(radius) {
             var _this = _super.call(this) || this;
@@ -6886,27 +7638,30 @@ var es;
             return _this;
         }
         Circle.prototype.recalculateBounds = function (collider) {
+            // 如果我们没有旋转或不关心TRS我们使用localOffset作为中心
             this.center = collider.localOffset;
             if (collider.shouldColliderScaleAndRotateWithTransform) {
+                // 我们只将直线缩放为一个圆，所以我们将使用最大值
                 var scale = collider.entity.transform.scale;
                 var hasUnitScale = scale.x == 1 && scale.y == 1;
                 var maxScale = Math.max(scale.x, scale.y);
                 this.radius = this._originalRadius * maxScale;
                 if (collider.entity.transform.rotation != 0) {
+                    // 为了处理偏移原点的旋转，我们只需要将圆心围绕(0,0)在一个圆上移动，我们的偏移量就是0角
                     var offsetAngle = Math.atan2(collider.localOffset.y, collider.localOffset.x) * es.MathHelper.Rad2Deg;
                     var offsetLength = hasUnitScale ? collider._localOffsetLength : es.Vector2.multiply(collider.localOffset, collider.entity.transform.scale).length();
-                    this.center = es.MathHelper.pointOnCirlce(es.Vector2.zero, offsetLength, collider.entity.transform.rotation + offsetAngle);
+                    this.center = es.MathHelper.pointOnCirlce(es.Vector2.zero, offsetLength, collider.entity.transform.rotationDegrees + offsetAngle);
                 }
             }
-            this.position = es.Vector2.add(collider.transform.position, this.center);
+            this.position = es.Vector2.add(collider.entity.transform.position, this.center);
             this.bounds = new es.Rectangle(this.position.x - this.radius, this.position.y - this.radius, this.radius * 2, this.radius * 2);
         };
         Circle.prototype.overlaps = function (other) {
             var result = new es.CollisionResult();
             if (other instanceof es.Box && other.isUnrotated)
-                return es.Collisions.isRectToCircle(other.bounds, this.position, this.radius);
+                return es.Collisions.rectToCircle(other.bounds, this.position, this.radius);
             if (other instanceof Circle)
-                return es.Collisions.isCircleToCircle(this.position, this.radius, other.position, other.radius);
+                return es.Collisions.circleToCircle(this.position, this.radius, other.position, other.radius);
             if (other instanceof es.Polygon)
                 return es.ShapeCollisions.circleToPolygon(this, other, result);
             throw new Error("overlaps of circle to " + other + " are not supported");
@@ -6926,6 +7681,10 @@ var es;
         Circle.prototype.collidesWithLine = function (start, end, hit) {
             return es.ShapeCollisions.lineToCircle(start, end, this, hit);
         };
+        /**
+         * 获取所提供的点是否在此范围内
+         * @param point
+         */
         Circle.prototype.containsPoint = function (point) {
             return (es.Vector2.subtract(point, this.position)).lengthSquared() <= this.radius * this.radius;
         };
@@ -6938,16 +7697,31 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var CollisionResult = (function () {
+    var CollisionResult = /** @class */ (function () {
         function CollisionResult() {
+            /**
+             * 被形状击中的表面的法向量
+             */
             this.normal = es.Vector2.zero;
+            /**
+             * 应用于第一个形状以推入形状的转换
+             */
             this.minimumTranslationVector = es.Vector2.zero;
+            /**
+             * 不是所有冲突类型都使用!在依赖这个字段之前，请检查ShapeCollisions切割类!
+             */
             this.point = es.Vector2.zero;
         }
+        /**
+         * 改变最小平移向量，如果没有相同方向上的运动，它将移除平移的x分量。
+         * @param deltaMovement
+         */
         CollisionResult.prototype.removeHorizontal = function (deltaMovement) {
+            // 检查是否需要横向移动，如果需要，移除并固定响应
             if (Math.sign(this.normal.x) != Math.sign(deltaMovement.x) || (deltaMovement.x == 0 && this.normal.x != 0)) {
                 var responseDistance = this.minimumTranslationVector.length();
                 var fix = responseDistance / this.normal.y;
+                // 检查一些边界情况。因为我们除以法线 使得x == 1和一个非常小的y这将导致一个巨大的固定值
                 if (Math.abs(this.normal.x) != 1 && Math.abs(fix) < Math.abs(deltaMovement.y * 3)) {
                     this.minimumTranslationVector = new es.Vector2(0, -fix);
                 }
@@ -6967,17 +7741,20 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var RealtimeCollisions = (function () {
+    var RealtimeCollisions = /** @class */ (function () {
         function RealtimeCollisions() {
         }
-        RealtimeCollisions.intersectMovingCircleToBox = function (s, b, movement) {
-            var e = b.bounds;
+        RealtimeCollisions.intersectMovingCircleBox = function (s, b, movement, time) {
+            // 计算将b按球面半径r扩大后的AABB
+            var e = b.bounds.clone();
             e.inflate(s.radius, s.radius);
+            // 将射线与展开的矩形e相交，如果射线错过了e，则以无交点退出，否则得到交点p和时间t作为结果。
             var ray = new es.Ray2D(es.Vector2.subtract(s.position, movement), s.position);
-            var time = e.rayIntersects(ray);
-            if (time > 1)
-                return time;
-            var point = es.Vector2.add(ray.start, es.Vector2.add(ray.direction, new es.Vector2(time)));
+            if (!e.rayIntersects(ray, time) && time.value > 1)
+                return false;
+            // 求交点
+            var point = es.Vector2.add(ray.start, es.Vector2.multiply(ray.direction, new es.Vector2(time.value)));
+            // 计算交点p位于b的哪个最小面和最大面之外。注意，u和v不能有相同的位集，它们之间必须至少有一个位集。
             var u, v = 0;
             if (point.x < b.bounds.left)
                 u |= 1;
@@ -6987,14 +7764,45 @@ var es;
                 u |= 2;
             if (point.y > b.bounds.bottom)
                 v |= 2;
+            // 'or'将所有的比特集合在一起，形成一个比特掩码(注意u + v == u | v)
             var m = u + v;
+            // 如果这3个比特都被设置，那么该点就在顶点区域内。
             if (m == 3) {
+                // 如果有一条或多条命中,则必须在两条边的顶点相交,并返回最佳时间。
                 console.log("m == 3. corner " + es.Time.frameCount);
             }
+            // 如果在m中只设置了一个位，那么该点就在一个面的区域。
             if ((m & (m - 1)) == 0) {
-                return time;
+                // 从扩大的矩形交点开始的时间就是正确的时间
+                return true;
             }
-            return time;
+            // 点在边缘区域，与边缘相交。
+            return true;
+        };
+        /**
+         * 支持函数，返回索引为n的矩形vert
+         * @param b
+         * @param n
+         */
+        RealtimeCollisions.corner = function (b, n) {
+            var p = new es.Vector2();
+            p.x = (n & 1) == 0 ? b.right : b.left;
+            p.y = (n & 1) == 0 ? b.bottom : b.top;
+            return p;
+        };
+        /**
+         * 检查圆是否与方框重叠，并返回point交点
+         * @param cirlce
+         * @param box
+         * @param point
+         */
+        RealtimeCollisions.testCircleBox = function (cirlce, box, point) {
+            // 找出离球心最近的点
+            point = box.bounds.getClosestPointOnRectangleToPoint(cirlce.position);
+            // 圆和方块相交，如果圆心到点的距离小于圆的半径，则圆和方块相交
+            var v = es.Vector2.subtract(point, cirlce.position);
+            var dist = es.Vector2.dot(v, v);
+            return dist <= cirlce.radius * cirlce.radius;
         };
         return RealtimeCollisions;
     }());
@@ -7002,107 +7810,163 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var ShapeCollisions = (function () {
+    /**
+     * 各种形状的碰撞例程
+     * 大多数人都希望第一个形状位于第二个形状的空间内(即shape1)
+     * pos应该设置为shape1。pos - shape2.pos)。
+     */
+    var ShapeCollisions = /** @class */ (function () {
         function ShapeCollisions() {
         }
+        /**
+         * 检查两个多边形之间的碰撞
+         * @param first
+         * @param second
+         * @param result
+         */
         ShapeCollisions.polygonToPolygon = function (first, second, result) {
             var isIntersecting = true;
-            var firstEdges = first.edgeNormals;
-            var secondEdges = second.edgeNormals;
+            var firstEdges = first.edgeNormals.slice();
+            var secondEdges = second.edgeNormals.slice();
             var minIntervalDistance = Number.POSITIVE_INFINITY;
             var translationAxis = new es.Vector2();
             var polygonOffset = es.Vector2.subtract(first.position, second.position);
             var axis;
+            // 循环穿过两个多边形的所有边
             for (var edgeIndex = 0; edgeIndex < firstEdges.length + secondEdges.length; edgeIndex++) {
+                // 1. 找出当前多边形是否相交
+                // 多边形的归一化轴垂直于缓存给我们的当前边
                 if (edgeIndex < firstEdges.length) {
                     axis = firstEdges[edgeIndex];
                 }
                 else {
                     axis = secondEdges[edgeIndex - firstEdges.length];
                 }
-                var minA = 0;
-                var minB = 0;
-                var maxA = 0;
-                var maxB = 0;
+                // 求多边形在当前轴上的投影
+                var minA = new es.Ref(0);
+                var minB = new es.Ref(0);
+                var maxA = new es.Ref(0);
+                var maxB = new es.Ref(0);
                 var intervalDist = 0;
-                var ta = this.getInterval(axis, first, minA, maxA);
-                minA = ta.min;
-                minB = ta.max;
-                var tb = this.getInterval(axis, second, minB, maxB);
-                minB = tb.min;
-                maxB = tb.max;
+                this.getInterval(axis, first, minA, maxA);
+                this.getInterval(axis, second, minB, maxB);
+                // 将区间设为第二个多边形的空间。由轴上投影的位置差偏移。
                 var relativeIntervalOffset = es.Vector2.dot(polygonOffset, axis);
-                minA += relativeIntervalOffset;
-                maxA += relativeIntervalOffset;
-                intervalDist = this.intervalDistance(minA, maxA, minB, maxB);
+                minA.value += relativeIntervalOffset;
+                maxA.value += relativeIntervalOffset;
+                // 检查多边形投影是否正在相交
+                intervalDist = this.intervalDistance(minA.value, maxA.value, minB.value, maxB.value);
                 if (intervalDist > 0)
                     isIntersecting = false;
+                // 对于多对多数据类型转换，添加一个Vector2?参数称为deltaMovement。为了提高速度，我们这里不使用它
+                // TODO: 现在找出多边形是否会相交。只要检查速度就行了
+                // 如果多边形不相交，也不会相交，退出循环
                 if (!isIntersecting)
                     return false;
+                // 检查当前间隔距离是否为最小值。如果是，则存储间隔距离和当前距离。这将用于计算最小平移向量
                 intervalDist = Math.abs(intervalDist);
                 if (intervalDist < minIntervalDistance) {
                     minIntervalDistance = intervalDist;
                     translationAxis = axis;
                     if (es.Vector2.dot(translationAxis, polygonOffset) < 0)
-                        translationAxis = new es.Vector2(-translationAxis);
+                        translationAxis = new es.Vector2(-translationAxis.x, -translationAxis.y);
                 }
             }
+            // 利用最小平移向量对多边形进行推入。
             result.normal = translationAxis;
-            result.minimumTranslationVector = es.Vector2.multiply(new es.Vector2(-translationAxis.x, -translationAxis.y), new es.Vector2(minIntervalDistance));
+            result.minimumTranslationVector = new es.Vector2(-translationAxis.x * minIntervalDistance, -translationAxis.y * minIntervalDistance);
             return true;
         };
+        /**
+         * 计算[minA, maxA]和[minB, maxB]之间的距离。如果间隔重叠，距离是负的
+         * @param minA
+         * @param maxA
+         * @param minB
+         * @param maxB
+         */
         ShapeCollisions.intervalDistance = function (minA, maxA, minB, maxB) {
             if (minA < minB)
                 return minB - maxA;
-            return minA - minB;
+            return minA - maxB;
         };
+        /**
+         * 计算一个多边形在一个轴上的投影，并返回一个[min，max]区间
+         * @param axis
+         * @param polygon
+         * @param min
+         * @param max
+         */
         ShapeCollisions.getInterval = function (axis, polygon, min, max) {
             var dot = es.Vector2.dot(polygon.points[0], axis);
-            min = max = dot;
+            min.value = max.value = dot;
             for (var i = 1; i < polygon.points.length; i++) {
                 dot = es.Vector2.dot(polygon.points[i], axis);
-                if (dot < min) {
-                    min = dot;
+                if (dot < min.value) {
+                    min.value = dot;
                 }
-                else if (dot > max) {
-                    max = dot;
+                else if (dot > max.value) {
+                    max.value = dot;
                 }
             }
-            return { min: min, max: max };
         };
+        /**
+         *
+         * @param circle
+         * @param polygon
+         * @param result
+         */
         ShapeCollisions.circleToPolygon = function (circle, polygon, result) {
+            if (result === void 0) { result = new es.CollisionResult(); }
+            // 圆圈在多边形中的位置坐标
             var poly2Circle = es.Vector2.subtract(circle.position, polygon.position);
-            var distanceSquared = 0;
+            // 首先，我们需要找到从圆到多边形的最近距离
+            var distanceSquared = new es.Ref(0);
             var closestPoint = es.Polygon.getClosestPointOnPolygonToPoint(polygon.points, poly2Circle, distanceSquared, result.normal);
+            // 确保距离的平方小于半径的平方，否则我们不会相撞。
+            // 请注意，如果圆完全包含在多边形中，距离可能大于半径。
+            // 正因为如此，我们还要确保圆的位置不在多边形内。
             var circleCenterInsidePoly = polygon.containsPoint(circle.position);
-            if (distanceSquared > circle.radius * circle.radius && !circleCenterInsidePoly)
+            if (distanceSquared.value > circle.radius * circle.radius && !circleCenterInsidePoly)
                 return false;
+            // 算出MTV。我们要注意处理完全包含在多边形中的圆或包含其中心的圆
             var mtv;
             if (circleCenterInsidePoly) {
-                mtv = es.Vector2.multiply(result.normal, new es.Vector2(Math.sqrt(distanceSquared) - circle.radius));
+                mtv = es.Vector2.multiply(result.normal, new es.Vector2(Math.sqrt(distanceSquared.value) - circle.radius));
             }
             else {
-                if (distanceSquared == 0) {
-                    mtv = es.Vector2.multiply(result.normal, new es.Vector2(circle.radius));
+                // 如果我们没有距离，这意味着圆心在多边形的边缘上。只需根据它的半径移动它
+                if (distanceSquared.value == 0) {
+                    mtv = new es.Vector2(result.normal.x * circle.radius, result.normal.y * circle.radius);
                 }
                 else {
-                    var distance = Math.sqrt(distanceSquared);
-                    mtv = es.Vector2.multiply(new es.Vector2(-es.Vector2.subtract(poly2Circle, closestPoint)), new es.Vector2((circle.radius - distanceSquared) / distance));
+                    var distance = Math.sqrt(distanceSquared.value);
+                    mtv = es.Vector2.subtract(new es.Vector2(-1), es.Vector2.subtract(poly2Circle, closestPoint))
+                        .multiply(new es.Vector2((circle.radius - distance) / distance));
                 }
             }
             result.minimumTranslationVector = mtv;
             result.point = es.Vector2.add(closestPoint, polygon.position);
             return true;
         };
+        /**
+         * 适用于中心在框内的圆，也适用于与框外中心重合的圆。
+         * @param circle
+         * @param box
+         * @param result
+         */
         ShapeCollisions.circleToBox = function (circle, box, result) {
+            if (result === void 0) { result = new es.CollisionResult(); }
             var closestPointOnBounds = box.bounds.getClosestPointOnRectangleBorderToPoint(circle.position, result.normal);
+            // 先处理中心在盒子里的圆，如果我们是包含的, 它的成本更低，
             if (box.containsPoint(circle.position)) {
-                result.point = closestPointOnBounds;
+                result.point = closestPointOnBounds.clone();
+                // 计算MTV。找出安全的、非碰撞的位置，并从中得到MTV
                 var safePlace = es.Vector2.add(closestPointOnBounds, es.Vector2.multiply(result.normal, new es.Vector2(circle.radius)));
                 result.minimumTranslationVector = es.Vector2.subtract(circle.position, safePlace);
                 return true;
             }
             var sqrDistance = es.Vector2.distanceSquared(closestPointOnBounds, circle.position);
+            // 看框上的点距圆的半径是否小于圆的半径
             if (sqrDistance == 0) {
                 result.minimumTranslationVector = es.Vector2.multiply(result.normal, new es.Vector2(circle.radius));
             }
@@ -7110,12 +7974,18 @@ var es;
                 result.normal = es.Vector2.subtract(circle.position, closestPointOnBounds);
                 var depth = result.normal.length() - circle.radius;
                 result.point = closestPointOnBounds;
-                result.normal = es.Vector2Ext.normalize(result.normal);
+                es.Vector2Ext.normalize(result.normal);
                 result.minimumTranslationVector = es.Vector2.multiply(new es.Vector2(depth), result.normal);
                 return true;
             }
             return false;
         };
+        /**
+         *
+         * @param point
+         * @param circle
+         * @param result
+         */
         ShapeCollisions.pointToCircle = function (point, circle, result) {
             var distanceSquared = es.Vector2.distanceSquared(point, circle.position);
             var sumOfRadii = 1 + circle.radius;
@@ -7131,30 +8001,50 @@ var es;
         };
         ShapeCollisions.pointToBox = function (point, box, result) {
             if (box.containsPoint(point)) {
+                // 在方框的空间里找到点
                 result.point = box.bounds.getClosestPointOnRectangleBorderToPoint(point, result.normal);
                 result.minimumTranslationVector = es.Vector2.subtract(point, result.point);
                 return true;
             }
             return false;
         };
+        /**
+         *
+         * @param lineA
+         * @param lineB
+         * @param closestTo
+         */
         ShapeCollisions.closestPointOnLine = function (lineA, lineB, closestTo) {
             var v = es.Vector2.subtract(lineB, lineA);
             var w = es.Vector2.subtract(closestTo, lineA);
             var t = es.Vector2.dot(w, v) / es.Vector2.dot(v, v);
             t = es.MathHelper.clamp(t, 0, 1);
-            return es.Vector2.add(lineA, es.Vector2.multiply(v, new es.Vector2(t, t)));
+            return es.Vector2.add(lineA, es.Vector2.multiply(v, new es.Vector2(t)));
         };
+        /**
+         *
+         * @param point
+         * @param poly
+         * @param result
+         */
         ShapeCollisions.pointToPoly = function (point, poly, result) {
             if (poly.containsPoint(point)) {
-                var distanceSquared = 0;
+                var distanceSquared = new es.Ref(0);
                 var closestPoint = es.Polygon.getClosestPointOnPolygonToPoint(poly.points, es.Vector2.subtract(point, poly.position), distanceSquared, result.normal);
-                result.minimumTranslationVector = es.Vector2.multiply(result.normal, new es.Vector2(Math.sqrt(distanceSquared), Math.sqrt(distanceSquared)));
+                result.minimumTranslationVector = new es.Vector2(result.normal.x * Math.sqrt(distanceSquared.value), result.normal.y * Math.sqrt(distanceSquared.value));
                 result.point = es.Vector2.add(closestPoint, poly.position);
                 return true;
             }
             return false;
         };
+        /**
+         *
+         * @param first
+         * @param second
+         * @param result
+         */
         ShapeCollisions.circleToCircle = function (first, second, result) {
+            if (result === void 0) { result = new es.CollisionResult(); }
             var distanceSquared = es.Vector2.distanceSquared(first.position, second.position);
             var sumOfRadii = first.radius + second.radius;
             var collided = distanceSquared < sumOfRadii * sumOfRadii;
@@ -7163,29 +8053,43 @@ var es;
                 var depth = sumOfRadii - Math.sqrt(distanceSquared);
                 result.minimumTranslationVector = es.Vector2.multiply(new es.Vector2(-depth), result.normal);
                 result.point = es.Vector2.add(second.position, es.Vector2.multiply(result.normal, new es.Vector2(second.radius)));
+                // 这可以得到实际的碰撞点，可能有用也可能没用，所以我们暂时把它留在这里
+                // let collisionPointX = ((first.position.x * second.radius) + (second.position.x * first.radius)) / sumOfRadii;
+                // let collisionPointY = ((first.position.y * second.radius) + (second.position.y * first.radius)) / sumOfRadii;
+                // result.point = new Vector2(collisionPointX, collisionPointY);
                 return true;
             }
             return false;
         };
+        /**
+         *
+         * @param first
+         * @param second
+         * @param result
+         */
         ShapeCollisions.boxToBox = function (first, second, result) {
             var minkowskiDiff = this.minkowskiDifference(first, second);
             if (minkowskiDiff.contains(0, 0)) {
+                // 计算MTV。如果它是零，我们就可以称它为非碰撞
                 result.minimumTranslationVector = minkowskiDiff.getClosestPointOnBoundsToOrigin();
                 if (result.minimumTranslationVector.equals(es.Vector2.zero))
                     return false;
                 result.normal = new es.Vector2(-result.minimumTranslationVector.x, -result.minimumTranslationVector.y);
-                result.normal = result.normal.normalize();
+                result.normal.normalize();
                 return true;
             }
             return false;
         };
         ShapeCollisions.minkowskiDifference = function (first, second) {
-            var positionOffset = es.Vector2.subtract(first.position, es.Vector2.add(first.bounds.location, es.Vector2.divide(first.bounds.size, new es.Vector2(2))));
+            // 我们需要第一个框的左上角
+            // 碰撞器只会修改运动的位置所以我们需要用位置来计算出运动是什么。
+            var positionOffset = es.Vector2.subtract(first.position, es.Vector2.add(first.bounds.location, new es.Vector2(first.bounds.size.x / 2, first.bounds.size.y / 2)));
             var topLeft = es.Vector2.subtract(es.Vector2.add(first.bounds.location, positionOffset), second.bounds.max);
             var fullSize = es.Vector2.add(first.bounds.size, second.bounds.size);
             return new es.Rectangle(topLeft.x, topLeft.y, fullSize.x, fullSize.y);
         };
         ShapeCollisions.lineToPoly = function (start, end, polygon, hit) {
+            if (hit === void 0) { hit = new es.RaycastHit(); }
             var normal = es.Vector2.zero;
             var intersectionPoint = es.Vector2.zero;
             var fraction = Number.MAX_VALUE;
@@ -7196,6 +8100,8 @@ var es;
                 var intersection = es.Vector2.zero;
                 if (this.lineToLine(edge1, edge2, start, end, intersection)) {
                     hasIntersection = true;
+                    // TODO: 这是得到分数的正确和最有效的方法吗?
+                    // 先检查x分数。如果是NaN，就用y代替
                     var distanceFraction = (intersection.x - start.x) / (end.x - start.x);
                     if (Number.isNaN(distanceFraction) || Number.isFinite(distanceFraction))
                         distanceFraction = (intersection.y - start.y) / (end.y - start.y);
@@ -7208,7 +8114,7 @@ var es;
                 }
             }
             if (hasIntersection) {
-                normal = normal.normalize();
+                normal.normalize();
                 var distance = es.Vector2.distance(start, intersectionPoint);
                 hit.setValuesNonCollider(fraction, distance, intersectionPoint, normal);
                 return true;
@@ -7219,6 +8125,7 @@ var es;
             var b = es.Vector2.subtract(a2, a1);
             var d = es.Vector2.subtract(b2, b1);
             var bDotDPerp = b.x * d.y - b.y * d.x;
+            // 如果b*d = 0，表示这两条直线平行，因此有无穷个交点
             if (bDotDPerp == 0)
                 return false;
             var c = es.Vector2.subtract(b1, a1);
@@ -7228,21 +8135,26 @@ var es;
             var u = (c.x * b.y - c.y * b.x) / bDotDPerp;
             if (u < 0 || u > 1)
                 return false;
-            intersection = intersection.add(a1).add(es.Vector2.multiply(new es.Vector2(t), b));
+            intersection = es.Vector2.add(a1, es.Vector2.multiply(new es.Vector2(t), b));
             return true;
         };
         ShapeCollisions.lineToCircle = function (start, end, s, hit) {
+            // 计算这里的长度并分别对d进行标准化，因为如果我们命中了我们需要它来得到分数
             var lineLength = es.Vector2.distance(start, end);
             var d = es.Vector2.divide(es.Vector2.subtract(end, start), new es.Vector2(lineLength));
             var m = es.Vector2.subtract(start, s.position);
             var b = es.Vector2.dot(m, d);
             var c = es.Vector2.dot(m, m) - s.radius * s.radius;
+            // 如果r的原点在s之外，(c>0)和r指向s (b>0) 则返回
             if (c > 0 && b > 0)
                 return false;
             var discr = b * b - c;
+            // 线不在圆圈上
             if (discr < 0)
                 return false;
+            // 射线相交圆
             hit.fraction = -b - Math.sqrt(discr);
+            // 如果分数为负数，射线从圈内开始，
             if (hit.fraction < 0)
                 hit.fraction = 0;
             hit.point = es.Vector2.add(start, es.Vector2.multiply(new es.Vector2(hit.fraction), d));
@@ -7251,27 +8163,37 @@ var es;
             hit.fraction = hit.distance / lineLength;
             return true;
         };
+        /**
+         * 用second检查被deltaMovement移动的框的结果
+         * @param first
+         * @param second
+         * @param movement
+         * @param hit
+         */
         ShapeCollisions.boxToBoxCast = function (first, second, movement, hit) {
+            // 首先，我们检查是否有重叠。如果有重叠，我们就不做扫描测试
             var minkowskiDiff = this.minkowskiDifference(first, second);
             if (minkowskiDiff.contains(0, 0)) {
+                // 计算MTV。如果它是零，我们就可以称它为非碰撞
                 var mtv = minkowskiDiff.getClosestPointOnBoundsToOrigin();
                 if (mtv.equals(es.Vector2.zero))
                     return false;
                 hit.normal = new es.Vector2(-mtv.x);
-                hit.normal = hit.normal.normalize();
+                hit.normal.normalize();
                 hit.distance = 0;
                 hit.fraction = 0;
                 return true;
             }
             else {
+                // 射线投射移动矢量
                 var ray = new es.Ray2D(es.Vector2.zero, new es.Vector2(-movement.x));
-                var fraction = minkowskiDiff.rayIntersects(ray);
-                if (fraction <= 1) {
-                    hit.fraction = fraction;
-                    hit.distance = movement.length() * fraction;
-                    hit.normal = new es.Vector2(-movement.x);
-                    hit.normal = hit.normal.normalize();
-                    hit.centroid = es.Vector2.add(first.bounds.center, es.Vector2.multiply(movement, new es.Vector2(fraction)));
+                var fraction = new es.Ref(0);
+                if (minkowskiDiff.rayIntersects(ray, fraction) && fraction.value <= 1) {
+                    hit.fraction = fraction.value;
+                    hit.distance = movement.length() * fraction.value;
+                    hit.normal = new es.Vector2(-movement.x, -movement.y);
+                    hit.normal.normalize();
+                    hit.centroid = es.Vector2.add(first.bounds.center, es.Vector2.multiply(movement, new es.Vector2(fraction.value)));
                     return true;
                 }
             }
@@ -7283,1632 +8205,1611 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var SpatialHash = (function () {
-        function SpatialHash(cellSize) {
-            if (cellSize === void 0) { cellSize = 100; }
-            this.gridBounds = new es.Rectangle();
-            this._overlapTestCircle = new es.Circle(0);
-            this._cellDict = new NumberDictionary();
-            this._tempHashSet = [];
-            this._cellSize = cellSize;
-            this._inverseCellSize = 1 / this._cellSize;
-            this._raycastParser = new RaycastResultParser();
+    var Edge;
+    (function (Edge) {
+        Edge[Edge["top"] = 0] = "top";
+        Edge[Edge["bottom"] = 1] = "bottom";
+        Edge[Edge["left"] = 2] = "left";
+        Edge[Edge["right"] = 3] = "right";
+    })(Edge = es.Edge || (es.Edge = {}));
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Enumerable = /** @class */ (function () {
+        function Enumerable() {
         }
-        SpatialHash.prototype.register = function (collider) {
-            var bounds = collider.bounds;
-            collider.registeredPhysicsBounds = bounds;
-            var p1 = this.cellCoords(bounds.x, bounds.y);
-            var p2 = this.cellCoords(bounds.right, bounds.bottom);
-            if (!this.gridBounds.contains(p1.x, p1.y)) {
-                this.gridBounds = es.RectangleExt.union(this.gridBounds, p1);
+        /**
+         * 生成包含一个重复值的序列
+         * @param element 要重复的值
+         * @param count 在生成的序列中重复该值的次数
+         */
+        Enumerable.repeat = function (element, count) {
+            var result = [];
+            while (count--) {
+                result.push(element);
             }
-            if (!this.gridBounds.contains(p2.x, p2.y)) {
-                this.gridBounds = es.RectangleExt.union(this.gridBounds, p2);
+            return result;
+        };
+        return Enumerable;
+    }());
+    es.Enumerable = Enumerable;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var EqualityComparer = /** @class */ (function () {
+        function EqualityComparer() {
+        }
+        EqualityComparer.default = function () {
+            return new EqualityComparer();
+        };
+        EqualityComparer.prototype.equals = function (x, y) {
+            if (typeof x["equals"] == 'function') {
+                return x["equals"](y);
             }
-            for (var x = p1.x; x <= p2.x; x++) {
-                for (var y = p1.y; y <= p2.y; y++) {
-                    var c = this.cellAtPosition(x, y, true);
-                    if (!c.firstOrDefault(function (c) { return c.hashCode == collider.hashCode; }))
-                        c.push(collider);
-                }
-            }
-        };
-        SpatialHash.prototype.remove = function (collider) {
-            var bounds = collider.registeredPhysicsBounds;
-            var p1 = this.cellCoords(bounds.x, bounds.y);
-            var p2 = this.cellCoords(bounds.right, bounds.bottom);
-            for (var x = p1.x; x <= p2.x; x++) {
-                for (var y = p1.y; y <= p2.y; y++) {
-                    var cell = this.cellAtPosition(x, y);
-                    if (!cell)
-                        console.log("\u4ECE\u4E0D\u5B58\u5728\u78B0\u649E\u5668\u7684\u5355\u5143\u683C\u4E2D\u79FB\u9664\u78B0\u649E\u5668: [" + collider + "]");
-                    else
-                        cell.remove(collider);
-                }
-            }
-        };
-        SpatialHash.prototype.removeWithBruteForce = function (obj) {
-            this._cellDict.remove(obj);
-        };
-        SpatialHash.prototype.clear = function () {
-            this._cellDict.clear();
-        };
-        SpatialHash.prototype.debugDraw = function (secondsToDisplay, textScale) {
-            if (textScale === void 0) { textScale = 1; }
-            for (var x = this.gridBounds.x; x <= this.gridBounds.right; x++) {
-                for (var y = this.gridBounds.y; y <= this.gridBounds.bottom; y++) {
-                    var cell = this.cellAtPosition(x, y);
-                    if (cell && cell.length > 0)
-                        this.debugDrawCellDetails(x, y, cell.length, secondsToDisplay, textScale);
-                }
+            else {
+                return x === y;
             }
         };
-        SpatialHash.prototype.aabbBroadphase = function (bounds, excludeCollider, layerMask) {
-            this._tempHashSet.length = 0;
-            var p1 = this.cellCoords(bounds.x, bounds.y);
-            var p2 = this.cellCoords(bounds.right, bounds.bottom);
-            for (var x = p1.x; x <= p2.x; x++) {
-                for (var y = p1.y; y <= p2.y; y++) {
-                    var cell = this.cellAtPosition(x, y);
-                    if (!cell)
-                        continue;
-                    var _loop_8 = function (i) {
-                        var collider = cell[i];
-                        if (collider == excludeCollider || !es.Flags.isFlagSet(layerMask, collider.physicsLayer))
-                            return "continue";
-                        if (bounds.intersects(collider.bounds)) {
-                            if (!this_4._tempHashSet.firstOrDefault(function (c) { return c.hashCode == collider.hashCode; }))
-                                this_4._tempHashSet.push(collider);
-                        }
-                    };
-                    var this_4 = this;
-                    for (var i = 0; i < cell.length; i++) {
-                        _loop_8(i);
-                    }
-                }
+        EqualityComparer.prototype.getHashCode = function (o) {
+            var _this = this;
+            if (typeof o == 'number') {
+                return this._getHashCodeForNumber(o);
             }
-            return this._tempHashSet;
+            if (typeof o == 'string') {
+                return this._getHashCodeForString(o);
+            }
+            var hashCode = 385229220;
+            this.forOwn(o, function (value) {
+                if (typeof value == 'number') {
+                    hashCode += _this._getHashCodeForNumber(value);
+                }
+                else if (typeof value == 'string') {
+                    hashCode += _this._getHashCodeForString(value);
+                }
+                else if (typeof value == 'object') {
+                    _this.forOwn(value, function () {
+                        hashCode += _this.getHashCode(value);
+                    });
+                }
+            });
+            return hashCode;
         };
-        SpatialHash.prototype.overlapCircle = function (circleCenter, radius, results, layerMask) {
-            var bounds = new es.Rectangle(circleCenter.x - radius, circleCenter.y - radius, radius * 2, radius * 2);
-            this._overlapTestCircle.radius = radius;
-            this._overlapTestCircle.position = circleCenter;
-            var resultCounter = 0;
-            var potentials = this.aabbBroadphase(bounds, null, layerMask);
-            for (var i = 0; i < potentials.length; i++) {
-                var collider = potentials[i];
-                if (collider instanceof es.BoxCollider) {
-                    results[resultCounter] = collider;
-                    resultCounter++;
-                }
-                else if (collider instanceof es.CircleCollider) {
-                    if (collider.shape.overlaps(this._overlapTestCircle)) {
-                        results[resultCounter] = collider;
-                        resultCounter++;
-                    }
-                }
-                else if (collider instanceof es.PolygonCollider) {
-                    if (collider.shape.overlaps(this._overlapTestCircle)) {
-                        results[resultCounter] = collider;
-                        resultCounter++;
-                    }
+        EqualityComparer.prototype._getHashCodeForNumber = function (n) {
+            return n;
+        };
+        EqualityComparer.prototype._getHashCodeForString = function (s) {
+            var hashCode = 385229220;
+            for (var i = 0; i < s.length; i++) {
+                hashCode = (hashCode * -1521134295) ^ s.charCodeAt(i);
+            }
+            return hashCode;
+        };
+        EqualityComparer.prototype.forOwn = function (object, iteratee) {
+            object = Object(object);
+            Object.keys(object).forEach(function (key) { return iteratee(object[key], key, object); });
+        };
+        return EqualityComparer;
+    }());
+    es.EqualityComparer = EqualityComparer;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var GlobalManager = /** @class */ (function () {
+        function GlobalManager() {
+        }
+        Object.defineProperty(GlobalManager.prototype, "enabled", {
+            /**
+             * 如果true则启用了GlobalManager。
+             * 状态的改变会导致调用OnEnabled/OnDisable
+             */
+            get: function () {
+                return this._enabled;
+            },
+            /**
+             * 如果true则启用了GlobalManager。
+             * 状态的改变会导致调用OnEnabled/OnDisable
+             * @param value
+             */
+            set: function (value) {
+                this.setEnabled(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * 启用/禁用这个GlobalManager
+         * @param isEnabled
+         */
+        GlobalManager.prototype.setEnabled = function (isEnabled) {
+            if (this._enabled != isEnabled) {
+                this._enabled = isEnabled;
+                if (this._enabled) {
+                    this.onEnabled();
                 }
                 else {
-                    throw new Error("overlapCircle against this collider type is not implemented!");
-                }
-                if (resultCounter == results.length)
-                    return resultCounter;
-            }
-            return resultCounter;
-        };
-        SpatialHash.prototype.cellCoords = function (x, y) {
-            return new es.Vector2(Math.floor(x * this._inverseCellSize), Math.floor(y * this._inverseCellSize));
-        };
-        SpatialHash.prototype.cellAtPosition = function (x, y, createCellIfEmpty) {
-            if (createCellIfEmpty === void 0) { createCellIfEmpty = false; }
-            var cell = this._cellDict.tryGetValue(x, y);
-            if (!cell) {
-                if (createCellIfEmpty) {
-                    cell = [];
-                    this._cellDict.add(x, y, cell);
+                    this.onDisabled();
                 }
             }
-            return cell;
         };
-        SpatialHash.prototype.debugDrawCellDetails = function (x, y, cellCount, secondsToDisplay, textScale) {
-            if (secondsToDisplay === void 0) { secondsToDisplay = 0.5; }
-            if (textScale === void 0) { textScale = 1; }
+        /**
+         * 此GlobalManager启用时调用
+         */
+        GlobalManager.prototype.onEnabled = function () {
         };
-        return SpatialHash;
+        /**
+         * 此GlobalManager禁用时调用
+         */
+        GlobalManager.prototype.onDisabled = function () {
+        };
+        /**
+         * 在frame .update之前调用每一帧
+         */
+        GlobalManager.prototype.update = function () {
+        };
+        return GlobalManager;
     }());
-    es.SpatialHash = SpatialHash;
-    var NumberDictionary = (function () {
-        function NumberDictionary() {
-            this._store = new Map();
+    es.GlobalManager = GlobalManager;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Hash = /** @class */ (function () {
+        function Hash() {
         }
-        NumberDictionary.prototype.add = function (x, y, list) {
-            this._store.set(this.getKey(x, y), list);
+        /**
+         * 从一个字节数组中计算一个哈希值
+         * @param data
+         */
+        Hash.computeHash = function () {
+            var data = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                data[_i] = arguments[_i];
+            }
+            var p = 16777619;
+            var hash = 2166136261;
+            for (var i = 0; i < data.length; i++)
+                hash = (hash ^ data[i]) * p;
+            hash += hash << 13;
+            hash ^= hash >> 7;
+            hash += hash << 3;
+            hash ^= hash >> 17;
+            hash += hash << 5;
+            return hash;
         };
-        NumberDictionary.prototype.remove = function (obj) {
-            this._store.forEach(function (list) {
-                if (list.contains(obj))
-                    list.remove(obj);
+        return Hash;
+    }());
+    es.Hash = Hash;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Ref = /** @class */ (function () {
+        function Ref(value) {
+            this.value = value;
+        }
+        return Ref;
+    }());
+    es.Ref = Ref;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Screen = /** @class */ (function () {
+        function Screen() {
+        }
+        Object.defineProperty(Screen, "size", {
+            get: function () {
+                return new es.Vector2(this.width, this.height);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Screen, "center", {
+            get: function () {
+                return new es.Vector2(this.width / 2, this.height / 2);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Screen;
+    }());
+    es.Screen = Screen;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 管理数值的简单助手类。它存储值，直到累计的总数大于1。一旦超过1，该值将在调用update时添加到amount中。
+     */
+    var SubpixelNumber = /** @class */ (function () {
+        function SubpixelNumber() {
+        }
+        /**
+         * 以amount递增余数，将值截断为int，存储新的余数并将amount设置为当前值。
+         * @param amount
+         */
+        SubpixelNumber.prototype.update = function (amount) {
+            this.remainder += amount;
+            var motion = Math.trunc(this.remainder);
+            this.remainder -= motion;
+            return motion;
+        };
+        /**
+         * 将余数重置为0。当一个物体与一个不可移动的物体碰撞时有用。
+         * 在这种情况下，您将希望将亚像素余数归零，因为它是空的和无效的碰撞。
+         */
+        SubpixelNumber.prototype.reset = function () {
+            this.remainder = 0;
+        };
+        return SubpixelNumber;
+    }());
+    es.SubpixelNumber = SubpixelNumber;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 简单的剪耳三角测量器，最终的三角形将出现在triangleIndices列表中。
+     */
+    var Triangulator = /** @class */ (function () {
+        function Triangulator() {
+            /**
+             * 上次三角函数调用中使用的点列表的三角列表条目索引
+             */
+            this.triangleIndices = [];
+            this._triPrev = new Array(12);
+            this._triNext = new Array(12);
+        }
+        Triangulator.testPointTriangle = function (point, a, b, c) {
+            // 如果点在AB的右边，那么外边的三角形是
+            if (es.Vector2Ext.cross(es.Vector2.subtract(point, a), es.Vector2.subtract(b, a)) < 0)
+                return false;
+            // 如果点在BC的右边，则在三角形的外侧
+            if (es.Vector2Ext.cross(es.Vector2.subtract(point, b), es.Vector2.subtract(c, b)) < 0)
+                return false;
+            // 如果点在ca的右边，则在三角形的外面
+            if (es.Vector2Ext.cross(es.Vector2.subtract(point, c), es.Vector2.subtract(a, c)) < 0)
+                return false;
+            // 点在三角形上
+            return true;
+        };
+        /**
+         * 计算一个三角形列表，该列表完全覆盖给定点集所包含的区域。如果点不是CCW，则将arePointsCCW参数传递为false
+         * @param points 定义封闭路径的点列表
+         * @param arePointsCCW
+         */
+        Triangulator.prototype.triangulate = function (points, arePointsCCW) {
+            if (arePointsCCW === void 0) { arePointsCCW = true; }
+            var count = points.length;
+            // 设置前一个链接和下一个链接
+            this.initialize(count);
+            // 非三角的多边形断路器
+            var iterations = 0;
+            // 从0开始
+            var index = 0;
+            // 继续移除所有的三角形，直到只剩下一个三角形
+            while (count > 3 && iterations < 500) {
+                iterations++;
+                var isEar = true;
+                var a = points[this._triPrev[index]];
+                var b = points[index];
+                var c = points[this._triNext[index]];
+                if (es.Vector2Ext.isTriangleCCW(a, b, c)) {
+                    var k = this._triNext[this._triNext[index]];
+                    do {
+                        if (Triangulator.testPointTriangle(points[k], a, b, c)) {
+                            isEar = false;
+                            break;
+                        }
+                        k = this._triNext[k];
+                    } while (k != this._triPrev[index]);
+                }
+                else {
+                    isEar = false;
+                }
+                if (isEar) {
+                    this.triangleIndices.push(this._triPrev[index]);
+                    this.triangleIndices.push(index);
+                    this.triangleIndices.push(this._triNext[index]);
+                    // 删除vert通过重定向相邻vert的上一个和下一个链接，从而减少vertext计数
+                    this._triNext[this._triPrev[index]] = this._triNext[index];
+                    this._triPrev[this._triNext[index]] = this._triPrev[index];
+                    count--;
+                    // 接下来访问前一个vert
+                    index = this._triPrev[index];
+                }
+                else {
+                    index = this._triNext[index];
+                }
+            }
+            this.triangleIndices.push(this._triPrev[index]);
+            this.triangleIndices.push(index);
+            this.triangleIndices.push(this._triNext[index]);
+            if (!arePointsCCW)
+                this.triangleIndices.reverse();
+        };
+        Triangulator.prototype.initialize = function (count) {
+            this.triangleIndices.length = 0;
+            if (this._triNext.length < count) {
+                this._triNext.reverse();
+                this._triNext.length = Math.max(this._triNext.length * 2, count);
+            }
+            if (this._triPrev.length < count) {
+                this._triPrev.reverse();
+                this._triPrev.length = Math.max(this._triPrev.length * 2, count);
+            }
+            for (var i = 0; i < count; i++) {
+                this._triPrev[i] = i - 1;
+                this._triNext[i] = i + 1;
+            }
+            this._triPrev[0] = count - 1;
+            this._triNext[count - 1] = 0;
+        };
+        return Triangulator;
+    }());
+    es.Triangulator = Triangulator;
+})(es || (es = {}));
+var stopwatch;
+(function (stopwatch) {
+    /**
+     * 记录时间的持续时间，一些设计灵感来自物理秒表。
+     */
+    var Stopwatch = /** @class */ (function () {
+        function Stopwatch(getSystemTime) {
+            if (getSystemTime === void 0) { getSystemTime = _defaultSystemTimeGetter; }
+            this.getSystemTime = getSystemTime;
+            /** 自上次复位以来，秒表已停止的系统时间总数。 */
+            this._stopDuration = 0;
+            /**
+             * 记录自上次复位以来所有已完成切片的结果。
+             */
+            this._completeSlices = [];
+        }
+        Stopwatch.prototype.getState = function () {
+            if (this._startSystemTime === undefined) {
+                return State.IDLE;
+            }
+            else if (this._stopSystemTime === undefined) {
+                return State.RUNNING;
+            }
+            else {
+                return State.STOPPED;
+            }
+        };
+        Stopwatch.prototype.isIdle = function () {
+            return this.getState() === State.IDLE;
+        };
+        Stopwatch.prototype.isRunning = function () {
+            return this.getState() === State.RUNNING;
+        };
+        Stopwatch.prototype.isStopped = function () {
+            return this.getState() === State.STOPPED;
+        };
+        /**
+         *
+         */
+        Stopwatch.prototype.slice = function () {
+            return this.recordPendingSlice();
+        };
+        /**
+         * 获取自上次复位以来该秒表已完成/记录的所有片的列表。
+         */
+        Stopwatch.prototype.getCompletedSlices = function () {
+            return Array.from(this._completeSlices);
+        };
+        /**
+         * 获取自上次重置以来该秒表已完成/记录的所有片的列表，以及当前挂起的片。
+         */
+        Stopwatch.prototype.getCompletedAndPendingSlices = function () {
+            return __spread(this._completeSlices, [this.getPendingSlice()]);
+        };
+        /**
+         * 获取关于这个秒表当前挂起的切片的详细信息。
+         */
+        Stopwatch.prototype.getPendingSlice = function () {
+            return this.calculatePendingSlice();
+        };
+        /**
+         * 获取当前秒表时间。这是这个秒表自上次复位以来运行的系统时间总数。
+         */
+        Stopwatch.prototype.getTime = function () {
+            return this.caculateStopwatchTime();
+        };
+        /**
+         * 完全重置这个秒表到它的初始状态。清除所有记录的运行持续时间、切片等。
+         */
+        Stopwatch.prototype.reset = function () {
+            this._startSystemTime = this._pendingSliceStartStopwatchTime = this._stopSystemTime = undefined;
+            this._stopDuration = 0;
+            this._completeSlices = [];
+        };
+        /**
+         * 开始(或继续)运行秒表。
+         * @param forceReset
+         */
+        Stopwatch.prototype.start = function (forceReset) {
+            if (forceReset === void 0) { forceReset = false; }
+            if (forceReset) {
+                this.reset();
+            }
+            if (this._stopSystemTime !== undefined) {
+                var systemNow = this.getSystemTime();
+                var stopDuration = systemNow - this._stopSystemTime;
+                this._stopDuration += stopDuration;
+                this._stopSystemTime = undefined;
+            }
+            else if (this._startSystemTime === undefined) {
+                var systemNow = this.getSystemTime();
+                this._startSystemTime = systemNow;
+                this._pendingSliceStartStopwatchTime = 0;
+            }
+        };
+        /**
+         *
+         * @param recordPendingSlice
+         */
+        Stopwatch.prototype.stop = function (recordPendingSlice) {
+            if (recordPendingSlice === void 0) { recordPendingSlice = false; }
+            if (this._startSystemTime === undefined) {
+                return 0;
+            }
+            var systemTimeOfStopwatchTime = this.getSystemTimeOfCurrentStopwatchTime();
+            if (recordPendingSlice) {
+                this.recordPendingSlice(this.caculateStopwatchTime(systemTimeOfStopwatchTime));
+            }
+            this._stopSystemTime = systemTimeOfStopwatchTime;
+            return this.getTime();
+        };
+        /**
+         * 计算指定秒表时间的当前挂起片。
+         * @param endStopwatchTime
+         */
+        Stopwatch.prototype.calculatePendingSlice = function (endStopwatchTime) {
+            if (this._pendingSliceStartStopwatchTime === undefined) {
+                return Object.freeze({ startTime: 0, endTime: 0, duration: 0 });
+            }
+            if (endStopwatchTime === undefined) {
+                endStopwatchTime = this.getTime();
+            }
+            return Object.freeze({
+                startTime: this._pendingSliceStartStopwatchTime,
+                endTime: endStopwatchTime,
+                duration: endStopwatchTime - this._pendingSliceStartStopwatchTime
             });
         };
-        NumberDictionary.prototype.tryGetValue = function (x, y) {
-            return this._store.get(this.getKey(x, y));
+        /**
+         * 计算指定系统时间的当前秒表时间。
+         * @param endSystemTime
+         */
+        Stopwatch.prototype.caculateStopwatchTime = function (endSystemTime) {
+            if (this._startSystemTime === undefined)
+                return 0;
+            if (endSystemTime === undefined)
+                endSystemTime = this.getSystemTimeOfCurrentStopwatchTime();
+            return endSystemTime - this._startSystemTime - this._stopDuration;
         };
-        NumberDictionary.prototype.clear = function () {
-            this._store.clear();
+        /**
+         * 获取与当前秒表时间等效的系统时间。
+         * 如果该秒表当前停止，则返回该秒表停止时的系统时间。
+         */
+        Stopwatch.prototype.getSystemTimeOfCurrentStopwatchTime = function () {
+            return this._stopSystemTime === undefined ? this.getSystemTime() : this._stopSystemTime;
         };
-        NumberDictionary.prototype.getKey = function (x, y) {
-            return Long.fromNumber(x).shiftLeft(32).or(Long.fromNumber(y, true)).toString();
+        /**
+         * 结束/记录当前挂起的片的私有实现。
+         * @param endStopwatchTime
+         */
+        Stopwatch.prototype.recordPendingSlice = function (endStopwatchTime) {
+            if (this._pendingSliceStartStopwatchTime !== undefined) {
+                if (endStopwatchTime === undefined) {
+                    endStopwatchTime = this.getTime();
+                }
+                var slice = this.calculatePendingSlice(endStopwatchTime);
+                this._pendingSliceStartStopwatchTime = slice.endTime;
+                this._completeSlices.push(slice);
+                return slice;
+            }
+            else {
+                return this.calculatePendingSlice();
+            }
         };
-        return NumberDictionary;
+        return Stopwatch;
     }());
-    es.NumberDictionary = NumberDictionary;
-    var RaycastResultParser = (function () {
-        function RaycastResultParser() {
-            this._checkedColliders = [];
-            this._cellHits = [];
+    stopwatch.Stopwatch = Stopwatch;
+    var State;
+    (function (State) {
+        /** 秒表尚未启动，或已复位。 */
+        State["IDLE"] = "IDLE";
+        /** 秒表正在运行。 */
+        State["RUNNING"] = "RUNNING";
+        /** 秒表以前还在跑，但现在已经停了。 */
+        State["STOPPED"] = "STOPPED";
+    })(State || (State = {}));
+    function setDefaultSystemTimeGetter(systemTimeGetter) {
+        if (systemTimeGetter === void 0) { systemTimeGetter = Date.now; }
+        _defaultSystemTimeGetter = systemTimeGetter;
+    }
+    stopwatch.setDefaultSystemTimeGetter = setDefaultSystemTimeGetter;
+    /** 所有新实例的默认“getSystemTime”实现 */
+    var _defaultSystemTimeGetter = Date.now;
+})(stopwatch || (stopwatch = {}));
+var es;
+(function (es) {
+    /**
+     * 创建这个字典的原因只有一个：
+     * 我需要一个能让我直接以数组的形式对值进行迭代的字典，而不需要生成一个数组或使用迭代器。
+     * 对于这个目标是比标准字典快N倍。
+     * Faster dictionary在大部分操作上也比标准字典快，但差别可以忽略不计。
+     * 唯一较慢的操作是在添加时调整内存大小，因为与标准数组相比，这个实现需要使用两个单独的数组。
+     */
+    var FasterDictionary = /** @class */ (function () {
+        function FasterDictionary(size) {
+            if (size === void 0) { size = 1; }
+            this._freeValueCellIndex = 0;
+            this._collisions = 0;
+            this._valuesInfo = new Array(size);
+            this._values = new Array(size);
+            this._buckets = new Array(es.HashHelpers.getPrime(size));
         }
-        RaycastResultParser.prototype.start = function (ray, hits, layerMask) {
-            this._ray = ray;
-            this._hits = hits;
-            this._layerMask = layerMask;
-            this.hitCounter = 0;
+        FasterDictionary.prototype.getValuesArray = function (count) {
+            count.value = this._freeValueCellIndex;
+            return this._values;
         };
-        RaycastResultParser.prototype.checkRayIntersection = function (cellX, cellY, cell) {
-            var fraction = 0;
-            for (var i = 0; i < cell.length; i++) {
-                var potential = cell[i];
-                if (this._checkedColliders.contains(potential))
-                    continue;
-                this._checkedColliders.push(potential);
-                if (potential.isTrigger && !es.Physics.raycastsHitTriggers)
-                    continue;
-                if (!es.Flags.isFlagSet(this._layerMask, potential.physicsLayer))
-                    continue;
-                var colliderBounds = potential.bounds;
-                var fraction_1 = colliderBounds.rayIntersects(this._ray);
-                if (fraction_1 <= 1) {
-                    if (potential.shape.collidesWithLine(this._ray.start, this._ray.end, this._tempHit)) {
-                        if (!es.Physics.raycastsStartInColliders && potential.shape.containsPoint(this._ray.start))
-                            continue;
-                        this._tempHit.collider = potential;
-                        this._cellHits.push(this._tempHit);
+        Object.defineProperty(FasterDictionary.prototype, "valuesArray", {
+            get: function () {
+                return this._values;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(FasterDictionary.prototype, "count", {
+            get: function () {
+                return this._freeValueCellIndex;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        FasterDictionary.prototype.add = function (key, value) {
+            if (!this.addValue(key, value, { value: 0 }))
+                throw new Error("key 已经存在");
+        };
+        FasterDictionary.prototype.addValue = function (key, value, indexSet) {
+            var hash = es.HashHelpers.getHashCode(key);
+            var bucketIndex = FasterDictionary.reduce(hash, this._buckets.length);
+            if (this._freeValueCellIndex == this._values.length) {
+                var expandPrime = es.HashHelpers.expandPrime(this._freeValueCellIndex);
+                this._values.length = expandPrime;
+                this._valuesInfo.length = expandPrime;
+            }
+            // buckets值-1表示它是空的
+            var valueIndex = es.NumberExtension.toNumber(this._buckets[bucketIndex]) - 1;
+            if (valueIndex == -1) {
+                // 在最后一个位置创建信息节点，并填入相关信息
+                this._valuesInfo[this._freeValueCellIndex] = new FastNode(key, hash);
+            }
+            else {
+                {
+                    var currentValueIndex = valueIndex;
+                    do {
+                        // 必须检查键是否已经存在于字典中
+                        if (this._valuesInfo[currentValueIndex].hashcode == hash &&
+                            this._valuesInfo[currentValueIndex].key == key) {
+                            // 键已经存在，只需将其值替换掉即可
+                            this._values[currentValueIndex] = value;
+                            indexSet.value = currentValueIndex;
+                            return false;
+                        }
+                        currentValueIndex = this._valuesInfo[currentValueIndex].previous;
+                    } while (currentValueIndex != -1); // -1表示没有更多的值与相同的哈希值的键
+                }
+                this._collisions++;
+                // 创建一个新的节点，该节点之前的索引指向当前指向桶的节点
+                this._valuesInfo[this._freeValueCellIndex] = new FastNode(key, hash, valueIndex);
+                // 更新现有单元格的下一个单元格指向新的单元格，旧的单元格 -> 新的单元格 -> 旧的单元格 <- 下一个单元格
+                this._valuesInfo[valueIndex].next = this._freeValueCellIndex;
+            }
+            // 重要的是：新的节点总是被桶单元格指向的那个节点，所以我可以假设被桶指向的那个节点总是最后添加的值(next = -1)
+            // item与这个bucketIndex将指向最后创建的值 
+            // TODO: 如果相反，我假设原来的那个是bucket中的那个，我就不需要在这里更新bucket了
+            this._buckets[bucketIndex] = (this._freeValueCellIndex + 1);
+            this._values[this._freeValueCellIndex] = value;
+            indexSet.value = this._freeValueCellIndex;
+            this._freeValueCellIndex++;
+            if (this._collisions > this._buckets.length) {
+                // 我们需要更多的空间和更少的碰撞
+                this._buckets = new Array(es.HashHelpers.expandPrime(this._collisions));
+                this._collisions = 0;
+                // 我们需要得到目前存储的所有值的哈希码，并将它们分布在新的桶长上
+                for (var newValueIndex = 0; newValueIndex < this._freeValueCellIndex; newValueIndex++) {
+                    // 获取原始哈希码，并根据新的长度找到新的bucketIndex
+                    bucketIndex = FasterDictionary.reduce(this._valuesInfo[newValueIndex].hashcode, this._buckets.length);
+                    // bucketsIndex可以是-1或下一个值。
+                    // 如果是-1意味着没有碰撞。
+                    // 如果有碰撞，我们创建一个新节点，它的上一个指向旧节点。
+                    // 旧节点指向新节点，新节点指向旧节点，旧节点指向新节点，现在bucket指向新节点，这样我们就可以重建linkedlist.
+                    // 获取当前值Index，如果没有碰撞，则为-1。
+                    var existingValueIndex = es.NumberExtension.toNumber(this._buckets[bucketIndex]) - 1;
+                    // 将bucket索引更新为共享bucketIndex的当前项目的索引（最后找到的总是bucket中的那个）
+                    this._buckets[bucketIndex] = newValueIndex + 1;
+                    if (existingValueIndex != -1) {
+                        // 这个单元格已经指向了新的bucket list中的一个值，这意味着有一个碰撞，出了问题
+                        this._collisions++;
+                        // bucket将指向这个值，所以新的值将使用以前的索引
+                        this._valuesInfo[newValueIndex].previous = existingValueIndex;
+                        this._valuesInfo[newValueIndex].next = -1;
+                        // 并将之前的下一个索引更新为新的索引
+                        this._valuesInfo[existingValueIndex].next = newValueIndex;
+                    }
+                    else {
+                        // 什么都没有被索引，桶是空的。我们需要更新之前的 next 和 previous 的值。
+                        this._valuesInfo[newValueIndex].next = -1;
+                        this._valuesInfo[newValueIndex].previous = -1;
                     }
                 }
             }
-            if (this._cellHits.length == 0)
-                return false;
-            this._cellHits.sort(RaycastResultParser.compareRaycastHits);
-            for (var i = 0; i < this._cellHits.length; i++) {
-                this._hits[this.hitCounter] = this._cellHits[i];
-                this.hitCounter++;
-                if (this.hitCounter == this._hits.length)
-                    return true;
+            return true;
+        };
+        FasterDictionary.prototype.remove = function (key) {
+            var hash = FasterDictionary.hash(key);
+            var bucketIndex = FasterDictionary.reduce(hash, this._buckets.length);
+            // 找桶
+            var indexToValueToRemove = es.NumberExtension.toNumber(this._buckets[bucketIndex]) - 1;
+            // 第一部分：在bucket list中寻找实际的键，如果找到了，我就更新bucket list，使它不再指向要删除的单元格。
+            while (indexToValueToRemove != -1) {
+                if (this._valuesInfo[indexToValueToRemove].hashcode == hash &&
+                    this._valuesInfo[indexToValueToRemove].key == key) {
+                    // 如果找到了密钥，并且桶直接指向了要删除的节点
+                    if (this._buckets[bucketIndex] - 1 == indexToValueToRemove) {
+                        if (this._valuesInfo[indexToValueToRemove].next != -1)
+                            throw new Error("如果 bucket 指向单元格，那么 next 必须不存在。");
+                        // 如果前一个单元格存在，它的下一个指针必须被更新!
+                        //<---迭代顺序  
+                        // B(ucket总是指向最后一个)
+                        // ------- ------- -------
+                        // 1 | | | | 2 | | | 3 | //bucket不能有下一个，只能有上一个。
+                        // ------- ------- -------
+                        //--> 插入
+                        var value = this._valuesInfo[indexToValueToRemove].previous;
+                        this._buckets[bucketIndex] = value + 1;
+                    }
+                    else {
+                        if (this._valuesInfo[indexToValueToRemove].next == -1)
+                            throw new Error("如果 bucket 指向另一个单元格，则 NEXT 必须存在");
+                    }
+                    FasterDictionary.updateLinkedList(indexToValueToRemove, this._valuesInfo);
+                    break;
+                }
+                indexToValueToRemove = this._valuesInfo[indexToValueToRemove].previous;
+            }
+            if (indexToValueToRemove == -1)
+                return false; // 未找到
+            this._freeValueCellIndex--; // 少了一个需要反复计算的值
+            // 第二部分
+            // 这时节点指针和水桶会被更新，但_values数组会被更新仍然有要删除的值
+            // 这个字典的目标是能够做到像数组一样对数值进行迭代，所以数值数组必须始终是最新的
+            // 如果要删除的单元格是列表中的最后一个，我们可以执行较少的操作（不需要交换），否则我们要将最后一个值的单元格移到要删除的值上。
+            if (indexToValueToRemove != this._freeValueCellIndex) {
+                // 我们可以将两个数组的最后一个值移到要删除的数组中。
+                // 为了做到这一点，我们需要确保 bucket 指针已经更新了
+                // 首先我们在桶列表中找到指向要移动的单元格的指针的索引
+                var movingBucketIndex = FasterDictionary.reduce(this._valuesInfo[this._freeValueCellIndex].hashcode, this._buckets.length);
+                // 如果找到了键，并且桶直接指向要删除的节点，现在必须指向要移动的单元格。
+                if (this._buckets[movingBucketIndex] - 1 == this._freeValueCellIndex)
+                    this._buckets[movingBucketIndex] = (indexToValueToRemove + 1);
+                // 否则意味着有多个键具有相同的哈希值（碰撞），所以我们需要更新链接列表和它的指针
+                var next = this._valuesInfo[this._freeValueCellIndex].next;
+                var previous = this._valuesInfo[this._freeValueCellIndex].previous;
+                // 现在它们指向最后一个值被移入的单元格
+                if (next != -1)
+                    this._valuesInfo[next].previous = indexToValueToRemove;
+                if (previous != -1)
+                    this._valuesInfo[previous].next = indexToValueToRemove;
+                // 最后，实际上是移动值
+                this._valuesInfo[indexToValueToRemove] = this._valuesInfo[this._freeValueCellIndex];
+                this._values[indexToValueToRemove] = this._values[this._freeValueCellIndex];
+            }
+            return true;
+        };
+        FasterDictionary.prototype.trim = function () {
+            var expandPrime = es.HashHelpers.expandPrime(this._freeValueCellIndex);
+            if (expandPrime < this._valuesInfo.length) {
+                this._values.length = expandPrime;
+                this._valuesInfo.length = expandPrime;
+            }
+        };
+        FasterDictionary.prototype.clear = function () {
+            if (this._freeValueCellIndex == 0)
+                return;
+            this._freeValueCellIndex = 0;
+            this._buckets.length = 0;
+            this._values.length = 0;
+            this._valuesInfo.length = 0;
+        };
+        FasterDictionary.prototype.fastClear = function () {
+            if (this._freeValueCellIndex == 0)
+                return;
+            this._freeValueCellIndex = 0;
+            this._buckets.length = 0;
+            this._valuesInfo.length = 0;
+        };
+        FasterDictionary.prototype.containsKey = function (key) {
+            if (this.tryFindIndex(key, { value: 0 })) {
+                return true;
             }
             return false;
         };
-        RaycastResultParser.prototype.reset = function () {
-            this._hits = null;
-            this._checkedColliders.length = 0;
-            this._cellHits.length = 0;
-        };
-        RaycastResultParser.compareRaycastHits = function (a, b) {
-            return a.distance - b.distance;
-        };
-        return RaycastResultParser;
-    }());
-    es.RaycastResultParser = RaycastResultParser;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxGroup = (function () {
-        function TmxGroup() {
-        }
-        return TmxGroup;
-    }());
-    es.TmxGroup = TmxGroup;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxImageLayer = (function () {
-        function TmxImageLayer() {
-        }
-        return TmxImageLayer;
-    }());
-    es.TmxImageLayer = TmxImageLayer;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxLayer = (function () {
-        function TmxLayer() {
-        }
-        Object.defineProperty(TmxLayer.prototype, "offset", {
-            get: function () {
-                return new es.Vector2(this.offsetX, this.offsetY);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TmxLayer.prototype.getTileWithGid = function (gid) {
-            for (var i = 0; i < this.tiles.length; i++) {
-                if (this.tiles[i] && this.tiles[i].gid == gid)
-                    return this.tiles[i];
+        FasterDictionary.prototype.tryGetValue = function (key) {
+            var findIndex = { value: 0 };
+            if (this.tryFindIndex(key, findIndex)) {
+                return this._values[findIndex.value];
             }
             return null;
         };
-        TmxLayer.prototype.getTile = function (x, y) {
-            return this.tiles[x + y * this.width];
-        };
-        TmxLayer.prototype.getCollisionRectangles = function () {
-            var checkedIndexes = [];
-            var rectangles = [];
-            var startCol = -1;
-            var index = -1;
-            for (var y = 0; y < this.map.height; y++) {
-                for (var x = 0; x < this.map.width; x++) {
-                    index = y * this.map.width + x;
-                    var tile = this.getTile(x, y);
-                    if (tile && !checkedIndexes[index]) {
-                        if (startCol < 0)
-                            startCol = x;
-                        checkedIndexes[index] = true;
-                    }
-                    else if (tile || checkedIndexes[index]) {
-                        if (startCol >= 0) {
-                            rectangles.push(this.findBoundsRect(startCol, x, y, checkedIndexes));
-                            startCol = -1;
-                        }
-                    }
+        FasterDictionary.prototype.tryFindIndex = function (key, findIndex) {
+            // 我把所有的索引都用偏移量+1来存储，这样在bucket list中0就意味着实际上不存在
+            // 当读取时，偏移量必须再偏移-1才是真实的
+            // 这样我就避免了将数组初始化为-1
+            var hash = FasterDictionary.hash(key);
+            var bucketIndex = FasterDictionary.reduce(hash, this._buckets.length);
+            var valueIndex = es.NumberExtension.toNumber(this._buckets[bucketIndex]) - 1;
+            // 即使我们找到了一个现有的值，我们也需要确定它是我们所要求的值
+            while (valueIndex != -1) {
+                if (this._valuesInfo[valueIndex].hashcode == hash && this._valuesInfo[valueIndex].key == key) {
+                    findIndex.value = valueIndex;
+                    return true;
                 }
-                if (startCol >= 0) {
-                    rectangles.push(this.findBoundsRect(startCol, this.map.width, y, checkedIndexes));
-                    startCol = -1;
-                }
+                valueIndex = this._valuesInfo[valueIndex].previous;
             }
-            return rectangles;
+            findIndex.value = 0;
+            return false;
         };
-        TmxLayer.prototype.findBoundsRect = function (startX, endX, startY, checkedIndexes) {
-            var index = -1;
-            for (var y = startY + 1; y < this.map.height; y++) {
-                for (var x = startX; x < endX; x++) {
-                    index = y * this.map.width + x;
-                    var tile = this.getTile(x, y);
-                    if (tile || checkedIndexes[index]) {
-                        for (var _x = startX; _x < x; _x++) {
-                            index = y * this.map.width + _x;
-                            checkedIndexes[index] = false;
-                        }
-                        return new es.Rectangle(startX * this.map.tileWidth, startY * this.map.tileHeight, (endX - startX) * this.map.tileWidth, (y - startY) * this.map.tileHeight);
-                    }
-                    checkedIndexes[index] = true;
-                }
-            }
-            return new es.Rectangle(startX * this.map.tileWidth, startY * this.map.tileHeight, (endX - startX) * this.map.tileWidth, (this.map.height - startY) * this.map.tileHeight);
+        FasterDictionary.prototype.getDirectValue = function (index) {
+            return this._values[index];
         };
-        return TmxLayer;
+        FasterDictionary.prototype.getIndex = function (key) {
+            var findIndex = { value: 0 };
+            if (this.tryFindIndex(key, findIndex))
+                return findIndex.value;
+            throw new Error("未找到key");
+        };
+        FasterDictionary.updateLinkedList = function (index, valuesInfo) {
+            var next = valuesInfo[index].next;
+            var previous = valuesInfo[index].previous;
+            if (next != -1)
+                valuesInfo[next].previous = previous;
+            if (previous != -1)
+                valuesInfo[previous].next = next;
+        };
+        FasterDictionary.hash = function (key) {
+            return es.HashHelpers.getHashCode(key);
+        };
+        FasterDictionary.reduce = function (x, n) {
+            if (x >= n)
+                return x % n;
+            return x;
+        };
+        return FasterDictionary;
     }());
-    es.TmxLayer = TmxLayer;
-    var TmxLayerTile = (function () {
-        function TmxLayerTile(map, id, x, y) {
-            this.x = x;
-            this.y = y;
-            var rawGid = id;
-            var flip;
-            flip = (rawGid & TmxLayerTile.FLIPPED_HORIZONTALLY_FLAG) != 0;
-            this.horizontalFlip = flip;
-            flip = (rawGid & TmxLayerTile.FLIPPED_VERTICALLY_FLAG) != 0;
-            this.verticalFlip = flip;
-            rawGid &= ~(TmxLayerTile.FLIPPED_HORIZONTALLY_FLAG | TmxLayerTile.FLIPPED_VERTICALLY_FLAG);
-            this.gid = rawGid;
-            this.tileset = map.getTilesetForTileGid(this.gid);
+    es.FasterDictionary = FasterDictionary;
+    var FastNode = /** @class */ (function () {
+        function FastNode(key, hash, previousNode) {
+            if (previousNode === void 0) { previousNode = -1; }
+            this.key = key;
+            this.hashcode = hash;
+            this.previous = previousNode;
+            this.next = -1;
         }
-        Object.defineProperty(TmxLayerTile.prototype, "position", {
-            get: function () {
-                return new es.Vector2(this.x, this.y);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TmxLayerTile.prototype, "tilesetTile", {
-            get: function () {
-                if (this._tilesetTileIndex == undefined) {
-                    this._tilesetTileIndex = -1;
-                    if (this.tileset.firstGid <= this.gid) {
-                        var tilesetTile = this.tileset.tiles.get(this.gid - this.tileset.firstGid);
-                        if (tilesetTile) {
-                            this._tilesetTileIndex = this.gid - this.tileset.firstGid;
-                        }
-                    }
-                }
-                if (this._tilesetTileIndex < 0)
-                    return null;
-                return this.tileset.tiles.get(this._tilesetTileIndex);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TmxLayerTile.FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
-        TmxLayerTile.FLIPPED_VERTICALLY_FLAG = 0x40000000;
-        return TmxLayerTile;
+        return FastNode;
     }());
-    es.TmxLayerTile = TmxLayerTile;
+    es.FastNode = FastNode;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var TmxDocument = (function () {
-        function TmxDocument() {
-            this.tmxDirectory = "resource/assets/";
+    var Node = /** @class */ (function () {
+        // next为可选参数，如果不传则为undefined
+        function Node(element, next) {
+            this.element = element;
+            this.next = next;
         }
-        return TmxDocument;
+        return Node;
     }());
-    es.TmxDocument = TmxDocument;
-    var TmxImage = (function () {
-        function TmxImage() {
+    es.Node = Node;
+    function defaultEquals(a, b) {
+        return a === b;
+    }
+    es.defaultEquals = defaultEquals;
+    var LinkedList = /** @class */ (function () {
+        function LinkedList(equalsFn) {
+            if (equalsFn === void 0) { equalsFn = defaultEquals; }
+            // 初始化链表内部变量
+            this.count = 0;
+            this.next = undefined;
+            this.equalsFn = equalsFn;
+            this.head = null;
         }
-        TmxImage.prototype.dispose = function () {
-            if (this.bitmap) {
-                this.bitmap.dispose();
-                this.bitmap = null;
-            }
-        };
-        return TmxImage;
-    }());
-    es.TmxImage = TmxImage;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxMap = (function (_super) {
-        __extends(TmxMap, _super);
-        function TmxMap() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Object.defineProperty(TmxMap.prototype, "worldWidth", {
-            get: function () {
-                return this.width * this.tileWidth;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TmxMap.prototype, "worldHeight", {
-            get: function () {
-                return this.height * this.tileHeight;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(TmxMap.prototype, "requiresLargeTileCulling", {
-            get: function () {
-                return this.maxTileHeight > this.tileHeight || this.maxTileWidth > this.tileWidth;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TmxMap.prototype.getTilesetForTileGid = function (gid) {
-            if (gid == 0)
-                return null;
-            for (var i = this.tilesets.length - 1; i >= 0; i--) {
-                if (this.tilesets[i].firstGid <= gid)
-                    return this.tilesets[i];
-            }
-            console.error("tile gid" + gid + "\u672A\u5728\u4EFB\u4F55tileset\u4E2D\u627E\u5230");
-        };
-        TmxMap.prototype.worldToTilePositionX = function (x, clampToTilemapBounds) {
-            if (clampToTilemapBounds === void 0) { clampToTilemapBounds = true; }
-            var tileX = Math.floor(x / this.tileWidth);
-            if (!clampToTilemapBounds)
-                return tileX;
-            return es.MathHelper.clamp(tileX, 0, this.width - 1);
-        };
-        TmxMap.prototype.worldToTilePositionY = function (y, clampToTilemapBounds) {
-            if (clampToTilemapBounds === void 0) { clampToTilemapBounds = true; }
-            var tileY = Math.floor(y / this.tileHeight);
-            if (!clampToTilemapBounds)
-                return tileY;
-            return es.MathHelper.clamp(tileY, 0, this.height - 1);
-        };
-        TmxMap.prototype.getLayer = function (name) {
-            return this.layers[name];
-        };
-        TmxMap.prototype.update = function () {
-            this.tilesets.forEach(function (tileset) { tileset.update(); });
-        };
-        TmxMap.prototype.dispose = function (disposing) {
-            if (disposing === void 0) { disposing = true; }
-            if (!this._isDisposed) {
-                if (disposing) {
-                    this.tilesets.forEach(function (tileset) { if (tileset.image)
-                        tileset.image.dispose(); });
-                    this.imageLayers.forEach(function (layer) { if (layer.image)
-                        layer.image.dispose(); });
-                }
-                this._isDisposed = true;
-            }
-        };
-        return TmxMap;
-    }(es.TmxDocument));
-    es.TmxMap = TmxMap;
-    var OrientationType;
-    (function (OrientationType) {
-        OrientationType[OrientationType["unknown"] = 0] = "unknown";
-        OrientationType[OrientationType["orthogonal"] = 1] = "orthogonal";
-        OrientationType[OrientationType["isometric"] = 2] = "isometric";
-        OrientationType[OrientationType["staggered"] = 3] = "staggered";
-        OrientationType[OrientationType["hexagonal"] = 4] = "hexagonal";
-    })(OrientationType = es.OrientationType || (es.OrientationType = {}));
-    var StaggerAxisType;
-    (function (StaggerAxisType) {
-        StaggerAxisType[StaggerAxisType["x"] = 0] = "x";
-        StaggerAxisType[StaggerAxisType["y"] = 1] = "y";
-    })(StaggerAxisType = es.StaggerAxisType || (es.StaggerAxisType = {}));
-    var StaggerIndexType;
-    (function (StaggerIndexType) {
-        StaggerIndexType[StaggerIndexType["odd"] = 0] = "odd";
-        StaggerIndexType[StaggerIndexType["even"] = 1] = "even";
-    })(StaggerIndexType = es.StaggerIndexType || (es.StaggerIndexType = {}));
-    var RenderOrderType;
-    (function (RenderOrderType) {
-        RenderOrderType[RenderOrderType["rightDown"] = 0] = "rightDown";
-        RenderOrderType[RenderOrderType["rightUp"] = 1] = "rightUp";
-        RenderOrderType[RenderOrderType["leftDown"] = 2] = "leftDown";
-        RenderOrderType[RenderOrderType["leftUp"] = 3] = "leftUp";
-    })(RenderOrderType = es.RenderOrderType || (es.RenderOrderType = {}));
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxObjectGroup = (function () {
-        function TmxObjectGroup() {
-        }
-        return TmxObjectGroup;
-    }());
-    es.TmxObjectGroup = TmxObjectGroup;
-    var TmxObject = (function () {
-        function TmxObject() {
-            this.shape = new egret.Shape();
-            this.textField = new egret.TextField();
-        }
-        return TmxObject;
-    }());
-    es.TmxObject = TmxObject;
-    var TmxText = (function () {
-        function TmxText() {
-        }
-        return TmxText;
-    }());
-    es.TmxText = TmxText;
-    var TmxAlignment = (function () {
-        function TmxAlignment() {
-        }
-        return TmxAlignment;
-    }());
-    es.TmxAlignment = TmxAlignment;
-    var TmxObjectType;
-    (function (TmxObjectType) {
-        TmxObjectType[TmxObjectType["basic"] = 0] = "basic";
-        TmxObjectType[TmxObjectType["point"] = 1] = "point";
-        TmxObjectType[TmxObjectType["tile"] = 2] = "tile";
-        TmxObjectType[TmxObjectType["ellipse"] = 3] = "ellipse";
-        TmxObjectType[TmxObjectType["polygon"] = 4] = "polygon";
-        TmxObjectType[TmxObjectType["polyline"] = 5] = "polyline";
-        TmxObjectType[TmxObjectType["text"] = 6] = "text";
-    })(TmxObjectType = es.TmxObjectType || (es.TmxObjectType = {}));
-    var DrawOrderType;
-    (function (DrawOrderType) {
-        DrawOrderType[DrawOrderType["unkownOrder"] = -1] = "unkownOrder";
-        DrawOrderType[DrawOrderType["TopDown"] = 0] = "TopDown";
-        DrawOrderType[DrawOrderType["IndexOrder"] = 1] = "IndexOrder";
-    })(DrawOrderType = es.DrawOrderType || (es.DrawOrderType = {}));
-    var TmxHorizontalAlignment;
-    (function (TmxHorizontalAlignment) {
-        TmxHorizontalAlignment[TmxHorizontalAlignment["left"] = 0] = "left";
-        TmxHorizontalAlignment[TmxHorizontalAlignment["center"] = 1] = "center";
-        TmxHorizontalAlignment[TmxHorizontalAlignment["right"] = 2] = "right";
-        TmxHorizontalAlignment[TmxHorizontalAlignment["justify"] = 3] = "justify";
-    })(TmxHorizontalAlignment = es.TmxHorizontalAlignment || (es.TmxHorizontalAlignment = {}));
-    var TmxVerticalAlignment;
-    (function (TmxVerticalAlignment) {
-        TmxVerticalAlignment[TmxVerticalAlignment["top"] = 0] = "top";
-        TmxVerticalAlignment[TmxVerticalAlignment["center"] = 1] = "center";
-        TmxVerticalAlignment[TmxVerticalAlignment["bottom"] = 2] = "bottom";
-    })(TmxVerticalAlignment = es.TmxVerticalAlignment || (es.TmxVerticalAlignment = {}));
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TiledMapLoader = (function () {
-        function TiledMapLoader() {
-        }
-        TiledMapLoader.loadTmxMap = function (map, filePath) {
-            var xMap = RES.getRes(filePath);
-            return this.loadTmxMapData(map, xMap);
-        };
-        TiledMapLoader.loadTmxMapData = function (map, xMap) {
-            return __awaiter(this, void 0, void 0, function () {
-                var _i, _a, e, tileset;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            map.version = xMap["version"];
-                            map.tiledVersion = xMap["tiledversion"];
-                            map.width = xMap["width"];
-                            map.height = xMap["height"];
-                            map.tileWidth = xMap["tilewidth"];
-                            map.tileHeight = xMap["tileheight"];
-                            map.hexSideLength = xMap["hexsidelength"];
-                            map.orientation = this.parseOrientationType(xMap["orientation"]);
-                            map.staggerAxis = this.parseStaggerAxisType(xMap["staggeraxis"]);
-                            map.staggerIndex = this.parseStaggerIndexType(xMap["staggerindex"]);
-                            map.renderOrder = this.parseRenderOrderType(xMap["renderorder"]);
-                            map.nextObjectID = xMap["nextobjectid"];
-                            map.backgroundColor = es.TmxUtils.color16ToUnit(xMap["color"]);
-                            map.properties = this.parsePropertyDict(xMap["properties"]);
-                            map.maxTileWidth = map.tileWidth;
-                            map.maxTileHeight = map.tileHeight;
-                            map.tilesets = [];
-                            _i = 0, _a = xMap["tilesets"];
-                            _b.label = 1;
-                        case 1:
-                            if (!(_i < _a.length)) return [3, 4];
-                            e = _a[_i];
-                            return [4, this.parseTmxTileset(map, e)];
-                        case 2:
-                            tileset = _b.sent();
-                            map.tilesets.push(tileset);
-                            this.updateMaxTileSizes(tileset);
-                            _b.label = 3;
-                        case 3:
-                            _i++;
-                            return [3, 1];
-                        case 4:
-                            map.layers = [];
-                            map.tileLayers = [];
-                            map.objectGroups = [];
-                            map.imageLayers = [];
-                            map.groups = [];
-                            this.parseLayers(map, xMap, map, map.width, map.height, map.tmxDirectory);
-                            return [2, map];
-                    }
-                });
-            });
-        };
-        TiledMapLoader.parseLayers = function (container, xEle, map, width, height, tmxDirectory) {
-            return __awaiter(this, void 0, void 0, function () {
-                var _i, _a, e, layer, _b, tileLayer, objectgroup, imagelayer, newGroup;
-                return __generator(this, function (_c) {
-                    switch (_c.label) {
-                        case 0:
-                            _i = 0, _a = ObjectUtils.elements(xEle).where(function (x) {
-                                return x.type == "tilelayer" || x.type == "objectgroup" || x.type == "imagelayer" || x.type == "group";
-                            });
-                            _c.label = 1;
-                        case 1:
-                            if (!(_i < _a.length)) return [3, 11];
-                            e = _a[_i];
-                            layer = void 0;
-                            _b = e.type;
-                            switch (_b) {
-                                case "tilelayer": return [3, 2];
-                                case "objectgroup": return [3, 3];
-                                case "imagelayer": return [3, 4];
-                                case "group": return [3, 6];
-                            }
-                            return [3, 8];
-                        case 2:
-                            tileLayer = this.loadTmxLayer(new es.TmxLayer(), map, e, width, height);
-                            layer = tileLayer;
-                            if (container instanceof es.TmxMap || container instanceof es.TmxGroup)
-                                container.tileLayers.push(tileLayer);
-                            return [3, 9];
-                        case 3:
-                            objectgroup = this.loadTmxObjectGroup(new es.TmxObjectGroup(), map, e);
-                            layer = objectgroup;
-                            if (container instanceof es.TmxMap || container instanceof es.TmxGroup)
-                                container.objectGroups.push(objectgroup);
-                            return [3, 9];
-                        case 4: return [4, this.loadTmxImageLayer(new es.TmxImageLayer(), map, e, tmxDirectory)];
-                        case 5:
-                            imagelayer = _c.sent();
-                            layer = imagelayer;
-                            if (container instanceof es.TmxMap || container instanceof es.TmxGroup)
-                                container.imageLayers.push(imagelayer);
-                            return [3, 9];
-                        case 6: return [4, this.loadTmxGroup(new es.TmxGroup(), map, e, width, height, tmxDirectory)];
-                        case 7:
-                            newGroup = _c.sent();
-                            layer = newGroup;
-                            if (container instanceof es.TmxMap || container instanceof es.TmxGroup)
-                                container.groups.push(newGroup);
-                            return [3, 9];
-                        case 8: throw new Error("无效的操作");
-                        case 9:
-                            if (container instanceof es.TmxMap || container instanceof es.TmxGroup)
-                                container.layers.push(layer);
-                            _c.label = 10;
-                        case 10:
-                            _i++;
-                            return [3, 1];
-                        case 11: return [2];
-                    }
-                });
-            });
-        };
-        TiledMapLoader.loadTmxGroup = function (group, map, xGroup, width, height, tmxDirectory) {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            group.map = map;
-                            group.name = xGroup["name"] != undefined ? xGroup["name"] : "";
-                            group.opacity = xGroup["opacity"] != undefined ? xGroup["opacity"] : 1;
-                            group.visible = xGroup["visible"] != undefined ? xGroup["visible"] : true;
-                            group.offsetX = xGroup["offsetx"] != undefined ? xGroup["offsetx"] : 0;
-                            group.offsetY = xGroup["offsety"] != undefined ? xGroup["offsety"] : 0;
-                            group.properties = this.parsePropertyDict(xGroup["properties"]);
-                            group.layers = [];
-                            group.tileLayers = [];
-                            group.objectGroups = [];
-                            group.imageLayers = [];
-                            group.groups = [];
-                            return [4, this.parseLayers(group, xGroup, map, width, height, tmxDirectory)];
-                        case 1:
-                            _a.sent();
-                            return [2, group];
-                    }
-                });
-            });
-        };
-        TiledMapLoader.loadTmxImageLayer = function (layer, map, xImageLayer, tmxDirectory) {
-            return __awaiter(this, void 0, void 0, function () {
-                var xImage, _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            layer.map = map;
-                            layer.name = xImageLayer["name"];
-                            layer.width = xImageLayer["width"];
-                            layer.height = xImageLayer["height"];
-                            layer.visible = xImageLayer["visible"] != undefined ? xImageLayer["visible"] : true;
-                            layer.opacity = xImageLayer["opacity"] != undefined ? xImageLayer["opacity"] : 1;
-                            layer.offsetX = xImageLayer["offsetx"] != undefined ? xImageLayer["offsetx"] : 0;
-                            layer.offsetY = xImageLayer["offsety"] != undefined ? xImageLayer["offsety"] : 0;
-                            xImage = xImageLayer["image"];
-                            if (!xImage) return [3, 2];
-                            _a = layer;
-                            return [4, this.loadTmxImage(new es.TmxImage(), xImage, tmxDirectory)];
-                        case 1:
-                            _a.image = _b.sent();
-                            _b.label = 2;
-                        case 2:
-                            layer.properties = this.parsePropertyDict(xImageLayer["properties"]);
-                            return [2, layer];
-                    }
-                });
-            });
-        };
-        TiledMapLoader.loadTmxLayer = function (layer, map, xLayer, width, height) {
-            layer.map = map;
-            layer.name = xLayer["name"];
-            layer.opacity = xLayer["opacity"] != undefined ? xLayer["opacity"] : 1;
-            layer.visible = xLayer["visible"] != undefined ? xLayer["visible"] : true;
-            layer.offsetX = xLayer["offsetx"] != undefined ? xLayer["offsetx"] : 0;
-            layer.offsetY = xLayer["offsety"] != undefined ? xLayer["offsety"] : 0;
-            layer.width = xLayer["width"];
-            layer.height = xLayer["height"];
-            var xData = xLayer["data"];
-            var encoding = xData["encoding"] != undefined ? xData["encoding"] : "csv";
-            layer.tiles = new Array(width * height);
-            if (encoding == "base64") {
-                var br = es.TmxUtils.decode(xData.toString(), encoding, xData["compression"]);
-                var index = 0;
-                for (var j = 0; j < height; j++) {
-                    for (var i = 0; i < width; i++) {
-                        var gid = br[index];
-                        layer.tiles[index++] = gid != 0 ? new es.TmxLayerTile(map, gid, i, j) : null;
-                    }
-                }
-            }
-            else if (encoding == "csv") {
-                var k = 0;
-                for (var _i = 0, xData_1 = xData; _i < xData_1.length; _i++) {
-                    var s = xData_1[_i];
-                    var gid = s;
-                    var x = k % width;
-                    var y = k / width;
-                    layer.tiles[k++] = gid != 0 ? new es.TmxLayerTile(map, gid, x, y) : null;
-                }
-            }
-            else if (!encoding) {
-                var k = 0;
-                for (var _a = 0, _b = xData["tile"]; _a < _b.length; _a++) {
-                    var e = _b[_a];
-                    var gid = e["gid"] != undefined ? e["gid"] : 0;
-                    var x = k % width;
-                    var y = k / width;
-                    layer.tiles[k++] = gid != 0 ? new es.TmxLayerTile(map, gid, x, y) : null;
-                }
+        // 链表尾部添加元素
+        LinkedList.prototype.push = function (element) {
+            // 声明结点变量，将元素当作参数传入生成结点
+            var node = new Node(element);
+            // 存储遍历到的链表元素
+            var current;
+            if (this.head == null) {
+                // 链表为空，直接将链表头部赋值为结点变量
+                this.head = node;
             }
             else {
-                throw new Error("TmxLayer:未知编码");
-            }
-            layer.properties = TiledMapLoader.parsePropertyDict(xLayer["properties"]);
-            return layer;
-        };
-        TiledMapLoader.updateMaxTileSizes = function (tileset) {
-            tileset.tiles.forEach(function (tile) {
-                if (tile.image) {
-                    if (tile.image.width > tileset.map.maxTileWidth)
-                        tileset.map.maxTileWidth = tile.image.width;
-                    if (tile.image.height > tileset.map.maxTileHeight)
-                        tileset.map.maxTileHeight = tile.image.height;
+                // 链表不为空，我们只能拿到链表中第一个元素的引用
+                current = this.head;
+                // 循环访问链表
+                while (current.next != null) {
+                    // 赋值遍历到的元素
+                    current = current.next;
                 }
-            });
-            tileset.tileRegions.forEach(function (region) {
-                var width = region.width;
-                var height = region.height;
-                if (width > tileset.map.maxTileWidth)
-                    tileset.map.maxTileWidth = width;
-                if (width > tileset.map.maxTileHeight)
-                    tileset.map.maxTileHeight = height;
-            });
-        };
-        TiledMapLoader.parseOrientationType = function (type) {
-            if (type == "unknown")
-                return es.OrientationType.unknown;
-            if (type == "orthogonal")
-                return es.OrientationType.orthogonal;
-            if (type == "isometric")
-                return es.OrientationType.isometric;
-            if (type == "staggered")
-                return es.OrientationType.staggered;
-            if (type == "hexagonal")
-                return es.OrientationType.hexagonal;
-            return es.OrientationType.unknown;
-        };
-        TiledMapLoader.parseStaggerAxisType = function (type) {
-            if (type == "y")
-                return es.StaggerAxisType.y;
-            return es.StaggerAxisType.x;
-        };
-        TiledMapLoader.parseStaggerIndexType = function (type) {
-            if (type == "even")
-                return es.StaggerIndexType.even;
-            return es.StaggerIndexType.odd;
-        };
-        TiledMapLoader.parseRenderOrderType = function (type) {
-            if (type == "right-up")
-                return es.RenderOrderType.rightUp;
-            if (type == "left-down")
-                return es.RenderOrderType.leftDown;
-            if (type == "left-up")
-                return es.RenderOrderType.leftUp;
-            return es.RenderOrderType.rightDown;
-        };
-        TiledMapLoader.parsePropertyDict = function (prop) {
-            if (!prop)
-                return null;
-            var dict = new Map();
-            for (var _i = 0, prop_1 = prop; _i < prop_1.length; _i++) {
-                var p = prop_1[_i];
-                var pname = p["name"];
-                var valueAttr = p["value"];
-                if (p["type"] == "color")
-                    dict.set(pname, es.TmxUtils.color16ToUnit(valueAttr).toString());
-                else
-                    dict.set(pname, valueAttr);
+                // 此时已经得到了链表的最后一个元素(null)，将链表的下一个元素赋值为结点变量。
+                current.next = node;
             }
-            return dict;
+            // 链表长度自增
+            this.count++;
         };
-        TiledMapLoader.parseTmxTileset = function (map, xTileset) {
-            return __awaiter(this, void 0, void 0, function () {
-                var xFirstGid, firstGid, source, xDocTileset, tileset;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            xFirstGid = xTileset["firstgid"];
-                            firstGid = xFirstGid;
-                            source = xTileset["image"];
-                            if (!(source != undefined)) return [3, 2];
-                            source = map.tmxDirectory + source;
-                            return [4, RES.getResByUrl(source, null, this, RES.ResourceItem.TYPE_IMAGE).catch(function (err) {
-                                    throw new Error(err);
-                                })];
-                        case 1:
-                            xDocTileset = _a.sent();
-                            tileset = this.loadTmxTileset(new es.TmxTileset(), map, xDocTileset["tileset"], firstGid);
-                            return [2, tileset];
-                        case 2: return [2, this.loadTmxTileset(new es.TmxTileset(), map, xTileset, firstGid)];
-                    }
-                });
-            });
-        };
-        TiledMapLoader.loadTmxTileset = function (tileset, map, xTileset, firstGid) {
-            return __awaiter(this, void 0, void 0, function () {
-                var xImage, _a, _i, _b, e, _c, _d, _e, t, xTile, tile, id, y, column, x;
-                return __generator(this, function (_f) {
-                    switch (_f.label) {
-                        case 0:
-                            tileset.map = map;
-                            tileset.firstGid = firstGid;
-                            tileset.name = xTileset["name"];
-                            tileset.tileWidth = xTileset["tilewidth"];
-                            tileset.tileHeight = xTileset["tileheight"];
-                            tileset.spacing = xTileset["spacing"] != undefined ? xTileset["spacing"] : 0;
-                            tileset.margin = xTileset["margin"] != undefined ? xTileset["margin"] : 0;
-                            tileset.columns = xTileset["columns"];
-                            tileset.tileCount = xTileset["tilecount"];
-                            tileset.tileOffset = this.parseTmxTileOffset(xTileset["tileoffset"]);
-                            xImage = xTileset["image"];
-                            if (!xImage) return [3, 2];
-                            _a = tileset;
-                            return [4, this.loadTmxImage(new es.TmxImage(), xTileset, map.tmxDirectory).catch(function (err) {
-                                    throw new Error(err);
-                                })];
-                        case 1:
-                            _a.image = _f.sent();
-                            _f.label = 2;
-                        case 2:
-                            tileset.terrains = [];
-                            if (xTileset["terrains"])
-                                for (_i = 0, _b = xTileset["terrains"]; _i < _b.length; _i++) {
-                                    e = _b[_i];
-                                    tileset.terrains.push(this.parseTmxTerrain(e));
-                                }
-                            tileset.tiles = new Map();
-                            _c = [];
-                            for (_d in xTileset["tiles"])
-                                _c.push(_d);
-                            _e = 0;
-                            _f.label = 3;
-                        case 3:
-                            if (!(_e < _c.length)) return [3, 6];
-                            t = _c[_e];
-                            if (!xTileset["tiles"].hasOwnProperty(t)) return [3, 5];
-                            xTile = xTileset["tiles"][t];
-                            return [4, this.loadTmxTilesetTile(new es.TmxTilesetTile(), tileset, xTile, tileset.terrains, map.tmxDirectory)];
-                        case 4:
-                            tile = _f.sent();
-                            tileset.tiles.set(tile.id == undefined ? Number(t) + 1 : tile.id, tile);
-                            _f.label = 5;
-                        case 5:
-                            _e++;
-                            return [3, 3];
-                        case 6:
-                            tileset.properties = this.parsePropertyDict(xTileset["properties"]);
-                            tileset.tileRegions = new Map();
-                            if (tileset.image) {
-                                id = firstGid;
-                                for (y = tileset.margin; y < tileset.image.height - tileset.margin; y += tileset.tileHeight + tileset.spacing) {
-                                    column = 0;
-                                    for (x = tileset.margin; x < tileset.image.width - tileset.margin; x += tileset.tileWidth + tileset.spacing) {
-                                        tileset.tileRegions.set(id++, new es.Rectangle(x, y, tileset.tileWidth, tileset.tileHeight));
-                                        if (++column >= tileset.columns)
-                                            break;
-                                    }
-                                }
-                            }
-                            else {
-                                tileset.tiles.forEach(function (tile, key) {
-                                    tileset.tileRegions.set(key, new es.Rectangle(0, 0, tile.image.width, tile.image.height));
-                                });
-                            }
-                            return [2, tileset];
-                    }
-                });
-            });
-        };
-        TiledMapLoader.loadTmxTilesetTile = function (tile, tileset, xTile, terrains, tmxDirectory) {
-            return __awaiter(this, void 0, void 0, function () {
-                var strTerrain, index, _i, strTerrain_1, v, edge, xImage, _a, _b, _c, e, _d, _e, e;
-                return __generator(this, function (_f) {
-                    switch (_f.label) {
-                        case 0:
-                            tile.tileset = tileset;
-                            tile.id = xTile["id"];
-                            strTerrain = xTile["terrain"];
-                            if (strTerrain) {
-                                tile.terrainEdges = new Array(4);
-                                index = 0;
-                                for (_i = 0, strTerrain_1 = strTerrain; _i < strTerrain_1.length; _i++) {
-                                    v = strTerrain_1[_i];
-                                    edge = terrains[v];
-                                    tile.terrainEdges[index++] = edge;
-                                }
-                            }
-                            tile.probability = xTile["probability"] != undefined ? xTile["probability"] : 1;
-                            tile.type = xTile["type"];
-                            xImage = xTile["image"];
-                            if (!xImage) return [3, 2];
-                            _a = tile;
-                            return [4, this.loadTmxImage(new es.TmxImage(), xImage, tmxDirectory)];
-                        case 1:
-                            _a.image = _f.sent();
-                            _f.label = 2;
-                        case 2:
-                            tile.objectGroups = [];
-                            if (xTile["objectgroup"])
-                                for (_b = 0, _c = xTile["objectgroup"]; _b < _c.length; _b++) {
-                                    e = _c[_b];
-                                    tile.objectGroups.push(this.loadTmxObjectGroup(new es.TmxObjectGroup(), tileset.map, e));
-                                }
-                            tile.animationFrames = [];
-                            if (xTile["animation"]) {
-                                for (_d = 0, _e = xTile["animation"]["frame"]; _d < _e.length; _d++) {
-                                    e = _e[_d];
-                                    tile.animationFrames.push(this.loadTmxAnimationFrame(new es.TmxAnimationFrame(), e));
-                                }
-                            }
-                            tile.properties = this.parsePropertyDict(xTile["properties"]);
-                            if (tile.properties)
-                                tile.processProperties();
-                            return [2, tile];
-                    }
-                });
-            });
-        };
-        TiledMapLoader.loadTmxAnimationFrame = function (frame, xFrame) {
-            frame.gid = xFrame["tileid"];
-            frame.duration = xFrame["duration"] / 1000;
-            return frame;
-        };
-        TiledMapLoader.loadTmxObjectGroup = function (group, map, xObjectGroup) {
-            group.map = map;
-            group.name = xObjectGroup["name"] != undefined ? xObjectGroup["name"] : "";
-            group.color = es.TmxUtils.color16ToUnit(xObjectGroup["color"]);
-            group.opacity = xObjectGroup["opacity"] != undefined ? xObjectGroup["opacity"] : 1;
-            group.visible = xObjectGroup["visible"] != undefined ? xObjectGroup["visible"] : true;
-            group.offsetX = xObjectGroup["offsetx"] != undefined ? xObjectGroup["offsetx"] : 0;
-            group.offsetY = xObjectGroup["offsety"] != undefined ? xObjectGroup["offsety"] : 0;
-            var drawOrderDict = new Map();
-            drawOrderDict.set("unknown", es.DrawOrderType.unkownOrder);
-            drawOrderDict.set("topdown", es.DrawOrderType.IndexOrder);
-            drawOrderDict.set("index", es.DrawOrderType.TopDown);
-            var drawOrderValue = xObjectGroup["draworder"];
-            if (drawOrderValue)
-                group.drawOrder = drawOrderDict.get(drawOrderValue);
-            group.objects = [];
-            for (var _i = 0, _a = xObjectGroup["objects"]; _i < _a.length; _i++) {
-                var e = _a[_i];
-                group.objects.push(this.loadTmxObject(new es.TmxObject(), map, e));
-            }
-            group.properties = this.parsePropertyDict(xObjectGroup["properties"]);
-            return group;
-        };
-        TiledMapLoader.loadTmxObject = function (obj, map, xObject) {
-            obj.id = xObject["id"] != undefined ? xObject["id"] : 0;
-            obj.name = xObject["name"] != undefined ? xObject["name"] : "";
-            obj.x = xObject["x"];
-            obj.y = xObject["y"];
-            obj.width = xObject["width"] != undefined ? xObject["width"] : 0;
-            obj.height = xObject["height"] != undefined ? xObject["height"] : 0;
-            obj.type = xObject["type"] != undefined ? xObject["type"] : "";
-            obj.visible = xObject["visible"] != undefined ? xObject["visible"] : true;
-            obj.rotation = xObject["rotation"] != undefined ? xObject["rotation"] : 0;
-            var xGid = xObject["gid"];
-            var xEllipse = xObject["ellipse"];
-            var xPolygon = xObject["polygon"];
-            var xPolyline = xObject["polyline"];
-            var xText = xObject["text"];
-            var xPoint = xObject["point"];
-            if (xGid) {
-                obj.tile = new es.TmxLayerTile(map, xGid, Math.round(obj.x), Math.round(obj.y));
-                obj.objectType = es.TmxObjectType.tile;
-            }
-            else if (xEllipse) {
-                obj.objectType = es.TmxObjectType.ellipse;
-            }
-            else if (xPolygon) {
-                obj.points = this.parsePoints(xPolygon);
-                obj.objectType = es.TmxObjectType.polygon;
-            }
-            else if (xPolyline) {
-                obj.points = this.parsePoints(xPolyline);
-                obj.objectType = es.TmxObjectType.polyline;
-            }
-            else if (xText) {
-                obj.text = this.loadTmxText(new es.TmxText(), xText);
-                obj.objectType = es.TmxObjectType.text;
-            }
-            else if (xPoint) {
-                obj.objectType = es.TmxObjectType.point;
-            }
-            else {
-                obj.objectType = es.TmxObjectType.basic;
-            }
-            obj.properties = this.parsePropertyDict(xObject["properties"]);
-            return obj;
-        };
-        TiledMapLoader.loadTmxText = function (text, xText) {
-            text.fontFamily = xText["fontfamily"] != undefined ? xText["fontfamily"] : "sans-serif";
-            text.pixelSize = xText["pixelsize"] != undefined ? xText["pixelsize"] : 16;
-            text.wrap = xText["wrap"] != undefined ? xText["wrap"] : false;
-            text.color = es.TmxUtils.color16ToUnit(xText["color"]);
-            text.bold = xText["bold"] ? xText["bold"] : false;
-            text.italic = xText["italic"] ? xText["italic"] : false;
-            text.underline = xText["underline"] ? xText["underline"] : false;
-            text.strikeout = xText["strikeout"] ? xText["strikeout"] : false;
-            text.kerning = xText["kerning"] ? xText["kerning"] : true;
-            text.alignment = this.loadTmxAlignment(new es.TmxAlignment(), xText);
-            text.value = xText;
-            return text;
-        };
-        TiledMapLoader.loadTmxAlignment = function (alignment, xText) {
-            function firstLetterToUpperCase(str) {
-                if (!str || str == "")
-                    return str;
-                return str[0].toString().toUpperCase() + str.substr(1);
-            }
-            var xHorizontal = xText["halign"] != undefined ? xText["halign"] : "left";
-            alignment.horizontal = es.TmxHorizontalAlignment[firstLetterToUpperCase(xHorizontal)];
-            var xVertical = xText["valign"] != undefined ? xText["valign"] : "top";
-            alignment.vertical = es.TmxVerticalAlignment[firstLetterToUpperCase((xVertical))];
-            return alignment;
-        };
-        TiledMapLoader.parsePoints = function (xPoints) {
-            var points = [];
-            var index = 0;
-            for (var _i = 0, xPoints_1 = xPoints; _i < xPoints_1.length; _i++) {
-                var s = xPoints_1[_i];
-                points[index++] = this.parsePoint(s);
-            }
-            return points;
-        };
-        TiledMapLoader.parsePoint = function (pt) {
-            return new es.Vector2(pt.x, pt.y);
-        };
-        TiledMapLoader.parseTmxTerrain = function (xTerrain) {
-            var terrain = new es.TmxTerrain();
-            terrain.name = xTerrain["name"];
-            terrain.tile = xTerrain["tile"];
-            terrain.properties = this.parsePropertyDict(xTerrain["properties"]);
-            return terrain;
-        };
-        TiledMapLoader.parseTmxTileOffset = function (xTileOffset) {
-            var tmxTileOffset = new es.TmxTileOffset();
-            if (!xTileOffset) {
-                tmxTileOffset.x = 0;
-                tmxTileOffset.y = 0;
-                return tmxTileOffset;
-            }
-            tmxTileOffset.x = xTileOffset["x"];
-            tmxTileOffset.y = xTileOffset["y"];
-            return tmxTileOffset;
-        };
-        TiledMapLoader.loadTmxImage = function (image, xImage, tmxDirectory) {
-            return __awaiter(this, void 0, void 0, function () {
-                var xSource, texture;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            xSource = xImage["image"];
-                            if (xSource != undefined) {
-                                image.source = tmxDirectory + xSource;
-                            }
-                            else {
-                                image.source = tmxDirectory + xImage;
-                            }
-                            return [4, RES.getResByUrl(image.source, null, this, RES.ResourceItem.TYPE_IMAGE).catch(function (err) {
-                                    throw new Error(err);
-                                })];
-                        case 1:
-                            texture = _a.sent();
-                            image.bitmap = new egret.SpriteSheet(texture);
-                            image.trans = es.TmxUtils.color16ToUnit(xImage["trans"]);
-                            image.width = xImage["imagewidth"] != undefined ? xImage["imagewidth"] : texture.textureWidth;
-                            image.height = xImage["imageheight"] != undefined ? xImage["imageheight"] : texture.textureHeight;
-                            return [2, image];
-                    }
-                });
-            });
-        };
-        return TiledMapLoader;
-    }());
-    es.TiledMapLoader = TiledMapLoader;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Bitmap = egret.Bitmap;
-    var TiledRendering = (function () {
-        function TiledRendering() {
-        }
-        TiledRendering.renderMap = function (map, container, position, scale, layerDepth) {
-            var _this = this;
-            map.layers.forEach(function (layer) {
-                if (layer instanceof es.TmxLayer && layer.visible) {
-                    _this.renderLayer(layer, container, position, scale, layerDepth);
-                }
-                else if (layer instanceof es.TmxImageLayer && layer.visible) {
-                    _this.renderImageLayer(layer, container, position, scale, layerDepth);
-                }
-                else if (layer instanceof es.TmxGroup && layer.visible) {
-                    _this.renderGroup(layer, container, position, scale, layerDepth);
-                }
-                else if (layer instanceof es.TmxObjectGroup && layer.visible) {
-                    _this.renderObjectGroup(layer, container, position, scale, layerDepth);
-                }
-            });
-        };
-        TiledRendering.renderLayer = function (layer, container, position, scale, layerDepth) {
-            if (!layer.visible)
-                return;
-            var tileWidth = layer.map.tileWidth * scale.x;
-            var tileHeight = layer.map.tileHeight * scale.y;
-            var color = es.DrawUtils.getColorMatrix(0xFFFFFF);
-            for (var i = 0; i < layer.tiles.length; i++) {
-                var tile = layer.tiles[i];
-                if (!tile)
-                    continue;
-                this.renderTile(tile, container, position, scale, tileWidth, tileHeight, color, layerDepth);
-            }
-        };
-        TiledRendering.renderLayerRenderCamera = function (layer, container, position, scale, layerDepth, camerClipBounds) {
-            if (layer instanceof es.TmxLayer && layer.visible) {
-                this.renderLayerCamera(layer, container, position, scale, layerDepth, camerClipBounds);
-            }
-            else if (layer instanceof es.TmxImageLayer && layer.visible) {
-                this.renderImageLayer(layer, container, position, scale, layerDepth);
-            }
-            else if (layer instanceof es.TmxGroup && layer.visible) {
-                this.renderGroup(layer, container, position, scale, layerDepth);
-            }
-            else if (layer instanceof es.TmxObjectGroup && layer.visible) {
-                this.renderObjectGroup(layer, container, position, scale, layerDepth);
-            }
-        };
-        TiledRendering.renderLayerCamera = function (layer, container, position, scale, layerDepth, camerClipBounds) {
-            if (!layer.visible)
-                return;
-            position = position.add(layer.offset);
-            camerClipBounds.location = camerClipBounds.location.subtract(position);
-            var tileWidth = layer.map.tileWidth * scale.x;
-            var tileHeight = layer.map.tileHeight * scale.y;
-            var minX, minY, maxX, maxY = 0;
-            if (layer.map.requiresLargeTileCulling) {
-                minX = layer.map.worldToTilePositionX(camerClipBounds.left - (layer.map.maxTileWidth * scale.x - tileWidth));
-                minY = layer.map.worldToTilePositionY(camerClipBounds.top - (layer.map.maxTileHeight * scale.y - tileHeight));
-                maxX = layer.map.worldToTilePositionX(camerClipBounds.right + (layer.map.maxTileWidth * scale.x - tileWidth));
-                maxY = layer.map.worldToTilePositionY(camerClipBounds.bottom + (layer.map.maxTileHeight * scale.y - tileHeight));
-            }
-            else {
-                minX = layer.map.worldToTilePositionX(camerClipBounds.left);
-                minY = layer.map.worldToTilePositionY(camerClipBounds.top);
-                maxX = layer.map.worldToTilePositionX(camerClipBounds.right);
-                maxY = layer.map.worldToTilePositionY(camerClipBounds.bottom);
-            }
-            var color = es.DrawUtils.getColorMatrix(0xFFFFFF);
-            for (var y = minY; y <= maxY; y++) {
-                for (var x = minX; x <= maxX; x++) {
-                    var tile = layer.getTile(x, y);
-                    if (tile)
-                        this.renderTile(tile, container, position, scale, tileWidth, tileHeight, color, layerDepth);
-                }
-            }
-        };
-        TiledRendering.renderImageLayer = function (layer, container, position, scale, layerDepth) {
-            if (!layer.visible)
-                return;
-            var color = es.DrawUtils.getColorMatrix(0xFFFFFF);
-            var pos = es.Vector2.add(position, new es.Vector2(layer.offsetX, layer.offsetY).multiply(scale));
-            if (!layer.image.texture.parent)
-                container.addChild(layer.image.texture);
-            layer.image.texture.x = pos.x;
-            layer.image.texture.y = pos.y;
-            layer.image.texture.scaleX = scale.x;
-            layer.image.texture.scaleY = scale.y;
-            layer.image.texture.filters = [color];
-        };
-        TiledRendering.renderObjectGroup = function (objGroup, container, position, scale, layerDepth) {
-            if (!objGroup.visible)
-                return;
-            function debugRender(obj, pos) {
-                if (!container)
-                    return;
-                if (!es.Core.debugRenderEndabled)
-                    return;
-                if (!obj.textField.parent && obj.name) {
-                    obj.textField.text = obj.name;
-                    obj.textField.size = 12;
-                    obj.textField.fontFamily = "sans-serif";
-                    if (obj.shape) {
-                        obj.textField.x = pos.x + (obj.shape.getBounds().width - obj.textField.width) / 2 + obj.shape.getBounds().x;
-                        obj.textField.y = pos.y - obj.textField.height - 5 + obj.shape.getBounds().y;
-                    }
-                    else {
-                        obj.textField.x = pos.x + (obj.width - obj.textField.width) / 2;
-                        obj.textField.y = pos.y - obj.textField.height - 5;
-                    }
-                    obj.textField.background = true;
-                    obj.textField.backgroundColor = 0xa0a0a4;
-                    obj.textField.textColor = 0xffffff;
-                    container.addChild(obj.textField);
-                }
-            }
-            for (var object in objGroup.objects) {
-                var obj = objGroup.objects[object];
-                if (!obj.visible)
-                    continue;
-                if (!es.Core.debugRenderEndabled) {
-                    if (obj.objectType != es.TmxObjectType.tile && obj.objectType != es.TmxObjectType.text)
-                        continue;
-                }
-                var pos = es.Vector2.add(position, new es.Vector2(obj.x, obj.y).multiply(scale));
-                switch (obj.objectType) {
-                    case es.TmxObjectType.basic:
-                        if (!obj.shape.parent) {
-                            obj.shape.x = obj.x;
-                            obj.shape.y = obj.y;
-                            container.addChild(obj.shape);
-                            obj.shape.graphics.clear();
-                            obj.shape.graphics.lineStyle(1, 0xa0a0a4);
-                            obj.shape.graphics.beginFill(0x979798, 0.5);
-                            obj.shape.graphics.drawRect(0, 0, obj.width * scale.x, obj.height * scale.y);
-                            obj.shape.graphics.endFill();
-                            debugRender(obj, pos);
-                        }
-                        break;
-                    case es.TmxObjectType.point:
-                        var size = objGroup.map.tileWidth * 0.5;
-                        pos.x -= size * 0.5;
-                        pos.y -= size * 0.5;
-                        if (!obj.shape.parent) {
-                            obj.shape.x = pos.x;
-                            obj.shape.y = pos.y;
-                            container.addChild(obj.shape);
-                            obj.shape.graphics.clear();
-                            obj.shape.graphics.lineStyle(1, 0xa0a0a4);
-                            obj.shape.graphics.beginFill(0x979798, 0.5);
-                            obj.shape.graphics.drawCircle(0, 0, 1);
-                            obj.shape.graphics.endFill();
-                            debugRender(obj, pos);
-                        }
-                        break;
-                    case es.TmxObjectType.tile:
-                        this.renderTilesetTile(objGroup, obj, container, pos, scale, debugRender);
-                        break;
-                    case es.TmxObjectType.ellipse:
-                        pos = new es.Vector2(obj.x + obj.width * 0.5, obj.y + obj.height * 0.5).multiply(scale);
-                        if (!obj.shape.parent) {
-                            obj.shape.x = pos.x;
-                            obj.shape.y = pos.y;
-                            container.addChild(obj.shape);
-                            obj.shape.graphics.clear();
-                            obj.shape.graphics.lineStyle(1, 0xa0a0a4);
-                            obj.shape.graphics.beginFill(0x979798, 0.5);
-                            obj.shape.graphics.drawCircle(0, 0, obj.width * 0.5);
-                            obj.shape.graphics.endFill();
-                            debugRender(obj, pos);
-                        }
-                        break;
-                    case es.TmxObjectType.polygon:
-                    case es.TmxObjectType.polyline:
-                        var points = [];
-                        for (var i = 0; i < obj.points.length; i++)
-                            points[i] = es.Vector2.multiply(obj.points[i], scale);
-                        if (!obj.shape.parent && points.length > 0) {
-                            obj.shape.x = pos.x;
-                            obj.shape.y = pos.y;
-                            container.addChild(obj.shape);
-                            obj.shape.graphics.clear();
-                            obj.shape.graphics.lineStyle(1, 0xa0a0a4);
-                            for (var i = 0; i < points.length; i++) {
-                                obj.shape.graphics.lineTo(points[i].x, points[i].y);
-                            }
-                            obj.shape.graphics.endFill();
-                            debugRender(obj, pos);
-                        }
-                        break;
-                    case es.TmxObjectType.text:
-                        if (!obj.textField.parent) {
-                            obj.textField.x = pos.x;
-                            obj.textField.y = pos.y;
-                            container.addChild(obj.textField);
-                            obj.textField.text = obj.text.value;
-                            obj.textField.textColor = obj.text.color;
-                            obj.textField.bold = obj.text.bold != undefined ? obj.text.bold : false;
-                            obj.textField.italic = obj.text.italic != undefined ? obj.text.italic : false;
-                            obj.textField.size = obj.text.pixelSize;
-                            obj.textField.fontFamily = obj.text.fontFamily;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-        TiledRendering.renderTilesetTile = function (objGroup, obj, container, pos, scale, debugRender) {
-            var tileset = objGroup.map.getTilesetForTileGid(obj.tile.gid);
-            var sourceRect = tileset.tileRegions.get(obj.tile.gid);
-            if (container) {
-                if (tileset.image) {
-                    if (obj.tile.horizontalFlip && obj.tile.verticalFlip) {
-                        pos.x += tileset.tileHeight + (sourceRect.height * scale.y - tileset.tileHeight);
-                        pos.y -= (sourceRect.width * scale.x - tileset.tileWidth);
-                    }
-                    else if (obj.tile.horizontalFlip) {
-                        pos.x += tileset.tileWidth + (sourceRect.height * scale.y - tileset.tileHeight);
-                    }
-                    else if (obj.tile.verticalFlip) {
-                        pos.y += (tileset.tileWidth - sourceRect.width * scale.x);
-                    }
-                    else {
-                        pos.y += (tileset.tileHeight - sourceRect.height * scale.y);
-                    }
-                    var texture = tileset.image.bitmap.getTexture("" + obj.tile.gid);
-                    if (!texture) {
-                        texture = tileset.image.bitmap.createTexture("" + obj.tile.gid, sourceRect.x, sourceRect.y, sourceRect.width, sourceRect.height);
-                    }
-                    tileset.image.texture = new Bitmap(texture);
-                    container.addChild(tileset.image.texture);
-                    tileset.image.texture.x = pos.x;
-                    tileset.image.texture.y = pos.y;
-                    if (obj.tile.verticalFlip && obj.tile.horizontalFlip) {
-                        tileset.image.texture.scaleX = -1;
-                        tileset.image.texture.scaleY = -1;
-                    }
-                    else if (obj.tile.verticalFlip) {
-                        tileset.image.texture.scaleX = scale.x;
-                        tileset.image.texture.scaleY = -1;
-                    }
-                    else if (obj.tile.horizontalFlip) {
-                        tileset.image.texture.scaleX = -1;
-                        tileset.image.texture.scaleY = scale.y;
-                    }
-                    else {
-                        tileset.image.texture.scaleX = scale.x;
-                        tileset.image.texture.scaleY = scale.y;
-                    }
-                    tileset.image.texture.anchorOffsetX = 0;
-                    tileset.image.texture.anchorOffsetY = 0;
-                    debugRender(obj, pos);
+        // 移除链表指定位置的元素
+        LinkedList.prototype.removeAt = function (index) {
+            // 边界判断: 参数是否有效
+            if (index >= 0 && index < this.count) {
+                // 获取当前链表头部元素
+                var current = this.head;
+                // 移除第一项
+                if (index === 0) {
+                    this.head = current.next;
                 }
                 else {
-                    var tilesetTile = tileset.tiles.get(obj.tile.gid);
-                    var texture = tilesetTile.image.bitmap.getTexture("" + obj.tile.gid);
-                    if (!texture) {
-                        texture = tilesetTile.image.bitmap.createTexture("" + obj.tile.gid, sourceRect.x, sourceRect.y, sourceRect.width, sourceRect.height);
-                    }
-                    pos.y -= obj.height;
-                    tilesetTile.image.texture = new Bitmap(texture);
-                    container.addChild(tilesetTile.image.texture);
-                    tilesetTile.image.texture.width = obj.width;
-                    tilesetTile.image.texture.height = obj.height;
-                    tilesetTile.image.texture.x = pos.x;
-                    tilesetTile.image.texture.y = pos.y;
-                    if (obj.tile.verticalFlip && obj.tile.horizontalFlip) {
-                        tilesetTile.image.texture.scaleX = -1;
-                        tilesetTile.image.texture.scaleY = -1;
-                    }
-                    else if (obj.tile.verticalFlip) {
-                        tilesetTile.image.texture.scaleX = scale.x;
-                        tilesetTile.image.texture.scaleY = -1;
-                    }
-                    else if (obj.tile.horizontalFlip) {
-                        tilesetTile.image.texture.scaleX = -1;
-                        tilesetTile.image.texture.scaleY = scale.y;
-                    }
-                    else {
-                        tilesetTile.image.texture.scaleX = scale.x;
-                        tilesetTile.image.texture.scaleY = scale.y;
-                    }
-                    tilesetTile.image.texture.anchorOffsetX = 0;
-                    tilesetTile.image.texture.anchorOffsetY = 0;
+                    // 获取目标参数上一个结点
+                    var previous = this.getElementAt(index - 1);
+                    // 当前结点指向目标结点
+                    current = previous.next;
+                    /**
+                     * 目标结点元素已找到
+                     * previous.next指向目标结点
+                     * current.next指向undefined
+                     * previous.next指向current.next即删除目标结点的元素
+                     */
+                    previous.next = current.next;
+                }
+                // 链表长度自减
+                this.count--;
+                // 返回当前删除的目标结点
+                return current.element;
+            }
+            return undefined;
+        };
+        // 获取链表指定位置的结点
+        LinkedList.prototype.getElementAt = function (index) {
+            // 参数校验
+            if (index >= 0 && index <= this.count) {
+                // 获取链表头部元素
+                var current = this.head;
+                // 从链表头部遍历至目标结点位置
+                for (var i = 0; i < index && current != null; i++) {
+                    // 当前结点指向下一个目标结点
+                    current = current.next;
+                }
+                // 返回目标结点数据
+                return current;
+            }
+            return undefined;
+        };
+        // 向链表中插入元素
+        LinkedList.prototype.insert = function (element, index) {
+            // 参数有效性判断
+            if (index >= 0 && index <= this.count) {
+                // 声明节点变量，将当前要插入的元素作为参数生成结点
+                var node = new Node(element);
+                // 第一个位置添加元素
+                if (index === 0) {
+                    // 将节点变量(node)的下一个元素指向链表的头部元素
+                    node.next = this.head;
+                    // 链表头部元素赋值为节点变量
+                    this.head = node;
+                }
+                else {
+                    // 获取目标结点的上一个结点
+                    var previous = this.getElementAt(index - 1);
+                    // 将节点变量的下一个元素指向目标节点
+                    node.next = previous.next;
+                    /**
+                     * 此时node中当前结点为要插入的值
+                     * next为原位置处的结点
+                     * 因此将当前结点赋值为node，就完成了结点插入操作
+                     */
+                    previous.next = node;
+                }
+                // 链表长度自增
+                this.count++;
+                return true;
+            }
+            return false;
+        };
+        // 根据元素获取其在链表中的索引
+        LinkedList.prototype.indexOf = function (element) {
+            // 获取链表顶部元素
+            var current = this.head;
+            // 遍历链表内的元素
+            for (var i = 0; i < this.count && current != null; i++) {
+                // 判断当前链表中的结点与目标结点是否相等
+                if (this.equalsFn(element, current.element)) {
+                    // 返回索引
+                    return i;
+                }
+                // 当前结点指向下一个结点
+                current = current.next;
+            }
+            // 目标元素不存在
+            return -1;
+        };
+        // 移除链表中的指定元素
+        LinkedList.prototype.remove = function (element) {
+            // 获取element的索引,移除索引位置的元素
+            this.removeAt(this.indexOf(element));
+        };
+        LinkedList.prototype.clear = function () {
+            this.head = undefined;
+            this.count = 0;
+        };
+        // 获取链表长度
+        LinkedList.prototype.size = function () {
+            return this.count;
+        };
+        // 判断链表是否为空
+        LinkedList.prototype.isEmpty = function () {
+            return this.size() === 0;
+        };
+        // 获取链表头部元素
+        LinkedList.prototype.getHead = function () {
+            return this.head;
+        };
+        // 获取链表中的所有元素
+        LinkedList.prototype.toString = function () {
+            if (this.head == null) {
+                return "";
+            }
+            var objString = "" + this.head.element;
+            // 获取链表顶点的下一个结点
+            var current = this.head.next;
+            // 遍历链表中的所有结点
+            for (var i = 1; i < this.size() && current != null; i++) {
+                // 将当前结点的元素拼接到最终要生成的字符串对象中
+                objString = objString + ", " + current.element;
+                // 当前结点指向链表的下一个元素
+                current = current.next;
+            }
+            return objString;
+        };
+        return LinkedList;
+    }());
+    es.LinkedList = LinkedList;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 可以用于列表池的简单类
+     */
+    var ListPool = /** @class */ (function () {
+        function ListPool() {
+        }
+        /**
+         * 预热缓存，使用最大的cacheCount对象填充缓存
+         * @param cacheCount
+         */
+        ListPool.warmCache = function (cacheCount) {
+            cacheCount -= this._objectQueue.length;
+            if (cacheCount > 0) {
+                for (var i = 0; i < cacheCount; i++) {
+                    this._objectQueue.unshift([]);
                 }
             }
         };
-        TiledRendering.renderGroup = function (group, container, position, scale, layerDepth) {
+        /**
+         * 将缓存修剪为cacheCount项目
+         * @param cacheCount
+         */
+        ListPool.trimCache = function (cacheCount) {
+            while (cacheCount > this._objectQueue.length)
+                this._objectQueue.shift();
+        };
+        /**
+         * 清除缓存
+         */
+        ListPool.clearCache = function () {
+            this._objectQueue.length = 0;
+        };
+        /**
+         * 如果可以的话，从堆栈中弹出一个项
+         */
+        ListPool.obtain = function () {
+            if (this._objectQueue.length > 0)
+                return this._objectQueue.shift();
+            return [];
+        };
+        /**
+         * 将项推回堆栈
+         * @param obj
+         */
+        ListPool.free = function (obj) {
+            this._objectQueue.unshift(obj);
+            obj.length = 0;
+        };
+        ListPool._objectQueue = [];
+        return ListPool;
+    }());
+    es.ListPool = ListPool;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 用于管理一对对象的简单DTO
+     */
+    var Pair = /** @class */ (function () {
+        function Pair(first, second) {
+            this.first = first;
+            this.second = second;
+        }
+        Pair.prototype.clear = function () {
+            this.first = this.second = null;
+        };
+        Pair.prototype.equals = function (other) {
+            // 这两种方法在功能上应该是等价的
+            return this.first == other.first && this.second == other.second;
+        };
+        Pair.prototype.getHashCode = function () {
+            return es.EqualityComparer.default().getHashCode(this.first) * 37 +
+                es.EqualityComparer.default().getHashCode(this.second);
+        };
+        return Pair;
+    }());
+    es.Pair = Pair;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 用于池任何对象
+     */
+    var Pool = /** @class */ (function () {
+        function Pool() {
+        }
+        /**
+         * 预热缓存，使用最大的cacheCount对象填充缓存
+         * @param type
+         * @param cacheCount
+         */
+        Pool.warmCache = function (type, cacheCount) {
+            cacheCount -= this._objectQueue.length;
+            if (cacheCount > 0) {
+                for (var i = 0; i < cacheCount; i++) {
+                    this._objectQueue.unshift(new type());
+                }
+            }
+        };
+        /**
+         * 将缓存修剪为cacheCount项目
+         * @param cacheCount
+         */
+        Pool.trimCache = function (cacheCount) {
+            while (cacheCount > this._objectQueue.length)
+                this._objectQueue.shift();
+        };
+        /**
+         * 清除缓存
+         */
+        Pool.clearCache = function () {
+            this._objectQueue.length = 0;
+        };
+        /**
+         * 如果可以的话，从堆栈中弹出一个项
+         */
+        Pool.obtain = function (type) {
+            if (this._objectQueue.length > 0)
+                return this._objectQueue.shift();
+            return new type();
+        };
+        /**
+         * 将项推回堆栈
+         * @param obj
+         */
+        Pool.free = function (obj) {
+            this._objectQueue.unshift(obj);
+            if (es.isIPoolable(obj)) {
+                obj["reset"]();
+            }
+        };
+        Pool._objectQueue = [];
+        return Pool;
+    }());
+    es.Pool = Pool;
+    es.isIPoolable = function (props) { return typeof props['reset'] !== 'undefined'; };
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Set = /** @class */ (function () {
+        function Set(source) {
             var _this = this;
-            if (!group.visible)
-                return;
-            group.layers.forEach(function (layer) {
-                if (layer instanceof es.TmxGroup) {
-                    _this.renderGroup(layer, container, position, scale, layerDepth);
-                }
-                if (layer instanceof es.TmxObjectGroup) {
-                    _this.renderObjectGroup(layer, container, position, scale, layerDepth);
-                }
-                if (layer instanceof es.TmxLayer) {
-                    _this.renderLayer(layer, container, position, scale, layerDepth);
-                }
-                if (layer instanceof es.TmxImageLayer) {
-                    _this.renderImageLayer(layer, container, position, scale, layerDepth);
-                }
-            });
+            this.clear();
+            if (source)
+                source.forEach(function (value) {
+                    _this.add(value);
+                });
+        }
+        Set.prototype.add = function (item) {
+            var _this = this;
+            var hashCode = this.getHashCode(item);
+            var bucket = this.buckets[hashCode];
+            if (bucket === undefined) {
+                var newBucket = new Array();
+                newBucket.push(item);
+                this.buckets[hashCode] = newBucket;
+                this.count = this.count + 1;
+                return true;
+            }
+            if (bucket.some(function (value) { return _this.areEqual(value, item); }))
+                return false;
+            bucket.push(item);
+            this.count = this.count + 1;
+            return true;
         };
-        TiledRendering.renderTile = function (tile, container, position, scale, tileWidth, tileHeight, color, layerDepth) {
-            var gid = tile.gid;
-            var tilesetTile = tile.tilesetTile;
-            if (tilesetTile && tilesetTile.animationFrames.length > 0)
-                gid = tilesetTile.currentAnimationFrameGid;
-            var sourceRect = tile.tileset.tileRegions.get(gid);
-            var tx = Math.floor(tile.x) * tileWidth;
-            var ty = Math.floor(tile.y) * tileHeight;
-            var rotation = 0;
-            if (tile.horizontalFlip && tile.verticalFlip) {
-                tx += tileHeight + (sourceRect.height * scale.y - tileHeight);
-                ty -= (sourceRect.width * scale.x - tileWidth);
+        ;
+        Set.prototype.remove = function (item) {
+            var _this = this;
+            var hashCode = this.getHashCode(item);
+            var bucket = this.buckets[hashCode];
+            if (bucket === undefined) {
+                return false;
             }
-            else if (tile.horizontalFlip) {
-                tx += tileWidth + (sourceRect.height * scale.y - tileHeight);
+            var result = false;
+            var newBucket = new Array();
+            bucket.forEach(function (value) {
+                if (!_this.areEqual(value, item))
+                    newBucket.push(item);
+                else
+                    result = true;
+            });
+            this.buckets[hashCode] = newBucket;
+            if (result)
+                this.count = this.count - 1;
+            return result;
+        };
+        Set.prototype.contains = function (item) {
+            return this.bucketsContains(this.buckets, item);
+        };
+        ;
+        Set.prototype.getCount = function () {
+            return this.count;
+        };
+        Set.prototype.clear = function () {
+            this.buckets = new Array();
+            this.count = 0;
+        };
+        Set.prototype.toArray = function () {
+            var result = new Array();
+            this.buckets.forEach(function (value) {
+                value.forEach(function (inner) {
+                    result.push(inner);
+                });
+            });
+            return result;
+        };
+        /**
+         * 从当前集合中删除指定集合中的所有元素
+         * @param other
+         */
+        Set.prototype.exceptWith = function (other) {
+            var _this = this;
+            if (other) {
+                other.forEach(function (value) {
+                    _this.remove(value);
+                });
             }
-            else if (tile.verticalFlip) {
-                ty += (tileWidth - sourceRect.width * scale.x);
+        };
+        /**
+         * 修改当前Set对象，使其只包含该对象和指定数组中的元素
+         * @param other
+         */
+        Set.prototype.intersectWith = function (other) {
+            var _this = this;
+            if (other) {
+                var otherBuckets_1 = this.buildInternalBuckets(other);
+                this.toArray().forEach(function (value) {
+                    if (!_this.bucketsContains(otherBuckets_1.Buckets, value))
+                        _this.remove(value);
+                });
             }
             else {
-                ty += (tileHeight - sourceRect.height * scale.y);
+                this.clear();
             }
-            var pos = new es.Vector2(tx, ty).add(position);
-            if (tile.tileset.image) {
-                if (container) {
-                    var texture = tile.tileset.image.bitmap.getTexture("" + gid);
-                    if (!texture) {
-                        texture = tile.tileset.image.bitmap.createTexture("" + gid, sourceRect.x, sourceRect.y, sourceRect.width, sourceRect.height);
-                    }
-                    tile.tileset.image.texture = new Bitmap(texture);
-                    container.addChild(tile.tileset.image.texture);
-                    if (tile.tileset.image.texture.x != pos.x)
-                        tile.tileset.image.texture.x = pos.x;
-                    if (tile.tileset.image.texture.y != pos.y)
-                        tile.tileset.image.texture.y = pos.y;
-                    if (tile.verticalFlip && tile.horizontalFlip) {
-                        tile.tileset.image.texture.scaleX = -1;
-                        tile.tileset.image.texture.scaleY = -1;
-                    }
-                    else if (tile.verticalFlip) {
-                        tile.tileset.image.texture.scaleX = scale.x;
-                        tile.tileset.image.texture.scaleY = -1;
-                    }
-                    else if (tile.horizontalFlip) {
-                        tile.tileset.image.texture.scaleX = -1;
-                        tile.tileset.image.texture.scaleY = scale.y;
+        };
+        Set.prototype.unionWith = function (other) {
+            var _this = this;
+            other.forEach(function (value) {
+                _this.add(value);
+            });
+        };
+        /**
+         * 确定当前集合是否为指定集合或数组的子集
+         * @param other
+         */
+        Set.prototype.isSubsetOf = function (other) {
+            var _this = this;
+            var otherBuckets = this.buildInternalBuckets(other);
+            return this.toArray().every(function (value) { return _this.bucketsContains(otherBuckets.Buckets, value); });
+        };
+        /**
+         * 确定当前不可变排序集是否为指定集合的超集
+         * @param other
+         */
+        Set.prototype.isSupersetOf = function (other) {
+            var _this = this;
+            return other.every(function (value) { return _this.contains(value); });
+        };
+        Set.prototype.overlaps = function (other) {
+            var _this = this;
+            return other.some(function (value) { return _this.contains(value); });
+        };
+        Set.prototype.setEquals = function (other) {
+            var _this = this;
+            var otherBuckets = this.buildInternalBuckets(other);
+            if (otherBuckets.Count !== this.count)
+                return false;
+            return other.every(function (value) { return _this.contains(value); });
+        };
+        Set.prototype.buildInternalBuckets = function (source) {
+            var _this = this;
+            var internalBuckets = new Array();
+            var internalCount = 0;
+            source.forEach(function (item) {
+                var hashCode = _this.getHashCode(item);
+                var bucket = internalBuckets[hashCode];
+                if (bucket === undefined) {
+                    var newBucket = new Array();
+                    newBucket.push(item);
+                    internalBuckets[hashCode] = newBucket;
+                    internalCount = internalCount + 1;
+                }
+                else if (!bucket.some(function (value) { return _this.areEqual(value, item); })) {
+                    bucket.push(item);
+                    internalCount = internalCount + 1;
+                }
+            });
+            return { Buckets: internalBuckets, Count: internalCount };
+        };
+        Set.prototype.bucketsContains = function (internalBuckets, item) {
+            var _this = this;
+            var hashCode = this.getHashCode(item);
+            var bucket = internalBuckets[hashCode];
+            if (bucket === undefined) {
+                return false;
+            }
+            return bucket.some(function (value) { return _this.areEqual(value, item); });
+        };
+        return Set;
+    }());
+    var HashSet = /** @class */ (function (_super) {
+        __extends(HashSet, _super);
+        function HashSet(source) {
+            return _super.call(this, source) || this;
+        }
+        HashSet.prototype.getHashCode = function (item) {
+            return item.getHashCode();
+        };
+        HashSet.prototype.areEqual = function (value1, value2) {
+            return value1.equals(value2);
+        };
+        return HashSet;
+    }(Set));
+    es.HashSet = HashSet;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var Coroutine = /** @class */ (function () {
+        function Coroutine() {
+        }
+        /**
+         * 导致Coroutine在指定的时间内暂停。在Coroutine.waitForSeconds的基础上，在Coroutine中使用Yield
+         * @param seconds
+         */
+        Coroutine.waitForSeconds = function (seconds) {
+            return WaitForSeconds.waiter.wait(seconds);
+        };
+        return Coroutine;
+    }());
+    es.Coroutine = Coroutine;
+    /**
+     * 帮助类，用于当一个coroutine想要暂停一段时间时。返回Coroutine.waitForSeconds返回其中一个
+     */
+    var WaitForSeconds = /** @class */ (function () {
+        function WaitForSeconds() {
+            this.waitTime = 0;
+        }
+        WaitForSeconds.prototype.wait = function (seconds) {
+            WaitForSeconds.waiter.waitTime = seconds;
+            return WaitForSeconds.waiter;
+        };
+        WaitForSeconds.waiter = new WaitForSeconds();
+        return WaitForSeconds;
+    }());
+    es.WaitForSeconds = WaitForSeconds;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * CoroutineManager用于隐藏Coroutine所需数据的内部类
+     */
+    var CoroutineImpl = /** @class */ (function () {
+        function CoroutineImpl() {
+            /**
+             * 每当产生一个延迟，它就会被添加到跟踪延迟的waitTimer中
+             */
+            this.waitTimer = 0;
+            this.useUnscaledDeltaTime = false;
+        }
+        CoroutineImpl.prototype.stop = function () {
+            this.isDone = true;
+        };
+        CoroutineImpl.prototype.setUseUnscaledDeltaTime = function (useUnscaledDeltaTime) {
+            this.useUnscaledDeltaTime = useUnscaledDeltaTime;
+            return this;
+        };
+        CoroutineImpl.prototype.prepareForUse = function () {
+            this.isDone = false;
+        };
+        CoroutineImpl.prototype.reset = function () {
+            this.isDone = true;
+            this.waitTimer = 0;
+            this.waitForCoroutine = null;
+            this.enumerator = null;
+            this.useUnscaledDeltaTime = false;
+        };
+        return CoroutineImpl;
+    }());
+    es.CoroutineImpl = CoroutineImpl;
+    var CoroutineManager = /** @class */ (function (_super) {
+        __extends(CoroutineManager, _super);
+        function CoroutineManager() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this._unblockedCoroutines = [];
+            _this._shouldRunNextFrame = [];
+            return _this;
+        }
+        /**
+         * 将IEnumerator添加到CoroutineManager中
+         * Coroutine在每一帧调用Update之前被执行
+         * @param enumerator
+         */
+        CoroutineManager.prototype.startCoroutine = function (enumerator) {
+            // 找到或创建一个CoroutineImpl
+            var coroutine = es.Pool.obtain(CoroutineImpl);
+            coroutine.prepareForUse();
+            // 设置coroutine并添加它
+            coroutine.enumerator = enumerator;
+            var shouldContinueCoroutine = this.tickCoroutine(coroutine);
+            if (!shouldContinueCoroutine)
+                return null;
+            if (this._isInUpdate)
+                this._shouldRunNextFrame.push(coroutine);
+            else
+                this._unblockedCoroutines.push(coroutine);
+            return coroutine;
+        };
+        CoroutineManager.prototype.update = function () {
+            this._isInUpdate = true;
+            for (var i = 0; i < this._unblockedCoroutines.length; i++) {
+                var coroutine = this._unblockedCoroutines[i];
+                if (coroutine.isDone) {
+                    es.Pool.free(coroutine);
+                    continue;
+                }
+                if (coroutine.waitForCoroutine != null) {
+                    if (coroutine.waitForCoroutine.isDone) {
+                        coroutine.waitForCoroutine = null;
                     }
                     else {
-                        tile.tileset.image.texture.scaleX = scale.x;
-                        tile.tileset.image.texture.scaleY = scale.y;
+                        this._shouldRunNextFrame.push(coroutine);
+                        continue;
                     }
-                    if (tile.tileset.image.texture.rotation != rotation)
-                        tile.tileset.image.texture.rotation = rotation;
-                    if (tile.tileset.image.texture.anchorOffsetX != 0)
-                        tile.tileset.image.texture.anchorOffsetX = 0;
-                    if (tile.tileset.image.texture.anchorOffsetY != 0)
-                        tile.tileset.image.texture.anchorOffsetY = 0;
                 }
+                if (coroutine.waitTimer > 0) {
+                    // 递减，然后再运行下一帧，确保用适当的deltaTime递减
+                    coroutine.waitTimer -= coroutine.useUnscaledDeltaTime ? es.Time.unscaledDeltaTime : es.Time.deltaTime;
+                    this._shouldRunNextFrame.push(coroutine);
+                    continue;
+                }
+                if (this.tickCoroutine(coroutine))
+                    this._shouldRunNextFrame.push(coroutine);
+            }
+            var linqCoroutines = new linq.List(this._unblockedCoroutines);
+            linqCoroutines.clear();
+            linqCoroutines.addRange(this._shouldRunNextFrame);
+            this._shouldRunNextFrame.length = 0;
+            this._isInUpdate = false;
+        };
+        /**
+         * 勾选一个coroutine，如果该coroutine应该在下一帧继续运行，则返回true。本方法会将完成的coroutine放回Pool
+         * @param coroutine
+         */
+        CoroutineManager.prototype.tickCoroutine = function (coroutine) {
+            var chain = coroutine.enumerator.next();
+            if (chain.done || coroutine.isDone) {
+                es.Pool.free(coroutine);
+                return false;
+            }
+            if (chain.value == null) {
+                // 下一帧再运行
+                return true;
+            }
+            if (chain.value instanceof es.WaitForSeconds) {
+                coroutine.waitTimer = chain.value.waitTime;
+                return true;
+            }
+            if (typeof chain.value == 'number') {
+                coroutine.waitTimer = chain.value;
+                return true;
+            }
+            if (typeof chain.value == 'string') {
+                if (chain.value == 'break') {
+                    es.Pool.free(coroutine);
+                    return false;
+                }
+                return true;
+            }
+            if (chain.value instanceof CoroutineImpl) {
+                coroutine.waitForCoroutine = chain.value;
+                return true;
             }
             else {
-                if (tilesetTile.image.texture) {
-                    if (!tilesetTile.image.bitmap.getTexture(gid.toString())) {
-                        tilesetTile.image.texture = new Bitmap(tilesetTile.image.bitmap.createTexture(gid.toString(), sourceRect.x, sourceRect.y, sourceRect.width, sourceRect.height));
-                        container.addChild(tilesetTile.image.texture);
-                    }
-                    tilesetTile.image.texture.x = pos.x;
-                    tilesetTile.image.texture.y = pos.y;
-                    tilesetTile.image.texture.scaleX = scale.x;
-                    tilesetTile.image.texture.scaleY = scale.y;
-                    tilesetTile.image.texture.rotation = rotation;
-                    tilesetTile.image.texture.anchorOffsetX = 0;
-                    tilesetTile.image.texture.anchorOffsetY = 0;
-                    tilesetTile.image.texture.filters = [color];
+                return true;
+            }
+        };
+        return CoroutineManager;
+    }(es.GlobalManager));
+    es.CoroutineManager = CoroutineManager;
+})(es || (es = {}));
+var es;
+(function (es) {
+    var MaxRectsBinPack = /** @class */ (function () {
+        function MaxRectsBinPack(width, height, rotations) {
+            if (rotations === void 0) { rotations = true; }
+            this.binWidth = 0;
+            this.binHeight = 0;
+            this.usedRectangles = [];
+            this.freeRectangles = [];
+            this.init(width, height, rotations);
+        }
+        MaxRectsBinPack.prototype.init = function (width, height, rotations) {
+            if (rotations === void 0) { rotations = true; }
+            this.binWidth = width;
+            this.binHeight = height;
+            this.allowRotations = rotations;
+            var n = new es.Rectangle();
+            n.x = 0;
+            n.y = 0;
+            n.width = width;
+            n.height = height;
+            this.usedRectangles.length = 0;
+            this.freeRectangles.length = 0;
+            this.freeRectangles.push(n);
+        };
+        MaxRectsBinPack.prototype.insert = function (width, height) {
+            var newNode = new es.Rectangle();
+            var score1 = new es.Ref(0);
+            var score2 = new es.Ref(0);
+            newNode = this.findPositionForNewNodeBestAreaFit(width, height, score1, score2);
+            if (newNode.height == 0)
+                return newNode;
+            var numRectanglesToProcess = this.freeRectangles.length;
+            for (var i = 0; i < numRectanglesToProcess; ++i) {
+                if (this.splitFreeNode(this.freeRectangles[i], newNode)) {
+                    new linq.List(this.freeRectangles).removeAt(i);
+                    --i;
+                    --numRectanglesToProcess;
                 }
             }
+            this.pruneFreeList();
+            this.usedRectangles.push(newNode);
+            return newNode;
         };
-        return TiledRendering;
-    }());
-    es.TiledRendering = TiledRendering;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxTileset = (function (_super) {
-        __extends(TmxTileset, _super);
-        function TmxTileset() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        TmxTileset.prototype.update = function () {
-            this.tiles.forEach(function (value) {
-                value.updateAnimatedTiles();
-            });
-        };
-        return TmxTileset;
-    }(es.TmxDocument));
-    es.TmxTileset = TmxTileset;
-    var TmxTileOffset = (function () {
-        function TmxTileOffset() {
-        }
-        return TmxTileOffset;
-    }());
-    es.TmxTileOffset = TmxTileOffset;
-    var TmxTerrain = (function () {
-        function TmxTerrain() {
-        }
-        return TmxTerrain;
-    }());
-    es.TmxTerrain = TmxTerrain;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxTilesetTile = (function () {
-        function TmxTilesetTile() {
-        }
-        Object.defineProperty(TmxTilesetTile.prototype, "currentAnimationFrameGid", {
-            get: function () {
-                return this.animationFrames[this._animationCurrentFrame].gid + this.tileset.firstGid;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TmxTilesetTile.prototype.processProperties = function () {
-            var value;
-            value = this.properties.get("engine.isDestructable");
-            if (value)
-                this.isDestructable = Boolean(value);
-            value = this.properties.get("engine:isSlope");
-            if (value)
-                this.isSlope = Boolean(value);
-            value = this.properties.get("engine:isOneWayPlatform");
-            if (value)
-                this.isOneWayPlatform = Boolean(value);
-            value = this.properties.get("engine:slopeTopLeft");
-            if (value)
-                this.slopeTopLeft = Number(value);
-            value = this.properties.get("engine:slopeTopRight");
-            if (value)
-                this.slopeTopRight = Number(value);
-        };
-        TmxTilesetTile.prototype.updateAnimatedTiles = function () {
-            if (this.animationFrames.length == 0)
-                return;
-            this._animationElapsedTime += es.Time.deltaTime;
-            if (this._animationElapsedTime > this.animationFrames[this._animationCurrentFrame].duration) {
-                this._animationCurrentFrame = es.MathHelper.incrementWithWrap(this._animationCurrentFrame, this.animationFrames.length);
-                this._animationElapsedTime = 0;
-            }
-        };
-        return TmxTilesetTile;
-    }());
-    es.TmxTilesetTile = TmxTilesetTile;
-    var TmxAnimationFrame = (function () {
-        function TmxAnimationFrame() {
-        }
-        return TmxAnimationFrame;
-    }());
-    es.TmxAnimationFrame = TmxAnimationFrame;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TmxUtils = (function () {
-        function TmxUtils() {
-        }
-        TmxUtils.decode = function (data, encoding, compression) {
-            compression = compression || "none";
-            encoding = encoding || "none";
-            switch (encoding) {
-                case "base64":
-                    var decoded = es.Base64Utils.decodeBase64AsArray(data, 4);
-                    return (compression === "none") ? decoded : es.Base64Utils.decompress(data, decoded, compression);
-                case "csv":
-                    return es.Base64Utils.decodeCSV(data);
-                case "none":
-                    var datas = [];
-                    for (var i = 0; i < data.length; i++) {
-                        datas[i] = +data[i].gid;
+        MaxRectsBinPack.prototype.findPositionForNewNodeBestAreaFit = function (width, height, bestAreaFit, bestShortSideFit) {
+            var bestNode = new es.Rectangle();
+            bestAreaFit.value = Number.MAX_VALUE;
+            for (var i = 0; i < this.freeRectangles.length; ++i) {
+                var areaFit = this.freeRectangles[i].width * this.freeRectangles[i].height - width * height;
+                // 试着将长方形放在直立（非翻转）的方向
+                if (this.freeRectangles[i].width >= width && this.freeRectangles[i].height >= height) {
+                    var leftoverHoriz = Math.abs(this.freeRectangles[i].width - width);
+                    var leftoverVert = Math.abs(this.freeRectangles[i].height - height);
+                    var shortSideFit = Math.min(leftoverHoriz, leftoverVert);
+                    if (areaFit < bestAreaFit.value || (areaFit == bestAreaFit.value && shortSideFit < bestShortSideFit.value)) {
+                        bestNode.x = this.freeRectangles[i].x;
+                        bestNode.y = this.freeRectangles[i].y;
+                        bestNode.width = width;
+                        bestNode.height = height;
+                        bestShortSideFit.value = shortSideFit;
+                        bestAreaFit.value = areaFit;
                     }
-                    return datas;
-                default:
-                    throw new Error("未定义的编码:" + encoding);
+                }
+                if (this.allowRotations && this.freeRectangles[i].width >= height && this.freeRectangles[i].height >= width) {
+                    var leftoverHoriz = Math.abs(this.freeRectangles[i].width - height);
+                    var leftoverVert = Math.abs(this.freeRectangles[i].height - width);
+                    var shortSideFit = Math.min(leftoverHoriz, leftoverVert);
+                    if (areaFit < bestAreaFit.value || (areaFit == bestAreaFit.value && shortSideFit < bestShortSideFit.value)) {
+                        bestNode.x = this.freeRectangles[i].x;
+                        bestNode.y = this.freeRectangles[i].y;
+                        bestNode.width = height;
+                        bestNode.height = width;
+                        bestShortSideFit.value = shortSideFit;
+                        bestAreaFit.value = areaFit;
+                    }
+                }
+                return bestNode;
             }
         };
-        TmxUtils.color16ToUnit = function ($color) {
-            if (!$color)
-                return 0xFFFFFF;
-            var colorStr = "0x" + $color.slice(1);
-            return parseInt(colorStr, 16);
+        MaxRectsBinPack.prototype.splitFreeNode = function (freeNode, usedNode) {
+            // 用SAT测试长方形是否均匀相交
+            if (usedNode.x >= freeNode.x + freeNode.width || usedNode.x + usedNode.width <= freeNode.x ||
+                usedNode.y >= freeNode.y + freeNode.height || usedNode.y + usedNode.height <= freeNode.y)
+                return false;
+            if (usedNode.x < freeNode.x + freeNode.width && usedNode.x + usedNode.width > freeNode.x) {
+                // 在使用过的节点的上边新建一个节点
+                if (usedNode.y > freeNode.y && usedNode.y < freeNode.y + freeNode.height) {
+                    var newNode = freeNode;
+                    newNode.height = usedNode.y - newNode.y;
+                    this.freeRectangles.push(newNode);
+                }
+                // 在使用过的节点的底边新建节点
+                if (usedNode.y + usedNode.height < freeNode.y + freeNode.height) {
+                    var newNode = freeNode;
+                    newNode.y = usedNode.y + usedNode.height;
+                    newNode.height = freeNode.y + freeNode.height - (usedNode.y + usedNode.height);
+                    this.freeRectangles.push(newNode);
+                }
+            }
+            if (usedNode.y < freeNode.y + freeNode.height && usedNode.y + usedNode.height > freeNode.y) {
+                // 在使用过的节点的左侧新建节点
+                if (usedNode.x > freeNode.x && usedNode.x < freeNode.x + freeNode.width) {
+                    var newNode = freeNode;
+                    newNode.width = usedNode.x - newNode.x;
+                    this.freeRectangles.push(newNode);
+                }
+                // 在使用过的节点右侧新建节点
+                if (usedNode.x + usedNode.width < freeNode.x + freeNode.width) {
+                    var newNode = freeNode;
+                    newNode.x = usedNode.x + usedNode.width;
+                    newNode.width = freeNode.x + freeNode.width - (usedNode.x + usedNode.width);
+                    this.freeRectangles.push(newNode);
+                }
+            }
+            return true;
         };
-        return TmxUtils;
+        MaxRectsBinPack.prototype.pruneFreeList = function () {
+            for (var i = 0; i < this.freeRectangles.length; ++i)
+                for (var j = i + 1; j < this.freeRectangles.length; ++j) {
+                    if (this.isContainedIn(this.freeRectangles[i], this.freeRectangles[j])) {
+                        new linq.List(this.freeRectangles).removeAt(i);
+                        --i;
+                        break;
+                    }
+                    if (this.isContainedIn(this.freeRectangles[j], this.freeRectangles[i])) {
+                        new linq.List(this.freeRectangles).removeAt(j);
+                        --j;
+                    }
+                }
+        };
+        MaxRectsBinPack.prototype.isContainedIn = function (a, b) {
+            return a.x >= b.x && a.y >= b.y
+                && a.x + a.width <= b.x + b.width
+                && a.y + a.height <= b.y + b.height;
+        };
+        return MaxRectsBinPack;
     }());
-    es.TmxUtils = TmxUtils;
+    es.MaxRectsBinPack = MaxRectsBinPack;
 })(es || (es = {}));
-var ArrayUtils = (function () {
+var ArrayUtils = /** @class */ (function () {
     function ArrayUtils() {
     }
+    /**
+     * 执行冒泡排序
+     * @param ary
+     */
     ArrayUtils.bubbleSort = function (ary) {
         var isExchange = false;
         for (var i = 0; i < ary.length; i++) {
@@ -8925,6 +9826,10 @@ var ArrayUtils = (function () {
                 break;
         }
     };
+    /**
+     * 执行插入排序
+     * @param ary
+     */
     ArrayUtils.insertionSort = function (ary) {
         var len = ary.length;
         for (var i = 1; i < len; i++) {
@@ -8935,6 +9840,12 @@ var ArrayUtils = (function () {
             ary[j] = val;
         }
     };
+    /**
+     * 执行二分搜索
+     * @param ary 搜索的数组（必须排序过）
+     * @param value 需要搜索的值
+     * @returns 返回匹配结果的数组索引
+     */
     ArrayUtils.binarySearch = function (ary, value) {
         var startIndex = 0;
         var endIndex = ary.length;
@@ -8950,6 +9861,11 @@ var ArrayUtils = (function () {
             return startIndex;
         return -1;
     };
+    /**
+     * 返回匹配项的索引
+     * @param ary
+     * @param num
+     */
     ArrayUtils.findElementIndex = function (ary, num) {
         var len = ary.length;
         for (var i = 0; i < len; ++i) {
@@ -8958,6 +9874,10 @@ var ArrayUtils = (function () {
         }
         return null;
     };
+    /**
+     * 返回数组中最大值的索引
+     * @param ary
+     */
     ArrayUtils.getMaxElementIndex = function (ary) {
         var matchIndex = 0;
         var len = ary.length;
@@ -8967,6 +9887,10 @@ var ArrayUtils = (function () {
         }
         return matchIndex;
     };
+    /**
+     * 返回数组中最小值的索引
+     * @param ary
+     */
     ArrayUtils.getMinElementIndex = function (ary) {
         var matchIndex = 0;
         var len = ary.length;
@@ -8976,6 +9900,15 @@ var ArrayUtils = (function () {
         }
         return matchIndex;
     };
+    /**
+     * 返回一个"唯一性"数组
+     * @param ary 需要唯一性的数组
+     * @returns 唯一性的数组
+     *
+     * @tutorial
+     * 比如: [1, 2, 2, 3, 4]
+     * 返回: [1, 2, 3, 4]
+     */
     ArrayUtils.getUniqueAry = function (ary) {
         var uAry = [];
         var newAry = [];
@@ -8991,6 +9924,15 @@ var ArrayUtils = (function () {
         }
         return newAry;
     };
+    /**
+     * 返回2个数组中不同的部分
+     * 比如数组A = [1, 2, 3, 4, 6]
+     *    数组B = [0, 2, 1, 3, 4]
+     * 返回[6, 0]
+     * @param    aryA
+     * @param    aryB
+     * @return
+     */
     ArrayUtils.getDifferAry = function (aryA, aryB) {
         aryA = this.getUniqueAry(aryA);
         aryB = this.getUniqueAry(aryB);
@@ -9018,11 +9960,21 @@ var ArrayUtils = (function () {
         }
         return newAry;
     };
+    /**
+     * 交换数组元素
+     * @param    array    目标数组
+     * @param    index1    交换后的索引
+     * @param    index2    交换前的索引
+     */
     ArrayUtils.swap = function (array, index1, index2) {
         var temp = array[index1];
         array[index1] = array[index2];
         array[index2] = temp;
     };
+    /**
+     * 清除列表
+     * @param ary
+     */
     ArrayUtils.clearList = function (ary) {
         if (!ary)
             return;
@@ -9031,11 +9983,21 @@ var ArrayUtils = (function () {
             ary.splice(i, 1);
         }
     };
+    /**
+     * 克隆一个数组
+     * @param    ary 需要克隆的数组
+     * @return  克隆的数组
+     */
     ArrayUtils.cloneList = function (ary) {
         if (!ary)
             return null;
         return ary.slice(0, ary.length);
     };
+    /**
+     * 判断2个数组是否相同
+     * @param ary1 数组1
+     * @param ary2 数组2
+     */
     ArrayUtils.equals = function (ary1, ary2) {
         if (ary1 == ary2)
             return true;
@@ -9048,6 +10010,13 @@ var ArrayUtils = (function () {
         }
         return true;
     };
+    /**
+     * 根据索引插入元素，索引和索引后的元素都向后移动一位
+     * @param ary
+     * @param index 插入索引
+     * @param value 插入的元素
+     * @returns 插入的元素 未插入则返回空
+     */
     ArrayUtils.insert = function (ary, index, value) {
         if (!ary)
             return null;
@@ -9057,9 +10026,9 @@ var ArrayUtils = (function () {
         if (index < 0)
             index = 0;
         if (index == length)
-            ary.push(value);
+            ary.push(value); //插入最后
         else if (index == 0)
-            ary.unshift(value);
+            ary.unshift(value); //插入头
         else {
             for (var i = length - 1; i >= index; i -= 1) {
                 ary[i + 1] = ary[i];
@@ -9068,20 +10037,82 @@ var ArrayUtils = (function () {
         }
         return value;
     };
+    /**
+     * 打乱数组 Fisher–Yates shuffle
+     * @param list
+     */
+    ArrayUtils.shuffle = function (list) {
+        var n = list.length;
+        while (n > 1) {
+            n--;
+            var k = RandomUtils.randint(0, n + 1);
+            var value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    };
+    /**
+     * 如果项目已经在列表中，返回false，如果成功添加，返回true
+     * @param list
+     * @param item
+     */
+    ArrayUtils.addIfNotPresent = function (list, item) {
+        if (new linq.List(list).contains(item))
+            return false;
+        list.push(item);
+        return true;
+    };
+    /**
+     * 返回列表中的最后一项。列表中至少应该有一个项目
+     * @param list
+     */
+    ArrayUtils.lastItem = function (list) {
+        return list[list.length - 1];
+    };
+    /**
+     * 从列表中随机获取一个项目。不清空检查列表!
+     * @param list
+     */
+    ArrayUtils.randomItem = function (list) {
+        return list[RandomUtils.randint(0, list.length - 1)];
+    };
+    /**
+     * 从列表中随机获取物品。不清空检查列表，也不验证列表数是否大于项目数。返回的List可以通过ListPool.free放回池中
+     * @param list
+     * @param itemCount 从列表中返回的随机项目的数量
+     */
+    ArrayUtils.randomItems = function (list, itemCount) {
+        var set = new Set();
+        while (set.size != itemCount) {
+            var item = this.randomItem(list);
+            if (!set.has(item))
+                set.add(item);
+        }
+        var items = es.ListPool.obtain();
+        set.forEach(function (value) { return items.push(value); });
+        return items;
+    };
     return ArrayUtils;
 }());
 var es;
 (function (es) {
-    var Base64Utils = (function () {
+    var Base64Utils = /** @class */ (function () {
         function Base64Utils() {
         }
         Object.defineProperty(Base64Utils, "nativeBase64", {
+            /**
+             * 判断是否原生支持Base64位解析
+             */
             get: function () {
                 return (typeof (window.atob) === "function");
             },
             enumerable: true,
             configurable: true
         });
+        /**
+         * 解码
+         * @param input
+         */
         Base64Utils.decode = function (input) {
             input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
             if (this.nativeBase64) {
@@ -9109,6 +10140,10 @@ var es;
                 return output;
             }
         };
+        /**
+         * 编码
+         * @param input
+         */
         Base64Utils.encode = function (input) {
             input = input.replace(/\r\n/g, "\n");
             if (this.nativeBase64) {
@@ -9139,6 +10174,11 @@ var es;
                 return output;
             }
         };
+        /**
+         * 解析Base64格式数据
+         * @param input
+         * @param bytes
+         */
         Base64Utils.decodeBase64AsArray = function (input, bytes) {
             bytes = bytes || 1;
             var dec = Base64Utils.decode(input), i, j, len;
@@ -9151,9 +10191,20 @@ var es;
             }
             return ar;
         };
+        /**
+         * 暂时不支持
+         * @param data
+         * @param decoded
+         * @param compression
+         * @private
+         */
         Base64Utils.decompress = function (data, decoded, compression) {
             throw new Error("GZIP/ZLIB compressed TMX Tile Map not supported!");
         };
+        /**
+         * 解析csv数据
+         * @param input
+         */
         Base64Utils.decodeCSV = function (input) {
             var entries = input.replace("\n", "").trim().split(",");
             var result = [];
@@ -9169,146 +10220,7 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Color = (function () {
-        function Color(r, g, b, alpha) {
-            if (((r | g | b | alpha) & 0xFFFFFF00) != 0) {
-                var clampedR = es.MathHelper.clamp(r, 0, 255);
-                var clampedG = es.MathHelper.clamp(g, 0, 255);
-                var clampedB = es.MathHelper.clamp(b, 0, 255);
-                var clampedA = es.MathHelper.clamp(alpha, 0, 255);
-                this._packedValue = (clampedA << 24) | (clampedB << 16) | (clampedG << 8) | (clampedR);
-            }
-            else {
-                this._packedValue = (alpha << 24) | (b << 16) | (g << 8) | r;
-            }
-        }
-        Object.defineProperty(Color.prototype, "b", {
-            get: function () {
-                return this._packedValue >> 16;
-            },
-            set: function (value) {
-                this._packedValue = (this._packedValue & 0xff00ffff) | (value << 16);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Color.prototype, "g", {
-            get: function () {
-                return this._packedValue >> 8;
-            },
-            set: function (value) {
-                this._packedValue = (this._packedValue & 0xffff00ff) | (value << 8);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Color.prototype, "r", {
-            get: function () {
-                return this._packedValue;
-            },
-            set: function (value) {
-                this._packedValue = (this._packedValue & 0xffffff00) | value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Color.prototype, "a", {
-            get: function () {
-                return this._packedValue >> 24;
-            },
-            set: function (value) {
-                this._packedValue = (this._packedValue & 0x00ffffff) | (value << 24);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Color.prototype, "packedValue", {
-            get: function () {
-                return this._packedValue;
-            },
-            set: function (value) {
-                this._packedValue = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Color.prototype.equals = function (other) {
-            return this._packedValue == other._packedValue;
-        };
-        return Color;
-    }());
-    es.Color = Color;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var ContentManager = (function () {
-        function ContentManager() {
-            this.loadedAssets = new Map();
-        }
-        ContentManager.prototype.loadRes = function (name, local) {
-            var _this = this;
-            if (local === void 0) { local = true; }
-            return new Promise(function (resolve, reject) {
-                var res = _this.loadedAssets.get(name);
-                if (res) {
-                    resolve(res);
-                    return;
-                }
-                if (local) {
-                    RES.getResAsync(name).then(function (data) {
-                        _this.loadedAssets.set(name, data);
-                        resolve(data);
-                    }).catch(function (err) {
-                        console.error("资源加载错误:", name, err);
-                        reject(err);
-                    });
-                }
-                else {
-                    RES.getResByUrl(name).then(function (data) {
-                        _this.loadedAssets.set(name, data);
-                        resolve(data);
-                    }).catch(function (err) {
-                        console.error("资源加载错误:", name, err);
-                        reject(err);
-                    });
-                }
-            });
-        };
-        ContentManager.prototype.dispose = function () {
-            this.loadedAssets.forEach(function (value) {
-                var assetsToRemove = value;
-                assetsToRemove.dispose();
-            });
-            this.loadedAssets.clear();
-        };
-        return ContentManager;
-    }());
-    es.ContentManager = ContentManager;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var DrawUtils = (function () {
-        function DrawUtils() {
-        }
-        DrawUtils.getColorMatrix = function (color) {
-            var colorMatrix = [
-                1, 0, 0, 0, 0,
-                0, 1, 0, 0, 0,
-                0, 0, 1, 0, 0,
-                0, 0, 0, 1, 0
-            ];
-            colorMatrix[0] = Math.floor(color / 256 / 256) / 255;
-            colorMatrix[6] = Math.floor(color / 256 % 256) / 255;
-            colorMatrix[12] = color % 256 / 255;
-            return new egret.ColorMatrixFilter(colorMatrix);
-        };
-        return DrawUtils;
-    }());
-    es.DrawUtils = DrawUtils;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var EdgeExt = (function () {
+    var EdgeExt = /** @class */ (function () {
         function EdgeExt() {
         }
         EdgeExt.oppositeEdge = function (self) {
@@ -9323,9 +10235,17 @@ var es;
                     return es.Edge.left;
             }
         };
+        /**
+         * 如果边是右或左，则返回true
+         * @param self
+         */
         EdgeExt.isHorizontal = function (self) {
             return self == es.Edge.right || self == es.Edge.left;
         };
+        /**
+         * 如果边是顶部或底部，则返回true
+         * @param self
+         */
         EdgeExt.isVertical = function (self) {
             return self == es.Edge.top || self == es.Edge.bottom;
         };
@@ -9335,560 +10255,33 @@ var es;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var FuncPack = (function () {
-        function FuncPack(func, context) {
-            this.func = func;
-            this.context = context;
+    var NumberExtension = /** @class */ (function () {
+        function NumberExtension() {
         }
-        return FuncPack;
+        NumberExtension.toNumber = function (value) {
+            if (value == undefined)
+                return 0;
+            return Number(value);
+        };
+        return NumberExtension;
     }());
-    es.FuncPack = FuncPack;
-    var Emitter = (function () {
-        function Emitter() {
-            this._messageTable = new Map();
-        }
-        Emitter.prototype.addObserver = function (eventType, handler, context) {
-            var list = this._messageTable.get(eventType);
-            if (!list) {
-                list = [];
-                this._messageTable.set(eventType, list);
-            }
-            if (list.findIndex(function (funcPack) { return funcPack.func == handler; }) != -1)
-                console.warn("您试图添加相同的观察者两次");
-            list.push(new FuncPack(handler, context));
-        };
-        Emitter.prototype.removeObserver = function (eventType, handler) {
-            var messageData = this._messageTable.get(eventType);
-            var index = messageData.findIndex(function (data) { return data.func == handler; });
-            if (index != -1)
-                messageData.removeAt(index);
-        };
-        Emitter.prototype.emit = function (eventType, data) {
-            var list = this._messageTable.get(eventType);
-            if (list) {
-                for (var i = list.length - 1; i >= 0; i--)
-                    list[i].func.call(list[i].context, data);
-            }
-        };
-        return Emitter;
-    }());
-    es.Emitter = Emitter;
+    es.NumberExtension = NumberExtension;
 })(es || (es = {}));
-var es;
-(function (es) {
-    var Edge;
-    (function (Edge) {
-        Edge[Edge["top"] = 0] = "top";
-        Edge[Edge["bottom"] = 1] = "bottom";
-        Edge[Edge["left"] = 2] = "left";
-        Edge[Edge["right"] = 3] = "right";
-    })(Edge = es.Edge || (es.Edge = {}));
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Enumerable = (function () {
-        function Enumerable() {
-        }
-        Enumerable.repeat = function (element, count) {
-            var result = [];
-            while (count--) {
-                result.push(element);
-            }
-            return result;
-        };
-        return Enumerable;
-    }());
-    es.Enumerable = Enumerable;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var GlobalManager = (function () {
-        function GlobalManager() {
-        }
-        Object.defineProperty(GlobalManager.prototype, "enabled", {
-            get: function () {
-                return this._enabled;
-            },
-            set: function (value) {
-                this.setEnabled(value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        GlobalManager.prototype.setEnabled = function (isEnabled) {
-            if (this._enabled != isEnabled) {
-                this._enabled = isEnabled;
-                if (this._enabled) {
-                    this.onEnabled();
-                }
-                else {
-                    this.onDisabled();
-                }
-            }
-        };
-        GlobalManager.prototype.onEnabled = function () {
-        };
-        GlobalManager.prototype.onDisabled = function () {
-        };
-        GlobalManager.prototype.update = function () {
-        };
-        return GlobalManager;
-    }());
-    es.GlobalManager = GlobalManager;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TouchState = (function () {
-        function TouchState() {
-            this.x = 0;
-            this.y = 0;
-            this.touchPoint = -1;
-            this.touchDown = false;
-        }
-        Object.defineProperty(TouchState.prototype, "position", {
-            get: function () {
-                return new es.Vector2(this.x, this.y);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TouchState.prototype.reset = function () {
-            this.x = 0;
-            this.y = 0;
-            this.touchDown = false;
-            this.touchPoint = -1;
-        };
-        return TouchState;
-    }());
-    es.TouchState = TouchState;
-    var Input = (function () {
-        function Input() {
-        }
-        Object.defineProperty(Input, "gameTouchs", {
-            get: function () {
-                return this._gameTouchs;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Input, "resolutionScale", {
-            get: function () {
-                return this._resolutionScale;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Input, "totalTouchCount", {
-            get: function () {
-                return this._totalTouchCount;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Input, "touchPosition", {
-            get: function () {
-                if (!this._gameTouchs[0])
-                    return es.Vector2.zero;
-                return this._gameTouchs[0].position;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Input, "maxSupportedTouch", {
-            get: function () {
-                return es.Core._instance.stage.maxTouches;
-            },
-            set: function (value) {
-                es.Core._instance.stage.maxTouches = value;
-                this.initTouchCache();
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Input, "touchPositionDelta", {
-            get: function () {
-                var delta = es.Vector2.subtract(this.touchPosition, this._previousTouchState.position);
-                if (delta.length() > 0) {
-                    this.setpreviousTouchState(this._gameTouchs[0]);
-                }
-                return delta;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Input.initialize = function () {
-            if (this._init)
-                return;
-            this._init = true;
-            es.Core._instance.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchBegin, this);
-            es.Core._instance.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchMove, this);
-            es.Core._instance.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.touchEnd, this);
-            es.Core._instance.stage.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.touchEnd, this);
-            es.Core._instance.stage.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.touchEnd, this);
-            this.initTouchCache();
-        };
-        Input.scaledPosition = function (position) {
-            var scaledPos = new es.Vector2(position.x - this._resolutionOffset.x, position.y - this._resolutionOffset.y);
-            return es.Vector2.multiply(scaledPos, this.resolutionScale);
-        };
-        Input.initTouchCache = function () {
-            this._totalTouchCount = 0;
-            this._touchIndex = 0;
-            this._gameTouchs.length = 0;
-            for (var i = 0; i < this.maxSupportedTouch; i++) {
-                this._gameTouchs.push(new TouchState());
-            }
-        };
-        Input.touchBegin = function (evt) {
-            if (this._touchIndex < this.maxSupportedTouch) {
-                this._gameTouchs[this._touchIndex].touchPoint = evt.touchPointID;
-                this._gameTouchs[this._touchIndex].touchDown = evt.touchDown;
-                this._gameTouchs[this._touchIndex].x = evt.stageX;
-                this._gameTouchs[this._touchIndex].y = evt.stageY;
-                if (this._touchIndex == 0) {
-                    this.setpreviousTouchState(this._gameTouchs[0]);
-                }
-                this._touchIndex++;
-                this._totalTouchCount++;
-            }
-        };
-        Input.touchMove = function (evt) {
-            if (evt.touchPointID == this._gameTouchs[0].touchPoint) {
-                this.setpreviousTouchState(this._gameTouchs[0]);
-            }
-            var touchIndex = this._gameTouchs.findIndex(function (touch) { return touch.touchPoint == evt.touchPointID; });
-            if (touchIndex != -1) {
-                var touchData = this._gameTouchs[touchIndex];
-                touchData.x = evt.stageX;
-                touchData.y = evt.stageY;
-            }
-        };
-        Input.touchEnd = function (evt) {
-            var touchIndex = this._gameTouchs.findIndex(function (touch) { return touch.touchPoint == evt.touchPointID; });
-            if (touchIndex != -1) {
-                var touchData = this._gameTouchs[touchIndex];
-                touchData.reset();
-                if (touchIndex == 0)
-                    this._previousTouchState.reset();
-                this._totalTouchCount--;
-                if (this.totalTouchCount == 0) {
-                    this._touchIndex = 0;
-                }
-            }
-        };
-        Input.setpreviousTouchState = function (touchState) {
-            this._previousTouchState = new TouchState();
-            this._previousTouchState.x = touchState.position.x;
-            this._previousTouchState.y = touchState.position.y;
-            this._previousTouchState.touchPoint = touchState.touchPoint;
-            this._previousTouchState.touchDown = touchState.touchDown;
-        };
-        Input._init = false;
-        Input._previousTouchState = new TouchState();
-        Input._resolutionOffset = new es.Vector2();
-        Input._touchIndex = 0;
-        Input._gameTouchs = [];
-        Input._resolutionScale = es.Vector2.one;
-        Input._totalTouchCount = 0;
-        return Input;
-    }());
-    es.Input = Input;
-})(es || (es = {}));
-var KeyboardUtils = (function () {
-    function KeyboardUtils() {
-    }
-    KeyboardUtils.init = function () {
-        this.keyDownDict = {};
-        this.keyUpDict = {};
-        document.addEventListener("keydown", this.onKeyDonwHander);
-        document.addEventListener("keyup", this.onKeyUpHander);
-    };
-    KeyboardUtils.registerKey = function (key, fun, thisObj, type) {
-        if (type === void 0) { type = 0; }
-        var args = [];
-        for (var _i = 4; _i < arguments.length; _i++) {
-            args[_i - 4] = arguments[_i];
-        }
-        var keyDict = type ? this.keyUpDict : this.keyDownDict;
-        keyDict[key] = { "fun": fun, args: args, "thisObj": thisObj };
-    };
-    KeyboardUtils.unregisterKey = function (key, type) {
-        if (type === void 0) { type = 0; }
-        var keyDict = type ? this.keyUpDict : this.keyDownDict;
-        delete keyDict[key];
-    };
-    KeyboardUtils.destroy = function () {
-        this.keyDownDict = null;
-        this.keyUpDict = null;
-        document.removeEventListener("keydown", this.onKeyDonwHander);
-        document.removeEventListener("keyup", this.onKeyUpHander);
-    };
-    KeyboardUtils.onKeyDonwHander = function (event) {
-        if (!this.keyDownDict)
-            return;
-        var key = this.keyCodeToString(event.keyCode);
-        var o = this.keyDownDict[key];
-        if (o) {
-            var fun = o["fun"];
-            var thisObj = o["thisObj"];
-            var args = o["args"];
-            fun.apply(thisObj, args);
-        }
-    };
-    KeyboardUtils.onKeyUpHander = function (event) {
-        if (!this.keyUpDict)
-            return;
-        var key = this.keyCodeToString(event.keyCode);
-        var o = this.keyUpDict[key];
-        if (o) {
-            var fun = o["fun"];
-            var thisObj = o["thisObj"];
-            var args = o["args"];
-            fun.apply(thisObj, args);
-        }
-    };
-    KeyboardUtils.keyCodeToString = function (keyCode) {
-        switch (keyCode) {
-            case 8:
-                return this.BACK_SPACE;
-            case 9:
-                return this.TAB;
-            case 13:
-                return this.ENTER;
-            case 16:
-                return this.SHIFT;
-            case 17:
-                return this.CTRL;
-            case 19:
-                return this.PAUSE_BREAK;
-            case 20:
-                return this.CAPS_LOCK;
-            case 27:
-                return this.ESC;
-            case 32:
-                return this.SPACE;
-            case 33:
-                return this.PAGE_UP;
-            case 34:
-                return this.PAGE_DOWN;
-            case 35:
-                return this.END;
-            case 36:
-                return this.HOME;
-            case 37:
-                return this.LEFT;
-            case 38:
-                return this.UP;
-            case 39:
-                return this.RIGHT;
-            case 40:
-                return this.DOWN;
-            case 45:
-                return this.INSERT;
-            case 46:
-                return this.DELETE;
-            case 91:
-                return this.WINDOWS;
-            case 112:
-                return this.F1;
-            case 113:
-                return this.F2;
-            case 114:
-                return this.F3;
-            case 115:
-                return this.F4;
-            case 116:
-                return this.F5;
-            case 117:
-                return this.F6;
-            case 118:
-                return this.F7;
-            case 119:
-                return this.F8;
-            case 120:
-                return this.F9;
-            case 122:
-                return this.F11;
-            case 123:
-                return this.F12;
-            case 144:
-                return this.NUM_LOCK;
-            case 145:
-                return this.SCROLL_LOCK;
-            default:
-                return String.fromCharCode(keyCode);
-        }
-    };
-    KeyboardUtils.TYPE_KEY_DOWN = 0;
-    KeyboardUtils.TYPE_KEY_UP = 1;
-    KeyboardUtils.A = "A";
-    KeyboardUtils.B = "B";
-    KeyboardUtils.C = "C";
-    KeyboardUtils.D = "D";
-    KeyboardUtils.E = "E";
-    KeyboardUtils.F = "F";
-    KeyboardUtils.G = "G";
-    KeyboardUtils.H = "H";
-    KeyboardUtils.I = "I";
-    KeyboardUtils.J = "J";
-    KeyboardUtils.K = "K";
-    KeyboardUtils.L = "L";
-    KeyboardUtils.M = "M";
-    KeyboardUtils.N = "N";
-    KeyboardUtils.O = "O";
-    KeyboardUtils.P = "P";
-    KeyboardUtils.Q = "Q";
-    KeyboardUtils.R = "R";
-    KeyboardUtils.S = "S";
-    KeyboardUtils.T = "T";
-    KeyboardUtils.U = "U";
-    KeyboardUtils.V = "V";
-    KeyboardUtils.W = "W";
-    KeyboardUtils.X = "X";
-    KeyboardUtils.Y = "Y";
-    KeyboardUtils.Z = "Z";
-    KeyboardUtils.ESC = "Esc";
-    KeyboardUtils.F1 = "F1";
-    KeyboardUtils.F2 = "F2";
-    KeyboardUtils.F3 = "F3";
-    KeyboardUtils.F4 = "F4";
-    KeyboardUtils.F5 = "F5";
-    KeyboardUtils.F6 = "F6";
-    KeyboardUtils.F7 = "F7";
-    KeyboardUtils.F8 = "F8";
-    KeyboardUtils.F9 = "F9";
-    KeyboardUtils.F10 = "F10";
-    KeyboardUtils.F11 = "F11";
-    KeyboardUtils.F12 = "F12";
-    KeyboardUtils.NUM_1 = "1";
-    KeyboardUtils.NUM_2 = "2";
-    KeyboardUtils.NUM_3 = "3";
-    KeyboardUtils.NUM_4 = "4";
-    KeyboardUtils.NUM_5 = "5";
-    KeyboardUtils.NUM_6 = "6";
-    KeyboardUtils.NUM_7 = "7";
-    KeyboardUtils.NUM_8 = "8";
-    KeyboardUtils.NUM_9 = "9";
-    KeyboardUtils.NUM_0 = "0";
-    KeyboardUtils.TAB = "Tab";
-    KeyboardUtils.CTRL = "Ctrl";
-    KeyboardUtils.ALT = "Alt";
-    KeyboardUtils.SHIFT = "Shift";
-    KeyboardUtils.CAPS_LOCK = "Caps Lock";
-    KeyboardUtils.ENTER = "Enter";
-    KeyboardUtils.SPACE = "Space";
-    KeyboardUtils.BACK_SPACE = "Back Space";
-    KeyboardUtils.INSERT = "Insert";
-    KeyboardUtils.DELETE = "Page Down";
-    KeyboardUtils.HOME = "Home";
-    KeyboardUtils.END = "Page Down";
-    KeyboardUtils.PAGE_UP = "Page Up";
-    KeyboardUtils.PAGE_DOWN = "Page Down";
-    KeyboardUtils.LEFT = "Left";
-    KeyboardUtils.RIGHT = "Right";
-    KeyboardUtils.UP = "Up";
-    KeyboardUtils.DOWN = "Down";
-    KeyboardUtils.PAUSE_BREAK = "Pause Break";
-    KeyboardUtils.NUM_LOCK = "Num Lock";
-    KeyboardUtils.SCROLL_LOCK = "Scroll Lock";
-    KeyboardUtils.WINDOWS = "Windows";
-    return KeyboardUtils;
-}());
-var es;
-(function (es) {
-    var ListPool = (function () {
-        function ListPool() {
-        }
-        ListPool.warmCache = function (cacheCount) {
-            cacheCount -= this._objectQueue.length;
-            if (cacheCount > 0) {
-                for (var i = 0; i < cacheCount; i++) {
-                    this._objectQueue.unshift([]);
-                }
-            }
-        };
-        ListPool.trimCache = function (cacheCount) {
-            while (cacheCount > this._objectQueue.length)
-                this._objectQueue.shift();
-        };
-        ListPool.clearCache = function () {
-            this._objectQueue.length = 0;
-        };
-        ListPool.obtain = function () {
-            if (this._objectQueue.length > 0)
-                return this._objectQueue.shift();
-            return [];
-        };
-        ListPool.free = function (obj) {
-            this._objectQueue.unshift(obj);
-            obj.length = 0;
-        };
-        ListPool._objectQueue = [];
-        return ListPool;
-    }());
-    es.ListPool = ListPool;
-})(es || (es = {}));
-var THREAD_ID = Math.floor(Math.random() * 1000) + "-" + Date.now();
-var nextTick = function (fn) {
-    setTimeout(fn, 0);
-};
-var LockUtils = (function () {
-    function LockUtils(key) {
-        this._keyX = "mutex_key_" + key + "_X";
-        this._keyY = "mutex_key_" + key + "_Y";
-        this.setItem = egret.localStorage.setItem.bind(localStorage);
-        this.getItem = egret.localStorage.getItem.bind(localStorage);
-        this.removeItem = egret.localStorage.removeItem.bind(localStorage);
-    }
-    LockUtils.prototype.lock = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var fn = function () {
-                _this.setItem(_this._keyX, THREAD_ID);
-                if (!_this.getItem(_this._keyY) === null) {
-                    nextTick(fn);
-                }
-                _this.setItem(_this._keyY, THREAD_ID);
-                if (_this.getItem(_this._keyX) !== THREAD_ID) {
-                    setTimeout(function () {
-                        if (_this.getItem(_this._keyY) !== THREAD_ID) {
-                            nextTick(fn);
-                            return;
-                        }
-                        resolve();
-                        _this.removeItem(_this._keyY);
-                    }, 10);
-                }
-                else {
-                    resolve();
-                    _this.removeItem(_this._keyY);
-                }
-            };
-            fn();
-        });
-    };
-    return LockUtils;
-}());
-var es;
-(function (es) {
-    var Pair = (function () {
-        function Pair(first, second) {
-            this.first = first;
-            this.second = second;
-        }
-        Pair.prototype.clear = function () {
-            this.first = this.second = null;
-        };
-        Pair.prototype.equals = function (other) {
-            return this.first == other.first && this.second == other.second;
-        };
-        return Pair;
-    }());
-    es.Pair = Pair;
-})(es || (es = {}));
-var RandomUtils = (function () {
+var RandomUtils = /** @class */ (function () {
     function RandomUtils() {
     }
+    /**
+     * 在 start 与 stop之间取一个随机整数，可以用step指定间隔， 但不包括较大的端点（start与stop较大的一个）
+     * 如
+     * this.randrange(1, 10, 3)
+     * 则返回的可能是   1 或  4 或  7  , 注意 这里面不会返回10，因为是10是大端点
+     *
+     * @param start
+     * @param stop
+     * @param step
+     * @return 假设 start < stop,  [start, stop) 区间内的随机整数
+     *
+     */
     RandomUtils.randrange = function (start, stop, step) {
         if (step === void 0) { step = 1; }
         if (step == 0)
@@ -9901,6 +10294,13 @@ var RandomUtils = (function () {
         var n = Math.floor((width + step - 1) / step);
         return Math.floor(this.random() * n) * step + Math.min(start, stop);
     };
+    /**
+     * 返回a 到 b直间的随机整数，包括 a 和 b
+     * @param a
+     * @param b
+     * @return [a, b] 直接的随机整数
+     *
+     */
     RandomUtils.randint = function (a, b) {
         a = Math.floor(a);
         b = Math.floor(b);
@@ -9910,13 +10310,31 @@ var RandomUtils = (function () {
             b++;
         return this.randrange(a, b);
     };
+    /**
+     * 返回 a - b之间的随机数，不包括  Math.max(a, b)
+     * @param a
+     * @param b
+     * @return 假设 a < b, [a, b)
+     */
     RandomUtils.randnum = function (a, b) {
         return this.random() * (b - a) + a;
     };
+    /**
+     * 打乱数组
+     * @param array
+     * @return
+     */
     RandomUtils.shuffle = function (array) {
         array.sort(this._randomCompare);
         return array;
     };
+    /**
+     * 从序列中随机取一个元素
+     * @param sequence 可以是 数组、 vector，等只要是有length属性，并且可以用数字索引获取元素的对象，
+     *                 另外，字符串也是允许的。
+     * @return 序列中的某一个元素
+     *
+     */
     RandomUtils.choice = function (sequence) {
         if (!sequence.hasOwnProperty("length"))
             throw new Error('无法对此对象执行此操作');
@@ -9926,6 +10344,17 @@ var RandomUtils = (function () {
         else
             return sequence[index];
     };
+    /**
+     * 对列表中的元素进行随机采æ ?
+     * <pre>
+     * this.sample([1, 2, 3, 4, 5],  3)  // Choose 3 elements
+     * [4, 1, 5]
+     * </pre>
+     * @param sequence
+     * @param num
+     * @return
+     *
+     */
     RandomUtils.sample = function (sequence, num) {
         var len = sequence.length;
         if (num <= 0 || len < num)
@@ -9941,9 +10370,19 @@ var RandomUtils = (function () {
         }
         return selected;
     };
+    /**
+     * 返回 0.0 - 1.0 之间的随机数，等同于 Math.random()
+     * @return Math.random()
+     *
+     */
     RandomUtils.random = function () {
         return Math.random();
     };
+    /**
+     * 计算概率
+     * @param    chance 概率
+     * @return
+     */
     RandomUtils.boolean = function (chance) {
         if (chance === void 0) { chance = .5; }
         return (this.random() < chance) ? true : false;
@@ -9955,9 +10394,14 @@ var RandomUtils = (function () {
 }());
 var es;
 (function (es) {
-    var RectangleExt = (function () {
+    var RectangleExt = /** @class */ (function () {
         function RectangleExt() {
         }
+        /**
+         * 获取指定边的位置
+         * @param rect
+         * @param edge
+         */
         RectangleExt.getSide = function (rect, edge) {
             switch (edge) {
                 case es.Edge.top:
@@ -9970,13 +10414,18 @@ var es;
                     return rect.right;
             }
         };
+        /**
+         * 计算两个矩形的并集。结果将是一个包含其他两个的矩形。
+         * @param first
+         * @param point
+         */
         RectangleExt.union = function (first, point) {
             var rect = new es.Rectangle(point.x, point.y, 0, 0);
             var result = new es.Rectangle();
             result.x = Math.min(first.x, rect.x);
             result.y = Math.min(first.y, rect.y);
             result.width = Math.max(first.right, rect.right) - result.x;
-            result.height = Math.max(first.bottom, result.bottom) - result.y;
+            result.height = Math.max(first.bottom, rect.bottom) - result.y;
             return result;
         };
         RectangleExt.getHalfRect = function (rect, edge) {
@@ -9991,6 +10440,12 @@ var es;
                     return new es.Rectangle(rect.x + rect.width / 2, rect.y, rect.width / 2, rect.height);
             }
         };
+        /**
+         * 获取矩形的一部分，其宽度/高度的大小位于矩形的边缘，但仍然包含在其中。
+         * @param rect
+         * @param edge
+         * @param size
+         */
         RectangleExt.getRectEdgePortion = function (rect, edge, size) {
             if (size === void 0) { size = 1; }
             switch (edge) {
@@ -10029,134 +10484,243 @@ var es;
             rect.width -= horizontalAmount * 2;
             rect.height -= verticalAmount * 2;
         };
+        /**
+         * 给定多边形的点，计算其边界
+         * @param points
+         */
+        RectangleExt.boundsFromPolygonVector = function (points) {
+            // 我们需要找到最小/最大的x/y值。
+            var minX = Number.POSITIVE_INFINITY;
+            var minY = Number.POSITIVE_INFINITY;
+            var maxX = Number.NEGATIVE_INFINITY;
+            var maxY = Number.NEGATIVE_INFINITY;
+            for (var i = 0; i < points.length; i++) {
+                var pt = points[i];
+                if (pt.x < minX)
+                    minX = pt.x;
+                if (pt.x > maxX)
+                    maxX = pt.x;
+                if (pt.y < minY)
+                    minY = pt.y;
+                if (pt.y > maxY)
+                    maxY = pt.y;
+            }
+            return this.fromMinMaxVector(new es.Vector2(minX, minY), new es.Vector2(maxX, maxY));
+        };
+        /**
+         * 创建一个给定最小/最大点（左上角，右下角）的矩形
+         * @param min
+         * @param max
+         */
+        RectangleExt.fromMinMaxVector = function (min, max) {
+            return new es.Rectangle(min.x, min.y, max.x - min.x, max.y - min.y);
+        };
+        /**
+         * 返回一个跨越当前边界和提供的delta位置的Bounds
+         * @param rect
+         * @param deltaX
+         * @param deltaY
+         */
+        RectangleExt.getSweptBroadphaseBounds = function (rect, deltaX, deltaY) {
+            var broadphasebox = es.Rectangle.empty;
+            broadphasebox.x = deltaX > 0 ? rect.x : rect.x + deltaX;
+            broadphasebox.y = deltaY > 0 ? rect.y : rect.y + deltaY;
+            broadphasebox.width = deltaX > 0 ? deltaX + rect.width : rect.width - deltaX;
+            broadphasebox.height = deltaY > 0 ? deltaY + rect.height : rect.height - deltaY;
+            return broadphasebox;
+        };
+        /**
+         * 如果矩形发生碰撞，返回true
+         * moveX和moveY将返回b1为避免碰撞而必须移动的移动量
+         * @param rect
+         * @param other
+         * @param moveX
+         * @param moveY
+         */
+        RectangleExt.prototype.collisionCheck = function (rect, other, moveX, moveY) {
+            moveX.value = moveY.value = 0;
+            var l = other.x - (rect.x + rect.width);
+            var r = (other.x + other.width) - rect.x;
+            var t = other.y - (rect.y + rect.height);
+            var b = (other.y + other.height) - rect.y;
+            // 检验是否有碰撞
+            if (l > 0 || r < 0 || t > 0 || b < 0)
+                return false;
+            // 求两边的偏移量
+            moveX.value = Math.abs(l) < r ? l : r;
+            moveY.value = Math.abs(t) < b ? t : b;
+            // 只使用最小的偏移量
+            if (Math.abs(moveX.value) < Math.abs(moveY.value))
+                moveY.value = 0;
+            else
+                moveX.value = 0;
+            return true;
+        };
+        /**
+         * 计算两个矩形之间有符号的交点深度
+         * @param rectA
+         * @param rectB
+         * @returns 两个相交的矩形之间的重叠量。
+         * 这些深度值可以是负值，取决于矩形相交的边。
+         * 这允许调用者确定正确的推送对象的方向，以解决碰撞问题。
+         * 如果矩形不相交，则返回Vector2.zero。
+         */
+        RectangleExt.getIntersectionDepth = function (rectA, rectB) {
+            // 计算半尺寸
+            var halfWidthA = rectA.width / 2;
+            var halfHeightA = rectA.height / 2;
+            var halfWidthB = rectB.width / 2;
+            var halfHeightB = rectB.height / 2;
+            // 计算中心
+            var centerA = new es.Vector2(rectA.left + halfWidthA, rectA.top + halfHeightA);
+            var centerB = new es.Vector2(rectB.left + halfWidthB, rectB.top + halfHeightB);
+            // 计算当前中心间的距离和最小非相交距离
+            var distanceX = centerA.x - centerB.x;
+            var distanceY = centerA.y - centerB.y;
+            var minDistanceX = halfWidthA + halfWidthB;
+            var minDistanceY = halfHeightA + halfHeightB;
+            // 如果我们根本不相交，则返回(0，0)
+            if (Math.abs(distanceX) >= minDistanceX || Math.abs(distanceY) >= minDistanceY)
+                return es.Vector2.zero;
+            // 计算并返回交叉点深度
+            var depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
+            var depthY = distanceY > 0 ? minDistanceY - distanceY : -minDistanceY - distanceY;
+            return new es.Vector2(depthX, depthY);
+        };
         return RectangleExt;
     }());
     es.RectangleExt = RectangleExt;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var SubpixelNumber = (function () {
-        function SubpixelNumber() {
+    var TextureUtils = /** @class */ (function () {
+        function TextureUtils() {
         }
-        SubpixelNumber.prototype.update = function (amount) {
-            this.remainder += amount;
-            var motion = Math.trunc(this.remainder);
-            this.remainder -= motion;
-            return motion;
+        TextureUtils.premultiplyAlpha = function (pixels) {
+            var b = pixels[0];
+            for (var i = 0; i < pixels.length; i += 4) {
+                if (b[i + 3] != 255) {
+                    var alpha = b[i + 3] / 255;
+                    b[i + 0] = b[i + 0] * alpha;
+                    b[i + 1] = b[i + 1] * alpha;
+                    b[i + 2] = b[i + 2] * alpha;
+                }
+            }
         };
-        SubpixelNumber.prototype.reset = function () {
-            this.remainder = 0;
-        };
-        return SubpixelNumber;
+        return TextureUtils;
     }());
-    es.SubpixelNumber = SubpixelNumber;
+    es.TextureUtils = TextureUtils;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Triangulator = (function () {
-        function Triangulator() {
-            this.triangleIndices = [];
-            this._triPrev = new Array(12);
-            this._triNext = new Array(12);
+    var TypeUtils = /** @class */ (function () {
+        function TypeUtils() {
         }
-        Triangulator.testPointTriangle = function (point, a, b, c) {
-            if (es.Vector2Ext.cross(es.Vector2.subtract(point, a), es.Vector2.subtract(b, a)) < 0)
-                return false;
-            if (es.Vector2Ext.cross(es.Vector2.subtract(point, b), es.Vector2.subtract(c, b)) < 0)
-                return false;
-            if (es.Vector2Ext.cross(es.Vector2.subtract(point, c), es.Vector2.subtract(a, c)) < 0)
-                return false;
-            return true;
+        TypeUtils.getType = function (obj) {
+            return obj["__proto__"]["constructor"];
         };
-        Triangulator.prototype.triangulate = function (points, arePointsCCW) {
-            if (arePointsCCW === void 0) { arePointsCCW = true; }
-            var count = points.length;
-            this.initialize(count);
-            var iterations = 0;
-            var index = 0;
-            while (count > 3 && iterations < 500) {
-                iterations++;
-                var isEar = true;
-                var a = points[this._triPrev[index]];
-                var b = points[index];
-                var c = points[this._triNext[index]];
-                if (es.Vector2Ext.isTriangleCCW(a, b, c)) {
-                    var k = this._triNext[this._triNext[index]];
-                    do {
-                        if (Triangulator.testPointTriangle(points[k], a, b, c)) {
-                            isEar = false;
-                            break;
-                        }
-                        k = this._triNext[k];
-                    } while (k != this._triPrev[index]);
-                }
-                else {
-                    isEar = false;
-                }
-                if (isEar) {
-                    this.triangleIndices.push(this._triPrev[index]);
-                    this.triangleIndices.push(index);
-                    this.triangleIndices.push(this._triNext[index]);
-                    this._triNext[this._triPrev[index]] = this._triNext[index];
-                    this._triPrev[this._triNext[index]] = this._triPrev[index];
-                    count--;
-                    index = this._triPrev[index];
-                }
-                else {
-                    index = this._triNext[index];
-                }
-            }
-            this.triangleIndices.push(this._triPrev[index]);
-            this.triangleIndices.push(index);
-            this.triangleIndices.push(this._triNext[index]);
-            if (!arePointsCCW)
-                this.triangleIndices.reverse();
-        };
-        Triangulator.prototype.initialize = function (count) {
-            this.triangleIndices.length = 0;
-            if (this._triNext.length < count) {
-                this._triNext.reverse();
-                this._triNext = new Array(Math.max(this._triNext.length * 2, count));
-            }
-            if (this._triPrev.length < count) {
-                this._triPrev.reverse();
-                this._triPrev = new Array(Math.max(this._triPrev.length * 2, count));
-            }
-            for (var i = 0; i < count; i++) {
-                this._triPrev[i] = i - 1;
-                this._triNext[i] = i + 1;
-            }
-            this._triPrev[0] = count - 1;
-            this._triNext[count - 1] = 0;
-        };
-        return Triangulator;
+        return TypeUtils;
     }());
-    es.Triangulator = Triangulator;
+    es.TypeUtils = TypeUtils;
 })(es || (es = {}));
 var es;
 (function (es) {
-    var Vector2Ext = (function () {
+    var Vector2Ext = /** @class */ (function () {
         function Vector2Ext() {
         }
+        /**
+         * 检查三角形是CCW还是CW
+         * @param a
+         * @param center
+         * @param c
+         */
         Vector2Ext.isTriangleCCW = function (a, center, c) {
             return this.cross(es.Vector2.subtract(center, a), es.Vector2.subtract(c, center)) < 0;
         };
+        Vector2Ext.halfVector = function () {
+            return new es.Vector2(0.5, 0.5);
+        };
+        /**
+         * 计算二维伪叉乘点(Perp(u)， v)
+         * @param u
+         * @param v
+         */
         Vector2Ext.cross = function (u, v) {
             return u.y * v.x - u.x * v.y;
         };
+        /**
+         * 返回垂直于传入向量的向量
+         * @param first
+         * @param second
+         */
         Vector2Ext.perpendicular = function (first, second) {
             return new es.Vector2(-1 * (second.y - first.y), second.x - first.x);
         };
+        /**
+         * 将x/y值翻转，并将y反转，得到垂直于x/y的值
+         * @param original
+         */
+        Vector2Ext.perpendicularFlip = function (original) {
+            return new es.Vector2(-original.y, original.x);
+        };
+        /**
+         * 返回两个向量之间的角度，单位为度
+         * @param from
+         * @param to
+         */
+        Vector2Ext.angle = function (from, to) {
+            this.normalize(from);
+            this.normalize(to);
+            return Math.acos(es.MathHelper.clamp(es.Vector2.dot(from, to), -1, 1)) * es.MathHelper.Rad2Deg;
+        };
+        /**
+         * 给定两条直线(ab和cd)，求交点
+         * @param a
+         * @param b
+         * @param c
+         * @param d
+         * @param intersection
+         */
+        Vector2Ext.getRayIntersection = function (a, b, c, d, intersection) {
+            if (intersection === void 0) { intersection = new es.Vector2(); }
+            var dy1 = b.y - a.y;
+            var dx1 = b.x - a.x;
+            var dy2 = d.y - c.y;
+            var dx2 = d.x - c.x;
+            if (dy1 * dx2 == dy2 * dx1) {
+                intersection.x = Number.NaN;
+                intersection.y = Number.NaN;
+                return false;
+            }
+            var x = ((c.y - a.y) * dx1 * dx2 + dy1 * dx2 * a.x - dy2 * dx1 * c.x) / (dy1 * dx2 - dy2 * dx1);
+            var y = a.y + (dy1 / dx1) * (x - a.x);
+            intersection.x = x;
+            intersection.y = y;
+            return true;
+        };
+        /**
+         * Vector2的临时解决方案
+         * 标准化把向量弄乱了
+         * @param vec
+         */
         Vector2Ext.normalize = function (vec) {
             var magnitude = Math.sqrt((vec.x * vec.x) + (vec.y * vec.y));
             if (magnitude > es.MathHelper.Epsilon) {
-                vec = es.Vector2.divide(vec, new es.Vector2(magnitude));
+                vec.divide(new es.Vector2(magnitude));
             }
             else {
                 vec.x = vec.y = 0;
             }
-            return vec;
         };
+        /**
+         * 通过指定的矩阵对Vector2的数组中的向量应用变换，并将结果放置在另一个数组中。
+         * @param sourceArray
+         * @param sourceIndex
+         * @param matrix
+         * @param destinationArray
+         * @param destinationIndex
+         * @param length
+         */
         Vector2Ext.transformA = function (sourceArray, sourceIndex, matrix, destinationArray, destinationIndex, length) {
             for (var i = 0; i < length; i++) {
                 var position = sourceArray[sourceIndex + i];
@@ -10166,11 +10730,25 @@ var es;
                 destinationArray[destinationIndex + i] = destination;
             }
         };
-        Vector2Ext.transformR = function (position, matrix) {
+        /**
+         * 创建一个新的Vector2，该Vector2包含了通过指定的Matrix进行的二维向量变换
+         * @param position
+         * @param matrix
+         * @param result
+         */
+        Vector2Ext.transformR = function (position, matrix, result) {
+            if (result === void 0) { result = new es.Vector2(); }
             var x = (position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m31;
             var y = (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m32;
-            return new es.Vector2(x, y);
+            result.x = x;
+            result.y = y;
         };
+        /**
+         * 通过指定的矩阵对Vector2的数组中的所有向量应用变换，并将结果放到另一个数组中。
+         * @param sourceArray
+         * @param matrix
+         * @param destinationArray
+         */
         Vector2Ext.transform = function (sourceArray, matrix, destinationArray) {
             this.transformA(sourceArray, 0, matrix, destinationArray, 0, sourceArray.length);
         };
@@ -10181,911 +10759,1013 @@ var es;
     }());
     es.Vector2Ext = Vector2Ext;
 })(es || (es = {}));
-var WebGLUtils = (function () {
-    function WebGLUtils() {
-    }
-    WebGLUtils.getContext = function () {
-        var canvas = document.getElementsByTagName('canvas')[0];
-        return canvas.getContext('2d');
-    };
-    return WebGLUtils;
-}());
-var es;
-(function (es) {
-    var Layout = (function () {
-        function Layout() {
-            this.clientArea = new es.Rectangle(0, 0, es.Core.graphicsDevice.viewport.width, es.Core.graphicsDevice.viewport.height);
-            this.safeArea = this.clientArea;
+var linq;
+(function (linq) {
+    var Enumerable = /** @class */ (function () {
+        function Enumerable() {
         }
-        Layout.prototype.place = function (size, horizontalMargin, verticalMargine, alignment) {
-            var rc = new es.Rectangle(0, 0, size.x, size.y);
-            if ((alignment & Alignment.left) != 0) {
-                rc.x = this.clientArea.x + (this.clientArea.width * horizontalMargin);
-            }
-            else if ((alignment & Alignment.right) != 0) {
-                rc.x = this.clientArea.x + (this.clientArea.width * (1 - horizontalMargin)) - rc.width;
-            }
-            else if ((alignment & Alignment.horizontalCenter) != 0) {
-                rc.x = this.clientArea.x + (this.clientArea.width - rc.width) / 2 + (horizontalMargin * this.clientArea.width);
-            }
-            else {
-            }
-            if ((alignment & Alignment.top) != 0) {
-                rc.y = this.clientArea.y + (this.clientArea.height * verticalMargine);
-            }
-            else if ((alignment & Alignment.bottom) != 0) {
-                rc.y = this.clientArea.y + (this.clientArea.height * (1 - verticalMargine)) - rc.height;
-            }
-            else if ((alignment & Alignment.verticalCenter) != 0) {
-                rc.y = this.clientArea.y + (this.clientArea.height - rc.height) / 2 + (verticalMargine * this.clientArea.height);
-            }
-            else {
-            }
-            if (rc.left < this.safeArea.left)
-                rc.x = this.safeArea.left;
-            if (rc.right > this.safeArea.right)
-                rc.x = this.safeArea.right - rc.width;
-            if (rc.top < this.safeArea.top)
-                rc.y = this.safeArea.top;
-            if (rc.bottom > this.safeArea.bottom)
-                rc.y = this.safeArea.bottom - rc.height;
-            return rc;
-        };
-        return Layout;
-    }());
-    es.Layout = Layout;
-    var Alignment;
-    (function (Alignment) {
-        Alignment[Alignment["none"] = 0] = "none";
-        Alignment[Alignment["left"] = 1] = "left";
-        Alignment[Alignment["right"] = 2] = "right";
-        Alignment[Alignment["horizontalCenter"] = 4] = "horizontalCenter";
-        Alignment[Alignment["top"] = 8] = "top";
-        Alignment[Alignment["bottom"] = 16] = "bottom";
-        Alignment[Alignment["verticalCenter"] = 32] = "verticalCenter";
-        Alignment[Alignment["topLeft"] = 9] = "topLeft";
-        Alignment[Alignment["topRight"] = 10] = "topRight";
-        Alignment[Alignment["topCenter"] = 12] = "topCenter";
-        Alignment[Alignment["bottomLeft"] = 17] = "bottomLeft";
-        Alignment[Alignment["bottomRight"] = 18] = "bottomRight";
-        Alignment[Alignment["bottomCenter"] = 20] = "bottomCenter";
-        Alignment[Alignment["centerLeft"] = 33] = "centerLeft";
-        Alignment[Alignment["centerRight"] = 34] = "centerRight";
-        Alignment[Alignment["center"] = 36] = "center";
-    })(Alignment = es.Alignment || (es.Alignment = {}));
-})(es || (es = {}));
-var stopwatch;
-(function (stopwatch) {
-    var Stopwatch = (function () {
-        function Stopwatch(getSystemTime) {
-            if (getSystemTime === void 0) { getSystemTime = _defaultSystemTimeGetter; }
-            this.getSystemTime = getSystemTime;
-            this._stopDuration = 0;
-            this._completeSlices = [];
-        }
-        Stopwatch.prototype.getState = function () {
-            if (this._startSystemTime === undefined) {
-                return State.IDLE;
-            }
-            else if (this._stopSystemTime === undefined) {
-                return State.RUNNING;
-            }
-            else {
-                return State.STOPPED;
-            }
-        };
-        Stopwatch.prototype.isIdle = function () {
-            return this.getState() === State.IDLE;
-        };
-        Stopwatch.prototype.isRunning = function () {
-            return this.getState() === State.RUNNING;
-        };
-        Stopwatch.prototype.isStopped = function () {
-            return this.getState() === State.STOPPED;
-        };
-        Stopwatch.prototype.slice = function () {
-            return this.recordPendingSlice();
-        };
-        Stopwatch.prototype.getCompletedSlices = function () {
-            return Array.from(this._completeSlices);
-        };
-        Stopwatch.prototype.getCompletedAndPendingSlices = function () {
-            return this._completeSlices.concat([this.getPendingSlice()]);
-        };
-        Stopwatch.prototype.getPendingSlice = function () {
-            return this.calculatePendingSlice();
-        };
-        Stopwatch.prototype.getTime = function () {
-            return this.caculateStopwatchTime();
-        };
-        Stopwatch.prototype.reset = function () {
-            this._startSystemTime = this._pendingSliceStartStopwatchTime = this._stopSystemTime = undefined;
-            this._stopDuration = 0;
-            this._completeSlices = [];
-        };
-        Stopwatch.prototype.start = function (forceReset) {
-            if (forceReset === void 0) { forceReset = false; }
-            if (forceReset) {
-                this.reset();
-            }
-            if (this._stopSystemTime !== undefined) {
-                var systemNow = this.getSystemTime();
-                var stopDuration = systemNow - this._stopSystemTime;
-                this._stopDuration += stopDuration;
-                this._stopSystemTime = undefined;
-            }
-            else if (this._startSystemTime === undefined) {
-                var systemNow = this.getSystemTime();
-                this._startSystemTime = systemNow;
-                this._pendingSliceStartStopwatchTime = 0;
-            }
-        };
-        Stopwatch.prototype.stop = function (recordPendingSlice) {
-            if (recordPendingSlice === void 0) { recordPendingSlice = false; }
-            if (this._startSystemTime === undefined) {
-                return 0;
-            }
-            var systemTimeOfStopwatchTime = this.getSystemTimeOfCurrentStopwatchTime();
-            if (recordPendingSlice) {
-                this.recordPendingSlice(this.caculateStopwatchTime(systemTimeOfStopwatchTime));
-            }
-            this._stopSystemTime = systemTimeOfStopwatchTime;
-            return this.getTime();
-        };
-        Stopwatch.prototype.calculatePendingSlice = function (endStopwatchTime) {
-            if (this._pendingSliceStartStopwatchTime === undefined) {
-                return Object.freeze({ startTime: 0, endTime: 0, duration: 0 });
-            }
-            if (endStopwatchTime === undefined) {
-                endStopwatchTime = this.getTime();
-            }
-            return Object.freeze({
-                startTime: this._pendingSliceStartStopwatchTime,
-                endTime: endStopwatchTime,
-                duration: endStopwatchTime - this._pendingSliceStartStopwatchTime
-            });
-        };
-        Stopwatch.prototype.caculateStopwatchTime = function (endSystemTime) {
-            if (this._startSystemTime === undefined)
-                return 0;
-            if (endSystemTime === undefined)
-                endSystemTime = this.getSystemTimeOfCurrentStopwatchTime();
-            return endSystemTime - this._startSystemTime - this._stopDuration;
-        };
-        Stopwatch.prototype.getSystemTimeOfCurrentStopwatchTime = function () {
-            return this._stopSystemTime === undefined ? this.getSystemTime() : this._stopSystemTime;
-        };
-        Stopwatch.prototype.recordPendingSlice = function (endStopwatchTime) {
-            if (this._pendingSliceStartStopwatchTime !== undefined) {
-                if (endStopwatchTime === undefined) {
-                    endStopwatchTime = this.getTime();
-                }
-                var slice = this.calculatePendingSlice(endStopwatchTime);
-                this._pendingSliceStartStopwatchTime = slice.endTime;
-                this._completeSlices.push(slice);
-                return slice;
-            }
-            else {
-                return this.calculatePendingSlice();
-            }
-        };
-        return Stopwatch;
-    }());
-    stopwatch.Stopwatch = Stopwatch;
-    var State;
-    (function (State) {
-        State["IDLE"] = "IDLE";
-        State["RUNNING"] = "RUNNING";
-        State["STOPPED"] = "STOPPED";
-    })(State || (State = {}));
-    function setDefaultSystemTimeGetter(systemTimeGetter) {
-        if (systemTimeGetter === void 0) { systemTimeGetter = Date.now; }
-        _defaultSystemTimeGetter = systemTimeGetter;
-    }
-    stopwatch.setDefaultSystemTimeGetter = setDefaultSystemTimeGetter;
-    var _defaultSystemTimeGetter = Date.now;
-})(stopwatch || (stopwatch = {}));
-var es;
-(function (es) {
-    var TimeRuler = (function () {
-        function TimeRuler() {
-            this.showLog = false;
-            this._frameKey = 'frame';
-            this._logKey = 'log';
-            this.markers = [];
-            this.stopwacth = new stopwatch.Stopwatch();
-            this._markerNameToIdMap = new Map();
-            this._logs = new Array(2);
-            for (var i = 0; i < this._logs.length; ++i)
-                this._logs[i] = new FrameLog();
-            this.sampleFrames = this.targetSampleFrames = 1;
-            this.width = es.Core.graphicsDevice.viewport.width * 0.8;
-            es.Core.emitter.addObserver(es.CoreEvents.GraphicsDeviceReset, this.onGraphicsDeviceReset, this);
-            this.onGraphicsDeviceReset();
-        }
-        Object.defineProperty(TimeRuler, "Instance", {
-            get: function () {
-                if (!this._instance)
-                    this._instance = new TimeRuler();
-                return this._instance;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        TimeRuler.prototype.startFrame = function () {
-            var _this = this;
-            var lock = new LockUtils(this._frameKey);
-            lock.lock().then(function () {
-                _this._updateCount = parseInt(egret.localStorage.getItem(_this._frameKey), 10);
-                if (isNaN(_this._updateCount))
-                    _this._updateCount = 0;
-                var count = _this._updateCount;
-                count += 1;
-                egret.localStorage.setItem(_this._frameKey, count.toString());
-                if (_this.enabled && (1 < count && count < TimeRuler.maxSampleFrames))
-                    return;
-                _this._prevLog = _this._logs[_this.frameCount++ & 0x1];
-                _this._curLog = _this._logs[_this.frameCount & 0x1];
-                var endFrameTime = _this.stopwacth.getTime();
-                for (var barIndex = 0; barIndex < _this._prevLog.bars.length; ++barIndex) {
-                    var prevBar = _this._prevLog.bars[barIndex];
-                    var nextBar = _this._curLog.bars[barIndex];
-                    for (var nest = 0; nest < prevBar.nestCount; ++nest) {
-                        var markerIdx = prevBar.markerNests[nest];
-                        prevBar.markers[markerIdx].endTime = endFrameTime;
-                        nextBar.markerNests[nest] = nest;
-                        nextBar.markers[nest].markerId = prevBar.markers[markerIdx].markerId;
-                        nextBar.markers[nest].beginTime = 0;
-                        nextBar.markers[nest].endTime = -1;
-                        nextBar.markers[nest].color = prevBar.markers[markerIdx].color;
-                    }
-                    for (var markerIdx = 0; markerIdx < prevBar.markCount; ++markerIdx) {
-                        var duration = prevBar.markers[markerIdx].endTime - prevBar.markers[markerIdx].beginTime;
-                        var markerId = prevBar.markers[markerIdx].markerId;
-                        var m = _this.markers[markerId];
-                        m.logs[barIndex].color = prevBar.markers[markerIdx].color;
-                        if (!m.logs[barIndex].initialized) {
-                            m.logs[barIndex].min = duration;
-                            m.logs[barIndex].max = duration;
-                            m.logs[barIndex].avg = duration;
-                            m.logs[barIndex].initialized = true;
-                        }
-                        else {
-                            m.logs[barIndex].min = Math.min(m.logs[barIndex].min, duration);
-                            m.logs[barIndex].max = Math.min(m.logs[barIndex].max, duration);
-                            m.logs[barIndex].avg += duration;
-                            m.logs[barIndex].avg *= 0.5;
-                            if (m.logs[barIndex].samples++ >= TimeRuler.logSnapDuration) {
-                                m.logs[barIndex].snapMin = m.logs[barIndex].min;
-                                m.logs[barIndex].snapMax = m.logs[barIndex].max;
-                                m.logs[barIndex].snapAvg = m.logs[barIndex].avg;
-                                m.logs[barIndex].samples = 0;
-                            }
-                        }
-                    }
-                    nextBar.markCount = prevBar.nestCount;
-                    nextBar.nestCount = prevBar.nestCount;
-                }
-                _this.stopwacth.reset();
-                _this.stopwacth.start();
-            });
-        };
-        TimeRuler.prototype.beginMark = function (markerName, color, barIndex) {
-            var _this = this;
-            if (barIndex === void 0) { barIndex = 0; }
-            var lock = new LockUtils(this._frameKey);
-            lock.lock().then(function () {
-                if (barIndex < 0 || barIndex >= TimeRuler.maxBars)
-                    throw new Error("barIndex argument out of range");
-                var bar = _this._curLog.bars[barIndex];
-                if (bar.markCount >= TimeRuler.maxSamples) {
-                    throw new Error("exceeded sample count. either set larger number to timeruler.maxsaple or lower sample count");
-                }
-                if (bar.nestCount >= TimeRuler.maxNestCall) {
-                    throw new Error("exceeded nest count. either set larger number to timeruler.maxnestcall or lower nest calls");
-                }
-                var markerId = _this._markerNameToIdMap.get(markerName);
-                if (isNaN(markerId)) {
-                    markerId = _this.markers.length;
-                    _this._markerNameToIdMap.set(markerName, markerId);
-                }
-                bar.markerNests[bar.nestCount++] = bar.markCount;
-                bar.markers[bar.markCount].markerId = markerId;
-                bar.markers[bar.markCount].color = color;
-                bar.markers[bar.markCount].beginTime = _this.stopwacth.getTime();
-                bar.markers[bar.markCount].endTime = -1;
-            });
-        };
-        TimeRuler.prototype.endMark = function (markerName, barIndex) {
-            var _this = this;
-            if (barIndex === void 0) { barIndex = 0; }
-            var lock = new LockUtils(this._frameKey);
-            lock.lock().then(function () {
-                if (barIndex < 0 || barIndex >= TimeRuler.maxBars)
-                    throw new Error("barIndex argument out of range");
-                var bar = _this._curLog.bars[barIndex];
-                if (bar.nestCount <= 0) {
-                    throw new Error("call beginMark method before calling endMark method");
-                }
-                var markerId = _this._markerNameToIdMap.get(markerName);
-                if (isNaN(markerId)) {
-                    throw new Error("Marker " + markerName + " is not registered. Make sure you specifed same name as you used for beginMark method");
-                }
-                var markerIdx = bar.markerNests[--bar.nestCount];
-                if (bar.markers[markerIdx].markerId != markerId) {
-                    throw new Error("Incorrect call order of beginMark/endMark method. beginMark(A), beginMark(B), endMark(B), endMark(A) But you can't called it like beginMark(A), beginMark(B), endMark(A), endMark(B).");
-                }
-                bar.markers[markerIdx].endTime = _this.stopwacth.getTime();
-            });
-        };
-        TimeRuler.prototype.getAverageTime = function (barIndex, markerName) {
-            if (barIndex < 0 || barIndex >= TimeRuler.maxBars) {
-                throw new Error("barIndex argument out of range");
-            }
-            var result = 0;
-            var markerId = this._markerNameToIdMap.get(markerName);
-            if (markerId) {
-                result = this.markers[markerId].logs[barIndex].avg;
+        /**
+         * 在指定范围内生成一个整数序列。
+         */
+        Enumerable.range = function (start, count) {
+            var result = new linq.List();
+            while (count--) {
+                result.add(start++);
             }
             return result;
         };
-        TimeRuler.prototype.resetLog = function () {
+        /**
+         * 生成包含一个重复值的序列。
+         */
+        Enumerable.repeat = function (element, count) {
+            var result = new linq.List();
+            while (count--) {
+                result.add(element);
+            }
+            return result;
+        };
+        return Enumerable;
+    }());
+    linq.Enumerable = Enumerable;
+})(linq || (linq = {}));
+var linq;
+(function (linq) {
+    /**
+     * 检查传递的参数是否为对象
+     */
+    linq.isObj = function (x) { return !!x && typeof x === 'object'; };
+    /**
+     * 创建一个否定谓词结果的函数
+     */
+    linq.negate = function (pred) { return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        return !pred.apply(void 0, __spread(args));
+    }; };
+    /**
+     * 比较器助手
+     */
+    linq.composeComparers = function (previousComparer, currentComparer) { return function (a, b) {
+        return previousComparer(a, b) || currentComparer(a, b);
+    }; };
+    linq.keyComparer = function (_keySelector, descending) { return function (a, b) {
+        var sortKeyA = _keySelector(a);
+        var sortKeyB = _keySelector(b);
+        if (sortKeyA > sortKeyB) {
+            return !descending ? 1 : -1;
+        }
+        else if (sortKeyA < sortKeyB) {
+            return !descending ? -1 : 1;
+        }
+        else {
+            return 0;
+        }
+    }; };
+})(linq || (linq = {}));
+var linq;
+(function (linq) {
+    var List = /** @class */ (function () {
+        /**
+         * 默认为列表的元素
+         */
+        function List(elements) {
+            if (elements === void 0) { elements = []; }
+            this._elements = elements;
+        }
+        /**
+         * 在列表的末尾添加一个对象。
+         */
+        List.prototype.add = function (element) {
+            this._elements.push(element);
+        };
+        /**
+         * 将一个对象追加到列表的末尾。
+         */
+        List.prototype.append = function (element) {
+            this.add(element);
+        };
+        /**
+         * 在列表的开头添加一个对象。
+         */
+        List.prototype.prepend = function (element) {
+            this._elements.unshift(element);
+        };
+        /**
+         * 将指定集合的元素添加到列表的末尾。
+         */
+        List.prototype.addRange = function (elements) {
+            var _a;
+            (_a = this._elements).push.apply(_a, __spread(elements));
+        };
+        /**
+         * 对序列应用累加器函数。
+         */
+        List.prototype.aggregate = function (accumulator, initialValue) {
+            return this._elements.reduce(accumulator, initialValue);
+        };
+        /**
+         * 确定序列的所有元素是否满足一个条件。
+         */
+        List.prototype.all = function (predicate) {
+            return this._elements.every(predicate);
+        };
+        List.prototype.any = function (predicate) {
+            return predicate
+                ? this._elements.some(predicate)
+                : this._elements.length > 0;
+        };
+        List.prototype.average = function (transform) {
+            return this.sum(transform) / this.count(transform);
+        };
+        /**
+         * 将序列的元素转换为指定的类型。
+         */
+        List.prototype.cast = function () {
+            return new List(this._elements);
+        };
+        /**
+         * 从列表中删除所有元素。
+         */
+        List.prototype.clear = function () {
+            this._elements.length = 0;
+        };
+        /**
+         * 连接两个序列。
+         */
+        List.prototype.concat = function (list) {
+            return new List(this._elements.concat(list.toArray()));
+        };
+        /**
+         * 确定一个元素是否在列表中。
+         */
+        List.prototype.contains = function (element) {
+            return this.any(function (x) { return x === element; });
+        };
+        List.prototype.count = function (predicate) {
+            return predicate ? this.where(predicate).count() : this._elements.length;
+        };
+        /**
+         * 返回指定序列的元素，或者如果序列为空，则返回单例集合中类型参数的默认值。
+         */
+        List.prototype.defaultIfEmpty = function (defaultValue) {
+            return this.count() ? this : new List([defaultValue]);
+        };
+        /**
+         * 根据指定的键选择器从序列中返回不同的元素。
+         */
+        List.prototype.distinctBy = function (keySelector) {
+            var groups = this.groupBy(keySelector);
+            return Object.keys(groups).reduce(function (res, key) {
+                res.add(groups[key][0]);
+                return res;
+            }, new List());
+        };
+        /**
+         * 返回序列中指定索引处的元素。
+         */
+        List.prototype.elementAt = function (index) {
+            if (index < this.count() && index >= 0) {
+                return this._elements[index];
+            }
+            else {
+                throw new Error('ArgumentOutOfRangeException: index is less than 0 or greater than or equal to the number of elements in source.');
+            }
+        };
+        /**
+         * 返回序列中指定索引处的元素，如果索引超出范围，则返回默认值。
+         */
+        List.prototype.elementAtOrDefault = function (index) {
+            return index < this.count() && index >= 0
+                ? this._elements[index]
+                : undefined;
+        };
+        /**
+         * 通过使用默认的相等比较器来比较值，生成两个序列的差值集。
+         */
+        List.prototype.except = function (source) {
+            return this.where(function (x) { return !source.contains(x); });
+        };
+        List.prototype.first = function (predicate) {
+            if (this.count()) {
+                return predicate ? this.where(predicate).first() : this._elements[0];
+            }
+            else {
+                throw new Error('InvalidOperationException: The source sequence is empty.');
+            }
+        };
+        List.prototype.firstOrDefault = function (predicate) {
+            return this.count(predicate) ? this.first(predicate) : undefined;
+        };
+        /**
+         * 对列表中的每个元素执行指定的操作。
+         */
+        List.prototype.forEach = function (action) {
+            return this._elements.forEach(action);
+        };
+        /**
+         * 根据指定的键选择器函数对序列中的元素进行分组。
+         */
+        List.prototype.groupBy = function (grouper, mapper) {
+            if (mapper === void 0) { mapper = function (val) { return val; }; }
+            var initialValue = {};
+            return this.aggregate(function (ac, v) {
+                var key = grouper(v);
+                var existingGroup = ac[key];
+                var mappedValue = mapper(v);
+                existingGroup
+                    ? existingGroup.push(mappedValue)
+                    : (ac[key] = [mappedValue]);
+                return ac;
+            }, initialValue);
+        };
+        /**
+         * 根据键的相等将两个序列的元素关联起来，并将结果分组。默认的相等比较器用于比较键。
+         */
+        List.prototype.groupJoin = function (list, key1, key2, result) {
+            return this.select(function (x) {
+                return result(x, list.where(function (z) { return key1(x) === key2(z); }));
+            });
+        };
+        /**
+         * 返回列表中某个元素第一次出现的索引。
+         */
+        List.prototype.indexOf = function (element) {
+            return this._elements.indexOf(element);
+        };
+        /**
+         * 向列表中插入一个元素在指定索引处。
+         */
+        List.prototype.insert = function (index, element) {
+            if (index < 0 || index > this._elements.length) {
+                throw new Error('Index is out of range.');
+            }
+            this._elements.splice(index, 0, element);
+        };
+        /**
+         * 通过使用默认的相等比较器来比较值，生成两个序列的交集集。
+         */
+        List.prototype.intersect = function (source) {
+            return this.where(function (x) { return source.contains(x); });
+        };
+        /**
+         * 基于匹配的键将两个序列的元素关联起来。默认的相等比较器用于比较键。
+         */
+        List.prototype.join = function (list, key1, key2, result) {
+            return this.selectMany(function (x) {
+                return list.where(function (y) { return key2(y) === key1(x); }).select(function (z) { return result(x, z); });
+            });
+        };
+        List.prototype.last = function (predicate) {
+            if (this.count()) {
+                return predicate
+                    ? this.where(predicate).last()
+                    : this._elements[this.count() - 1];
+            }
+            else {
+                throw Error('InvalidOperationException: The source sequence is empty.');
+            }
+        };
+        List.prototype.lastOrDefault = function (predicate) {
+            return this.count(predicate) ? this.last(predicate) : undefined;
+        };
+        List.prototype.max = function (selector) {
+            var id = function (x) { return x; };
+            return Math.max.apply(Math, __spread(this._elements.map(selector || id)));
+        };
+        List.prototype.min = function (selector) {
+            var id = function (x) { return x; };
+            return Math.min.apply(Math, __spread(this._elements.map(selector || id)));
+        };
+        /**
+         * 根据指定的类型筛选序列中的元素。
+         */
+        List.prototype.ofType = function (type) {
+            var typeName;
+            switch (type) {
+                case Number:
+                    typeName = typeof 0;
+                    break;
+                case String:
+                    typeName = typeof '';
+                    break;
+                case Boolean:
+                    typeName = typeof true;
+                    break;
+                case Function:
+                    typeName = typeof function () { }; // tslint:disable-line no-empty
+                    break;
+                default:
+                    typeName = null;
+                    break;
+            }
+            return typeName === null
+                ? this.where(function (x) { return x instanceof type; }).cast()
+                : this.where(function (x) { return typeof x === typeName; }).cast();
+        };
+        /**
+         * 根据键按升序对序列中的元素进行排序。
+         */
+        List.prototype.orderBy = function (keySelector, comparer) {
+            if (comparer === void 0) { comparer = linq.keyComparer(keySelector, false); }
+            // tslint:disable-next-line: no-use-before-declare
+            return new OrderedList(this._elements, comparer);
+        };
+        /**
+         * 根据键值降序对序列中的元素进行排序。
+         */
+        List.prototype.orderByDescending = function (keySelector, comparer) {
+            if (comparer === void 0) { comparer = linq.keyComparer(keySelector, true); }
+            // tslint:disable-next-line: no-use-before-declare
+            return new OrderedList(this._elements, comparer);
+        };
+        /**
+         * 按键按升序对序列中的元素执行后续排序。
+         */
+        List.prototype.thenBy = function (keySelector) {
+            return this.orderBy(keySelector);
+        };
+        /**
+         * 根据键值按降序对序列中的元素执行后续排序。
+         */
+        List.prototype.thenByDescending = function (keySelector) {
+            return this.orderByDescending(keySelector);
+        };
+        /**
+         * 从列表中删除第一个出现的特定对象。
+         */
+        List.prototype.remove = function (element) {
+            return this.indexOf(element) !== -1
+                ? (this.removeAt(this.indexOf(element)), true)
+                : false;
+        };
+        /**
+         * 删除与指定谓词定义的条件匹配的所有元素。
+         */
+        List.prototype.removeAll = function (predicate) {
+            return this.where(linq.negate(predicate));
+        };
+        /**
+         * 删除列表指定索引处的元素。
+         */
+        List.prototype.removeAt = function (index) {
+            this._elements.splice(index, 1);
+        };
+        /**
+         * 颠倒整个列表中元素的顺序。
+         */
+        List.prototype.reverse = function () {
+            return new List(this._elements.reverse());
+        };
+        /**
+         * 将序列中的每个元素投射到一个新形式中。
+         */
+        List.prototype.select = function (selector) {
+            return new List(this._elements.map(selector));
+        };
+        /**
+         * 将序列的每个元素投影到一个列表中。并将得到的序列扁平化为一个序列。
+         */
+        List.prototype.selectMany = function (selector) {
             var _this = this;
-            var lock = new LockUtils(this._logKey);
-            lock.lock().then(function () {
-                var count = parseInt(egret.localStorage.getItem(_this._logKey), 10);
-                count += 1;
-                egret.localStorage.setItem(_this._logKey, count.toString());
-                _this.markers.forEach(function (markerInfo) {
-                    for (var i = 0; i < markerInfo.logs.length; ++i) {
-                        markerInfo.logs[i].initialized = false;
-                        markerInfo.logs[i].snapMin = 0;
-                        markerInfo.logs[i].snapMax = 0;
-                        markerInfo.logs[i].snapAvg = 0;
-                        markerInfo.logs[i].min = 0;
-                        markerInfo.logs[i].max = 0;
-                        markerInfo.logs[i].avg = 0;
-                        markerInfo.logs[i].samples = 0;
-                    }
-                });
-            });
+            return this.aggregate(function (ac, _, i) { return (ac.addRange(_this.select(selector)
+                .elementAt(i)
+                .toArray()),
+                ac); }, new List());
         };
-        TimeRuler.prototype.render = function (position, width) {
-            if (position === void 0) { position = this._position; }
-            if (width === void 0) { width = this.width; }
-            egret.localStorage.setItem(this._frameKey, "0");
-            if (!this.showLog)
+        /**
+         * 通过使用默认的相等比较器对元素的类型进行比较，确定两个序列是否相等。
+         */
+        List.prototype.sequenceEqual = function (list) {
+            return this.all(function (e) { return list.contains(e); });
+        };
+        /**
+         * 返回序列中唯一的元素，如果序列中没有恰好一个元素，则抛出异常。
+         */
+        List.prototype.single = function (predicate) {
+            if (this.count(predicate) !== 1) {
+                throw new Error('The collection does not contain exactly one element.');
+            }
+            else {
+                return this.first(predicate);
+            }
+        };
+        /**
+         * 返回序列中唯一的元素，如果序列为空，则返回默认值;如果序列中有多个元素，此方法将抛出异常。
+         */
+        List.prototype.singleOrDefault = function (predicate) {
+            return this.count(predicate) ? this.single(predicate) : undefined;
+        };
+        /**
+         * 绕过序列中指定数量的元素，然后返回剩余的元素。
+         */
+        List.prototype.skip = function (amount) {
+            return new List(this._elements.slice(Math.max(0, amount)));
+        };
+        /**
+         * 省略序列中最后指定数量的元素，然后返回剩余的元素。
+         */
+        List.prototype.skipLast = function (amount) {
+            return new List(this._elements.slice(0, -Math.max(0, amount)));
+        };
+        /**
+         * 只要指定条件为真，就绕过序列中的元素，然后返回剩余的元素。
+         */
+        List.prototype.skipWhile = function (predicate) {
+            var _this = this;
+            return this.skip(this.aggregate(function (ac) { return (predicate(_this.elementAt(ac)) ? ++ac : ac); }, 0));
+        };
+        List.prototype.sum = function (transform) {
+            return transform
+                ? this.select(transform).sum()
+                : this.aggregate(function (ac, v) { return (ac += +v); }, 0);
+        };
+        /**
+         * 从序列的开始返回指定数量的连续元素。
+         */
+        List.prototype.take = function (amount) {
+            return new List(this._elements.slice(0, Math.max(0, amount)));
+        };
+        /**
+         * 从序列的末尾返回指定数目的连续元素。
+         */
+        List.prototype.takeLast = function (amount) {
+            return new List(this._elements.slice(-Math.max(0, amount)));
+        };
+        /**
+         * 返回序列中的元素，只要指定的条件为真。
+         */
+        List.prototype.takeWhile = function (predicate) {
+            var _this = this;
+            return this.take(this.aggregate(function (ac) { return (predicate(_this.elementAt(ac)) ? ++ac : ac); }, 0));
+        };
+        /**
+         * 复制列表中的元素到一个新数组。
+         */
+        List.prototype.toArray = function () {
+            return this._elements;
+        };
+        List.prototype.toDictionary = function (key, value) {
+            var _this = this;
+            return this.aggregate(function (dicc, v, i) {
+                dicc[_this.select(key)
+                    .elementAt(i)
+                    .toString()] = value ? _this.select(value).elementAt(i) : v;
+                dicc.add({
+                    Key: _this.select(key).elementAt(i),
+                    Value: value ? _this.select(value).elementAt(i) : v
+                });
+                return dicc;
+            }, new List());
+        };
+        /**
+         * 创建一个Set从一个Enumerable.List< T>。
+         */
+        List.prototype.toSet = function () {
+            var e_14, _a;
+            var result = new Set();
+            try {
+                for (var _b = __values(this._elements), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var x = _c.value;
+                    result.add(x);
+                }
+            }
+            catch (e_14_1) { e_14 = { error: e_14_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_14) throw e_14.error; }
+            }
+            return result;
+        };
+        /**
+         * 创建一个List< T>从一个Enumerable.List< T>。
+         */
+        List.prototype.toList = function () {
+            return this;
+        };
+        /**
+         * 创建一个查找，TElement>从一个IEnumerable< T>根据指定的键选择器和元素选择器函数。
+         */
+        List.prototype.toLookup = function (keySelector, elementSelector) {
+            return this.groupBy(keySelector, elementSelector);
+        };
+        /**
+         * 基于谓词过滤一系列值。
+         */
+        List.prototype.where = function (predicate) {
+            return new List(this._elements.filter(predicate));
+        };
+        /**
+         * 将指定的函数应用于两个序列的对应元素，生成结果序列。
+         */
+        List.prototype.zip = function (list, result) {
+            var _this = this;
+            return list.count() < this.count()
+                ? list.select(function (x, y) { return result(_this.elementAt(y), x); })
+                : this.select(function (x, y) { return result(x, list.elementAt(y)); });
+        };
+        return List;
+    }());
+    linq.List = List;
+    /**
+     * 表示已排序的序列。该类的方法是通过使用延迟执行来实现的。
+     * 即时返回值是一个存储执行操作所需的所有信息的对象。
+     * 在通过调用对象的ToDictionary、ToLookup、ToList或ToArray方法枚举对象之前，不会执行由该方法表示的查询
+     */
+    var OrderedList = /** @class */ (function (_super) {
+        __extends(OrderedList, _super);
+        function OrderedList(elements, _comparer) {
+            var _this = _super.call(this, elements) || this;
+            _this._comparer = _comparer;
+            _this._elements.sort(_this._comparer);
+            return _this;
+        }
+        /**
+         * 按键按升序对序列中的元素执行后续排序。
+         * @override
+         */
+        OrderedList.prototype.thenBy = function (keySelector) {
+            return new OrderedList(this._elements, linq.composeComparers(this._comparer, linq.keyComparer(keySelector, false)));
+        };
+        /**
+         * 根据键值按降序对序列中的元素执行后续排序。
+         * @override
+         */
+        OrderedList.prototype.thenByDescending = function (keySelector) {
+            return new OrderedList(this._elements, linq.composeComparers(this._comparer, linq.keyComparer(keySelector, true)));
+        };
+        return OrderedList;
+    }(List));
+    linq.OrderedList = OrderedList;
+})(linq || (linq = {}));
+var es;
+(function (es) {
+    /**
+     * 一段的终点
+     */
+    var EndPoint = /** @class */ (function () {
+        function EndPoint() {
+            this.position = es.Vector2.zero;
+            this.begin = false;
+            this.segment = null;
+            this.angle = 0;
+        }
+        return EndPoint;
+    }());
+    es.EndPoint = EndPoint;
+    var EndPointComparer = /** @class */ (function () {
+        function EndPointComparer() {
+        }
+        /**
+         * 按角度对点进行排序的比较功能
+         * @param a
+         * @param b
+         */
+        EndPointComparer.prototype.compare = function (a, b) {
+            // 按角度顺序移动
+            if (a.angle > b.angle)
+                return 1;
+            if (a.angle < b.angle)
+                return -1;
+            // 但对于纽带，我们希望Begin节点在End节点之前
+            if (!a.begin && b.begin)
+                return 1;
+            if (a.begin && !b.begin)
+                return -1;
+            return 0;
+        };
+        return EndPointComparer;
+    }());
+    es.EndPointComparer = EndPointComparer;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 表示可见性网格中的遮挡线段
+     */
+    var Segment = /** @class */ (function () {
+        function Segment() {
+            this.p1 = null;
+            this.p2 = null;
+        }
+        return Segment;
+    }());
+    es.Segment = Segment;
+})(es || (es = {}));
+///<reference path="../Collections/LinkList.ts" />
+var es;
+///<reference path="../Collections/LinkList.ts" />
+(function (es) {
+    /**
+     * 类，它可以计算出一个网格，表示从给定的一组遮挡物的原点可以看到哪些区域。使用方法如下。
+     *
+     * - 调用 begin
+     * - 添加任何遮挡物
+     * - 调用end来获取可见度多边形。当调用end时，所有的内部存储都会被清空。
+     */
+    var VisibilityComputer = /** @class */ (function () {
+        function VisibilityComputer(origin, radius) {
+            /**
+             *  在近似圆的时候要用到的线的总数。只需要一个180度的半球，所以这将是近似该半球的线段数
+             */
+            this.lineCountForCircleApproximation = 10;
+            this._radius = 0;
+            this._origin = es.Vector2.zero;
+            this._isSpotLight = false;
+            this._spotStartAngle = 0;
+            this._spotEndAngle = 0;
+            this._endPoints = [];
+            this._segments = [];
+            this._origin = origin;
+            this._radius = radius;
+            this._radialComparer = new es.EndPointComparer();
+        }
+        /**
+         * 增加了一个对撞机作为PolyLight的遮蔽器
+         * @param collider
+         */
+        VisibilityComputer.prototype.addColliderOccluder = function (collider) {
+            // 特殊情况下，BoxColliders没有旋转
+            if (collider instanceof es.BoxCollider && collider.rotation == 0) {
+                this.addSquareOccluder(collider.bounds);
                 return;
-            var height = 0;
-            var maxTime = 0;
-            this._prevLog.bars.forEach(function (bar) {
-                if (bar.markCount > 0) {
-                    height += TimeRuler.barHeight + TimeRuler.barPadding * 2;
-                    maxTime = Math.max(maxTime, bar.markers[bar.markCount - 1].endTime);
+            }
+            if (collider instanceof es.PolygonCollider) {
+                var poly = collider.shape;
+                for (var i = 0; i < poly.points.length; i++) {
+                    var firstIndex = i - 1;
+                    if (i == 0)
+                        firstIndex += poly.points.length;
+                    this.addLineOccluder(es.Vector2.add(poly.points[firstIndex], poly.position), es.Vector2.add(poly.points[i], poly.position));
                 }
-            });
-            var frameSpan = 1 / 60 * 1000;
-            var sampleSpan = this.sampleFrames * frameSpan;
-            if (maxTime > sampleSpan) {
-                this._frameAdjust = Math.max(0, this._frameAdjust) + 1;
             }
-            else {
-                this._frameAdjust = Math.min(0, this._frameAdjust) - 1;
+            else if (collider instanceof es.CircleCollider) {
+                this.addCircleOccluder(collider.absolutePosition, collider.radius);
             }
-            if (Math.max(this._frameAdjust) > TimeRuler.autoAdjustDelay) {
-                this.sampleFrames = Math.min(TimeRuler.maxSampleFrames, this.sampleFrames);
-                this.sampleFrames = Math.max(this.targetSampleFrames, (maxTime / frameSpan) + 1);
-                this._frameAdjust = 0;
+        };
+        /**
+         * 增加了一个圆形的遮挡器
+         * @param position
+         * @param radius
+         */
+        VisibilityComputer.prototype.addCircleOccluder = function (position, radius) {
+            var dirToCircle = es.Vector2.subtract(position, this._origin);
+            var angle = Math.atan2(dirToCircle.y, dirToCircle.x);
+            var stepSize = Math.PI / this.lineCountForCircleApproximation;
+            var startAngle = angle + es.MathHelper.PiOver2;
+            var lastPt = es.MathHelper.angleToVector(startAngle, radius).add(position);
+            for (var i = 1; i < this.lineCountForCircleApproximation; i++) {
+                var nextPt = es.MathHelper.angleToVector(startAngle + i * stepSize, radius).add(position);
+                this.addLineOccluder(lastPt, nextPt);
+                lastPt = nextPt;
             }
-            var msToPs = width / sampleSpan;
-            var startY = position.y - (height - TimeRuler.barHeight);
-            var y = startY;
         };
-        TimeRuler.prototype.onGraphicsDeviceReset = function () {
-            var layout = new es.Layout();
-            this._position = layout.place(new es.Vector2(this.width, TimeRuler.barHeight), 0, 0.01, es.Alignment.bottomCenter).location;
+        /**
+         * 增加一个线型遮挡器
+         * @param p1
+         * @param p2
+         */
+        VisibilityComputer.prototype.addLineOccluder = function (p1, p2) {
+            this.addSegment(p1, p2);
         };
-        TimeRuler.maxBars = 8;
-        TimeRuler.maxSamples = 256;
-        TimeRuler.maxNestCall = 32;
-        TimeRuler.barHeight = 8;
-        TimeRuler.maxSampleFrames = 4;
-        TimeRuler.logSnapDuration = 120;
-        TimeRuler.barPadding = 2;
-        TimeRuler.autoAdjustDelay = 30;
-        return TimeRuler;
-    }());
-    es.TimeRuler = TimeRuler;
-    var FrameLog = (function () {
-        function FrameLog() {
-            this.bars = new Array(TimeRuler.maxBars);
-            this.bars.fill(new MarkerCollection(), 0, TimeRuler.maxBars);
-        }
-        return FrameLog;
-    }());
-    es.FrameLog = FrameLog;
-    var MarkerCollection = (function () {
-        function MarkerCollection() {
-            this.markers = new Array(TimeRuler.maxSamples);
-            this.markCount = 0;
-            this.markerNests = new Array(TimeRuler.maxNestCall);
-            this.nestCount = 0;
-            this.markers.fill(new Marker(), 0, TimeRuler.maxSamples);
-            this.markerNests.fill(0, 0, TimeRuler.maxNestCall);
-        }
-        return MarkerCollection;
-    }());
-    es.MarkerCollection = MarkerCollection;
-    var Marker = (function () {
-        function Marker() {
-            this.markerId = 0;
-            this.beginTime = 0;
-            this.endTime = 0;
-            this.color = 0x000000;
-        }
-        return Marker;
-    }());
-    es.Marker = Marker;
-    var MarkerInfo = (function () {
-        function MarkerInfo(name) {
-            this.logs = new Array(TimeRuler.maxBars);
-            this.name = name;
-            this.logs.fill(new MarkerLog(), 0, TimeRuler.maxBars);
-        }
-        return MarkerInfo;
-    }());
-    es.MarkerInfo = MarkerInfo;
-    var MarkerLog = (function () {
-        function MarkerLog() {
-            this.snapMin = 0;
-            this.snapMax = 0;
-            this.snapAvg = 0;
-            this.min = 0;
-            this.max = 0;
-            this.avg = 0;
-            this.samples = 0;
-            this.color = 0x000000;
-            this.initialized = false;
-        }
-        return MarkerLog;
-    }());
-    es.MarkerLog = MarkerLog;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var Bitmap = egret.Bitmap;
-    var AssetPacker = (function () {
-        function AssetPacker() {
-            this.itemsToRaster = [];
-            this.useCache = false;
-            this.cacheName = "";
-            this._sprites = new Map();
-            this.allow4096Textures = false;
-        }
-        AssetPacker.prototype.addTextureToPack = function (texture, customID) {
-            this.itemsToRaster.push(new es.TextureToPack(texture, customID));
+        /**
+         * 增加一个方形的遮挡器
+         * @param bounds
+         */
+        VisibilityComputer.prototype.addSquareOccluder = function (bounds) {
+            var tr = new es.Vector2(bounds.right, bounds.top);
+            var bl = new es.Vector2(bounds.left, bounds.bottom);
+            var br = new es.Vector2(bounds.right, bounds.bottom);
+            this.addSegment(bounds.location, tr);
+            this.addSegment(tr, br);
+            this.addSegment(br, bl);
+            this.addSegment(bl, bounds.location);
         };
-        AssetPacker.prototype.process = function (allow4096Textures) {
-            if (allow4096Textures === void 0) { allow4096Textures = false; }
-            return __awaiter(this, void 0, void 0, function () {
-                var cacheExist;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            this.allow4096Textures = allow4096Textures;
-                            if (!this.useCache) return [3, 2];
-                            if (this.cacheName == "") {
-                                console.error("未指定缓存名称");
-                                return [2];
-                            }
-                            return [4, RES.getResByUrl(this.cacheName)];
-                        case 1:
-                            cacheExist = _a.sent();
-                            if (!cacheExist)
-                                this.createPack();
+        /**
+         * 添加一个段，第一个点在可视化中显示，但第二个点不显示。
+         * 每个端点都是两个段的一部分，但我们希望只显示一次
+         * @param p1
+         * @param p2
+         */
+        VisibilityComputer.prototype.addSegment = function (p1, p2) {
+            var segment = new es.Segment();
+            var endPoint1 = new es.EndPoint();
+            var endPoint2 = new es.EndPoint();
+            endPoint1.position = p1;
+            endPoint1.segment = segment;
+            endPoint2.position = p2;
+            endPoint2.segment = segment;
+            segment.p1 = endPoint1;
+            segment.p2 = endPoint2;
+            this._segments.push(segment);
+            this._endPoints.push(endPoint1);
+            this._endPoints.push(endPoint2);
+        };
+        /**
+         * 移除所有的遮挡物
+         */
+        VisibilityComputer.prototype.clearOccluders = function () {
+            this._segments.length = 0;
+            this._endPoints.length = 0;
+        };
+        /**
+         * 为计算机计算当前的聚光做好准备
+         * @param origin
+         * @param radius
+         */
+        VisibilityComputer.prototype.begin = function (origin, radius) {
+            this._origin = origin;
+            this._radius = radius;
+            this._isSpotLight = false;
+        };
+        /**
+         * 计算可见性多边形，并返回三角形扇形的顶点（减去中心顶点）。返回的数组来自ListPool
+         */
+        VisibilityComputer.prototype.end = function () {
+            var e_15, _a;
+            var output = es.ListPool.obtain();
+            this.updateSegments();
+            this._endPoints.sort(this._radialComparer.compare);
+            var currentAngle = 0;
+            // 在扫描开始时，我们想知道哪些段是活动的。
+            // 最简单的方法是先进行一次段的收集，然后再进行一次段的收集和处理。
+            // 然而，更有效的方法是通过所有的段，找出哪些段与最初的扫描线相交，然后对它们进行分类
+            for (var pass = 0; pass < 2; pass++) {
+                try {
+                    for (var _b = __values(this._endPoints), _c = _b.next(); !_c.done; _c = _b.next()) {
+                        var p = _c.value;
+                        var currentOld = VisibilityComputer._openSegments.size() == 0 ? null : VisibilityComputer._openSegments.getHead().element;
+                        if (p.begin) {
+                            // 在列表中的正确位置插入
+                            var node = VisibilityComputer._openSegments.getHead();
+                            while (node != null && this.isSegmentInFrontOf(p.segment, node.element, this._origin))
+                                node = node.next;
+                            if (node == null)
+                                VisibilityComputer._openSegments.push(p.segment);
                             else
-                                this.loadPack();
-                            return [3, 3];
-                        case 2:
-                            this.createPack();
-                            _a.label = 3;
-                        case 3: return [2];
-                    }
-                });
-            });
-        };
-        AssetPacker.prototype.loadPack = function () {
-            return __awaiter(this, void 0, void 0, function () {
-                var loaderTexture;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4, RES.getResByUrl(this.cacheName)];
-                        case 1:
-                            loaderTexture = _a.sent();
-                            if (this.onProcessCompleted)
-                                this.onProcessCompleted();
-                            return [2, loaderTexture];
-                    }
-                });
-            });
-        };
-        AssetPacker.prototype.createPack = function () {
-            var textures = [];
-            var images = [];
-            for (var _i = 0, _a = this.itemsToRaster; _i < _a.length; _i++) {
-                var itemToRaster = _a[_i];
-                textures.push(new Bitmap(itemToRaster.texture));
-                images.push(itemToRaster.id);
-            }
-            var textureSize = this.allow4096Textures ? 4096 : 2048;
-            var rectangles = [];
-            for (var i = 0; i < textures.length; i++) {
-                if (textures[i].width > textureSize || textures[i].height > textureSize) {
-                    throw new Error("一个纹理的大小比图集的大小大");
-                }
-                else {
-                    rectangles.push(new es.Rectangle(0, 0, textures[i].width, textures[i].height));
-                }
-            }
-            var padding = 1;
-            var numSpriteSheet = 0;
-            while (rectangles.length > 0) {
-                var texture = new egret.RenderTexture();
-                var packer = new es.RectanglePacker(textureSize, textureSize, padding);
-                for (var i = 0; i < rectangles.length; i++)
-                    packer.insertRectangle(Math.floor(rectangles[i].width), Math.floor(rectangles[i].height), i);
-                packer.packRectangles();
-                if (packer.rectangleCount > 0) {
-                    var rect = new es.IntegerRectangle();
-                    var textureAssets = [];
-                    var garbageRect = [];
-                    var garabeTextures = [];
-                    var garbageImages = [];
-                    for (var j = 0; j < packer.rectangleCount; j++) {
-                        rect = packer.getRectangle(j, rect);
-                        var index = packer.getRectangleId(j);
-                        texture.drawToTexture(textures[index], new es.Rectangle(rect.x, rect.y, rect.width, rect.height));
-                        var textureAsset = new es.TextureAsset();
-                        textureAsset.x = rect.x;
-                        textureAsset.y = rect.y;
-                        textureAsset.width = rect.width;
-                        textureAsset.height = rect.height;
-                        textureAsset.name = images[index];
-                        textureAssets.push(textureAsset);
-                        garbageRect.push(rectangles[index]);
-                        garabeTextures.push(textures[index].texture);
-                        garbageImages.push(images[index]);
-                    }
-                    for (var _b = 0, garbageRect_1 = garbageRect; _b < garbageRect_1.length; _b++) {
-                        var garbage = garbageRect_1[_b];
-                        rectangles.remove(garbage);
-                    }
-                    var _loop_9 = function (garbage) {
-                        textures.removeAll(function (a) { return a.texture.hashCode == garbage.hashCode; });
-                    };
-                    for (var _c = 0, garabeTextures_1 = garabeTextures; _c < garabeTextures_1.length; _c++) {
-                        var garbage = garabeTextures_1[_c];
-                        _loop_9(garbage);
-                    }
-                    for (var _d = 0, garbageImages_1 = garbageImages; _d < garbageImages_1.length; _d++) {
-                        var garbage = garbageImages_1[_d];
-                        images.remove(garbage);
-                    }
-                    if (this.cacheName != "") {
-                        texture.saveToFile("image/png", this.cacheName);
-                        ++numSpriteSheet;
-                    }
-                    for (var _e = 0, textureAssets_1 = textureAssets; _e < textureAssets_1.length; _e++) {
-                        var textureAsset = textureAssets_1[_e];
-                        this._sprites.set(textureAsset.name, texture);
-                    }
-                }
-            }
-            if (this.onProcessCompleted)
-                this.onProcessCompleted();
-        };
-        AssetPacker.prototype.dispose = function () {
-            this._sprites.forEach(function (asset, name) {
-                asset.dispose();
-                RES.destroyRes(name);
-            });
-            this._sprites.clear();
-        };
-        AssetPacker.prototype.getTexture = function (id) {
-            return this._sprites.get(id);
-        };
-        return AssetPacker;
-    }());
-    es.AssetPacker = AssetPacker;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var IntegerRectangle = (function (_super) {
-        __extends(IntegerRectangle, _super);
-        function IntegerRectangle() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        return IntegerRectangle;
-    }(es.Rectangle));
-    es.IntegerRectangle = IntegerRectangle;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var RectanglePacker = (function () {
-        function RectanglePacker(width, height, padding) {
-            if (padding === void 0) { padding = 0; }
-            this._width = 0;
-            this._height = 0;
-            this._padding = 8;
-            this._packedWidth = 0;
-            this._packedHeight = 0;
-            this._insertList = [];
-            this._insertedRectangles = [];
-            this._freeAreas = [];
-            this._newFreeAreas = [];
-            this._sortableSizeStack = [];
-            this._rectangleStack = [];
-            this._outsideRectangle = new es.IntegerRectangle(width + 1, height + 1, 0, 0);
-            this.reset(width, height, padding);
-        }
-        Object.defineProperty(RectanglePacker.prototype, "rectangleCount", {
-            get: function () {
-                return this._insertedRectangles.length;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RectanglePacker.prototype, "packedWidth", {
-            get: function () {
-                return this._packedWidth;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RectanglePacker.prototype, "packedHeight", {
-            get: function () {
-                return this._packedHeight;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(RectanglePacker.prototype, "padding", {
-            get: function () {
-                return this._padding;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        RectanglePacker.prototype.reset = function (width, height, padding) {
-            if (padding === void 0) { padding = 0; }
-            while (this._insertedRectangles.length > 0)
-                this.freeRectangle(this._insertedRectangles.pop());
-            while (this._freeAreas.length > 0)
-                this.freeRectangle(this._freeAreas.pop());
-            this._width = width;
-            this._height = height;
-            this._packedWidth = 0;
-            this._packedHeight = 0;
-            this._freeAreas.push(this.allocateRectangle(0, 0, this._width, this._height));
-            while (this._insertedRectangles.length > 0)
-                this.freeSize(this._insertList.pop());
-            this._padding = padding;
-        };
-        RectanglePacker.prototype.insertRectangle = function (width, height, id) {
-            var sortableSize = this.allocateSize(width, height, id);
-            this._insertList.push(sortableSize);
-        };
-        RectanglePacker.prototype.packRectangles = function (sort) {
-            if (sort === void 0) { sort = true; }
-            if (sort)
-                this._insertList.sort(function (emp1, emp2) {
-                    return emp1.width - emp2.width;
-                });
-            while (this._insertList.length > 0) {
-                var sortableSize = this._insertList.pop();
-                var width = sortableSize.width;
-                var height = sortableSize.height;
-                var index = this.getFreeAreaIndex(width, height);
-                if (index >= 0) {
-                    var freeArea = this._freeAreas[index];
-                    var target = this.allocateRectangle(freeArea.x, freeArea.y, width, height);
-                    target.id = sortableSize.id;
-                    this.generateNewFreeAreas(target, this._freeAreas, this._newFreeAreas);
-                    while (this._newFreeAreas.length > 0)
-                        this._freeAreas.push(this._newFreeAreas.pop());
-                    this._insertedRectangles.push(target);
-                    if (target.right > this._packedWidth)
-                        this._packedWidth = target.right;
-                    if (target.bottom > this._packedHeight)
-                        this._packedHeight = target.bottom;
-                }
-                this.freeSize(sortableSize);
-            }
-            return this.rectangleCount;
-        };
-        RectanglePacker.prototype.getRectangle = function (index, rectangle) {
-            var inserted = this._insertedRectangles[index];
-            rectangle.x = inserted.x;
-            rectangle.y = inserted.y;
-            rectangle.width = inserted.width;
-            rectangle.height = inserted.height;
-            return rectangle;
-        };
-        RectanglePacker.prototype.getRectangleId = function (index) {
-            var inserted = this._insertedRectangles[index];
-            return inserted.id;
-        };
-        RectanglePacker.prototype.generateNewFreeAreas = function (target, areas, results) {
-            var x = target.x;
-            var y = target.y;
-            var right = target.right + 1 + this._padding;
-            var bottom = target.bottom + 1 + this._padding;
-            var targetWithPadding = null;
-            if (this._padding == 0)
-                targetWithPadding = target;
-            for (var i = areas.length - 1; i >= 0; i--) {
-                var area = areas[i];
-                if (!(x >= area.right || right <= area.x || y >= area.bottom || bottom <= area.y)) {
-                    if (targetWithPadding == null)
-                        targetWithPadding = this.allocateRectangle(target.x, target.y, target.width + this._padding, target.height + this._padding);
-                    this.generateDividedAreas(targetWithPadding, area, results);
-                    var topOfStack = areas.pop();
-                    if (i < areas.length) {
-                        areas[i] = topOfStack;
-                    }
-                }
-            }
-            if (targetWithPadding != null && targetWithPadding != target)
-                this.freeRectangle(targetWithPadding);
-            this.filterSelfSubAreas(results);
-        };
-        RectanglePacker.prototype.filterSelfSubAreas = function (areas) {
-            for (var i = areas.length - 1; i >= 0; i--) {
-                var filtered = areas[i];
-                for (var j = areas.length - 1; j >= 0; j--) {
-                    if (i != j) {
-                        var area = areas[j];
-                        if (filtered.x >= area.x && filtered.y >= area.y && filtered.right <= area.right && filtered.bottom <= area.bottom) {
-                            this.freeRectangle(filtered);
-                            var topOfStack = areas.pop();
-                            if (i < areas.length) {
-                                areas[i] = topOfStack;
+                                VisibilityComputer._openSegments.insert(p.segment, VisibilityComputer._openSegments.indexOf(node.element));
+                        }
+                        else {
+                            VisibilityComputer._openSegments.remove(p.segment);
+                        }
+                        var currentNew = null;
+                        if (VisibilityComputer._openSegments.size() != 0)
+                            currentNew = VisibilityComputer._openSegments.getHead().element;
+                        if (currentOld != currentNew) {
+                            if (pass == 1) {
+                                if (!this._isSpotLight || (VisibilityComputer.between(currentAngle, this._spotStartAngle, this._spotEndAngle) &&
+                                    VisibilityComputer.between(p.angle, this._spotStartAngle, this._spotEndAngle)))
+                                    this.addTriangle(output, currentAngle, p.angle, currentOld);
                             }
-                            break;
+                            currentAngle = p.angle;
                         }
                     }
                 }
+                catch (e_15_1) { e_15 = { error: e_15_1 }; }
+                finally {
+                    try {
+                        if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                    }
+                    finally { if (e_15) throw e_15.error; }
+                }
             }
+            VisibilityComputer._openSegments.clear();
+            this.clearOccluders();
+            return output;
         };
-        RectanglePacker.prototype.generateDividedAreas = function (divider, area, results) {
-            var count = 0;
-            var rightDelta = area.right - divider.right;
-            if (rightDelta > 0) {
-                results.push(this.allocateRectangle(divider.right, area.y, rightDelta, area.height));
-                count++;
-            }
-            var leftDelta = divider.x - area.x;
-            if (leftDelta > 0) {
-                results.push(this.allocateRectangle(area.x, area.y, leftDelta, area.height));
-                count++;
-            }
-            var bottomDelta = area.bottom - divider.bottom;
-            if (bottomDelta > 0) {
-                results.push(this.allocateRectangle(area.x, divider.bottom, area.width, bottomDelta));
-                count++;
-            }
-            var topDelta = divider.y - area.y;
-            if (topDelta > 0) {
-                results.push(this.allocateRectangle(area.x, area.y, area.width, topDelta));
-                count++;
-            }
-            if (count == 0 && (divider.width < area.width || divider.height < area.height)) {
-                results.push(area);
+        VisibilityComputer.prototype.addTriangle = function (triangles, angle1, angle2, segment) {
+            var p1 = this._origin.clone();
+            var p2 = new es.Vector2(this._origin.x + Math.cos(angle1), this._origin.y + Math.sin(angle1));
+            var p3 = es.Vector2.zero;
+            var p4 = es.Vector2.zero;
+            if (segment != null) {
+                // 将三角形停在相交线段上
+                p3.x = segment.p1.position.x;
+                p3.y = segment.p1.position.y;
+                p4.x = segment.p2.position.x;
+                p4.y = segment.p2.position.y;
             }
             else {
-                this.freeRectangle(area);
+                p3.x = this._origin.x + Math.cos(angle1) * this._radius * 2;
+                p3.y = this._origin.y + Math.sin(angle1) * this._radius * 2;
+                p4.x = this._origin.x + Math.cos(angle2) * this._radius * 2;
+                p4.y = this._origin.y + Math.sin(angle2) * this._radius * 2;
             }
+            var pBegin = VisibilityComputer.lineLineIntersection(p3, p4, p1, p2);
+            p2.x = this._origin.x + Math.cos(angle2);
+            p2.y = this._origin.y + Math.sin(angle2);
+            var pEnd = VisibilityComputer.lineLineIntersection(p3, p4, p1, p2);
+            triangles.push(pBegin);
+            triangles.push(pEnd);
         };
-        RectanglePacker.prototype.getFreeAreaIndex = function (width, height) {
-            var best = this._outsideRectangle;
-            var index = -1;
-            var paddedWidth = width + this._padding;
-            var paddedHeight = height + this._padding;
-            var count = this._freeAreas.length;
-            for (var i = count - 1; i >= 0; i--) {
-                var free = this._freeAreas[i];
-                if (free.x < this._packedWidth || free.y < this.packedHeight) {
-                    if (free.x < best.x && paddedWidth <= free.width && paddedHeight <= free.height) {
-                        index = i;
-                        if ((paddedWidth == free.width && free.width <= free.height && free.right < this._width) ||
-                            (paddedHeight == free.height && free.height <= free.width)) {
-                            break;
-                        }
-                        best = free;
-                    }
+        /**
+         * 计算直线p1-p2与p3-p4的交点
+         * @param p1
+         * @param p2
+         * @param p3
+         * @param p4
+         */
+        VisibilityComputer.lineLineIntersection = function (p1, p2, p3, p4) {
+            var s = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x))
+                / ((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y));
+            return new es.Vector2(p1.x + s * (p2.x - p1.x), p1.y + s * (p2.y - p1.y));
+        };
+        VisibilityComputer.between = function (value, min, max) {
+            value = (360 + (value % 360)) % 360;
+            min = (3600000 + min) % 360;
+            max = (3600000 + max) % 360;
+            if (min < max)
+                return min <= value && value <= max;
+            return min <= value || value <= max;
+        };
+        /**
+         * 辅助函数，用于沿外周线构建分段，以限制光的半径。
+         */
+        VisibilityComputer.prototype.loadRectangleBoundaries = function () {
+            this.addSegment(new es.Vector2(this._origin.x - this._radius, this._origin.y - this._radius), new es.Vector2(this._origin.x + this._radius, this._origin.y - this._radius));
+            this.addSegment(new es.Vector2(this._origin.x - this._radius, this._origin.y + this._radius), new es.Vector2(this._origin.x + this._radius, this._origin.y + this._radius));
+            this.addSegment(new es.Vector2(this._origin.x - this._radius, this._origin.y - this._radius), new es.Vector2(this._origin.x - this._radius, this._origin.y + this._radius));
+            this.addSegment(new es.Vector2(this._origin.x + this._radius, this._origin.y - this._radius), new es.Vector2(this._origin.x + this._radius, this._origin.y + this._radius));
+        };
+        /**
+         * 助手：我们知道a段在b的前面吗？实现不反对称（也就是说，isSegmentInFrontOf(a, b) != (!isSegmentInFrontOf(b, a))）。
+         * 另外要注意的是，在可见性算法中，它只需要在有限的一组情况下工作，我不认为它能处理所有的情况。
+         * 见http://www.redblobgames.com/articles/visibility/segment-sorting.html
+         * @param a
+         * @param b
+         * @param relativeTo
+         */
+        VisibilityComputer.prototype.isSegmentInFrontOf = function (a, b, relativeTo) {
+            // 注意：我们稍微缩短了段，所以在这个算法中，端点的交点（共同）不计入交点。
+            var a1 = VisibilityComputer.isLeftOf(a.p2.position, a.p1.position, VisibilityComputer.interpolate(b.p1.position, b.p2.position, 0.01));
+            var a2 = VisibilityComputer.isLeftOf(a.p2.position, a.p1.position, VisibilityComputer.interpolate(b.p2.position, b.p1.position, 0.01));
+            var a3 = VisibilityComputer.isLeftOf(a.p2.position, a.p1.position, relativeTo);
+            var b1 = VisibilityComputer.isLeftOf(b.p2.position, b.p1.position, VisibilityComputer.interpolate(a.p1.position, a.p2.position, 0.01));
+            var b2 = VisibilityComputer.isLeftOf(b.p2.position, b.p1.position, VisibilityComputer.interpolate(a.p2.position, a.p1.position, 0.01));
+            var b3 = VisibilityComputer.isLeftOf(b.p2.position, b.p1.position, relativeTo);
+            // 注：考虑A1-A2这条线。如果B1和B2都在一条边上，而relativeTo在另一条边上，那么A就在观看者和B之间。
+            if (b1 == b2 && b2 != b3)
+                return true;
+            if (a1 == a2 && a2 == a3)
+                return true;
+            if (a1 == a2 && a2 != a3)
+                return false;
+            if (b1 == b2 && b2 == b3)
+                return false;
+            // 如果A1 !=A2，B1 !=B2，那么我们就有一个交点。
+            // 一个更稳健的实现是在交叉点上分割段，使一部分段在前面，一部分段在后面，但无论如何我们不应该有重叠的碰撞器，所以这不是太重要
+            return false;
+            // 注意：以前的实现方式是a.d < b.d.，这比较简单，但当段的大小不一样时，就麻烦了。
+            // 如果你是在一个网格上，而且段的大小相似，那么使用距离将是一个更简单和更快的实现。
+        };
+        /**
+         * 返回略微缩短的向量：p * (1 - f) + q * f
+         * @param p
+         * @param q
+         * @param f
+         */
+        VisibilityComputer.interpolate = function (p, q, f) {
+            return new es.Vector2(p.x * (1 - f) + q.x * f, p.y * (1 - f) + q.y * f);
+        };
+        /**
+         * 返回点是否在直线p1-p2的 "左边"。
+         * @param p1
+         * @param p2
+         * @param point
+         */
+        VisibilityComputer.isLeftOf = function (p1, p2, point) {
+            var cross = (p2.x - p1.x) * (point.y - p1.y)
+                - (p2.y - p1.y) * (point.x - p1.x);
+            return cross < 0;
+        };
+        /**
+         * 处理片段，以便我们稍后对它们进行分类
+         */
+        VisibilityComputer.prototype.updateSegments = function () {
+            var e_16, _a;
+            try {
+                for (var _b = __values(this._segments), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var segment = _c.value;
+                    // 注：未来的优化：我们可以记录象限和y/x或x/y比率，并按（象限、比率）排序，而不是调用atan2。
+                    // 参见<https://github.com/mikolalysenko/compare-slope>，有一个库可以做到这一点
+                    segment.p1.angle = Math.atan2(segment.p1.position.y - this._origin.y, segment.p1.position.x - this._origin.x);
+                    segment.p2.angle = Math.atan2(segment.p2.position.y - this._origin.y, segment.p2.position.x - this._origin.x);
+                    //  Pi和Pi之间的映射角度
+                    var dAngle = segment.p2.angle - segment.p1.angle;
+                    if (dAngle <= -Math.PI)
+                        dAngle += Math.PI * 2;
+                    if (dAngle > Math.PI)
+                        dAngle -= Math.PI * 2;
+                    segment.p1.begin = (dAngle > 0);
+                    segment.p2.begin = !segment.p1.begin;
                 }
-                else {
-                    if (free.x < best.x && width <= free.width && height <= free.height) {
-                        index = i;
-                        if ((width == free.width && free.width <= free.height && free.right < this._width) ||
-                            (height == free.height && free.height <= free.width)) {
-                            break;
-                        }
-                        best = free;
-                    }
+            }
+            catch (e_16_1) { e_16 = { error: e_16_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_16) throw e_16.error; }
+            }
+            // 如果我们有一个聚光灯，我们需要存储前两个段的角度。
+            // 这些是光斑的边界，我们将用它们来过滤它们之外的任何顶点。
+            if (this._isSpotLight) {
+                this._spotStartAngle = this._segments[0].p2.angle;
+                this._spotEndAngle = this._segments[1].p2.angle;
+            }
+        };
+        VisibilityComputer._cornerCache = [];
+        VisibilityComputer._openSegments = new es.LinkedList();
+        return VisibilityComputer;
+    }());
+    es.VisibilityComputer = VisibilityComputer;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 私有类隐藏ITimer的实现
+     */
+    var Timer = /** @class */ (function () {
+        function Timer() {
+            this._timeInSeconds = 0;
+            this._repeats = false;
+            this._isDone = false;
+            this._elapsedTime = 0;
+        }
+        Timer.prototype.getContext = function () {
+            return this.context;
+        };
+        Timer.prototype.reset = function () {
+            this._elapsedTime = 0;
+        };
+        Timer.prototype.stop = function () {
+            this._isDone = true;
+        };
+        Timer.prototype.tick = function () {
+            // 如果stop在tick之前被调用，那么isDone将为true，我们不应该再做任何事情
+            if (!this._isDone && this._elapsedTime > this._timeInSeconds) {
+                this._elapsedTime -= this._timeInSeconds;
+                this._onTime(this);
+                if (!this._isDone && !this._repeats)
+                    this._isDone = true;
+            }
+            this._elapsedTime += es.Time.deltaTime;
+            return this._isDone;
+        };
+        Timer.prototype.initialize = function (timeInsSeconds, repeats, context, onTime) {
+            this._timeInSeconds = timeInsSeconds;
+            this._repeats = repeats;
+            this.context = context;
+            this._onTime = onTime;
+        };
+        /**
+         * 空出对象引用，以便在js需要时GC可以清理它们的引用
+         */
+        Timer.prototype.unload = function () {
+            this.context = null;
+            this._onTime = null;
+        };
+        return Timer;
+    }());
+    es.Timer = Timer;
+})(es || (es = {}));
+var es;
+(function (es) {
+    /**
+     * 允许动作的延迟和重复执行
+     */
+    var TimerManager = /** @class */ (function (_super) {
+        __extends(TimerManager, _super);
+        function TimerManager() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this._timers = [];
+            return _this;
+        }
+        TimerManager.prototype.update = function () {
+            for (var i = this._timers.length - 1; i >= 0; i--) {
+                if (this._timers[i].tick()) {
+                    this._timers[i].unload();
+                    new linq.List(this._timers).removeAt(i);
                 }
             }
-            return index;
         };
-        RectanglePacker.prototype.allocateSize = function (width, height, id) {
-            if (this._sortableSizeStack.length > 0) {
-                var size = this._sortableSizeStack.pop();
-                size.width = width;
-                size.height = height;
-                size.id = id;
-                return size;
-            }
-            return new es.SortableSize(width, height, id);
+        /**
+         * 调度一个一次性或重复的计时器，该计时器将调用已传递的动作
+         * @param timeInSeconds
+         * @param repeats
+         * @param context
+         * @param onTime
+         */
+        TimerManager.prototype.schedule = function (timeInSeconds, repeats, context, onTime) {
+            var timer = new es.Timer();
+            timer.initialize(timeInSeconds, repeats, context, onTime);
+            this._timers.push(timer);
+            return timer;
         };
-        RectanglePacker.prototype.freeSize = function (size) {
-            this._sortableSizeStack.push(size);
-        };
-        RectanglePacker.prototype.allocateRectangle = function (x, y, width, height) {
-            if (this._rectangleStack.length > 0) {
-                var rectangle = this._rectangleStack.pop();
-                rectangle.x = x;
-                rectangle.y = y;
-                rectangle.width = width;
-                rectangle.height = height;
-                rectangle.right = x + width;
-                rectangle.bottom = y + height;
-                return rectangle;
-            }
-            return new es.IntegerRectangle(x, y, width, height);
-        };
-        RectanglePacker.prototype.freeRectangle = function (rectangle) {
-            this._rectangleStack.push(rectangle);
-        };
-        return RectanglePacker;
-    }());
-    es.RectanglePacker = RectanglePacker;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var SortableSize = (function () {
-        function SortableSize(width, height, id) {
-            this.width = width;
-            this.height = height;
-            this.id = id;
-        }
-        return SortableSize;
-    }());
-    es.SortableSize = SortableSize;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TextureAssets = (function () {
-        function TextureAssets(assets) {
-            this.assets = assets;
-        }
-        return TextureAssets;
-    }());
-    es.TextureAssets = TextureAssets;
-    var TextureAsset = (function () {
-        function TextureAsset() {
-        }
-        return TextureAsset;
-    }());
-    es.TextureAsset = TextureAsset;
-})(es || (es = {}));
-var es;
-(function (es) {
-    var TextureToPack = (function () {
-        function TextureToPack(texture, id) {
-            this.texture = texture;
-            this.id = id;
-        }
-        return TextureToPack;
-    }());
-    es.TextureToPack = TextureToPack;
+        return TimerManager;
+    }(es.GlobalManager));
+    es.TimerManager = TimerManager;
 })(es || (es = {}));

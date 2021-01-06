@@ -7,16 +7,14 @@ module transform {
 }
 
 module es {
-    import HashObject = egret.HashObject;
-
     export enum DirtyType {
-        clean,
-        positionDirty,
-        scaleDirty,
-        rotationDirty,
+        clean = 0,
+        positionDirty = 1,
+        scaleDirty = 2,
+        rotationDirty = 4,
     }
 
-    export class Transform extends HashObject {
+    export class Transform {
         /** 与此转换关联的实体 */
         public readonly entity: Entity;
         public hierarchyDirty: DirtyType;
@@ -30,21 +28,19 @@ module es {
         /**
          * 值会根据位置、旋转和比例自动重新计算
          */
-        public _localTransform: Matrix2D = Matrix2D.create();
+        public _localTransform: Matrix2D;
         /**
          * 值将自动从本地和父矩阵重新计算。
          */
-        public _worldTransform = Matrix2D.create().identity();
-        public _rotationMatrix: Matrix2D = Matrix2D.create();
-        public _translationMatrix: Matrix2D = Matrix2D.create();
-        public _scaleMatrix: Matrix2D = Matrix2D.create();
-        public _children: Transform[];
+        public _worldTransform = Matrix2D.identity;
+        public _rotationMatrix: Matrix2D = Matrix2D.identity;
+        public _translationMatrix: Matrix2D = Matrix2D.identity;
+        public _scaleMatrix: Matrix2D;
+        public _children: Transform[] = [];
 
         constructor(entity: Entity) {
-            super();
             this.entity = entity;
-            this.scale = Vector2.one;
-            this._children = [];
+            this.scale = this._localScale = Vector2.one;
         }
 
         /**
@@ -106,15 +102,15 @@ module es {
             this.setParent(value);
         }
 
-        public _worldToLocalTransform = Matrix2D.create().identity();
+        public _worldToLocalTransform = Matrix2D.identity;
 
         public get worldToLocalTransform(): Matrix2D {
             if (this._worldToLocalDirty) {
                 if (!this.parent) {
-                    this._worldToLocalTransform = Matrix2D.create().identity();
+                    this._worldToLocalTransform = Matrix2D.identity;
                 } else {
                     this.parent.updateTransform();
-                    this._worldToLocalTransform = this.parent._worldTransform.invert();
+                    this._worldToLocalTransform = Matrix2D.invert(this.parent._worldTransform);
                 }
 
                 this._worldToLocalDirty = false;
@@ -123,12 +119,12 @@ module es {
             return this._worldToLocalTransform;
         }
 
-        public _worldInverseTransform = Matrix2D.create().identity();
+        public _worldInverseTransform = Matrix2D.identity;
 
         public get worldInverseTransform(): Matrix2D {
             this.updateTransform();
             if (this._worldInverseDirty) {
-                this._worldInverseTransform = this._worldTransform.invert();
+                this._worldInverseTransform = Matrix2D.invert(this._worldTransform);
                 this._worldInverseDirty = false;
             }
 
@@ -143,11 +139,11 @@ module es {
         public get position(): Vector2 {
             this.updateTransform();
             if (this._positionDirty) {
-                if (!this.parent) {
+                if (this.parent == null) {
                     this._position = this._localPosition;
                 } else {
                     this.parent.updateTransform();
-                    this._position = Vector2Ext.transformR(this._localPosition, this.parent._worldTransform);
+                    Vector2Ext.transformR(this._localPosition, this.parent._worldTransform, this._position);
                 }
 
                 this._positionDirty = false;
@@ -267,12 +263,13 @@ module es {
          * @param parent
          */
         public setParent(parent: Transform): Transform {
-            if (this._parent.equals(parent))
+            if (this._parent == parent)
                 return this;
 
             if (!this._parent) {
-                this._parent._children.remove(this);
-                this._parent._children.push(this);
+                let children = new linq.List(this._parent._children);
+                children.remove(this);
+                children.add(this);
             }
 
             this._parent = parent;
@@ -292,8 +289,8 @@ module es {
                 return this;
 
             this._position = position;
-            if (this.parent) {
-                this.localPosition = Vector2Ext.transformR(this._position, this._worldToLocalTransform);
+            if (this.parent != null) {
+                this.localPosition = Vector2.transform(this._position, this._worldToLocalTransform);
             } else {
                 this.localPosition = position;
             }
@@ -401,34 +398,34 @@ module es {
          * 对精灵坐标进行四舍五入
          */
         public roundPosition() {
-            this.position = this._position.round();
+            this.position = Vector2Ext.round(this._position);
         }
 
         public updateTransform() {
             if (this.hierarchyDirty != DirtyType.clean) {
-                if (this.parent)
+                if (this.parent != null)
                     this.parent.updateTransform();
 
                 if (this._localDirty) {
                     if (this._localPositionDirty) {
-                        this._translationMatrix = Matrix2D.create().translate(this._localPosition.x, this._localPosition.y);
+                        this._translationMatrix = Matrix2D.createTranslation(this._localPosition.x, this._localPosition.y);
                         this._localPositionDirty = false;
                     }
 
                     if (this._localRotationDirty) {
-                        this._rotationMatrix = Matrix2D.create().rotate(this._localRotation);
+                        this._rotationMatrix = Matrix2D.createRotation(this._localRotation);
                         this._localRotationDirty = false;
                     }
 
                     if (this._localScaleDirty) {
-                        this._scaleMatrix = Matrix2D.create().scale(this._localScale.x, this._localScale.y);
+                        this._scaleMatrix = Matrix2D.createScale(this._localScale.x, this._localScale.y);
                         this._localScaleDirty = false;
                     }
 
                     this._localTransform = this._scaleMatrix.multiply(this._rotationMatrix);
                     this._localTransform = this._localTransform.multiply(this._translationMatrix);
 
-                    if (!this.parent) {
+                    if (this.parent == null) {
                         this._worldTransform = this._localTransform;
                         this._rotation = this._localRotation;
                         this._scale = this._localScale;
@@ -438,7 +435,7 @@ module es {
                     this._localDirty = false;
                 }
 
-                if (this.parent) {
+                if (this.parent != null) {
                     this._worldTransform = this._localTransform.multiply(this.parent._worldTransform);
 
                     this._rotation = this._localRotation + this.parent._rotation;
@@ -468,9 +465,6 @@ module es {
                         break;
                 }
 
-                if (!this._children)
-                    this._children = [];
-
                 // 告诉子项发生了变换
                 for (let i = 0; i < this._children.length; i++)
                     this._children[i].setDirty(dirtyFlagType);
@@ -498,10 +492,6 @@ module es {
             return `[Transform: parent: ${this.parent}, position: ${this.position}, rotation: ${this.rotation},
                 scale: ${this.scale}, localPosition: ${this._localPosition}, localRotation: ${this._localRotation},
                 localScale: ${this._localScale}]`;
-        }
-
-        public equals(other: Transform) {
-            return other.hashCode == this.hashCode;
         }
     }
 }

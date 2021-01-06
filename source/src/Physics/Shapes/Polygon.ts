@@ -54,10 +54,7 @@ module es {
             this.points = points;
             this.recalculateCenterAndEdgeNormals();
 
-            this._originalPoints = [];
-            for (let i = 0; i < this.points.length; i++) {
-                this._originalPoints.push(this.points[i]);
-            }
+            this._originalPoints = this.points.slice();
         }
 
         /**
@@ -76,7 +73,7 @@ module es {
         public buildEdgeNormals() {
             // 对于box 我们只需要两条边，因为另外两条边是平行的
             let totalEdges = this.isBox ? 2 : this.points.length;
-            if (this._edgeNormals == null || this._edgeNormals.length != totalEdges)
+            if (this._edgeNormals == undefined || this._edgeNormals.length != totalEdges)
                 this._edgeNormals = new Array(totalEdges);
 
             let p2: Vector2;
@@ -88,7 +85,7 @@ module es {
                     p2 = this.points[i + 1];
 
                 let perp = Vector2Ext.perpendicular(p1, p2);
-                perp = Vector2.normalize(perp);
+                Vector2Ext.normalize(perp);
                 this._edgeNormals[i] = perp;
             }
         }
@@ -103,7 +100,7 @@ module es {
 
             for (let i = 0; i < vertCount; i++) {
                 let a = 2 * Math.PI * (i / vertCount);
-                verts[i] = Vector2.multiply(new Vector2(Math.cos(a), Math.sin(a)), new Vector2(radius));
+                verts[i] = new Vector2(Math.cos(a) * radius, Math.sin(a) * radius);
             }
 
             return verts;
@@ -163,12 +160,13 @@ module es {
          * @param distanceSquared
          * @param edgeNormal
          */
-        public static getClosestPointOnPolygonToPoint(points: Vector2[], point: Vector2, distanceSquared: number, edgeNormal: Vector2): Vector2 {
-            distanceSquared = Number.MAX_VALUE;
-            edgeNormal = new Vector2(0, 0);
-            let closestPoint = new Vector2(0, 0);
+        public static getClosestPointOnPolygonToPoint(points: Vector2[], point: Vector2, distanceSquared: Ref<number>, edgeNormal: Vector2): Vector2 {
+            distanceSquared.value = Number.MAX_VALUE;
+            edgeNormal.x = 0;
+            edgeNormal.y = 0;
+            let closestPoint = Vector2.zero;
 
-            let tempDistanceSquared;
+            let tempDistanceSquared = 0;
             for (let i = 0; i < points.length; i++) {
                 let j = i + 1;
                 if (j == points.length)
@@ -177,13 +175,14 @@ module es {
                 let closest = ShapeCollisions.closestPointOnLine(points[i], points[j], point);
                 tempDistanceSquared = Vector2.distanceSquared(point, closest);
 
-                if (tempDistanceSquared < distanceSquared) {
-                    distanceSquared = tempDistanceSquared;
+                if (tempDistanceSquared < distanceSquared.value) {
+                    distanceSquared.value = tempDistanceSquared;
                     closestPoint = closest;
 
                     // 求直线的法线
                     let line = Vector2.subtract(points[j], points[i]);
-                    edgeNormal = new Vector2(-line.y, line.x);
+                    edgeNormal.x = -line.y;
+                    edgeNormal.y = line.x;
                 }
             }
 
@@ -198,9 +197,9 @@ module es {
          * @param originalPoints
          * @param rotatedPoints
          */
-        public static rotatePolygonVerts(radians: number, originalPoints: Vector2[], rotatedPoints){
+        public static rotatePolygonVerts(radians: number, originalPoints: Vector2[], rotatedPoints: Vector2[]){
             let cos = Math.cos(radians);
-            let sin = Math.sign(radians);
+            let sin = Math.sin(radians);
 
             for (let i = 0; i < originalPoints.length; i ++){
                 let position = originalPoints[i];
@@ -210,15 +209,15 @@ module es {
 
         public recalculateBounds(collider: Collider) {
             // 如果我们没有旋转或不关心TRS我们使用localOffset作为中心，我们会从那开始
-            this.center = collider.localOffset;
+            this.center = collider.localOffset.clone();
 
             if (collider.shouldColliderScaleAndRotateWithTransform) {
                 let hasUnitScale = true;
                 let tempMat: Matrix2D;
-                let combinedMatrix = Matrix2D.create().translate(-this._polygonCenter.x, -this._polygonCenter.y);
+                let combinedMatrix = Matrix2D.createTranslation(-this._polygonCenter.x, -this._polygonCenter.y);
 
-                if (collider.entity.transform.scale != Vector2.zero) {
-                    tempMat = Matrix2D.create().scale(collider.entity.transform.scale.x, collider.entity.transform.scale.y);
+                if (!collider.entity.transform.scale.equals(Vector2.one)) {
+                    tempMat = Matrix2D.createScale(collider.entity.transform.scale.x, collider.entity.transform.scale.y);
                     combinedMatrix = combinedMatrix.multiply(tempMat);
                     hasUnitScale = false;
 
@@ -227,19 +226,19 @@ module es {
                 }
 
                 if (collider.entity.transform.rotation != 0) {
-                    tempMat = Matrix2D.create().rotate(collider.entity.transform.rotation);
+                    tempMat = Matrix2D.createRotation(collider.entity.transform.rotation);
                     combinedMatrix = combinedMatrix.multiply(tempMat);
 
                     // 为了处理偏移原点的旋转我们只需要将圆心在(0,0)附近移动
                     // 我们的偏移使角度为0我们还需要处理这里的比例所以我们先对偏移进行缩放以得到合适的长度。
-                    let offsetAngle = Math.atan2(collider.localOffset.y, collider.localOffset.x) * MathHelper.Rad2Deg;
+                    let offsetAngle = Math.atan2(collider.localOffset.y * collider.entity.transform.scale.y, collider.localOffset.x * collider.entity.transform.scale.x) * MathHelper.Rad2Deg;
                     let offsetLength = hasUnitScale ? collider._localOffsetLength :
                         Vector2.multiply(collider.localOffset, collider.entity.transform.scale).length();
                     this.center = MathHelper.pointOnCirlce(Vector2.zero, offsetLength,
-                        collider.entity.transform.rotation + offsetAngle);
+                        collider.entity.transform.rotationDegrees + offsetAngle);
                 }
 
-                tempMat = Matrix2D.create().translate(this._polygonCenter.x, this._polygonCenter.y);
+                tempMat = Matrix2D.createTranslation(this._polygonCenter.x, this._polygonCenter.y);
                 combinedMatrix = combinedMatrix.multiply(tempMat);
 
                 // 最后变换原始点
@@ -254,7 +253,7 @@ module es {
 
             this.position = Vector2.add(collider.entity.transform.position, this.center);
             this.bounds = Rectangle.rectEncompassingPoints(this.points);
-            this.bounds.location = this.bounds.location.add(this.position);
+            this.bounds.location = Vector2.add(this.bounds.location, this.position);
         }
 
         public overlaps(other: Shape) {
@@ -302,7 +301,7 @@ module es {
          */
         public containsPoint(point: Vector2) {
             // 将点归一化到多边形坐标空间中
-            point = Vector2.subtract(point, this.position);
+            point.subtract(this.position);
 
             let isInside = false;
             for (let i = 0, j = this.points.length - 1; i < this.points.length; j = i++) {
